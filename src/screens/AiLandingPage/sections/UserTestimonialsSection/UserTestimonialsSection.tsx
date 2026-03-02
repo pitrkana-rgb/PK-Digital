@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 const statsData = [
   { label: "REALIZOVANÝCH PROJEKTŮ", value: 120, suffix: "+", description: "Od prvních MVP až po škálované AI řešení." },
-  { label: "KLIENTŮ S NÁMI POKRAČUJE", value: 95, suffix: " %", description: "Dlouhodobé partnerství místo jednorázových zakázek." },
-  { label: "UŠETŘENÉHO ČASU AUTOMATIZACÍ", value: 3000, suffix: "+ h", description: "Procesy, které běží samy a bez chyb." },
+  { label: "KLIENTŮ NÁS DOPORUČUJE", value: 97, suffix: " %", description: "Dlouhodobé partnerství místo jednorázových zakázek." },
+  { label: "PRŮMĚRNÁ DOBA REALIZACE", value: 14, suffix: " dní", description: "Kompletní web připravený k nasazení." },
 ];
 
 function useCountUp(target: number, duration = 1800, active: boolean) {

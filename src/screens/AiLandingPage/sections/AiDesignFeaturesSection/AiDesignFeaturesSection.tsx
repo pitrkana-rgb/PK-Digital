@@ -1,10 +1,10 @@
 import { MessageCircleIcon, CheckCircle2Icon, Code2Icon, CogIcon } from "lucide-react";
 
 const steps = [
-  { num: "01", title: "Nezávazná poptávka", description: "Krátký call nebo zpráva, kde společně projdeme váš business, cíle a aktuální procesy. Navrhneme konkrétní AI příležitosti.", icon: MessageCircleIcon },
-  { num: "02", title: "Validace & úpravy", description: "Ověříme, kde dává AI skutečně smysl. Společně doladíme zadání, aby návrh řešení zapadl do vašeho týmu i stávajících nástrojů.", icon: CheckCircle2Icon },
-  { num: "03", title: "Spolupráce & vývoj", description: "Navrhujeme UX, automatizace i AI agenty. Vše průběžně testujeme, komunikujeme v češtině a doručujeme v jasných iteracích.", icon: Code2Icon },
-  { num: "04", title: "Škálování & automatizace", description: "Napojíme nástroje, nastavíme metriky a vytrénujeme vaše AI agenty tak, aby se z experimentu stala dlouhodobá konkurenční výhoda.", icon: CogIcon },
+  { num: "01", title: "Bezplatná konzultace", description: "Nezávazně projdeme váš web nebo projektový záměr, identifikujeme konverzní příležitosti a navrhneme konkrétní možnosti využití AI pro zvýšení výkonu.", icon: MessageCircleIcon },
+  { num: "02", title: "Návrh řešení", description: "Připravíme strategii a strukturu webu a během přibližně 3 dnů vytvoříme bezplatnou frontendovou verzi, abyste si mohli ověřit směr a podobu řešení ještě před plnou realizací.", icon: CheckCircle2Icon },
+  { num: "03", title: "Vývoj a implementace", description: "Po schválení konceptu web dokončíme nebo modernizujeme, implementujeme AI nástroje a nastavíme měření výkonu i konverzí.", icon: Code2Icon },
+  { num: "04", title: "Optimalizace a rozvoj", description: "Na základě dat web průběžně optimalizujeme, rozšiřujeme AI funkce a dlouhodobě zvyšujeme jeho obchodní přínos.", icon: CogIcon },
 ];
 
 import { SectionDivider } from "../../components/SectionDivider";
@@ -16,17 +16,9 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
 
       {/* Section badge + headline */}
       <div style={{ marginBottom: "56px", textAlign: "center" }}>
-        <span style={{
-          display: "inline-block", background: "rgba(255,90,31,0.12)", border: "1px solid rgba(255,90,31,0.3)",
-          borderRadius: "999px", padding: "6px 16px", fontFamily: "'Space Grotesk',sans-serif",
-          fontWeight: 500, fontSize: "13px", letterSpacing: "0.06em", color: "#FF5A1F",
-          textTransform: "uppercase" as const, marginBottom: "24px",
-        }}>
-          Jak to funguje
-        </span>
         <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,52px)", lineHeight: 1.1, color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", maxWidth: "700px" }}>
-          Povyšte váš business díky{" "}
-          <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>AI</span>
+          Jak probíhá{" "}
+          <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>spolupráce</span>
         </h2>
         <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "560px" }}>
           Navrhujeme AI řešení, která propojují váš web, interní nástroje i tým. Od prvního nápadu až po škálování.

@@ -147,16 +147,8 @@ export const CompanyMilestonesSection = (): JSX.Element => (
 
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "80px" }}>
-        <span style={{
-          display: "inline-block", background: "rgba(255,90,31,0.12)", border: "1px solid rgba(255,90,31,0.3)",
-          borderRadius: "999px", padding: "6px 16px", fontFamily: "'Space Grotesk',sans-serif",
-          fontWeight: 500, fontSize: "13px", letterSpacing: "0.06em", color: "#FF5A1F",
-          textTransform: "uppercase" as const, marginBottom: "24px",
-        }}>
-          Náš příběh
-        </span>
         <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,5vw,56px)", lineHeight: 1.1, color: "#fff", margin: "0 auto 32px", letterSpacing: "-0.02em", maxWidth: "800px" }}>
-          Od malého studia k vašemu partnerovi pro <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>AI revoluci</span>
+          Kdo <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>jsme</span>
         </h2>
 
         {/* Intro text glass card */}
@@ -172,9 +164,7 @@ export const CompanyMilestonesSection = (): JSX.Element => (
           marginBottom: "-50px",
         }}>
           <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "19px", lineHeight: 1.6, color: "rgba(255,255,255,0.85)", margin: 0 }}>
-            Začínali jsme jako malé studio zaměřené na weby a automatizace.
-            Dnes navrhujeme a implementujeme AI řešení, která šetří čas, zvyšují tržby
-            a uvolňují ruce vašim týmům pro práci, která má skutečný smysl.
+            Jsme tým, který dlouhodobě pracuje s AI nástroji a dnes je systematicky využívá při návrhu moderních webů a pokročilých AI řešení.
           </p>
         </div>
       </div>
@@ -199,7 +189,7 @@ export const CompanyMilestonesSection = (): JSX.Element => (
         .milestones-container { padding: 0 16px !important; }
         .timeline-line { left: 0px !important; transform: none !important; }
         .milestone-content { 
-          flex-direction: column !important; 
+          flex-direction: column-reverse !important; 
           align-items: flex-start !important;
           text-align: left !important;
           padding-left: 20px;

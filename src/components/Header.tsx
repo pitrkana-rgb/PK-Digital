@@ -7,29 +7,12 @@ const navigationItems = [
     { label: "Domů", targetId: "hero", path: "/" },
     { label: "Služby", targetId: "features", path: "/" },
     { label: "Ceník", targetId: "pricing", path: "/" },
+    { label: "O nás", targetId: "", path: "/o-nas" },
     { label: "FAQ", targetId: "faq", path: "/" },
     { label: "Kontakt", targetId: "contact", path: "/kontakt" },
 ];
 
-/** Minimal AI chip / neural node icon */
-const AiChipIcon = () => (
-    <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-    >
-        <circle cx="10" cy="10" r="9" stroke="#FF5A1F" strokeWidth="1.5" />
-        <rect x="6.5" y="6.5" width="7" height="7" rx="1.5" fill="#FF5A1F" opacity="0.9" />
-        <line x1="10" y1="1" x2="10" y2="6.5" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="10" y1="13.5" x2="10" y2="19" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="1" y1="10" x2="6.5" y2="10" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="13.5" y1="10" x2="19" y2="10" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="10" cy="10" r="1.5" fill="white" />
-    </svg>
-);
+
 
 export const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -86,19 +69,11 @@ export const Header = () => {
                             className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F] focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-md"
                             aria-label="AI-agency – zpět na začátek"
                         >
-                            <AiChipIcon />
-                            <span
-                                style={{
-                                    fontFamily: "'Space Grotesk', sans-serif",
-                                    fontWeight: 600,
-                                    fontSize: "20px",
-                                    letterSpacing: "0.02em",
-                                    color: "#FFFFFF",
-                                    lineHeight: 1,
-                                }}
-                            >
-                                AI-agency
-                            </span>
+                            <img
+                                src="/Company_logo.png"
+                                alt="AI-agency logo"
+                                style={{ height: "54px", width: "auto", display: "block" }}
+                            />
                         </button>
                     </div>
 

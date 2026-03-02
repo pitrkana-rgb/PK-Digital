@@ -166,7 +166,7 @@ export const MainHeroSection = (): JSX.Element => {
           margin: "0 0 16px 0",
           letterSpacing: "-0.02em",
         }}>
-          <span>Využijte s námi sílu </span>
+          <span>Získejte moderní web nové generace díky síle </span>
           <span style={{
             background: "linear-gradient(135deg, #FF6A2A 0%, #FFB347 100%)",
             WebkitBackgroundClip: "text",
@@ -174,7 +174,6 @@ export const MainHeroSection = (): JSX.Element => {
             backgroundClip: "text",
             filter: "drop-shadow(0 0 24px rgba(255,90,31,0.5))",
           }}>AI</span>
-          <span> pro váš business</span>
         </h1>
 
         {/* Paragraph */}
@@ -187,9 +186,8 @@ export const MainHeroSection = (): JSX.Element => {
           maxWidth: "680px",
           margin: "0 auto 32px auto",
         }}>
-          Navrhujeme moderní weby, automatizujeme procesy a stavíme šité na míru
-          AI agenty, kteří pracují pro váš tým 24/7 – od prvního nápadu až po
-          nasazení do provozu.
+          Vytváříme nové weby a modernizujeme ty stávající pomocí pokročilých AI nástrojů,
+          které zvyšují konverze, generují více zákazníků a podporují dlouhodobý růst.
         </p>
 
         {/* CTAs */}

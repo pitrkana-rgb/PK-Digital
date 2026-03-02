@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { AiDesignFeaturesSection } from "./sections/AiDesignFeaturesSection/AiDesignFeaturesSection";
-import { CompanyMilestonesSection } from "./sections/CompanyMilestonesSection/CompanyMilestonesSection";
 import { FrequentlyAskedQuestionsSection } from "./sections/FrequentlyAskedQuestionsSection";
 import { MainHeroSection } from "./sections/MainHeroSection";
 import { ReadyToDesignSection } from "./sections/ReadyToDesignSection";
@@ -91,10 +90,6 @@ export const AiLandingPage = (): JSX.Element => {
 
         <section id="features" data-animate-on-scroll style={{ backgroundColor: "#000000" }}>
           <AiDesignFeaturesSection />
-        </section>
-
-        <section id="timeline" data-animate-on-scroll style={{ backgroundColor: "#000000" }}>
-          <CompanyMilestonesSection />
         </section>
 
         <section data-animate-on-scroll style={{ backgroundColor: "#000000" }}>
