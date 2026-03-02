@@ -1,9 +1,9 @@
 import { ArrowRightIcon, ShieldCheckIcon, ZapIcon, UsersIcon } from "lucide-react";
 
 const trustBadges = [
-  { icon: ZapIcon, label: "Rychlé nasazení" },
-  { icon: ShieldCheckIcon, label: "Bezpečná data" },
-  { icon: UsersIcon, label: "Dedikovaný tým" },
+  { icon: ZapIcon, label: "Prototyp do 3 dnů" },
+  { icon: ShieldCheckIcon, label: "Zaměřeno na konverze" },
+  { icon: UsersIcon, label: "Osobní přístup" },
 ];
 
 import { SectionDivider } from "../../components/SectionDivider";
@@ -32,11 +32,11 @@ export const ReadyToDesignSection = (): JSX.Element => {
 
           <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "32px" }}>
             <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px,4vw,56px)", color: "#fff", margin: 0, lineHeight: 1.1, letterSpacing: "-0.02em", maxWidth: "720px" }}>
-              Připraveni povýšit váš business s námi?
+              Připraveni na web, který pracuje za vás?
             </h2>
 
             <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.65, color: "rgba(255,255,255,0.65)", margin: 0, maxWidth: "560px" }}>
-              Ať už jste menší tým nebo rostoucí firma, můžeme začít nezávaznou konzultací, jednorázovým workshopem nebo konkrétním projektem.
+              Ať už potřebujete nový web od základu nebo modernizaci toho stávajícího — začněte nezávaznou konzultací zdarma. Prototyp můžete mít už do 3 dnů.
             </p>
 
             {/* Trust badges */}

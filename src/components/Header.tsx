@@ -5,8 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const navigationItems = [
     { label: "Domů", targetId: "hero", path: "/" },
-    { label: "Služby", targetId: "features", path: "/" },
-    { label: "Ceník", targetId: "pricing", path: "/" },
+    { label: "Služby", targetId: "pricing", path: "/" },
     { label: "O nás", targetId: "", path: "/o-nas" },
     { label: "FAQ", targetId: "faq", path: "/" },
     { label: "Kontakt", targetId: "contact", path: "/kontakt" },

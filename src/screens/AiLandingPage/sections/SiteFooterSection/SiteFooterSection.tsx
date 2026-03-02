@@ -3,8 +3,8 @@ import { GithubIcon, TwitterIcon, LinkedinIcon } from "lucide-react";
 
 const navLinks = [
   { label: "Domů", id: "hero", path: "/" },
-  { label: "Služby", id: "features", path: "/" },
-  { label: "Ceník", id: "pricing", path: "/" },
+  { label: "Služby", id: "pricing", path: "/" },
+  { label: "O nás", id: "", path: "/o-nas" },
   { label: "FAQ", id: "faq", path: "/" },
   { label: "Kontakt", id: "contact", path: "/kontakt" },
 ];
@@ -37,16 +37,11 @@ export const SiteFooterSection = (): JSX.Element => {
           {/* Brand */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "300px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <circle cx="10" cy="10" r="9" stroke="#FF5A1F" strokeWidth="1.5" />
-                <rect x="6.5" y="6.5" width="7" height="7" rx="1.5" fill="#FF5A1F" opacity="0.9" />
-                <line x1="10" y1="1" x2="10" y2="6.5" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="10" y1="13.5" x2="10" y2="19" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="1" y1="10" x2="6.5" y2="10" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="13.5" y1="10" x2="19" y2="10" stroke="#FF5A1F" strokeWidth="1.5" strokeLinecap="round" />
-                <circle cx="10" cy="10" r="1.5" fill="white" />
-              </svg>
-              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "20px", color: "#fff", letterSpacing: "0.02em" }}>AI-agency</span>
+              <img
+                src="/Company_logo.png"
+                alt="PK Digital logo"
+                style={{ height: "40px", width: "auto", display: "block" }}
+              />
             </div>
             <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: 1.65, margin: 0 }}>
               Navrhujeme moderní weby, automatizujeme procesy a stavíme AI agenty pro váš tým.

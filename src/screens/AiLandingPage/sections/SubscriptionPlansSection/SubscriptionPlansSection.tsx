@@ -2,7 +2,7 @@ import { CheckIcon, ChevronRightIcon } from "lucide-react";
 
 const pricingPlans = [
   {
-    name: "Webdesign",
+    name: "Tvorba webu na míru",
     description: "Moderní, rychlý a srozumitelný web, který od první sekundy vysvětlí, co děláte a proč by to mělo zajímat vaše klienty.",
     price: "od 9 900 Kč",
     features: [
@@ -16,18 +16,18 @@ const pricingPlans = [
     cta: "Chci web",
   },
   {
-    name: "AI Agenti & Automatizace",
-    description: "Návrh a implementace AI agentů a automatizací, které šetří čas vašemu týmu a zvyšují kvalitu služeb.",
+    name: "Modernizace webových stránek",
+    description: "Kompletní modernizace vašeho stávajícího webu — nový design, vyšší rychlost, lepší konverze a nasazení AI nástrojů pro růst.",
     price: "Individuální",
     features: [
-      "Bezplatná vstupní konzultace a analýza proveditelnosti",
-      "Vývoj AI chatbotů",
-      "Automatizace procesů a workflow (interní i zákaznické)",
-      "Plánovací a rezervační systémy",
-      "AI agenti pro podporu, obchod a HR",
+      "Bezplatný audit stávajícího webu a návrh vylepšení",
+      "Redesign a modernizace vizuální identity",
+      "Optimalizace rychlosti, SEO a konverzního výkonu",
+      "Integrace AI chatbotů a automatizačních nástrojů",
+      "Průběžná správa, údržba a datová optimalizace",
     ],
     highlighted: false,
-    cta: "Chci AI řešení",
+    cta: "Chci modernizaci",
   },
 ];
 
@@ -48,7 +48,7 @@ export const SubscriptionPlansSection = (): JSX.Element => {
             Vyberte službu
           </h2>
           <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "560px" }}>
-            Ať už potřebujete nový web, AI agenty nebo kombinaci obojího, vybereme společně formu spolupráce, která dává smysl vašemu týmu i rozpočtu.
+            Ať už potřebujete nový web od základu nebo modernizaci toho stávajícího, připravíme řešení, které odpovídá vašim cílům i rozpočtu.
           </p>
         </div>
 
