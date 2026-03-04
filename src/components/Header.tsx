@@ -56,8 +56,8 @@ export const Header = () => {
                     backgroundColor: menuOpen && !isScrolled ? "#000000" : undefined,
                 }}
                 className={`fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1280px] px-6 transition-all duration-300 ${isScrolled
-                    ? "backdrop-blur-xl bg-black/60 border border-white/5 rounded-2xl mt-4 shadow-lg"
-                    : "mt-5"
+                    ? "backdrop-blur-xl bg-black/60 border border-white/5 rounded-b-2xl shadow-lg"
+                    : ""
                     }`}
             >
                 <nav className="grid grid-cols-2 md:grid-cols-3 items-center py-5 header-nav">

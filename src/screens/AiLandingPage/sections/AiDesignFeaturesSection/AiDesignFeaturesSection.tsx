@@ -42,8 +42,8 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
           Jak probíhá{" "}
           <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>spolupráce</span>
         </h2>
-        <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "560px" }}>
-          Navrhujeme AI řešení, která propojují váš web, interní nástroje i tým. Od prvního nápadu až po škálování.
+        <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "600px" }}>
+          Díky pokročilým AI nástrojům dokážeme výrazně zrychlit vývoj webu a dodat kompletní řešení v krátkém časovém horizontu.
         </p>
       </div>
 

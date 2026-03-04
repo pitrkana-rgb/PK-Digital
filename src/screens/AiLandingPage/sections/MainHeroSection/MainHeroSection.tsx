@@ -271,9 +271,9 @@ export const MainHeroSection = (): JSX.Element => {
             margin-top: -180px !important;
           }
           .hero-headline {
-            font-size: 26px !important;
-            line-height: 1.15 !important;
-            max-width: 320px;
+            font-size: 32px !important;
+            line-height: 1.1 !important;
+            max-width: 100% !important;
             margin-bottom: 10px !important;
           }
           .hero-subheading {

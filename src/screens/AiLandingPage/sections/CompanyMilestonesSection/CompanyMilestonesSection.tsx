@@ -4,28 +4,28 @@ const milestones = [
   {
     year: "2025",
     title: "Vytvoření studia",
-    description: "Začali jsme jako malé studio zaměřené na moderní weby a chytrá digitální řešení. Od prvního dne jsme stavěli na kvalitním designu, technické preciznosti a důrazu na reálný přínos pro klienta. Pevné základy nám umožnily růst rychle, ale systematicky.",
+    description: "PK-Digital vzniklo v roce 2025 na základě více než 10 let zkušeností s prací s daty, digitálním designem a technologiemi. Postupně se k analytice a návrhu systémů přirozeně přidala i oblast AI nástrojů a automatizace, která dnes zásadně mění způsob, jak fungují weby i podnikání. Studio vzniklo s cílem propojit data, design a AI do praktických řešení, která mají reálný dopad na výkon webů a online projektů.",
     image: "/Studio.png",
     stats: "Start",
   },
   {
     year: "30+",
     title: "Realizované weby",
-    description: "Navrhli a spustili jsme desítky moderních webových projektů – od prezentačních stránek po komplexní firemní platformy. Každý web stavíme na výkonu, konverzích a škálovatelnosti. Design propojujeme s byznysovým cílem, ne pouze s estetikou.",
+    description: "Navrhli a spustili jsme desítky moderních webových projektů – od prezentačních stránek až po komplexnější digitální řešení. Každý web stavíme s důrazerem na rychlost, přehlednost, konverze a dlouhodobou škálovatelnost. Design vždy propojujeme s reálným cílem projektu, aby web nebyl jen vizuální prezentací, ale funkčním nástrojem pro růst podnikání.",
     image: "/Web_designs.png",
     stats: "Design",
   },
   {
     year: "50+",
-    title: "Realizované automatizace",
-    description: "Implementujeme AI řešení, která šetří čas a zvyšují efektivitu. Od chatbotů pro zákaznickou podporu, přes generování obsahu, až po inteligentní vyhledávání a procesní automatizace. Technologie nasazujeme prakticky – s měřitelným dopadem na provoz i tržby.",
+    title: "Implementace AI nástrojů",
+    description: "Součástí našich řešení je také implementace AI nástrojů, které posouvají weby na vyšší úroveň. Nejčastěji nasazujeme AI chatboty, lead-generation systémy, chytré cenové kalkulátory nebo inteligentní vyhledávání. Cílem těchto nástrojů je zvyšovat návštěvnost, zlepšovat uživatelský zážitek a především maximalizovat konverze.",
     image: "/Automation.png",
     stats: "AI & Automatizace",
   },
   {
-    year: "4",
-    title: "Lidé v core týmu",
-    description: "Náš tým tvoří specialisté na UX, vývoj a AI integrace. Kombinujeme technickou odbornost s byznysovým přesahem. Jsme kompaktní, rychlí v rozhodování a schopní dodat řešení bez zbytečné složitosti.",
+    year: "PK",
+    title: "Kdo stojí za PK-Digital",
+    description: "Jmenuji se Petr Kaňa a dlouhodobě se věnuji práci s daty, analytikou a návrhu digitálních řešení. Během své kariéry jsem pracoval na projektech zaměřených na datovou analytiku, reporting, optimalizaci procesů a technologický design. Dnes tyto zkušenosti propojuji s moderními technologiemi a AI, abych vytvářel efektivní digitální řešení pro podnikatele, jednotlivce i firmy.",
     image: "/Team_members.png",
     stats: "Core Tým",
   },
@@ -164,7 +164,7 @@ export const CompanyMilestonesSection = (): JSX.Element => (
           marginBottom: "-50px",
         }}>
           <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "19px", lineHeight: 1.6, color: "rgba(255,255,255,0.85)", margin: 0 }}>
-            Jsme tým, který dlouhodobě pracuje s AI nástroji a dnes je systematicky využívá při návrhu moderních webů a pokročilých AI řešení.
+            Vytváříme moderní weby a digitální řešení, která propojují technologii, uživatelský zážitek a reálné obchodní výsledky.
           </p>
         </div>
       </div>

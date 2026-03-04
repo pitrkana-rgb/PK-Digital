@@ -65,35 +65,39 @@ export const SiteFooterSection = (): JSX.Element => {
             </div>
           </div>
 
-          {/* Nav links */}
-          <nav style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#FF5A1F", textTransform: "uppercase" as const, marginBottom: "4px" }}>Navigace</span>
-            {navLinks.map(link => (
-              <button key={link.id} type="button" onClick={() => handleNavClick(link)}
+          {/* Nav + Contact — wrapped for mobile 2-column row */}
+          <div className="footer-columns" style={{ display: "flex", gap: "48px", alignItems: "flex-start" }}>
+
+            {/* Nav links */}
+            <nav style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#FF5A1F", textTransform: "uppercase" as const, marginBottom: "4px" }}>Navigace</span>
+              {navLinks.map(link => (
+                <button key={link.id} type="button" onClick={() => handleNavClick(link)}
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", transition: "color 200ms ease" }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.6)"; }}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </nav>
+
+            {/* Contact */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#FF5A1F", textTransform: "uppercase" as const, marginBottom: "4px" }}>Kontakt</span>
+              <button type="button" onClick={() => navigate("/kontakt")}
                 style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.6)"; }}
               >
-                {link.label}
+                Napište nám
               </button>
-            ))}
-          </nav>
-
-          {/* Contact */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#FF5A1F", textTransform: "uppercase" as const, marginBottom: "4px" }}>Kontakt</span>
-            <button type="button" onClick={() => navigate("/kontakt")}
-              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", transition: "color 200ms ease" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.6)"; }}
-            >
-              Napište nám
-            </button>
+            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+        <div className="footer-bottom" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
           <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: "rgba(255,255,255,0.35)", margin: 0 }}>
             © 2025 AI-agency. Všechna práva vyhrazena.
           </p>
@@ -109,12 +113,40 @@ export const SiteFooterSection = (): JSX.Element => {
       </div>
       <style>{`
         @media(max-width:768px){
-          .footer-wrapper { padding: 32px 16px 24px !important; }
-          .footer-top { gap: 24px !important; margin-bottom: 28px !important; }
+          .footer-wrapper { padding: 40px 20px 28px !important; }
+          .footer-top {
+            flex-direction: column !important;
+            gap: 32px !important;
+            margin-bottom: 32px !important;
+          }
+          /* Brand block: full width on top */
+          .footer-top > div:first-child {
+            max-width: 100% !important;
+            width: 100% !important;
+          }
+          /* Nav + Contact side by side */
+          .footer-top > nav,
+          .footer-top > div:last-child {
+            flex: 1 1 0 !important;
+          }
+          /* Wrap only nav+contact into a row */
+          .footer-columns {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 32px !important;
+            width: 100% !important;
+          }
+          /* Bottom bar: stacked */
+          .footer-bottom {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            gap: 12px !important;
+          }
           .footer-logo { height: 32px !important; }
-          .header-logo { height: 32px !important; }
         }
       `}</style>
+
     </footer>
   );
 };
