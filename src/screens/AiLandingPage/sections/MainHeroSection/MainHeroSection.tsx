@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 /* ── Scroll indicator ─────────────────────────────────────────────── */
 const ScrollIndicator = () => (
   <div
@@ -30,6 +32,8 @@ const ScrollIndicator = () => (
 );
 
 export const MainHeroSection = (): JSX.Element => {
+  const navigate = useNavigate();
+
   return (
     <section
       className="relative w-full flex items-center justify-center hero-section-mobile"
@@ -120,9 +124,7 @@ export const MainHeroSection = (): JSX.Element => {
             id="hero-primary-cta"
             type="button"
             className="animate-pulse-glow hero-primary-btn"
-            onClick={() => {
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }}
+            onClick={() => navigate("/kontakt")}
             style={{
               background: "linear-gradient(135deg, #FF6A2A 0%, #FF3C00 100%)",
               color: "#FFFFFF",

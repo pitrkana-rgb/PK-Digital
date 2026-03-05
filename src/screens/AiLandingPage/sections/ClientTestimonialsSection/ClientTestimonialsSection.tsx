@@ -1,21 +1,21 @@
 import { StarIcon } from "lucide-react";
 
 const testimonials = [
-  { name: "Jan Novák", role: "CEO, e‑shop s módou", text: "Za tři týdny jsme nasadili AI agenta pro zákaznickou podporu. Dnes odbaví většinu dotazů bez zásahu člověka a tým má čas řešit důležité požadavky." },
-  { name: "Lucie Procházková", role: "Marketing, B2B SaaS", text: "Pomohli nám ujasnit, kde má AI smysl a kde ne. Díky automatizaci lead kvalifikace šetříme desítky hodin měsíčně." },
-  { name: "Petr Svoboda", role: "Zakladatel, digitální agentura", text: "Nešlo jen o technologii, ale o celý proces. Od workshopu po nasazení jsme měli jasnou roadmapu a rychlé iterace." },
-  { name: "Eva Černá", role: "COO, logistická firma", text: "AI agent nám výrazně zrychlil zpracování objednávek. Nejvíc oceňuji kombinaci technického přehledu a lidského přístupu." },
-  { name: "Tomáš Dvořák", role: "Founder, konzultační studio", text: "Společně jsme postavili interní znalostního agenta. Tým má odpovědi na pár kliknutí a onboarding nových lidí je mnohem rychlejší." },
-  { name: "Michaela Králová", role: "Head of CX, marketplace", text: "Design webu, AI chatbot i automatizace ticketů vznikaly paralelně. Výsledek je konzistentní a hlavně měřitelný." },
-  { name: "Ondřej Konečný", role: "CTO, fintech startup", text: "Překvapilo mě, jak rychle dokázali pochopit naši architekturu. AI nástroje zapadly do stávajícího stacku bez zbytečného chaosu." },
-  { name: "Barbora Veselá", role: "HR, technologická firma", text: "Automatizovali jsme část náboru a komunikaci s kandidáty. Ušetřený čas věnujeme osobním pohovorům místo administrativy." },
-  { name: "Filip Hruška", role: "Product Owner, SaaS", text: "Pomohl nám otestovat několik AI konceptů na malých experimentech. Teď víme, do čeho má smysl investovat naplno." },
-  { name: "Kristýna Malá", role: "CMO, služba pro freelancery", text: "Nový web i automatizované kampaně jsou navržené tak, aby šly dál rozvíjet. Nemáme pocit \u201ehotového webu\u201c, ale živého produktu." },
-  { name: "Martin Pokorný", role: "Majitel, výrobní firma", text: "AI pomáhá plánovat kapacity a reporty. Líbí se mi, že řešení je praktické a ne jen \u201ehračka s AI\u201c." },
-  { name: "Zuzana Jelínková", role: "Projektová manažerka, NGO", text: "Společně jsme zjednodušili formuláře a komunikaci s dárci. Automatizace běží na pozadí, ale pro uživatele je vše srozumitelné." },
-  { name: "Daniel Beneš", role: "Founder, edtech projekt", text: "AI agent pro studenty nám pomáhá zodpovídat časté dotazy a šetří práci tutorů. Implementace byla rychlá a dobře zdokumentovaná." },
-  { name: "Alena Růžičková", role: "Manažerka provozu, realitní kancelář", text: "Automatizace procesů a nový web nám pomohly lépe třídit poptávky. Máme přehled a méně manuální práce." },
-  { name: "Jakub Mareš", role: "Spoluzakladatel, AI startup", text: "Byli pro nás sparring partnerem v produktovém přemýšlení. Od UX po technickou architekturu AI částí." },
+  { name: "Jan Novák", text: "Nový web od PK Digital nám konečně jasně říká, co děláme. Konverze vzrostly a zákazníci nás lépe chápou na první pohled." },
+  { name: "Lucie Procházková", text: "Kombinace moderního webdesignu a AI agenta pro poptávky nám ušetřila hodiny práce. Web prodává a agent třídí leady." },
+  { name: "Petr Svoboda", text: "Od návrhu webu po nasazení AI chatbotu – vše proběhlo srozumitelně a rychle. Doporučuji každému, kdo chce web, který opravdu funguje." },
+  { name: "Eva Černá", text: "AI agent na webu nám automatizoval odpovědi na časté dotazy. Návštěvníci dostanou odpověď hned a my se věnujeme složitějším případům." },
+  { name: "Tomáš Dvořák", text: "Webdesign na míru a následně AI nástroje pro kvalifikaci zákazníků. Přesně to, co jsme potřebovali pro růst." },
+  { name: "Michaela Králová", text: "Nový web a AI agent pracují dohromady – design přitáhne, agent pomůže a uzavře. Vidíme to na konverzích." },
+  { name: "Ondřej Konečný", text: "Profesionální web a integrace AI agenta do zákaznické podpory. Řešení je přehledné a měřitelné." },
+  { name: "Barbora Veselá", text: "Potřebovali jsme web, který nejen vypadá dobře, ale také sám odpovídá na dotazy. PK Digital to zvládl – webdesign i AI agent." },
+  { name: "Filip Hruška", text: "Od prvního návrhu webu po nasazení AI nástrojů – vše v jednom proudu. Web komunikuje naši hodnotu a agent šetří čas týmu." },
+  { name: "Kristýna Malá", text: "Webdesign zaměřený na konverze a AI agent pro leady. Růst návštěvnosti i kvality poptávek je znát." },
+  { name: "Martin Pokorný", text: "Moderní web a AI agent na objednávky. Jednoduchá spolupráce a výsledek, který pomáhá podnikání." },
+  { name: "Zuzana Jelínková", text: "Nový web a automatizace díky AI. Návštěvníci mají přehled, my máme víc času na to, na čem záleží." },
+  { name: "Daniel Beneš", text: "Web na míru a AI agent pro dotazy – přesně ta kombinace, která nám pomohla růst bez zbytečné zátěže." },
+  { name: "Alena Růžičková", text: "Redesign webu a nasazení AI nástrojů změnily způsob, jak pracujeme s poptávkami. Vřele doporučuji." },
+  { name: "Jakub Mareš", text: "Spolupráce na webdesignu i AI částech byla na jedničku. Web prodává a AI agenty dál rozvíjíme." },
 ];
 
 const initials = (name: string) => name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
@@ -45,7 +45,7 @@ const TestimonialCard = ({ t, i }: { t: typeof testimonials[0]; i: number }) => 
     <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", lineHeight: 1.65, color: "rgba(255,255,255,0.82)", margin: 0, flex: 1 }}>
       "{t.text}"
     </p>
-    {/* Author */}
+    {/* Author — name only, no role */}
     <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
       <div style={{
         width: "38px", height: "38px", borderRadius: "50%", flexShrink: 0,
@@ -55,10 +55,7 @@ const TestimonialCard = ({ t, i }: { t: typeof testimonials[0]; i: number }) => 
       }}>
         {initials(t.name)}
       </div>
-      <div>
-        <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff" }}>{t.name}</div>
-        <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "12px", color: "rgba(255,255,255,0.5)" }}>{t.role}</div>
-      </div>
+      <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff" }}>{t.name}</div>
     </div>
   </div>
 );
@@ -70,13 +67,13 @@ import { SectionDivider } from "../../components/SectionDivider";
 export const ClientTestimonialsSection = (): JSX.Element => (
   <section style={{ width: "100%", backgroundColor: "#000", padding: "96px 0", marginTop: "-50px" }}>
     <SectionDivider />
-    {/* Header */}
-    <div style={{ maxWidth: "1200px", margin: "0 auto 56px", padding: "0 24px" }}>
-      <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px,4vw,48px)", color: "#fff", marginBottom: "16px", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+    {/* Header — same style as other sections (centered, same font sizes) */}
+    <div style={{ maxWidth: "1200px", margin: "0 auto 56px", padding: "0 24px", textAlign: "center" }}>
+      <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,52px)", color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "700px" }}>
         Co o spolupráci říkají klienti
       </h2>
-      <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: "rgba(255,255,255,0.65)", margin: 0, maxWidth: "560px" }}>
-        Reálné příběhy týmů, kterým pomáháme s webem, automatizací i nasazením AI agentů do každodenního provozu.
+      <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "560px" }}>
+        Reference našich partnerů, kterým webdesign, automatizace a AI pomohly růst.
       </p>
     </div>
 

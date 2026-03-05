@@ -15,16 +15,16 @@ const slides = [
         label: "Tvorba webových stránek",
         title: "Tvorba webových stránek",
         description:
-            "Moderní, rychlý a srozumitelný web na míru, který od první sekundy vysvětlí, co děláte a proč by to mělo zajímat vaše klienty.",
+            "Moderní web, který jasně komunikuje vaši hodnotu, získává zákazníky a je připravený růst s vaším podnikáním",
         features: [
             "Konzultace a návrh zdarma",
             "Dodání do 14 dnů",
             "Responzivní mobilní verze",
             "Napojení na interní systémy",
-            "Technický support",
+            "Pravidelná optimalizace",
         ],
         cta: "Chci web",
-        image: "/New.web-promotion.png",
+        image: "/New.web-promotion-V2.png",
     },
     {
         id: "modernizace-webu",
@@ -47,7 +47,7 @@ const slides = [
         label: "Integrace AI",
         title: "Integrace AI nástrojů",
         description:
-            "Implementujeme AI řešení, která šetří čas a zvyšují efektivitu — od chatbotů po inteligentní vyhledávání a procesní automatizace.",
+            "Nasazujeme AI nástroje, které automatizují práci, zlepšují zákaznickou zkušenost a maximalizují konverzní potenciál vašeho webu.",
         features: [
             "AI chatboty",
             "Generování leadů",
@@ -117,7 +117,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                         <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>nabízíme</span>
                     </h2>
                     <p className="section-sub offer-subheading" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "560px" }}>
-                        Tři klíčové služby, které pokrývají celý životní cyklus vašeho digitálního projektu.
+                        Od vytvoření nového webu přes vizuální redesign až po integraci AI nástrojů – řešení pro začínající podnikatele i rostoucí firmy.
                     </p>
                 </div>
 

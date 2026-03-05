@@ -199,7 +199,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         color: "rgba(255,255,255,0.55)",
                         maxWidth: "520px", margin: "0 auto",
                     }}>
-                        Kombinujeme rychlost, AI a reálnou zodpovědnost za výsledek.
+                        Stavíme weby rychle, využíváme AI a neseme odpovědnost za to, že vaše řešení skutečně funguje.
                     </p>
                 </div>
 
