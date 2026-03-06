@@ -151,18 +151,16 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
   );
 };
 
-/** Left column: Company name, Address, Telephone, Email. Right column: Číslo účtu, IBAN, IČO, Datová schránka. */
-const companyInfoLeft = [
+/** Exact order on mobile (single column): Název firmy → Adresa → Telefon → E-mail → IČO → Datová schránka → Číslo účtu → IBAN. Desktop: same list, grid fills column-first (1–4 left, 5–8 right). */
+const companyInfoOrdered = [
   { icon: Building2, label: "Název firmy", text: "PK-Digital" },
   { icon: MapPin, label: "Adresa", text: "Němčice 329, Ivančice 664 91" },
   { icon: Phone, label: "Telefon", text: "+420 725 703 868" },
   { icon: Mail, label: "E-mail", text: "info@pk-digital.cz" },
-];
-const companyInfoRight = [
-  { icon: Landmark, label: "Číslo účtu", text: "1025290491/5500" },
-  { icon: Landmark, label: "IBAN", text: "CZ60 5500 0000 0010 2529 0491" },
   { icon: FileText, label: "IČO", text: "21185301" },
   { icon: Inbox, label: "Datová schránka", text: "f4i6cbb" },
+  { icon: Landmark, label: "Číslo účtu", text: "1025290491/5500" },
+  { icon: Landmark, label: "IBAN", text: "CZ60 5500 0000 0010 2529 0491" },
 ];
 
 export const ContactSection = (): JSX.Element => {
@@ -283,8 +281,8 @@ export const ContactSection = (): JSX.Element => {
             marginBottom: "64px",
           }}
         >
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px 32px" }} className="company-info-grid">
-            {companyInfoLeft.map((item, i) => [item, companyInfoRight[i]]).flat().map(({ icon: Icon, label, text }) => (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "repeat(4, auto)", gridAutoFlow: "column", gap: "24px 32px" }} className="company-info-grid">
+            {companyInfoOrdered.map(({ icon: Icon, label, text }) => (
               <div
                 key={label}
                 style={{
@@ -335,7 +333,7 @@ export const ContactSection = (): JSX.Element => {
         @keyframes spin { to { transform: rotate(360deg); } }
         @media (max-width: 768px) {
           .form-row { grid-template-columns: 1fr !important; }
-          .company-info-grid { grid-template-columns: 1fr !important; }
+          .company-info-grid { grid-template-columns: 1fr !important; grid-auto-flow: row !important; grid-template-rows: unset !important; }
           .contact-bottom-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>

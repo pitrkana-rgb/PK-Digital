@@ -28,7 +28,7 @@ export const ContactPage = (): JSX.Element => {
             <Header />
 
             {/* Hero Section — solid black, badge + title only */}
-            <section style={{ position: "relative", paddingTop: "160px", paddingBottom: "80px", backgroundColor: "#000000" }}>
+            <section className="contact-hero" style={{ position: "relative", paddingTop: "160px", paddingBottom: "80px", backgroundColor: "#000000" }}>
                 <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
                     <div style={{ marginBottom: "24px" }}>
                         <span style={{
@@ -42,7 +42,7 @@ export const ContactPage = (): JSX.Element => {
                             Odpovídáme do 24h
                         </span>
                     </div>
-                    <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#fff", margin: 0, letterSpacing: "-0.02em" }}>
+                    <h1 className="contact-hero-title" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#fff", margin: 0, letterSpacing: "-0.02em" }}>
                         Pojďme vytvořit web, který <span style={{ background: "linear-gradient(135deg, #FF6A2A, #FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>promění návštěvníky v klienty</span>
                     </h1>
                 </div>
@@ -56,8 +56,8 @@ export const ContactPage = (): JSX.Element => {
 
             <style>{`
                 @media(max-width:768px) {
-                    h1 { font-size: clamp(36px, 10vw, 48px) !important; }
-                    section { padding-top: 120px !important; padding-bottom: 40px !important; }
+                    .contact-hero-title { font-size: clamp(20px, 5.2vw, 26px) !important; line-height: 1.25 !important; max-width: 20em; margin-left: auto !important; margin-right: auto !important; }
+                    .contact-hero { padding-top: 120px !important; padding-bottom: 20px !important; }
                 }
             `}</style>
         </div>

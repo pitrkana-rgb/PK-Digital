@@ -60,7 +60,7 @@ export const Header = () => {
                     : ""
                     }`}
             >
-                <nav className="grid grid-cols-2 md:grid-cols-3 items-center py-5 header-nav">
+                <nav className="grid grid-cols-2 md:grid-cols-3 items-center header-nav" style={{ paddingTop: "15px", paddingBottom: "15px" }}>
                     <div className="flex justify-start">
                         <button
                             type="button"
@@ -72,7 +72,7 @@ export const Header = () => {
                                 src="/Company_logo.png"
                                 alt="AI-agency logo"
                                 className="header-logo"
-                                style={{ height: "54px", width: "auto", display: "block" }}
+                                style={{ height: "47px", width: "auto", display: "block" }}
                             />
                         </button>
                     </div>

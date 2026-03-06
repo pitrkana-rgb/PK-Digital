@@ -165,8 +165,8 @@ export const AiLandingPage = (): JSX.Element => {
 
       <style>{`
         @media(max-width:768px) {
-          .header-logo { height: 38px !important; }
-          .header-nav { padding-top: 5px !important; padding-bottom: 5px !important; }
+          .header-logo { height: 47px !important; }
+          .header-nav { padding-top: 15px !important; padding-bottom: 15px !important; }
           .hero-section-mobile { margin-top: -200px !important; }
           .hero-content-wrap { margin-top: -220px !important; }
           .stats-section { margin-top: -50px !important; }
