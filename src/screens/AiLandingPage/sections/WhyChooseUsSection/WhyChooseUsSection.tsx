@@ -21,8 +21,8 @@ const themPoints = [
 
 const CheckIcon = () => (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
-        <circle cx="10" cy="10" r="10" fill="rgba(255,90,31,0.15)" />
-        <path d="M6 10.5L8.5 13L14 7" stroke="#FF5A1F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="10" cy="10" r="10" fill="rgba(0,229,255,0.14)" />
+        <path d="M6 10.5L8.5 13L14 7" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 
@@ -43,8 +43,8 @@ const PkCard = () => (
             minWidth: 0,
             borderRadius: "24px",
             padding: "3px",
-            background: "linear-gradient(145deg, #FF6A2A, #FF3C00 60%, #6B21A8)",
-            boxShadow: "0 24px 64px rgba(255,90,31,0.25)",
+            background: "linear-gradient(90deg, #E040FB, #00E5FF)",
+            boxShadow: "0 0 20px rgba(0, 229, 255, 0.22)",
             transition: "transform 250ms ease, box-shadow 250ms ease",
             transform: "scale(1.02)",
             height: "100%",
@@ -53,21 +53,21 @@ const PkCard = () => (
         onMouseEnter={e => {
             const el = e.currentTarget as HTMLDivElement;
             el.style.transform = "scale(1.04) translateY(-4px)";
-            el.style.boxShadow = "0 32px 80px rgba(255,90,31,0.35)";
+            el.style.boxShadow = "0 0 24px rgba(0,229,255,0.28), 0 32px 80px rgba(0,0,0,0.45)";
         }}
         onMouseLeave={e => {
             const el = e.currentTarget as HTMLDivElement;
             el.style.transform = "scale(1.02)";
-            el.style.boxShadow = "0 24px 64px rgba(255,90,31,0.25)";
+            el.style.boxShadow = "0 0 20px rgba(0, 229, 255, 0.22)";
         }}
     >
         <div style={{
             background: "#0D0D0D", borderRadius: "21px", padding: "40px",
             height: "100%", display: "flex", flexDirection: "column", gap: "28px", boxSizing: "border-box",
         }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingBottom: "24px", borderBottom: "1px solid rgba(255,90,31,0.2)" }}>
-                <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FF5A1F", boxShadow: "0 0 10px rgba(255,90,31,0.7)", flexShrink: 0 }} />
-                <img src="/Company_logo.png" alt="PK Digital" style={{ height: "32px", width: "auto", display: "block" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingBottom: "24px", borderBottom: "1px solid rgba(0,229,255,0.18)" }}>
+                <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#00E5FF", boxShadow: "0 0 12px rgba(0,229,255,0.55)", flexShrink: 0 }} />
+                <img src="/Company_logo_V2.png" alt="PK Digital" style={{ height: "32px", width: "auto", display: "block" }} />
             </div>
             <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "18px" }}>
                 {usPoints.map((point, i) => (
@@ -167,7 +167,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
             <div style={{
                 position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
                 width: "900px", height: "500px",
-                background: "radial-gradient(ellipse at center, rgba(255,90,31,0.07) 0%, transparent 70%)",
+                background: "radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 70%)",
                 pointerEvents: "none",
             }} />
 
@@ -193,7 +193,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                     }}>
                         Proč si vybrat{" "}
                         <span style={{
-                            background: "linear-gradient(135deg, #FF6A2A, #FFB347)",
+                            background: "linear-gradient(135deg, #E040FB, #00E5FF)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                             backgroundClip: "text",
@@ -246,7 +246,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                                 style={{
                                     width: i === mobileIdx ? "28px" : "8px", height: "8px",
                                     borderRadius: "999px", border: "none", cursor: "pointer",
-                                    background: i === mobileIdx ? "#FF5A1F" : "rgba(255,255,255,0.2)",
+                                    background: i === mobileIdx ? "#00E5FF" : "rgba(255,255,255,0.2)",
                                     transition: "width 250ms ease, background 250ms ease",
                                     padding: 0,
                                 }}
@@ -272,7 +272,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                                     opacity: (dir === -1 && mobileIdx === 0) || (dir === 1 && mobileIdx === cards.length - 1) ? 0.3 : 1,
                                     transition: "background 200ms ease",
                                 }}
-                                onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,90,31,0.15)"; b.style.borderColor = "rgba(255,90,31,0.4)"; }}
+                                onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,229,255,0.12)"; b.style.borderColor = "rgba(0,229,255,0.35)"; }}
                                 onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.05)"; b.style.borderColor = "rgba(255,255,255,0.15)"; }}
                             >
                                 {label}
@@ -287,8 +287,8 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         type="button"
                         onClick={() => navigate("/kontakt")}
                         style={{
-                            background: "linear-gradient(135deg, #FF6A2A 0%, #FF3C00 100%)",
-                            color: "#fff",
+                            background: "linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%)",
+                            color: "#070B14",
                             border: "none",
                             borderRadius: "999px",
                             padding: "16px 36px",
@@ -296,7 +296,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                             fontWeight: 600,
                             fontSize: "16px",
                             cursor: "pointer",
-                            boxShadow: "0 8px 32px rgba(255,90,31,0.4)",
+                            boxShadow: "0 0 20px rgba(0,229,255,0.25)",
                             transition: "filter 0.2s ease, transform 0.2s ease",
                         }}
                         onMouseEnter={e => {

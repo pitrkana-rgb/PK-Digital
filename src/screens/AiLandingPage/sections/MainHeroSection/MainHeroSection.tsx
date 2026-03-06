@@ -23,7 +23,7 @@ const ScrollIndicator = () => (
     >
       Scroll
     </span>
-    <div className="animate-bounce" style={{ color: "#FF5A1F" }}>
+    <div className="animate-bounce" style={{ color: "#00E5FF" }}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="m6 9 6 6 6-6" />
       </svg>
@@ -62,11 +62,11 @@ export const MainHeroSection = (): JSX.Element => {
           maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 100%)",
           WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 100%)",
         }} />
-        {/* Purple glow right */}
+        {/* Teal glow right */}
         <div style={{
           position: "absolute", top: "5%", right: "-5%",
           width: "400px", height: "400px",
-          background: "radial-gradient(circle, rgba(120,80,255,0.12) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(0,229,255,0.10) 0%, transparent 70%)",
           filter: "blur(60px)",
         }} />
       </div>
@@ -89,11 +89,11 @@ export const MainHeroSection = (): JSX.Element => {
         }}>
           <span>Získejte moderní web nové generace díky síle </span>
           <span style={{
-            background: "linear-gradient(135deg, #FF6A2A 0%, #FFB347 100%)",
+            background: "linear-gradient(135deg, #E040FB 0%, #00E5FF 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            filter: "drop-shadow(0 0 24px rgba(255,90,31,0.5))",
+            filter: "drop-shadow(0 0 20px rgba(0,229,255,0.35))",
           }}>AI</span>
         </h1>
 
@@ -119,8 +119,8 @@ export const MainHeroSection = (): JSX.Element => {
             className="animate-pulse-glow hero-primary-btn"
             onClick={() => navigate("/kontakt")}
             style={{
-              background: "linear-gradient(135deg, #FF6A2A 0%, #FF3C00 100%)",
-              color: "#FFFFFF",
+              background: "linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%)",
+              color: "#070B14",
               border: "none",
               borderRadius: "12px",
               padding: "15px 32px",
@@ -149,7 +149,7 @@ export const MainHeroSection = (): JSX.Element => {
             style={{
               background: "rgba(255,255,255,0.05)",
               color: "#FFFFFF",
-              border: "1px solid rgba(255,255,255,0.2)",
+              border: "1px solid rgba(0,229,255,0.25)",
               borderRadius: "12px",
               padding: "15px 32px",
               fontFamily: "'Space Grotesk', sans-serif",
@@ -179,7 +179,7 @@ export const MainHeroSection = (): JSX.Element => {
         .animate-scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) { .animate-scroll-dot { animation: none; } }
         #hero-primary-cta:focus-visible, #hero-secondary-cta:focus-visible {
-          outline: 2px solid #FF5A1F; outline-offset: 3px;
+          outline: 2px solid #00E5FF; outline-offset: 3px;
         }
         /* ── Mobile hero adjustments ────────────── */
         @media (max-width: 768px) {

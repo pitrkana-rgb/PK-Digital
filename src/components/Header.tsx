@@ -53,26 +53,26 @@ export const Header = () => {
             <header
                 style={{
                     zIndex: 10000,
-                    backgroundColor: menuOpen && !isScrolled ? "#000000" : undefined,
+                    backgroundColor: menuOpen && !isScrolled ? "#000" : undefined,
                 }}
                 className={`fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1280px] px-6 transition-all duration-300 ${isScrolled
                     ? "backdrop-blur-xl bg-black/60 border border-white/5 rounded-b-2xl shadow-lg"
                     : ""
                     }`}
             >
-                <nav className="grid grid-cols-2 md:grid-cols-3 items-center header-nav" style={{ paddingTop: "15px", paddingBottom: "15px" }}>
+                <nav className="grid grid-cols-2 md:grid-cols-3 items-center header-nav" style={{ paddingTop: "13px", paddingBottom: "13px" }}>
                     <div className="flex justify-start">
                         <button
                             type="button"
                             onClick={() => handleNavClick(navigationItems[0])}
-                            className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F] focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-md"
+                            className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-md"
                             aria-label="AI-agency – zpět na začátek"
                         >
                             <img
-                                src="/Company_logo.png"
-                                alt="AI-agency logo"
+                                src="/Company_logo_V2.png"
+                                alt="PK Digital logo"
                                 className="header-logo"
-                                style={{ height: "47px", width: "auto", display: "block" }}
+                                style={{ height: "52px", width: "auto", display: "block" }}
                             />
                         </button>
                     </div>
@@ -91,7 +91,7 @@ export const Header = () => {
                                         fontFamily: "'Space Grotesk', sans-serif",
                                         fontWeight: 500,
                                         fontSize: "15px",
-                                        color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? "#FFFFFF" : "rgba(255,255,255,0.85)",
+                                        color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? "#00E5FF" : "rgba(240,244,248,0.9)",
                                         transition: "color 0.2s ease",
                                         whiteSpace: "nowrap",
                                     }}
@@ -109,8 +109,8 @@ export const Header = () => {
                                 type="button"
                                 onClick={() => navigate("/kontakt")}
                                 style={{
-                                    background: "linear-gradient(135deg, #FF6A2A 0%, #FF3C00 100%)",
-                                    color: "#FFFFFF",
+                                    background: "linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%)",
+                                    color: "#070B14",
                                     borderRadius: "999px",
                                     padding: "12px 22px",
                                     fontFamily: "'Space Grotesk', sans-serif",
@@ -118,9 +118,9 @@ export const Header = () => {
                                     fontSize: "15px",
                                     border: "none",
                                     transition: "filter 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
-                                    boxShadow: "0 4px 20px rgba(255,90,31,0.35)",
+                                    boxShadow: "0 0 20px rgba(0, 229, 255, 0.3)",
                                 }}
-                                className="hover:brightness-105 hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[#FF5A1F]"
+                                className="hover:brightness-105 hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[#00E5FF]"
                             >
                                 Napište nám
                             </Button>
@@ -179,7 +179,7 @@ export const Header = () => {
                         zIndex: 1,
                         width: "280px",
                         height: "fit-content",
-                        backgroundColor: "#000000",
+                                backgroundColor: "#000",
                         backdropFilter: "blur(10px)",
                         WebkitBackdropFilter: "blur(10px)",
                         borderLeft: "1px solid rgba(255,255,255,0.08)",
@@ -216,7 +216,7 @@ export const Header = () => {
                                 fontFamily: "'Space Grotesk', sans-serif",
                                 fontWeight: 500,
                                 fontSize: "18px",
-                                color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? "#FF5A1F" : "#FFFFFF",
+                                color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? "#00E5FF" : "#F0F4F8",
                                 textAlign: "left",
                                 padding: "14px 0",
                                 borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -233,8 +233,8 @@ export const Header = () => {
                         onClick={() => { navigate("/kontakt"); setMenuOpen(false); }}
                         style={{
                             marginTop: "24px",
-                            background: "linear-gradient(135deg,#FF6A2A,#FF3C00)",
-                            color: "#fff",
+                            background: "linear-gradient(135deg,#0ABDC6,#00E5FF)",
+                            color: "#070B14",
                             border: "none",
                             borderRadius: "999px",
                             padding: "14px 24px",

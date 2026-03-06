@@ -19,7 +19,7 @@ const testimonials = [
 ];
 
 const initials = (name: string) => name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
-const colors = ["#FF6A2A", "#7B61FF", "#19B9A0", "#F59E0B", "#EC4899", "#3B82F6", "#10B981"];
+const colors = ["#00E5FF", "#0ABDC6", "#7B61FF", "#19B9A0", "#F59E0B", "#EC4899", "#3B82F6"];
 const colorFor = (i: number) => colors[i % colors.length];
 
 const TestimonialCard = ({ t, i }: { t: typeof testimonials[0]; i: number }) => (
@@ -38,7 +38,7 @@ const TestimonialCard = ({ t, i }: { t: typeof testimonials[0]; i: number }) => 
     <div className="flex gap-1">
       {Array.from({ length: 5 }).map((_, si) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: static
-        <StarIcon key={si} fill="#FF5A1F" className="w-3.5 h-3.5 text-[#FF5A1F]" />
+        <StarIcon key={si} fill="#00E5FF" className="w-3.5 h-3.5 text-[#00E5FF]" />
       ))}
     </div>
     {/* Quote */}
@@ -70,7 +70,8 @@ export const ClientTestimonialsSection = (): JSX.Element => (
     {/* Header — same style as other sections (centered, same font sizes) */}
     <div style={{ maxWidth: "1200px", margin: "0 auto 56px", padding: "0 24px", textAlign: "center" }}>
       <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,52px)", color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "700px" }}>
-        Co o spolupráci říkají klienti
+        Co o spolupráci říkají{" "}
+        <span style={{ background: "linear-gradient(135deg,#E040FB,#00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>klienti</span>
       </h2>
       <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "560px" }}>
         Reference našich partnerů, kterým webdesign, automatizace a AI pomohly růst.

@@ -1,3 +1,33 @@
+# Color Rebranding Plan (V2) — pk-digital.cz → Cyan/Teal Dark Theme
+
+## Checklist
+
+- [x] **Global palette**: background, surfaces, text, borders, glows
+- [x] **Logo**: switch to `Company_logo_V2.png` (new logo)
+- [x] **Navigation**: cyan CTA, cyan underline/active, dark blue-black tint
+- [x] **Hero**: cyan accent + cyan CTA, remove remaining orange tints
+- [x] **Stats bar**: cyan labels, navy cards, subtle cyan borders
+- [x] **Jak probíhá spolupráce**: magenta emphasis word, cyan icons/badges/lines
+- [x] **Co nabízíme**: cyan active tab, cyan checks/arrows, cyan CTA
+- [x] **Proč si vybrat**: cyan highlights + subtle cyan border/glow
+- [x] **Testimonials**: cyan decorative accents + controls
+- [x] **Pricing**: magenta “Populární” badge, cyan price/checks/CTA, cyan border glow
+- [x] **FAQ**: cyan open state + focus, optional magenta section accent
+- [x] **Footer / CTA**: cyan CTA + borders/badges, cyan micro-interactions
+- [x] **Contact page**: cyan focus/CTA, cyan accents (keep layout/design)
+
+## Target Palette
+
+- **Primary accent**: `#00E5FF`
+- **Secondary accent**: `#0ABDC6`
+- **Magenta (sparingly)**: `#E040FB`
+- **Background**: `#070B14` / `#0A1628`
+- **Surface**: `#0D1B2A` / `#1B2838`
+- **Border accent**: `rgba(0, 229, 255, 0.15)`
+- **Text primary**: `#F0F4F8`
+- **Text secondary**: `#8899AA`
+- **Glow**: `0 0 20px rgba(0, 229, 255, 0.3)`
+
 # IMPROVEMENT_VISUALS_V2 – Full Visual Rebuild Checklist
 
 > **Scope:** Complete premium AI-agency landing page visual rebuild (11 sections)

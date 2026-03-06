@@ -11,7 +11,7 @@ export const ContactPage = (): JSX.Element => {
     return (
         <div
             className="relative w-full min-h-screen overflow-x-hidden"
-            style={{ backgroundColor: "#000000", fontFamily: "'Space Grotesk', 'Inter', sans-serif", color: "#fff" }}
+            style={{ backgroundColor: "#000", fontFamily: "'Space Grotesk', 'Inter', sans-serif", color: "#fff" }}
         >
             {/* Grain Texture Overlay */}
             <div
@@ -28,22 +28,22 @@ export const ContactPage = (): JSX.Element => {
             <Header />
 
             {/* Hero Section — solid black, badge + title only */}
-            <section className="contact-hero" style={{ position: "relative", paddingTop: "160px", paddingBottom: "80px", backgroundColor: "#000000" }}>
+            <section className="contact-hero" style={{ position: "relative", paddingTop: "160px", paddingBottom: "80px", backgroundColor: "#000" }}>
                 <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
                     <div style={{ marginBottom: "24px" }}>
                         <span style={{
                             display: "inline-flex", alignItems: "center", gap: "8px",
-                            background: "rgba(255,90,31,0.1)", border: "1px solid rgba(255,90,31,0.2)",
+                            background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)",
                             borderRadius: "99px", padding: "6px 16px",
-                            fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: "#FF5A1F",
+                            fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: "#00E5FF",
                             textTransform: "uppercase", letterSpacing: "0.1em"
                         }}>
-                            <span style={{ width: "8px", height: "8px", background: "#FF5A1F", borderRadius: "50%", display: "inline-block" }} />
+                            <span style={{ width: "8px", height: "8px", background: "#00E5FF", borderRadius: "50%", display: "inline-block" }} />
                             Odpovídáme do 24h
                         </span>
                     </div>
                     <h1 className="contact-hero-title" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#fff", margin: 0, letterSpacing: "-0.02em" }}>
-                        Pojďme vytvořit web, který <span style={{ background: "linear-gradient(135deg, #FF6A2A, #FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>promění návštěvníky v klienty</span>
+                        Pojďme vytvořit web, který <span style={{ background: "linear-gradient(135deg, #0ABDC6, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>promění návštěvníky v klienty</span>
                     </h1>
                 </div>
             </section>

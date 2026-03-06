@@ -44,7 +44,7 @@ const FloatingField = ({
         transformOrigin: "left",
         fontFamily: "'Space Grotesk',sans-serif", fontWeight: 500,
         fontSize: active ? "12px" : "15px",
-        color: focused ? "#FF5A1F" : "rgba(255,255,255,0.4)",
+        color: focused ? "#00E5FF" : "rgba(255,255,255,0.4)",
         transition: "all 200ms cubic-bezier(0.2, 0.8, 0.2, 1)",
         pointerEvents: "none", zIndex: 1,
         ...(multiline ? { top: active ? "8px" : "20px", transform: "none" } : {}),
@@ -62,14 +62,14 @@ const FloatingField = ({
             onBlur={() => setFocused(false)}
             style={{
               background: "rgba(255,255,255,0.03)",
-              border: `1px solid ${focused ? "#FF5A1F" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
+              border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
               borderRadius: "16px",
               padding: active ? "26px 20px 10px" : "20px",
               fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: value ? "#fff" : "transparent",
               outline: "none", width: "100%", appearance: "none",
               boxSizing: "border-box", cursor: "pointer",
               transition: "all 250ms ease",
-              boxShadow: focused ? "0 0 0 4px rgba(255,90,31,0.1)" : "none",
+              boxShadow: focused ? "0 0 0 4px rgba(0,229,255,0.1)" : "none",
             }}
           >
             <option value="" disabled hidden></option>
@@ -88,13 +88,13 @@ const FloatingField = ({
           rows={6}
           style={{
             background: "rgba(255,255,255,0.03)",
-            border: `1px solid ${focused ? "#FF5A1F" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
+            border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
             borderRadius: "16px",
             padding: active ? "32px 20px 16px" : "20px",
             fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "#fff",
             outline: "none", resize: "none", width: "100%",
             boxSizing: "border-box", transition: "all 250ms ease",
-            boxShadow: focused ? "0 0 0 4px rgba(255,90,31,0.1)" : "none",
+            boxShadow: focused ? "0 0 0 4px rgba(0,229,255,0.1)" : "none",
           }}
         />
       ) : (
@@ -108,13 +108,13 @@ const FloatingField = ({
           placeholder={focused ? placeholder : ""}
           style={{
             background: "rgba(255,255,255,0.03)",
-            border: `1px solid ${focused ? "#FF5A1F" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
+            border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
             borderRadius: "16px",
             padding: active ? "28px 20px 10px" : "20px",
             fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "#fff",
             outline: "none", width: "100%",
             boxSizing: "border-box", transition: "all 250ms ease",
-            boxShadow: focused ? "0 0 0 4px rgba(255,90,31,0.1)" : "none",
+            boxShadow: focused ? "0 0 0 4px rgba(0,229,255,0.1)" : "none",
           }}
         />
       )}
@@ -136,8 +136,8 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
           cursor: "pointer", textAlign: "left"
         }}
       >
-        <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "17px", color: open ? "#FF5A1F" : "#fff", transition: "color 250ms ease" }}>{q}</span>
-        <ChevronDown style={{ transform: open ? "rotate(180deg)" : "rotate(0)", transition: "transform 300ms ease", color: open ? "#FF5A1F" : "rgba(255,255,255,0.3)" }} />
+        <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "17px", color: open ? "#00E5FF" : "#fff", transition: "color 250ms ease" }}>{q}</span>
+        <ChevronDown style={{ transform: open ? "rotate(180deg)" : "rotate(0)", transition: "transform 300ms ease", color: open ? "#00E5FF" : "rgba(255,255,255,0.3)" }} />
       </button>
       <div style={{
         maxHeight: open ? "200px" : "0", opacity: open ? 1 : 0,
@@ -219,7 +219,7 @@ export const ContactSection = (): JSX.Element => {
   };
 
   return (
-    <section id="contact" style={{ width: "100%", padding: "0 0 100px", position: "relative", backgroundColor: "#000000" }}>
+    <section id="contact" style={{ width: "100%", padding: "0 0 100px", position: "relative", backgroundColor: "#000" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
         {/* ── Full-width contact form (top half) ───────────────────── */}
         <div style={{ marginBottom: "64px" }}>
@@ -268,23 +268,23 @@ export const ContactSection = (): JSX.Element => {
                   disabled={loading}
                   style={{
                     marginTop: "8px", padding: "18px 32px", borderRadius: "16px",
-                    background: "linear-gradient(135deg, #FF6A2A, #FF3C00)",
-                    border: "none", color: "#fff", fontFamily: "'Space Grotesk',sans-serif",
+                    background: "linear-gradient(135deg, #0ABDC6, #00E5FF)",
+                    border: "none", color: "#000", fontFamily: "'Space Grotesk',sans-serif",
                     fontWeight: 700, fontSize: "17px", cursor: loading ? "wait" : "pointer",
                     display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
                     transition: "all 300ms cubic-bezier(0.2, 0.8, 0.2, 1)",
-                    boxShadow: "0 16px 40px rgba(255,90,31,0.3)",
+                    boxShadow: "0 16px 40px rgba(0,229,255,0.25)",
                   }}
                   onMouseEnter={e => {
                     if (loading) return;
                     e.currentTarget.style.transform = "translateY(-3px)";
                     e.currentTarget.style.filter = "brightness(1.1)";
-                    e.currentTarget.style.boxShadow = "0 20px 50px rgba(255,90,31,0.45)";
+                    e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,229,255,0.35)";
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.transform = "";
                     e.currentTarget.style.filter = "";
-                    e.currentTarget.style.boxShadow = "0 16px 40px rgba(255,90,31,0.3)";
+                    e.currentTarget.style.boxShadow = "0 16px 40px rgba(0,229,255,0.25)";
                   }}
                 >
                   {loading ? "Odesílám..." : <><Send size={20} /> Odeslat poptávku</>}
@@ -317,7 +317,7 @@ export const ContactSection = (): JSX.Element => {
                   gap: "16px",
                 }}
               >
-                <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,90,31,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FF5A1F", flexShrink: 0 }}>
+                <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(0,229,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#00E5FF", flexShrink: 0 }}>
                   <Icon size={20} />
                 </div>
                 <div style={{ minWidth: 0 }}>

@@ -102,10 +102,10 @@ const MilestoneCard = ({ milestone, index }: { milestone: typeof milestones[0]; 
           <div style={{
             display: "inline-flex", alignItems: "center", justifyContent: "center",
             width: "80px", height: "80px", borderRadius: "50%",
-            background: "linear-gradient(135deg, #FF6A2A, #FF3C00)",
-            boxShadow: "0 0 30px rgba(255,90,31,0.4)",
+            background: "linear-gradient(135deg, #0ABDC6, #00E5FF)",
+            boxShadow: "0 0 22px rgba(0,229,255,0.28)",
             marginBottom: "24px",
-            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "24px", color: "#fff",
+            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "24px", color: "#000",
           }}>
             {milestone.year}
           </div>
@@ -137,7 +137,7 @@ export const CompanyMilestonesSection = (): JSX.Element => (
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "80px" }}>
         <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,5vw,56px)", lineHeight: 1.1, color: "#fff", margin: "0 auto 32px", letterSpacing: "-0.02em", maxWidth: "800px" }}>
-          Kdo <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>jsme</span>
+          Kdo <span style={{ background: "linear-gradient(135deg,#0ABDC6,#00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>jsme</span>
         </h2>
       </div>
 
@@ -146,7 +146,7 @@ export const CompanyMilestonesSection = (): JSX.Element => (
         {/* Vertical line through center */}
         <div style={{
           position: "absolute", top: "0", bottom: "0", left: "50%", transform: "translateX(-50%)",
-          width: "4px", background: "linear-gradient(180deg, #FF5A1F 0%, rgba(255,90,31,0.1) 100%)",
+          width: "4px", background: "linear-gradient(180deg, #00E5FF 0%, rgba(0,229,255,0.12) 100%)",
           zIndex: 0,
         }} className="timeline-line" />
 

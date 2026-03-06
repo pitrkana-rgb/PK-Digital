@@ -28,10 +28,9 @@ export const ReadyToDesignSection = (): JSX.Element => {
           {/* Radial glow background */}
           <div style={{
             position: "absolute", inset: 0, pointerEvents: "none",
-            background: "radial-gradient(ellipse 60% 80% at 50% -10%,rgba(255,90,31,0.18) 0%,transparent 70%)",
+            background: "radial-gradient(ellipse 60% 80% at 50% -10%,rgba(0,229,255,0.14) 0%,transparent 70%)",
           }} />
-          {/* Orange grain border top */}
-          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg,transparent,#FF5A1F,transparent)" }} />
+          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg,transparent,#00E5FF,transparent)" }} />
 
           <div className="cta-stack" style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "32px" }}>
             <h2 className="cta-heading" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px,4vw,56px)", color: "#fff", margin: 0, lineHeight: 1.1, letterSpacing: "-0.02em", maxWidth: "720px" }}>
@@ -46,7 +45,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
             <div className="cta-badges" style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap", justifyContent: "center" }}>
               {trustBadges.map(({ icon: Icon, label }) => (
                 <div key={label} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <Icon style={{ width: "16px", height: "16px", color: "#FF5A1F" }} />
+                  <Icon style={{ width: "16px", height: "16px", color: "#00E5FF" }} />
                   <span className="cta-badge-label" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 500, fontSize: "14px", color: "rgba(255,255,255,0.65)" }}>{label}</span>
                 </div>
               ))}
@@ -59,15 +58,15 @@ export const ReadyToDesignSection = (): JSX.Element => {
               style={{
                 display: "inline-flex", alignItems: "center", gap: "10px",
                 padding: "16px 36px",
-                background: "linear-gradient(135deg,#FF6A2A,#FF3C00)",
+                background: "linear-gradient(135deg,#0ABDC6,#00E5FF)",
                 border: "none", borderRadius: "12px",
-                fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "17px", color: "#fff",
+                fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "17px", color: "#070B14",
                 cursor: "pointer",
                 transition: "transform 250ms ease, box-shadow 250ms ease, filter 250ms ease",
-                boxShadow: "0 16px 40px rgba(255,90,31,0.35)",
+                boxShadow: "0 0 20px rgba(0,229,255,0.25)",
               }}
-              onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.transform = "translateY(-4px)"; b.style.filter = "brightness(1.08)"; b.style.boxShadow = "0 24px 56px rgba(255,90,31,0.45)"; }}
-              onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.transform = ""; b.style.filter = ""; b.style.boxShadow = "0 16px 40px rgba(255,90,31,0.35)"; }}
+              onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.transform = "translateY(-4px)"; b.style.filter = "brightness(1.04)"; b.style.boxShadow = "0 0 26px rgba(0,229,255,0.28)"; }}
+              onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.transform = ""; b.style.filter = ""; b.style.boxShadow = "0 0 20px rgba(0,229,255,0.25)"; }}
               onMouseDown={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(0.97)"; }}
               onMouseUp={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-4px)"; }}
             >
@@ -78,7 +77,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
         </div>
       </div>
       <style>{`
-      #ready-cta-btn:focus-visible{ outline:2px solid #FF5A1F; outline-offset:3px; }
+      #ready-cta-btn:focus-visible{ outline:2px solid #00E5FF; outline-offset:3px; }
       @media(max-width:768px){
         .cta-inner { padding: 44px 20px !important; }
         .cta-stack { gap: 22px !important; }

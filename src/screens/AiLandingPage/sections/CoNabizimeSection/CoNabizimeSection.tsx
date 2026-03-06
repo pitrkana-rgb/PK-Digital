@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 const CheckIcon = () => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: "2px" }}>
-        <circle cx="8" cy="8" r="8" fill="rgba(255,90,31,0.15)" />
-        <path d="M4.5 8.5L6.5 10.5L11.5 5.5" stroke="#FF5A1F" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="8" cy="8" r="8" fill="rgba(0,229,255,0.14)" />
+        <path d="M4.5 8.5L6.5 10.5L11.5 5.5" stroke="#00E5FF" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 
@@ -108,7 +108,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                         color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", maxWidth: "700px",
                     }}>
                         Co{" "}
-                        <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>nabízíme</span>
+                        <span style={{ background: "linear-gradient(135deg,#E040FB,#00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>nabízíme</span>
                     </h2>
                     <p className="section-sub offer-subheading" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "560px" }}>
                         Od vytvoření nového webu přes vizuální redesign až po integraci AI nástrojů – řešení pro začínající podnikatele i rostoucí firmy.
@@ -127,11 +127,11 @@ export const CoNabizimeSection = (): JSX.Element => {
                                 padding: "8px 20px", borderRadius: "999px", cursor: "pointer",
                                 border: i === active ? "none" : "1px solid rgba(255,255,255,0.15)",
                                 background: i === active
-                                    ? "linear-gradient(135deg,#FF6A2A,#FF3C00)"
+                                    ? "linear-gradient(135deg,#0ABDC6,#00E5FF)"
                                     : "rgba(255,255,255,0.05)",
-                                color: i === active ? "#fff" : "rgba(255,255,255,0.55)",
+                                color: i === active ? "#000" : "rgba(255,255,255,0.55)",
                                 transition: "all 200ms ease",
-                                boxShadow: i === active ? "0 4px 20px rgba(255,90,31,0.35)" : "none",
+                                boxShadow: i === active ? "0 0 20px rgba(0,229,255,0.22)" : "none",
                             }}
                         >
                             {s.label}
@@ -173,7 +173,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                                     style={{
                                         background: slide.image
                                             ? "#000"
-                                            : "linear-gradient(145deg, rgba(255,106,42,0.08), rgba(255,90,31,0.03))",
+                                            : "linear-gradient(145deg, rgba(10,189,198,0.10), rgba(0,229,255,0.04))",
                                         borderRight: "1px solid rgba(255,255,255,0.06)",
                                         display: "flex", alignItems: "center", justifyContent: "center",
                                         minHeight: "460px",
@@ -200,7 +200,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                                             <div style={{
                                                 position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
                                                 width: "260px", height: "260px",
-                                                background: "radial-gradient(circle, rgba(255,90,31,0.18) 0%, transparent 70%)",
+                                                background: "radial-gradient(circle, rgba(0,229,255,0.16) 0%, transparent 70%)",
                                                 pointerEvents: "none",
                                             }} />
                                             <div style={{
@@ -209,13 +209,13 @@ export const CoNabizimeSection = (): JSX.Element => {
                                             }}>
                                                 <div style={{
                                                     width: "80px", height: "80px", borderRadius: "20px",
-                                                    background: "rgba(255,90,31,0.12)",
-                                                    border: "1px dashed rgba(255,90,31,0.3)",
+                                        background: "rgba(0,229,255,0.10)",
+                                        border: "1px dashed rgba(0,229,255,0.25)",
                                                     display: "flex", alignItems: "center", justifyContent: "center",
                                                 }}>
                                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(255,90,31,0.5)" strokeWidth="1.5" />
-                                                        <path d="M3 9h18M9 21V9" stroke="rgba(255,90,31,0.5)" strokeWidth="1.5" strokeLinecap="round" />
+                                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="rgba(0,229,255,0.45)" strokeWidth="1.5" />
+                                            <path d="M3 9h18M9 21V9" stroke="rgba(0,229,255,0.45)" strokeWidth="1.5" strokeLinecap="round" />
                                                     </svg>
                                                 </div>
                                                 <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
@@ -238,9 +238,9 @@ export const CoNabizimeSection = (): JSX.Element => {
                                     <span style={{
                                         display: "inline-flex", alignSelf: "flex-start",
                                         fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "11px",
-                                        color: "#FF5A1F", letterSpacing: "0.12em", textTransform: "uppercase",
-                                        background: "rgba(255,90,31,0.12)",
-                                        border: "1px solid rgba(255,90,31,0.25)",
+                            color: "#00E5FF", letterSpacing: "0.12em", textTransform: "uppercase",
+                            background: "rgba(0,229,255,0.10)",
+                            border: "1px solid rgba(0,229,255,0.18)",
                                         borderRadius: "999px", padding: "4px 14px",
                                     }}>
                                         {slide.label}
@@ -274,12 +274,12 @@ export const CoNabizimeSection = (): JSX.Element => {
                                         onClick={() => navigate("/kontakt")}
                                         style={{
                                             alignSelf: "flex-start",
-                                            background: "linear-gradient(135deg,#FF6A2A,#FF3C00)",
-                                            color: "#fff", border: "none", borderRadius: "12px",
+                                background: "linear-gradient(135deg,#0ABDC6,#00E5FF)",
+                                color: "#070B14", border: "none", borderRadius: "12px",
                                             padding: "14px 28px",
                                             fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "15px",
                                             cursor: "pointer",
-                                            boxShadow: "0 8px 28px rgba(255,90,31,0.35)",
+                                boxShadow: "0 0 20px rgba(0,229,255,0.22)",
                                             transition: "filter 200ms ease, transform 200ms ease",
                                         }}
                                         onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.filter = "brightness(1.1)"; b.style.transform = "translateY(-2px)"; }}
@@ -304,7 +304,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                             style={{
                                 width: i === active ? "28px" : "8px", height: "8px",
                                 borderRadius: "999px", border: "none", cursor: "pointer",
-                                background: i === active ? "#FF5A1F" : "rgba(255,255,255,0.2)",
+                                background: i === active ? "#00E5FF" : "rgba(255,255,255,0.2)",
                                 transition: "width 250ms ease, background 250ms ease",
                                 padding: 0,
                             }}
@@ -333,7 +333,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                                 transition: "background 200ms ease, border-color 200ms ease",
                                 opacity: (dir === -1 && active === 0) || (dir === 1 && active === slides.length - 1) ? 0.3 : 1,
                             }}
-                            onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,90,31,0.15)"; b.style.borderColor = "rgba(255,90,31,0.4)"; }}
+                            onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,229,255,0.12)"; b.style.borderColor = "rgba(0,229,255,0.35)"; }}
                             onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.05)"; b.style.borderColor = "rgba(255,255,255,0.15)"; }}
                         >
                             {label}

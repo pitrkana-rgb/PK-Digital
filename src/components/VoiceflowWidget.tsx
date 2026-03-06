@@ -77,7 +77,7 @@ export const VoiceflowWidget = (): JSX.Element => {
                     padding: "14px 20px",
                     background: hovered
                         ? "linear-gradient(135deg,#FF7A3A,#FF4510)"
-                        : "linear-gradient(135deg,#FF6A2A,#FF3C00)",
+                        : "linear-gradient(135deg,#0ABDC6,#00E5FF)",
                     color: "#fff",
                     border: "none",
                     borderRadius: "999px",
@@ -86,8 +86,8 @@ export const VoiceflowWidget = (): JSX.Element => {
                     fontWeight: 600,
                     fontSize: "15px",
                     boxShadow: hovered
-                        ? "0 8px 32px rgba(255,90,31,0.55), 0 2px 8px rgba(0,0,0,0.3)"
-                        : "0 4px 20px rgba(255,90,31,0.4), 0 2px 8px rgba(0,0,0,0.25)",
+                        ? "0 8px 32px rgba(0,229,255,0.35), 0 2px 8px rgba(0,0,0,0.3)"
+                        : "0 4px 20px rgba(0,229,255,0.25), 0 2px 8px rgba(0,0,0,0.25)",
                     transform: hovered ? "translateY(-2px) scale(1.03)" : "translateY(0) scale(1)",
                     transition: "all 220ms cubic-bezier(0.34,1.56,0.64,1)",
                     opacity: ready ? 1 : 0,

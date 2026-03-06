@@ -40,8 +40,8 @@ const StatCard = ({ label, value, suffix, delay }: Omit<typeof statsData[0], "de
       ref={ref}
       className="stat-card"
       style={{
-        background: "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "linear-gradient(145deg, rgba(13,27,42,0.9), rgba(13,27,42,0.55))",
+        border: "1px solid rgba(0,229,255,0.12)",
         borderRadius: "20px",
         padding: "26px 32px",
         display: "flex",
@@ -52,16 +52,15 @@ const StatCard = ({ label, value, suffix, delay }: Omit<typeof statsData[0], "de
         position: "relative",
         overflow: "hidden",
       }}
-      onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = "rgba(255,90,31,0.4)"; el.style.transform = "translateY(-6px)"; el.style.boxShadow = "0 24px 48px rgba(255,90,31,0.12)"; }}
-      onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = "rgba(255,255,255,0.08)"; el.style.transform = ""; el.style.boxShadow = ""; }}
+      onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = "rgba(0,229,255,0.35)"; el.style.transform = "translateY(-6px)"; el.style.boxShadow = "0 0 20px rgba(0,229,255,0.18), 0 24px 48px rgba(0,0,0,0.35)"; }}
+      onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = "rgba(0,229,255,0.12)"; el.style.transform = ""; el.style.boxShadow = ""; }}
     >
-      {/* Orange accent line top */}
-      <div className="stat-accent-line" style={{ position: "absolute", top: 0, left: "32px", right: "32px", height: "2px", background: "linear-gradient(90deg, #FF5A1F, transparent)", borderRadius: "1px" }} />
+      <div className="stat-accent-line" style={{ position: "absolute", top: 0, left: "32px", right: "32px", height: "2px", background: "linear-gradient(90deg, #00E5FF, transparent)", borderRadius: "1px" }} />
 
-      <span className="stat-label" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 500, fontSize: "12px", letterSpacing: "0.1em", color: "#FF5A1F", textTransform: "uppercase" as const }}>
+      <span className="stat-label" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 500, fontSize: "12px", letterSpacing: "0.1em", color: "#00E5FF", textTransform: "uppercase" as const }}>
         {label}
       </span>
-      <div className="stat-value" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(40px,5vw,56px)", color: "#fff", lineHeight: 1, letterSpacing: "-0.03em" }}>
+      <div className="stat-value" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(40px,5vw,56px)", color: "#F0F4F8", lineHeight: 1, letterSpacing: "-0.03em" }}>
         {count.toLocaleString("cs")}{suffix}
       </div>
     </div>
@@ -85,7 +84,7 @@ export const UserTestimonialsSection = (): JSX.Element => (
         .stats-section { padding-top: 60px !important; }
       }
       @media(prefers-reduced-motion:reduce){ .stat-card{ transition:none !important; } }
-      .stat-card:focus-visible{ outline:2px solid #FF5A1F; outline-offset:4px; }
+      .stat-card:focus-visible{ outline:2px solid #00E5FF; outline-offset:4px; }
     `}</style>
   </section>
 );

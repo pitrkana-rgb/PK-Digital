@@ -44,31 +44,31 @@ const PricingCard = ({ plan, navigate }: { plan: typeof pricingPlans[0]; navigat
       borderRadius: "24px",
       padding: plan.highlighted ? "3px" : "0",
       background: plan.highlighted
-        ? "linear-gradient(145deg, #FF6A2A, #FF3C00 60%, #6B21A8)"
+        ? "linear-gradient(90deg, #E040FB, #00E5FF)"
         : "transparent",
       transition: "transform 250ms ease, box-shadow 250ms ease",
       transform: plan.highlighted ? "scale(1.05)" : "scale(1)",
       zIndex: plan.highlighted ? 5 : 1,
-      boxShadow: plan.highlighted ? "0 24px 64px rgba(255,90,31,0.25)" : "none",
+      boxShadow: plan.highlighted ? "0 0 22px rgba(0,229,255,0.22)" : "none",
     }}
     onMouseEnter={e => {
       const el = e.currentTarget as HTMLDivElement;
       el.style.transform = plan.highlighted ? "scale(1.08) translateY(-4px)" : "translateY(-8px)";
-      el.style.boxShadow = plan.highlighted ? "0 32px 80px rgba(255,90,31,0.35)" : "0 24px 48px rgba(0,0,0,0.5)";
+      el.style.boxShadow = plan.highlighted ? "0 0 26px rgba(0,229,255,0.28), 0 32px 80px rgba(0,0,0,0.5)" : "0 24px 48px rgba(0,0,0,0.5)";
     }}
     onMouseLeave={e => {
       const el = e.currentTarget as HTMLDivElement;
       el.style.transform = plan.highlighted ? "scale(1.05)" : "scale(1)";
-      el.style.boxShadow = plan.highlighted ? "0 24px 64px rgba(255,90,31,0.25)" : "none";
+      el.style.boxShadow = plan.highlighted ? "0 0 22px rgba(0,229,255,0.22)" : "none";
     }}
   >
     {/* Popular badge — sits above the card, outside the gradient border */}
     {plan.highlighted && (
       <div style={{
         position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)",
-        background: "linear-gradient(135deg,#FF6A2A,#FF3C00)",
+        background: "linear-gradient(90deg, #E040FB, #00E5FF)",
         borderRadius: "999px", padding: "4px 16px",
-        fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: "#fff",
+        fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: "#000",
         letterSpacing: "0.06em", textTransform: "uppercase" as const,
         whiteSpace: "nowrap", zIndex: 10,
       }}>
@@ -77,9 +77,9 @@ const PricingCard = ({ plan, navigate }: { plan: typeof pricingPlans[0]; navigat
     )}
 
     <div style={{
-      background: "#0D0D0D",
+      background: "#0D1B2A",
       borderRadius: plan.highlighted ? "21px" : "24px",
-      border: plan.highlighted ? "none" : "1px solid rgba(255,255,255,0.08)",
+      border: plan.highlighted ? "none" : "1px solid rgba(0,229,255,0.12)",
       padding: "40px",
       height: "100%",
       display: "flex",
@@ -92,18 +92,18 @@ const PricingCard = ({ plan, navigate }: { plan: typeof pricingPlans[0]; navigat
         <h3 style={{
           fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700,
           fontSize: plan.highlighted ? "26px" : "22px",
-          color: plan.highlighted ? "#FF5A1F" : "#fff",
+          color: plan.highlighted ? "#00E5FF" : "#F0F4F8",
           marginBottom: "12px",
         }}>
           {plan.name}
         </h3>
-        <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.65)", lineHeight: 1.6, margin: 0 }}>
+        <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(136,153,170,0.95)", lineHeight: 1.6, margin: 0 }}>
           {plan.description}
         </p>
       </div>
 
       {/* Price */}
-      <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "40px", color: "#fff", letterSpacing: "-0.03em", lineHeight: 1, marginTop: "-8px", marginBottom: "-8px" }}>
+      <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "40px", color: "#F0F4F8", letterSpacing: "-0.03em", lineHeight: 1, marginTop: "-8px", marginBottom: "-8px" }}>
         {plan.price}
       </div>
 
@@ -116,12 +116,12 @@ const PricingCard = ({ plan, navigate }: { plan: typeof pricingPlans[0]; navigat
           <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
             <div style={{
               width: "20px", height: "20px", borderRadius: "50%", flexShrink: 0, marginTop: "1px",
-              background: "rgba(255,90,31,0.15)", border: "1px solid rgba(255,90,31,0.4)",
+              background: "rgba(0,229,255,0.12)", border: "1px solid rgba(0,229,255,0.35)",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <CheckIcon style={{ width: "11px", height: "11px", color: "#FF5A1F", strokeWidth: 3 }} />
+              <CheckIcon style={{ width: "11px", height: "11px", color: "#00E5FF", strokeWidth: 3 }} />
             </div>
-            <span className="pricing-bullet" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>{f}</span>
+            <span className="pricing-bullet" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(240,244,248,0.85)", lineHeight: 1.5 }}>{f}</span>
           </li>
         ))}
       </ul>
@@ -134,13 +134,13 @@ const PricingCard = ({ plan, navigate }: { plan: typeof pricingPlans[0]; navigat
         style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
           padding: "14px 28px",
-          background: plan.highlighted ? "linear-gradient(135deg,#FF6A2A,#FF3C00)" : "rgba(255,255,255,0.06)",
-          border: plan.highlighted ? "none" : "1px solid rgba(255,255,255,0.15)",
+          background: plan.highlighted ? "linear-gradient(135deg,#0ABDC6,#00E5FF)" : "rgba(13,27,42,0.65)",
+          border: plan.highlighted ? "none" : "1px solid rgba(0,229,255,0.12)",
           borderRadius: "12px",
           fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "16px",
-          color: "#fff", cursor: "pointer",
+          color: plan.highlighted ? "#070B14" : "#F0F4F8", cursor: "pointer",
           transition: "filter 250ms ease, transform 250ms ease",
-          boxShadow: plan.highlighted ? "0 12px 30px rgba(255,90,31,0.35)" : "none",
+          boxShadow: plan.highlighted ? "0 0 18px rgba(0,229,255,0.25)" : "none",
         }}
         onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.filter = "brightness(1.1)"; b.style.transform = "translateY(-2px)"; }}
         onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.filter = ""; b.style.transform = ""; }}
@@ -228,7 +228,7 @@ export const SubscriptionPlansSection = (): JSX.Element => {
                 style={{
                   width: i === mobileIdx ? "28px" : "8px", height: "8px",
                   borderRadius: "999px", border: "none", cursor: "pointer",
-                  background: i === mobileIdx ? "#FF5A1F" : "rgba(255,255,255,0.2)",
+                  background: i === mobileIdx ? "#00E5FF" : "rgba(255,255,255,0.2)",
                   transition: "width 250ms ease, background 250ms ease",
                   padding: 0,
                 }}
@@ -254,7 +254,7 @@ export const SubscriptionPlansSection = (): JSX.Element => {
                   opacity: (dir === -1 && mobileIdx === 0) || (dir === 1 && mobileIdx === pricingPlans.length - 1) ? 0.3 : 1,
                   transition: "background 200ms ease",
                 }}
-                onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,90,31,0.15)"; b.style.borderColor = "rgba(255,90,31,0.4)"; }}
+                onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,229,255,0.12)"; b.style.borderColor = "rgba(0,229,255,0.35)"; }}
                 onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.05)"; b.style.borderColor = "rgba(255,255,255,0.15)"; }}
               >
                 {label}
@@ -278,7 +278,7 @@ export const SubscriptionPlansSection = (): JSX.Element => {
           .pricing-arrows { margin-top: 10px !important; }
         }
         @media(prefers-reduced-motion:reduce){ .pricing-card,.pricing-cta{ transition:none !important; } }
-        .pricing-cta:focus-visible{ outline:2px solid #FF5A1F; outline-offset:3px; }
+        .pricing-cta:focus-visible{ outline:2px solid #00E5FF; outline-offset:3px; }
       `}</style>
     </section>
   );

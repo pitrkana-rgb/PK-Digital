@@ -40,7 +40,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
       <div className="how-it-works-head" style={{ marginBottom: "56px", textAlign: "center" }}>
         <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,52px)", lineHeight: 1.1, color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", maxWidth: "700px" }}>
           Jak probíhá{" "}
-          <span style={{ background: "linear-gradient(135deg,#FF6A2A,#FFB347)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>spolupráce</span>
+          <span style={{ background: "linear-gradient(135deg,#E040FB,#00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>spolupráce</span>
         </h2>
         <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto", maxWidth: "600px" }}>
           Díky pokročilým AI nástrojům dokážeme výrazně zrychlit vývoj webu a dodat kompletní řešení v krátkém časovém horizontu.
@@ -55,7 +55,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
           className="stepper-line"
           style={{
             position: "absolute", top: "54px", left: "12.5%", right: "12.5%", height: "2px",
-            background: "linear-gradient(90deg, #FF5A1F 0%, rgba(255,90,31,0.4) 50%, rgba(255,90,31,0.1) 100%)",
+            background: "linear-gradient(90deg, rgba(0,229,255,0.95) 0%, rgba(0,229,255,0.35) 50%, rgba(0,229,255,0.12) 100%)",
             zIndex: 0,
           }}
         />
@@ -66,21 +66,18 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
             className="step-block"
             style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "0 16px", position: "relative", zIndex: 1 }}
           >
-            {/* Icon image container */}
+            {/* Icon image container — no background circle */}
             <div
               className="step-img-wrap"
               style={{
                 width: "108px", height: "108px",
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, rgba(255,106,42,0.15), rgba(255,90,31,0.08))",
-                border: "1px solid rgba(255,90,31,0.25)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 marginBottom: "24px", flexShrink: 0,
                 position: "relative",
-                transition: "box-shadow 250ms ease, transform 250ms ease",
+                transition: "transform 250ms ease",
               }}
-              onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.boxShadow = "0 0 0 12px rgba(255,90,31,0.12)"; el.style.transform = "scale(1.08)"; }}
-              onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.boxShadow = ""; el.style.transform = ""; }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = "scale(1.08)"; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = ""; }}
             >
               <img
                 src={step.img}
@@ -88,8 +85,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
                 style={{
                   width: "96px", height: "96px",
                   objectFit: "contain",
-                  filter: "drop-shadow(0 0 12px rgba(255,106,42,0.35))",
-                  borderRadius: "12px",
+                  filter: "drop-shadow(0 0 14px rgba(0,229,255,0.22))",
                 }}
               />
 
@@ -128,7 +124,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
           gap: 16px !important;
           background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
           border: 1px solid rgba(255,255,255,0.08);
-          border-left: 2px solid rgba(255,90,31,0.3) !important;
+          border-left: 2px solid rgba(0,229,255,0.3) !important;
           border-radius: 16px;
         }
 

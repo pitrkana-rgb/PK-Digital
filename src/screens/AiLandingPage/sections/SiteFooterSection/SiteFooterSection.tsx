@@ -29,7 +29,7 @@ export const SiteFooterSection = (): JSX.Element => {
   return (
     <footer style={{ width: "100%", backgroundColor: "#000", position: "relative", overflow: "hidden" }}>
       {/* Orange gradient top border */}
-      <div style={{ height: "1px", background: "linear-gradient(90deg,transparent 0%,#FF5A1F 40%,rgba(255,90,31,0.3) 70%,transparent 100%)" }} />
+      <div style={{ height: "1px", background: "linear-gradient(90deg,transparent 0%,#00E5FF 40%,rgba(0,229,255,0.25) 70%,transparent 100%)" }} />
 
       <div className="footer-wrapper" style={{ maxWidth: "1200px", margin: "0 auto", padding: "56px 24px 40px" }}>
         <div className="footer-top" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "48px", flexWrap: "wrap", marginBottom: "48px" }}>
@@ -38,7 +38,7 @@ export const SiteFooterSection = (): JSX.Element => {
           <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "300px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <img
-                src="/Company_logo.png"
+                src="/Company_logo_V2.png"
                 alt="PK Digital logo"
                 style={{ height: "40px", width: "auto", display: "block" }}
               />
@@ -56,7 +56,7 @@ export const SiteFooterSection = (): JSX.Element => {
                   transition: "background 200ms ease, border-color 200ms ease",
                   color: "rgba(255,255,255,0.6)",
                 }}
-                  onMouseEnter={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.background = "rgba(255,90,31,0.15)"; a.style.borderColor = "rgba(255,90,31,0.3)"; a.style.color = "#FF5A1F"; }}
+                  onMouseEnter={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.background = "rgba(0,229,255,0.12)"; a.style.borderColor = "rgba(0,229,255,0.3)"; a.style.color = "#00E5FF"; }}
                   onMouseLeave={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.background = "rgba(255,255,255,0.06)"; a.style.borderColor = "rgba(255,255,255,0.08)"; a.style.color = "rgba(255,255,255,0.6)"; }}
                 >
                   <Icon style={{ width: "16px", height: "16px" }} />
@@ -70,7 +70,7 @@ export const SiteFooterSection = (): JSX.Element => {
 
             {/* Nav links */}
             <nav style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#FF5A1F", textTransform: "uppercase" as const, marginBottom: "4px" }}>Navigace</span>
+              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#00E5FF", textTransform: "uppercase" as const, marginBottom: "4px" }}>Navigace</span>
               {navLinks.map(link => (
                 <button key={link.id} type="button" onClick={() => handleNavClick(link)}
                   style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", transition: "color 200ms ease" }}
@@ -84,7 +84,7 @@ export const SiteFooterSection = (): JSX.Element => {
 
             {/* Contact */}
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#FF5A1F", textTransform: "uppercase" as const, marginBottom: "4px" }}>Kontakt</span>
+              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#00E5FF", textTransform: "uppercase" as const, marginBottom: "4px" }}>Kontakt</span>
               <button type="button" onClick={() => navigate("/kontakt")}
                 style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}

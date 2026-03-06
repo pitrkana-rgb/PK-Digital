@@ -44,7 +44,7 @@ export const AiLandingPage = (): JSX.Element => {
   return (
     <div
       className="relative w-full min-h-screen overflow-x-hidden"
-      style={{ backgroundColor: "#000000", fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
+      style={{ backgroundColor: "#000", fontFamily: "'Space Grotesk', 'Inter', sans-serif" }}
     >
       {/* ── Noise texture overlay ───────────────────────────────────── */}
       <div
@@ -165,8 +165,6 @@ export const AiLandingPage = (): JSX.Element => {
 
       <style>{`
         @media(max-width:768px) {
-          .header-logo { height: 47px !important; }
-          .header-nav { padding-top: 15px !important; padding-bottom: 15px !important; }
           .hero-section-mobile { margin-top: -200px !important; }
           .hero-content-wrap { margin-top: -220px !important; }
           .stats-section { margin-top: -50px !important; }

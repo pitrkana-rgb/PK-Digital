@@ -58,7 +58,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                   <span style={{
                     fontFamily: "'Space Grotesk',sans-serif", fontWeight: isOpen ? 600 : 500,
                     fontSize: "18px",
-                    color: isOpen ? "#FF5A1F" : "#fff",
+                    color: isOpen ? "#00E5FF" : "#F0F4F8",
                     lineHeight: 1.4,
                     transition: "color 200ms ease",
                   }}>
@@ -66,14 +66,14 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                   </span>
                   <div style={{
                     flexShrink: 0, width: "32px", height: "32px", borderRadius: "50%",
-                    background: isOpen ? "rgba(255,90,31,0.15)" : "rgba(255,255,255,0.06)",
-                    border: `1px solid ${isOpen ? "rgba(255,90,31,0.4)" : "rgba(255,255,255,0.1)"}`,
+                    background: isOpen ? "rgba(0,229,255,0.12)" : "rgba(13,27,42,0.65)",
+                    border: `1px solid ${isOpen ? "rgba(0,229,255,0.35)" : "rgba(0,229,255,0.12)"}`,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     transition: "background 200ms ease, border-color 200ms ease, transform 200ms ease",
                     transform: isOpen ? "rotate(0deg)" : "rotate(0deg)",
                   }}>
                     {isOpen
-                      ? <MinusIcon style={{ width: "14px", height: "14px", color: "#FF5A1F" }} />
+                      ? <MinusIcon style={{ width: "14px", height: "14px", color: "#00E5FF" }} />
                       : <PlusIcon style={{ width: "14px", height: "14px", color: "rgba(255,255,255,0.6)" }} />
                     }
                   </div>
@@ -103,7 +103,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
       </div>
 
       <style>{`
-        .faq-trigger:focus-visible{ outline:2px solid #FF5A1F; outline-offset:2px; border-radius:4px; }
+        .faq-trigger:focus-visible{ outline:2px solid #00E5FF; outline-offset:2px; border-radius:4px; }
         @media(max-width:768px){
           .faq-section { padding: 48px 0 60px !important; }
           .faq-heading { font-size: 22px !important; margin-bottom: 8px !important; }
