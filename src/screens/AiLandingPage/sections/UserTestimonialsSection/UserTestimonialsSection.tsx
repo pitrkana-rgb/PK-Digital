@@ -187,12 +187,12 @@ export const UserTestimonialsSection = (): JSX.Element => (
 
     <style>{`
       @media(max-width:767px){
-        .stats-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-        .badge-card { padding: 20px 16px !important; border-radius: 14px !important; gap: 8px !important; }
-        .badge-title { font-size: 10px !important; }
-        .badge-value { font-size: 34px !important; }
-        .badge-desc { font-size: 12px !important; }
-        .stats-section { padding-top: 60px !important; }
+        .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; }
+        .badge-card { padding: 14px 10px !important; border-radius: 12px !important; gap: 6px !important; min-width: 0 !important; }
+        .badge-title { font-size: 9px !important; letter-spacing: 0.06em !important; }
+        .badge-value { font-size: 22px !important; }
+        .badge-desc { font-size: 10px !important; line-height: 1.35 !important; display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+        .stats-section { padding-top: 60px !important; padding-bottom: 40px !important; }
       }
       @media(prefers-reduced-motion:reduce){
         .badge-card { transition: none !important; }
