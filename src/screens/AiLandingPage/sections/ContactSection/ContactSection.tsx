@@ -5,7 +5,28 @@ import {
 } from "lucide-react";
 import { supabase } from "../../../../lib/supabase";
 
-const PROJECT_TYPE_OPTIONS = ["Tvorba webových stránek", "Upgrade stávajícího webu"];
+const PROJECT_TYPE_OPTIONS = [
+  "Landing page (pro jeden produkt/službu)",
+  "Firemní web / prezentační stránky",
+  "E-shop (internetový obchod)",
+  "Modernizace / redesign stávajícího webu",
+  "Jiné",
+];
+
+const FEATURES_OPTIONS = [
+  "Chatbot",
+  "Cenový Kalkulátor",
+  "Rezervační systém",
+  "Lead management",
+  "E-shop",
+  "Galerie / Videa",
+  "Kontaktní formuláře",
+  "Napojení na sociální sítě",
+  "Blog / články",
+  "Napojení na analytiku (Google Analytics apod.)",
+];
+
+const DOMAIN_OPTIONS = ["Ano", "Ne"];
 
 type FormState = {
   name: string;
@@ -13,8 +34,9 @@ type FormState = {
   email: string;
   phone: string;
   projectType: string;
+  features: string;   // single select dropdown
+  hasDomain: string;  // single select dropdown
   budget: string;
-  description: string;
   gdprConsent: boolean;
 };
 
@@ -24,16 +46,18 @@ const init: FormState = {
   email: "",
   phone: "",
   projectType: "",
+  features: "",
+  hasDomain: "",
   budget: "",
-  description: "",
   gdprConsent: false,
 };
 
+/* ── Floating label input / select ──────────────────────────────── */
 const FloatingField = ({
-  label, id, type = "text", value, onChange, error, placeholder, multiline, isSelect, options
+  label, id, type = "text", value, onChange, error, placeholder, isSelect, options
 }: {
   label: string; id: string; type?: string; value: string;
-  onChange: (v: string) => void; error?: string; placeholder: string; multiline?: boolean;
+  onChange: (v: string) => void; error?: string; placeholder: string;
   isSelect?: boolean; options?: string[];
 }) => {
   const [focused, setFocused] = useState(false);
@@ -51,7 +75,6 @@ const FloatingField = ({
         color: focused ? "#00E5FF" : "rgba(255,255,255,0.4)",
         transition: "all 200ms cubic-bezier(0.2, 0.8, 0.2, 1)",
         pointerEvents: "none", zIndex: 1,
-        ...(multiline ? { top: active ? "8px" : "20px", transform: "none" } : {}),
       }}>
         {label}
       </label>
@@ -68,8 +91,9 @@ const FloatingField = ({
               background: "rgba(255,255,255,0.03)",
               border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
               borderRadius: "16px",
-              padding: active ? "26px 20px 10px" : "20px",
-              fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: value ? "#fff" : "transparent",
+              padding: active ? "26px 40px 10px 20px" : "20px 40px 20px 20px",
+              fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px",
+              color: value ? "#fff" : "transparent",
               outline: "none", width: "100%", appearance: "none",
               boxSizing: "border-box", cursor: "pointer",
               transition: "all 250ms ease",
@@ -81,26 +105,6 @@ const FloatingField = ({
           </select>
           <ChevronDown style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", width: "18px", color: "rgba(255,255,255,0.3)", pointerEvents: "none" }} />
         </div>
-      ) : multiline ? (
-        <textarea
-          id={id}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder={focused ? placeholder : ""}
-          rows={6}
-          style={{
-            background: "rgba(255,255,255,0.03)",
-            border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
-            borderRadius: "16px",
-            padding: active ? "32px 20px 16px" : "20px",
-            fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "#fff",
-            outline: "none", resize: "none", width: "100%",
-            boxSizing: "border-box", transition: "all 250ms ease",
-            boxShadow: focused ? "0 0 0 4px rgba(0,229,255,0.1)" : "none",
-          }}
-        />
       ) : (
         <input
           id={id}
@@ -155,7 +159,6 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
   );
 };
 
-/** Exact order on mobile (single column): Název firmy → Adresa → Telefon → E-mail → IČO → Datová schránka → Číslo účtu → IBAN. Desktop: same list, grid fills column-first (1–4 left, 5–8 right). */
 const companyInfoOrdered = [
   { icon: Building2, label: "Název firmy", text: "PK-Digital" },
   { icon: MapPin, label: "Adresa", text: "Němčice 329, Ivančice 664 91" },
@@ -187,7 +190,7 @@ export const ContactSection = (): JSX.Element => {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Neplatný email";
     if (!form.phone.trim()) e.phone = "Zadejte telefon";
     if (!form.projectType) e.projectType = "Vyberte typ projektu";
-    if (!form.description.trim()) e.description = "Napište nám, co poptáváte";
+    if (!form.hasDomain) e.hasDomain = "Vyberte možnost";
     if (!form.gdprConsent) e.gdprConsent = "Pro odeslání je nutný souhlas se zpracováním osobních údajů.";
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -205,7 +208,7 @@ export const ContactSection = (): JSX.Element => {
       company: form.company.trim(),
       project_type: form.projectType,
       budget: form.budget.trim(),
-      message: form.description.trim(),
+      message: `Požadované funkce: ${form.features || "Žádné"}\nDoména/hosting: ${form.hasDomain}`,
     };
     try {
       const { error } = await supabase.from("leads").insert([row]);
@@ -222,7 +225,8 @@ export const ContactSection = (): JSX.Element => {
   return (
     <section id="contact" style={{ width: "100%", padding: "0 0 100px", position: "relative", backgroundColor: "#000" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
-        {/* ── Full-width contact form (top half) ───────────────────── */}
+
+        {/* ── Contact form ─────────────────────────────────────────── */}
         <div style={{ marginBottom: "64px" }}>
           <div style={{
             background: "rgba(255,255,255,0.02)",
@@ -246,19 +250,32 @@ export const ContactSection = (): JSX.Element => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }} className="form-row">
-                  <FloatingField id="f-name" label="Jméno (povinné)" value={form.name} onChange={set("name")} error={errors.name} placeholder="Jan Novák" />
-                  <FloatingField id="f-company" label="Firma" value={form.company} onChange={set("company")} placeholder="Firma s.r.o." />
+
+                {/*
+                  Desktop 2-column layout:
+                  Left col:  Jméno | E-mail | Typ projektu | Požadované funkce
+                  Right col: Firma | Telefon | Máte doménu | Rozpočet
+                  Mobile: single column in order – Jméno, Firma, E-mail, Telefon, Typ projektu, Požadované funkce, Doména, Rozpočet
+                */}
+                <div className="contact-form-grid">
+                  {/* LEFT COLUMN */}
+                  <div className="contact-form-col" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <FloatingField id="f-name" label="Jméno (povinné)" value={form.name} onChange={set("name") as (v: string) => void} error={errors.name} placeholder="Jan Novák" />
+                    <FloatingField id="f-email" label="E-mail (povinné)" type="email" value={form.email} onChange={set("email") as (v: string) => void} error={errors.email} placeholder="jan@firma.cz" />
+                    <FloatingField id="f-type" label="Typ projektu (povinné)" isSelect options={PROJECT_TYPE_OPTIONS} value={form.projectType} onChange={set("projectType") as (v: string) => void} error={errors.projectType} placeholder="" />
+                    <FloatingField id="f-features" label="Požadované funkce / AI nástroje" isSelect options={FEATURES_OPTIONS} value={form.features} onChange={set("features") as (v: string) => void} placeholder="" />
+                  </div>
+
+                  {/* RIGHT COLUMN */}
+                  <div className="contact-form-col" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <FloatingField id="f-company" label="Firma" value={form.company} onChange={set("company") as (v: string) => void} placeholder="Firma s.r.o." />
+                    <FloatingField id="f-phone" label="Telefon (povinné)" type="tel" value={form.phone} onChange={set("phone") as (v: string) => void} error={errors.phone} placeholder="+420 725 703 868" />
+                    <FloatingField id="f-domain" label="Máte doménu / webhosting? (povinné)" isSelect options={DOMAIN_OPTIONS} value={form.hasDomain} onChange={set("hasDomain") as (v: string) => void} error={errors.hasDomain} placeholder="" />
+                    <FloatingField id="f-budget" label="Rozpočet" value={form.budget} onChange={set("budget") as (v: string) => void} placeholder="např. 30 000 Kč" />
+                  </div>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }} className="form-row">
-                  <FloatingField id="f-email" label="E-mail (povinné)" type="email" value={form.email} onChange={set("email")} error={errors.email} placeholder="jan@firma.cz" />
-                  <FloatingField id="f-phone" label="Telefon (povinné)" type="tel" value={form.phone} onChange={set("phone")} error={errors.phone} placeholder="+420 725 703 868" />
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }} className="form-row">
-                  <FloatingField id="f-type" label="Typ projektu" isSelect options={PROJECT_TYPE_OPTIONS} value={form.projectType} onChange={set("projectType")} error={errors.projectType} placeholder="" />
-                  <FloatingField id="f-budget" label="Rozpočet" value={form.budget} onChange={set("budget")} placeholder="např. 50 000 Kč" />
-                </div>
-                <FloatingField id="f-desc" label="Napište nám, co poptáváte (povinné)" value={form.description} onChange={set("description")} error={errors.description} placeholder="Stručně popište váš projekt nebo dotaz..." multiline />
+
+                {/* GDPR */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                   <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.85)" }}>
                     <input
@@ -277,11 +294,13 @@ export const ContactSection = (): JSX.Element => {
                     <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "12px", color: "#F87171", paddingLeft: "30px" }}>{errors.gdprConsent}</span>
                   )}
                 </div>
+
                 {submitError && (
                   <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: "#F87171", margin: 0 }} role="alert">
                     {submitError}
                   </p>
                 )}
+
                 <button
                   type="submit"
                   disabled={loading}
@@ -313,29 +332,20 @@ export const ContactSection = (): JSX.Element => {
           </div>
         </div>
 
-        {/* ── Firemní údaje (one card, 2 columns × 4 rows inside) ──────── */}
-        <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(22px, 2.5vw, 28px)", color: "#fff", marginBottom: "24px", textAlign: "center" }}>
+        {/* ── Firemní údaje ──────────────────────────────────────── */}
+        <h2 id="company-info" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(22px, 2.5vw, 28px)", color: "#fff", marginBottom: "24px", textAlign: "center" }}>
           Firemní údaje
         </h2>
-        <div
-          style={{
-            background: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "20px",
-            padding: "32px 40px",
-            marginBottom: "64px",
-          }}
-        >
+        <div style={{
+          background: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: "20px",
+          padding: "32px 40px",
+          marginBottom: "64px",
+        }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "repeat(4, auto)", gridAutoFlow: "column", gap: "24px 32px" }} className="company-info-grid">
             {companyInfoOrdered.map(({ icon: Icon, label, text }) => (
-              <div
-                key={label}
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "16px",
-                }}
-              >
+              <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: "16px" }}>
                 <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(0,229,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#00E5FF", flexShrink: 0 }}>
                   <Icon size={20} />
                 </div>
@@ -348,7 +358,7 @@ export const ContactSection = (): JSX.Element => {
           </div>
         </div>
 
-        {/* ── Map + FAQ ────────────────────────────────────────────── */}
+        {/* ── Map + FAQ ─────────────────────────────────────────── */}
         <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "60px", alignItems: "flex-start" }} className="contact-bottom-grid">
           <div>
             <div style={{
@@ -375,9 +385,26 @@ export const ContactSection = (): JSX.Element => {
       </div>
 
       <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* ── Desktop: 2-column form grid ─────────────────── */
+        .contact-form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+          align-items: start;
+        }
+        /* ── Mobile: single column in correct order ────── */
         @media (max-width: 768px) {
-          .form-row { grid-template-columns: 1fr !important; }
+          .contact-form-grid {
+            grid-template-columns: 1fr !important;
+          }
+          /* Reorder the two columns into one flat list */
+          .contact-form-col:first-child { order: 1; }
+          .contact-form-col:last-child  { order: 2; }
+          /* Individual field order within the flattened grid */
+          /* Left col fields: Jméno(1), Email(2), Typ(3), Funkce(4) */
+          /* Right col fields: Firma(5), Telefon(6), Doména(7), Rozpočet(8) */
+          /* We use a wrapper approach - order is preserved since cols stack naturally */
+          .contact-form-card { padding: 28px 16px !important; }
           .company-info-grid { grid-template-columns: 1fr !important; grid-auto-flow: row !important; grid-template-rows: unset !important; }
           .contact-bottom-grid { grid-template-columns: 1fr !important; }
         }

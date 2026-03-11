@@ -81,7 +81,7 @@ export const MainHeroSection = (): JSX.Element => {
         <h1 className="hero-headline" style={{
           fontFamily: "'Space Grotesk', sans-serif",
           fontWeight: 800,
-          fontSize: "clamp(38px, 7vw, 68px)",
+          fontSize: "clamp(28px, 4.5vw, 52px)",
           lineHeight: 1.05,
           color: "#FFFFFF",
           margin: "0 0 16px 0",
@@ -197,7 +197,7 @@ export const MainHeroSection = (): JSX.Element => {
             margin-top: -180px !important;
           }
           .hero-headline {
-            font-size: 32px !important;
+            font-size: 26px !important;
             line-height: 1.1 !important;
             max-width: 100% !important;
             margin-bottom: 10px !important;

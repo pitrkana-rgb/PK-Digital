@@ -5,7 +5,7 @@ const pricingPlans = [
   {
     name: "Tvorba webu na míru",
     description: "Moderní, rychlý a srozumitelný web, který od první sekundy vysvětlí, co děláte a proč by to mělo zajímat vaše klienty.",
-    price: "od 24 900 Kč",
+    price: "od 19 900 Kč",
     features: [
       "Konzultace a návrh řešení zdarma",
       "Kompletní web standardně dodán do 14 dnů",
@@ -19,7 +19,7 @@ const pricingPlans = [
   {
     name: "Modernizace webových stránek",
     description: "Kompletní modernizace vašeho stávajícího webu — nový design, vyšší rychlost, lepší konverze a nasazení AI nástrojů pro růst.",
-    price: "od 17 900 Kč",
+    price: "od 14 900 Kč",
     features: [
       "Bezplatný audit webu a návrh zlepšení",
       "Redesign a modernizace vizuální identity",

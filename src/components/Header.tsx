@@ -8,7 +8,7 @@ const navigationItems = [
     { label: "Služby", targetId: "pricing", path: "/" },
     { label: "O nás", targetId: "", path: "/o-nas" },
     { label: "FAQ", targetId: "faq", path: "/" },
-    { label: "Kontakt", targetId: "contact", path: "/kontakt" },
+    { label: "Kontakt", targetId: "company-info", path: "/kontakt" },
 ];
 
 
@@ -43,6 +43,8 @@ export const Header = () => {
             navigate(item.path);
             if (item.path === "/") {
                 setTimeout(() => scrollToSection(item.targetId), 120);
+            } else if (item.targetId) {
+                setTimeout(() => scrollToSection(item.targetId), 180);
             }
         }
         setMenuOpen(false);
@@ -179,7 +181,7 @@ export const Header = () => {
                         zIndex: 1,
                         width: "280px",
                         height: "fit-content",
-                                backgroundColor: "#000",
+                        backgroundColor: "#000",
                         backdropFilter: "blur(10px)",
                         WebkitBackdropFilter: "blur(10px)",
                         borderLeft: "1px solid rgba(255,255,255,0.08)",

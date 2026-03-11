@@ -3,40 +3,36 @@ import { PlusIcon, MinusIcon } from "lucide-react";
 
 const faqData = [
   {
-    question: "Jaké typy webových stránek tvoříte?",
-    answer: "Vytvářím vše od jednoduchých landing page pro prezentaci služby až po komplexní weby pro firmy – včetně funkcí jako jsou rezervační systémy, poptávkové formuláře nebo napojení na další aplikace. Řešení vždy přizpůsobuji velikosti a potřebám vašeho podnikání.",
+    question: "Co budu pro začátek potřebovat?",
+    answer: "Na začátku stačí základní informace o vaší firmě, cíle a hrubá představa o webu. Texty, fotky ani přesný plán mít nemusíte – to vše zvládneme společně. Po nezávazné konzultaci vám sdělím, co bude třeba do dalšího kroku.",
   },
   {
-    question: "Jak dlouho trvá vytvoření webu?",
-    answer: "Standardně dodávám kompletní web do 14 dnů. U rozsáhlejších projektů nebo modernizací se délka odvíjí od požadavků – konkrétní odhad dostanete po úvodní konzultaci.",
+    question: "Zatím nemám obsah, co s tím?",
+    answer: "Nevadí. Pomůžu vám s přípravou textů, strukturou webu i základním copywritingem. Díky AI nástrojům dokážeme obsah připravit rychle a kvalitně. Fotografie lze vyřešit pořízením vlastních nebo využitím licencovaných stocků.",
   },
   {
-    question: "Jak probíhá první spolupráce?",
-    answer: "Začínáme krátkým online callem nebo e-mailem, kde společně pojmenujeme cíle a vaše představy. Na základě toho připravím nezávaznou kalkulaci a návrh dalších kroků. Až poté se pustíme do samotné realizace.",
+    question: "Můžete navrhnout logo mého webu?",
+    answer: "Základní návrh loga nebo grafické identity do webu zahrnout mohu. Pro komplexní brand manuál spolupracuji s ověřenými grafiky. Vždy záleží na rozsahu projektu – probereme to při konzultaci.",
   },
   {
-    question: "Co ode mě budete potřebovat?",
-    answer: "Na začátku stačí základní informace: o čem vaše firma je, jaké máte cíle a představy o webu. Texty, obrázky a další podklady můžeme doplnit průběžně. U modernizace stávajícího webu pomůže přístup k současnému obsahu.",
+    question: "Budu moci své webové stránky snadno upravovat? Nejsem programátor.",
+    answer: "Ano. Weby stavím tak, aby je mohl spravovat kdokoliv bez znalosti programování – texty, obrázky i základní sekce upravíte sami přes přehledné rozhraní. Po předání webu vás vším osobně provedu a ukážu, jak na to.",
   },
   {
-    question: "Budu si moci web upravovat sám?",
-    answer: "Ano. Weby připravuji tak, aby se daly snadno spravovat bez znalosti kódu – úpravy textů, obrázků nebo jednoduchých sekcí zvládnete sami. V případě potřeby nabízím i dlouhodobou správu a rozvoj.",
+    question: "Kolik stojí vytvoření webu?",
+    answer: "Tvorba webu na míru začíná od 19\u00a0900 Kč, modernizace stávajícího webu od 14\u00a0900 Kč. Každý projekt je jiný, proto vám po konzultaci připravím přesnou kalkulaci ušitou na míru. Neúčtuji žádné měsíční ani roční paušály.",
   },
   {
-    question: "Co když už web mám a chci ho modernizovat?",
-    answer: "Nabízím upgrade stávajícího webu: bezplatný audit, moderní redesign pro vyšší konverze, zrychlení a SEO optimalizaci, integraci AI nástrojů a lepší stabilitu. Ceny od 17 900 Kč podle rozsahu.",
+    question: "Co všechno je zahrnuto v ceně?",
+    answer: "V ceně je konzultace, návrh prototypu zdarma, kompletní vývoj webu, mobilní verze, základní SEO optimalizace a osobní předání s ukázkou správy. Dostupné doplňky (AI chatbot, rezervační systém apod.) jsou součástí nabídky při dohodě.",
   },
   {
-    question: "Co se děje po spuštění webu?",
-    answer: "Po předání vám ukážu, jak web spravovat. Nabízím možnost následné správy, údržby a optimalizace na základě dat. Můžeme také napojit analytiku a průběžně vylepšovat konverze.",
+    question: "Je možné platit zálohovou fakturou?",
+    answer: "Ano, standardně probíhá platba ve dvou fázích: záloha před zahájením práce a doplatek po předání hotového webu. Konkrétní podmínky vždy dohodnu individuálně dle projektu.",
   },
   {
-    question: "Můžete web napojit na další systémy?",
-    answer: "Ano. Umím napojení na interní systémy, rezervační nebo objednávkové systémy, e-mailové nástroje a další aplikace. Konkrétní možnosti probereme podle vašich potřeb.",
-  },
-  {
-    question: "Můžeme si nejdříve nezávazně zavolat?",
-    answer: "Ano. Nezávazná konzultace je první krok – probereme vaše cíle, představy a rozpočet. Napište mi přes kontaktní formulář nebo na info@pk-digital.cz, ozvu se do 24 hodin.",
+    question: "Potřebuji vlastní doménu a webhosting?",
+    answer: "Pokud doménu ani hosting ještě nemáte, pomohu vám s jejich výběrem a registrací. Pokud je máte, web nasadím na váš stávající hosting nebo doporučím vhodnou alternativu. Vše probereme při konzultaci.",
   },
 ];
 

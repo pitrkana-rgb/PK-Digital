@@ -43,7 +43,8 @@ export const ContactPage = (): JSX.Element => {
                         </span>
                     </div>
                     <h1 className="contact-hero-title" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#fff", margin: 0, letterSpacing: "-0.02em" }}>
-                        Pojďme vytvořit web, který <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>promění návštěvníky v klienty</span>
+                        Udělejte první krok k novému webu.{" "}
+                        <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Zabere to jen 5 minut.</span>
                     </h1>
                 </div>
             </section>

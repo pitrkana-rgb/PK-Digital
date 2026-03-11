@@ -9,6 +9,7 @@ import { UserTestimonialsSection } from "./sections/UserTestimonialsSection";
 import { ClientTestimonialsSection } from "./sections/ClientTestimonialsSection";
 import { WhyChooseUsSection } from "./sections/WhyChooseUsSection/WhyChooseUsSection";
 import { CoNabizimeSection } from "./sections/CoNabizimeSection/CoNabizimeSection";
+import { PriceCalculatorSection } from "./sections/PriceCalculatorSection/PriceCalculatorSection";
 import { Header } from "../../components/Header";
 
 export const AiLandingPage = (): JSX.Element => {
@@ -150,6 +151,10 @@ export const AiLandingPage = (): JSX.Element => {
 
         <section id="pricing" data-animate-on-scroll className="section-mb-mobile">
           <SubscriptionPlansSection />
+        </section>
+
+        <section id="calculator" data-animate-on-scroll className="section-mb-mobile">
+          <PriceCalculatorSection />
         </section>
 
         <section id="faq" data-animate-on-scroll className="section-mb-mobile">
