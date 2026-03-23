@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 /* ── Scroll indicator ─────────────────────────────────────────────── */
 const ScrollIndicator = () => (
@@ -33,6 +34,22 @@ const ScrollIndicator = () => (
 
 export const MainHeroSection = (): JSX.Element => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = language === "en" ? {
+    headlinePre: "Get a next-generation website with",
+    headlineMid: "that",
+    headlineAccent: "turns visitors into customers",
+    subheading: "Forget slow, outdated websites without results. With AI, you get a fast, smart, and scalable site that actually brings customers.",
+    ctaPrimary: "Contact us",
+    ctaSecondary: "Our services",
+  } : {
+    headlinePre: "Získejte web nové generace s",
+    headlineMid: ", který",
+    headlineAccent: "přemění návštěvníky v zákazníky",
+    subheading: "Zapomeňte na pomalé, zastaralé weby bez výsledků. Díky AI získáte rychlý, chytrý a škálovatelný web, který skutečně přivádí zákazníky.",
+    ctaPrimary: "Kontaktujte nás",
+    ctaSecondary: "Naše služby",
+  };
 
   return (
     <section
@@ -101,22 +118,22 @@ export const MainHeroSection = (): JSX.Element => {
           maxWidth: "100%",
           width: "100%",
         }}>
-          Získejte web nové generace s{" "}
+          {t.headlinePre}{" "}
           <span style={{
             background: "linear-gradient(135deg, #E040FB 0%, #00E5FF 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
             filter: "drop-shadow(0 0 20px rgba(0,229,255,0.35))",
-          }}>AI</span>
-          , který{" "}
+          }}>AI</span>{" "}
+          {t.headlineMid}{" "}
           <span style={{
             background: "linear-gradient(135deg, #E040FB 0%, #00E5FF 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
             filter: "drop-shadow(0 0 20px rgba(0,229,255,0.35))",
-          }}>přemění návštěvníky v zákazníky</span>
+          }}>{t.headlineAccent}</span>
         </h1>
 
         {/* Paragraph */}
@@ -129,7 +146,7 @@ export const MainHeroSection = (): JSX.Element => {
           maxWidth: "680px",
           margin: "0 0 32px 0",
         }}>
-          Zapomeňte na pomalé, zastaralé weby bez výsledků. Díky AI získáte rychlý, chytrý a škálovatelný web, který skutečně přivádí zákazníky.
+          {t.subheading}
         </p>
 
         {/* CTAs */}
@@ -157,7 +174,7 @@ export const MainHeroSection = (): JSX.Element => {
             onMouseDown={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(0.97)"; }}
             onMouseUp={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-3px)"; }}
           >
-            Kontaktujte nás
+            {t.ctaPrimary}
           </button>
 
           <button
@@ -165,6 +182,11 @@ export const MainHeroSection = (): JSX.Element => {
             type="button"
             className="hero-secondary-btn"
             onClick={() => {
+              const pricingHeading = document.getElementById("pricing-heading");
+              if (pricingHeading) {
+                pricingHeading.scrollIntoView({ behavior: "smooth", block: "start" });
+                return;
+              }
               document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
             style={{
@@ -186,7 +208,7 @@ export const MainHeroSection = (): JSX.Element => {
             onMouseDown={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(0.98)"; }}
             onMouseUp={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)"; }}
           >
-            Naše služby
+            {t.ctaSecondary}
           </button>
         </div>
         </div>
@@ -208,20 +230,23 @@ export const MainHeroSection = (): JSX.Element => {
         @media (min-width: 769px) {
           .hero-content-wrap {
             text-align: left;
-            /* ~left half of viewport, +20% width vs calc(50vw - 6rem) → 60vw - 7.2rem */
             width: 100% !important;
-            max-width: calc(60vw - 7.2rem) !important;
+            max-width: 100% !important;
+            box-sizing: border-box;
+          }
+          .hero-headline,
+          .hero-subheading {
+            width: 60% !important;
+            max-width: 60% !important;
             box-sizing: border-box;
           }
           .hero-headline {
             margin-left: 0;
             margin-right: 0;
-            max-width: 100% !important;
           }
           .hero-subheading {
             margin-left: 0 !important;
             margin-right: 0 !important;
-            max-width: 100% !important;
           }
         }
         /* ── Mobile hero adjustments ────────────── */

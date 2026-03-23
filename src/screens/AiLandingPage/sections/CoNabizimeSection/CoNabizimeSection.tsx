@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type TouchEvent } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 import pcFrameUrl from "../../../../../Images/PC_frame.png";
 import tvorbaWebuUrl from "../../../../../Images/Tvorba webu.png";
 import aiBotUrl from "../../../../../Images/AI bot.png";
@@ -294,10 +295,11 @@ const slides: Slide[] = [
     description:
       "Kompletní modernizace vašeho stávajícího webu — nový design, vyšší rychlost, lepší konverze.",
     features: [
-      "Bezplatný audit webu",
-      "Moderní redesign pro vyšší konverze",
-      "Zrychlení webu a SEO optimalizace",
-      "Vyšší stabilita a snadnější správa",
+      "Audit webu a identifikace slabých míst",
+      "Silnější značka díky modernímu designu",
+      "Rychlejší web s dopadem na SEO i výkon",
+      "Stabilní řešení připravené na růst",
+      "Jednoduchá budoucí správa webu",
     ],
     cta: "Chci modernizaci",
     beforeAfter: {
@@ -311,30 +313,85 @@ const slides: Slide[] = [
   {
     id: "automatizace-ai",
     title: "Automatizace a AI agenti",
-    description: "Dodáváme AI řešení pro automatizaci klíčových procesů:",
+    description: "Získejte více zákazníků a snižte náklady díky chytré automatizaci",
     features: [
-      "Chatbot",
-      "Cenový kalkulátor",
-      "Rezervační systém",
-      "Lead management",
-      "Kontaktní formulář",
-      "a další…",
+      "Eliminace rutinní práce",
+      "Okamžité zpracování požadavků",
+      "Snížení nákladů až o desítky %",
+      "Zvýšení konverzí a kvality leadů",
+      "Škálování bez navyšování týmu",
     ],
     cta: "Chci automatizaci",
     image: aiBotUrl,
   },
 ];
 
+const slidesEn: Slide[] = [
+  {
+    id: "tvorba-webu",
+    title: "Website Development",
+    description:
+      "A modern website that clearly communicates your value, gains customers, and is ready to grow with your business.",
+    features: [
+      "Free consultation and website concept",
+      "Standard delivery within 14 days",
+      "Conversion-focused design",
+      "Optimized for mobile and desktop",
+      "Easy management without a developer",
+    ],
+    cta: "I want a website",
+    image: tvorbaWebuUrl,
+  },
+  {
+    id: "upgrade-webu",
+    title: "Website Modernization",
+    description:
+      "Complete modernization of your existing website - new design, higher speed, and better conversions.",
+    features: [
+      "Website audit and weak-point identification",
+      "Stronger brand through modern design",
+      "Faster website with SEO and performance impact",
+      "Stable solution prepared for growth",
+      "Easy future website management",
+    ],
+    cta: "I want modernization",
+    beforeAfter: {
+      beforeSrc: modernizaceBeforeUrl,
+      afterSrc: modernizaceAfterUrl,
+      beforeLabel: "Before",
+      afterLabel: "After",
+      introDemo: true,
+    },
+  },
+  {
+    id: "automatizace-ai",
+    title: "Automation and AI Agents",
+    description: "Get more customers and reduce costs with smart automation",
+    features: [
+      "Eliminate routine work",
+      "Immediate request processing",
+      "Reduce costs by tens of percent",
+      "Increase conversions and lead quality",
+      "Scale without expanding your team",
+    ],
+    cta: "I want automation",
+    image: aiBotUrl,
+  },
+];
+
 export const CoNabizimeSection = (): JSX.Element => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [activeIdx, setActiveIdx] = useState(0);
   const touchStartX = useRef<number | null>(null);
   const SWIPE_THRESHOLD = 50;
+  const isEn = language === "en";
+  const activeSlides = isEn ? slidesEn : slides;
 
-  const activeSlide = slides[activeIdx];
+  const activeSlide = activeSlides[activeIdx];
 
   const goTo = (idx: number) => {
-    setActiveIdx(Math.max(0, Math.min(slides.length - 1, idx)));
+    setActiveIdx(Math.max(0, Math.min(activeSlides.length - 1, idx)));
   };
 
   const isBeforeAfterSliderTarget = (target: EventTarget | null) =>
@@ -383,7 +440,7 @@ export const CoNabizimeSection = (): JSX.Element => {
               maxWidth: "770px",
             }}
           >
-            Co{" "}
+            {isEn ? "What we " : "Co "}
             <span
               style={{
                 background: "linear-gradient(135deg,#E040FB,#00E5FF)",
@@ -392,7 +449,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                 backgroundClip: "text",
               }}
             >
-              nabízíme
+              {isEn ? "offer" : "nabízíme"}
             </span>
           </h2>
           <p
@@ -406,18 +463,19 @@ export const CoNabizimeSection = (): JSX.Element => {
               margin: "0 auto",
             }}
           >
-            Od vytvoření nového webu přes vizuální redesign až po nasazení AI nástrojů – řešení pro začínající podnikatele i
-            rostoucí firmy.
+            {isEn
+              ? "From building a new website to visual redesign and AI deployment - solutions for startups and growing businesses."
+              : "Od vytvoření nového webu přes vizuální redesign až po nasazení AI nástrojů – řešení pro začínající podnikatele i rostoucí firmy."}
           </p>
         </div>
 
         <div className="offer-carousel" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div className="offer-carousel-viewport" aria-label="Carousel Co nabízíme">
+          <div className="offer-carousel-viewport" aria-label={isEn ? "What we offer carousel" : "Carousel Co nabízíme"}>
             <div
               className="offer-carousel-track"
               style={{ transform: `translateX(${-activeIdx * 100}%)` }}
             >
-              {slides.map((slide) => (
+              {activeSlides.map((slide) => (
                 <div key={slide.id} className="offer-slide">
                   <div className="offer-premium-card">
                     <div className="offer-premium-card-inner">
@@ -531,20 +589,20 @@ export const CoNabizimeSection = (): JSX.Element => {
             <button
               type="button"
               className="offer-nav-btn"
-              aria-label="Předchozí"
+              aria-label={isEn ? "Previous" : "Předchozí"}
               onClick={() => goTo(activeIdx - 1)}
               style={{ opacity: activeIdx === 0 ? 0.35 : 1 }}
             >
               ←
             </button>
 
-            <div className="offer-carousel-dots" aria-label="Volba karty">
-              {slides.map((s, i) => (
+            <div className="offer-carousel-dots" aria-label={isEn ? "Card selection" : "Volba karty"}>
+              {activeSlides.map((s, i) => (
                 <button
                   key={s.id}
                   type="button"
                   className={`offer-dot ${i === activeIdx ? "offer-dot-active" : ""}`}
-                  aria-label={`Karta ${i + 1}`}
+                  aria-label={isEn ? `Card ${i + 1}` : `Karta ${i + 1}`}
                   onClick={() => goTo(i)}
                 />
               ))}
@@ -553,9 +611,9 @@ export const CoNabizimeSection = (): JSX.Element => {
             <button
               type="button"
               className="offer-nav-btn"
-              aria-label="Další"
+              aria-label={isEn ? "Next" : "Další"}
               onClick={() => goTo(activeIdx + 1)}
-              style={{ opacity: activeIdx === slides.length - 1 ? 0.35 : 1 }}
+              style={{ opacity: activeIdx === activeSlides.length - 1 ? 0.35 : 1 }}
             >
               →
             </button>
@@ -587,8 +645,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           flex: 0 0 100%;
           display: flex;
           flex-direction: column;
-          /* Same card height for all slides (carousel + resize) */
-          min-height: clamp(520px, 68vh, 820px);
+          /* Height from content + media aspect-ratio (no vh clamp — avoids jump below laptop) */
+          min-height: auto;
         }
 
         .offer-premium-card{
@@ -596,7 +654,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           padding: 1px;
           background: linear-gradient(90deg, rgba(0,229,255,0.45) 0%, rgba(224,64,251,0.26) 100%);
           box-shadow: 0 0 60px rgba(0,229,255,0.08);
-          flex: 1;
+          flex: 0 1 auto;
           display: flex;
           flex-direction: column;
           min-height: 0;
@@ -613,7 +671,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           position: relative;
           overflow: hidden;
           isolation: isolate;
-          flex: 1;
+          flex: 0 1 auto;
           display: flex;
           flex-direction: column;
           min-height: 0;
@@ -716,7 +774,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           display:flex;
           gap: 8px;
           align-items: center;
-          flex: 1 1 auto;
+          flex: 0 1 auto;
           min-height: 0;
         }
 
@@ -793,20 +851,20 @@ export const CoNabizimeSection = (): JSX.Element => {
           background: transparent;
         }
 
+        /* kebab-case required — camelCase is ignored in plain <style> (was blocking font-weight) */
+        h3.offer-title,
         .offer-title{
-          fontFamily: "'Space Grotesk',sans-serif";
-          fontWeight: 700;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
           color: #fff;
           margin: 0;
-          letterSpacing: -0.02em;
+          letter-spacing: -0.02em;
           line-height: 1.15;
         }
 
         .offer-title-large{
-          /* Same style as section heading, just ~20% smaller */
-          /* Card title = 2x card description font size */
-          fontSize: 28px !important;
-          lineHeight: 1.08;
+          font-size: 28px !important;
+          line-height: 1.08;
           display: inline-block;
         }
 
@@ -823,10 +881,10 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         .offer-desc{
-          fontFamily: "'Space Grotesk',sans-serif";
-          fontWeight: 400;
-          fontSize: 16px;
-          lineHeight: 1.7;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 1.7;
           color: rgba(255,255,255,0.72);
           margin: 0 0 18px;
         }
@@ -847,10 +905,10 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
         .offer-bullets li{
           margin: 10px 0;
-          fontFamily: "'Space Grotesk',sans-serif";
-          fontWeight: 500;
-          fontSize: 15px;
-          lineHeight: 1.45;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 1.45;
           color: rgba(255,255,255,0.86);
         }
 
@@ -860,14 +918,14 @@ export const CoNabizimeSection = (): JSX.Element => {
           border: none;
           border-radius: 12px;
           padding: 15px 32px;
-          fontFamily: "'Space Grotesk',sans-serif";
-          fontWeight: 700;
-          fontSize: 16px;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 16px;
           cursor: pointer;
           transition: filter 0.25s ease, transform 0.25s ease;
-          display:inline-flex;
-          align-items:center;
-          justify-content:center;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
         .offer-cta:hover{
           filter: brightness(1.1);
@@ -950,8 +1008,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           color: rgba(255,255,255,0.75);
           cursor:pointer;
           transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
-          fontFamily: system-ui;
-          fontSize: 18px;
+          font-family: system-ui;
+          font-size: 18px;
           display:flex;
           align-items:center;
           justify-content:center;
@@ -985,43 +1043,73 @@ export const CoNabizimeSection = (): JSX.Element => {
           background: rgba(0,229,255,0.95);
         }
 
-        @media(max-width:900px){
-          .offer-slide{
-            min-height: clamp(480px, 78vh, 760px);
+        /* Large desktop: pin media column to top; height still content-driven */
+        @media (min-width: 1440px) {
+          .offer-gallery-right{
+            align-items: flex-start;
+            padding: 0;
           }
+        }
+
+        @media(max-width:900px){
           .offer-premium-card-inner{ padding: 15px; }
-          .offer-gallery-grid{ flex-direction: column; gap: 16px; }
+          .offer-gallery-grid{ flex-direction: column; gap: 8px; }
           .offer-gallery-left{
             padding: 40px 0;
-            text-align: center;
+            text-align: left;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
+          }
+          .offer-left-copy{
+            width: 100%;
+            text-align: left;
           }
           .offer-gallery-right{ width: 100%; }
-          .offer-title-wrap{ text-align: center; }
+          .offer-title-wrap{
+            text-align: left;
+            width: 100%;
+          }
           /* Keep mobile titles readable, not bigger than section heading */
           .offer-title-large{ font-size: 24px !important; }
           .offer-title:not(.offer-title-large){ font-size: clamp(22px, 6vw, 30px) !important; }
           .offer-desc{
             font-size: 14px !important;
-            text-align: center !important;
+            line-height: 1.7 !important;
+            text-align: left !important;
           }
           .offer-features-subheading{
             font-size: 14px !important;
-            text-align: center !important;
+            text-align: left !important;
             margin-bottom: 8px !important;
           }
           .offer-bullets{
-            padding-left: 0 !important;
-            list-style-position: inside;
-            text-align: center;
+            padding-left: 20px !important;
+            list-style-position: outside;
+            text-align: left;
+            margin-bottom: 11px !important;
+            align-self: stretch;
+            width: 100%;
+            box-sizing: border-box;
           }
           .offer-bullets li{
             font-size: 14px !important;
-            text-align: center !important;
+            line-height: 1.7 !important;
+            text-align: left !important;
           }
-          .offer-cta{ align-self: center; }
+          /* Match pricing mobile CTA: full card width, same padding & type size */
+          .offer-cta{
+            align-self: stretch;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            padding: 10px 16px !important;
+            font-size: 14px !important;
+            font-weight: 600;
+            margin-top: 10px;
+          }
           .notebook-screen{ transform: none; }
           .offer-carousel-controls{ margin-top: 0; }
         }

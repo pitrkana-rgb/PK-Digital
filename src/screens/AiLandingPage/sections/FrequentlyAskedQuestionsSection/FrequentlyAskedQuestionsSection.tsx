@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PlusIcon, MinusIcon } from "lucide-react";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const faqData = [
   {
@@ -36,9 +37,47 @@ const faqData = [
   },
 ];
 
+const faqDataEn = [
+  {
+    question: "What do I need to start?",
+    answer: "At the beginning, basic information about your company, goals, and a rough website idea is enough. You do not need final texts, photos, or a perfect plan yet - we handle that together.",
+  },
+  {
+    question: "I do not have content yet. What now?",
+    answer: "That is fine. I can help with website structure, content preparation, and basic copywriting. With AI tools, we can produce content quickly and at high quality.",
+  },
+  {
+    question: "Can you design a logo for my website?",
+    answer: "I can include a basic logo or visual identity proposal for your website. For complete brand manuals, I cooperate with trusted designers.",
+  },
+  {
+    question: "Will I be able to edit the website myself?",
+    answer: "Yes. Websites are built so anyone can manage them without coding knowledge - text, images, and core sections can be updated in a clear interface.",
+  },
+  {
+    question: "How much does website development cost?",
+    answer: "Custom website development starts from CZK 19,900 and modernization from CZK 14,900. Every project is different, so I prepare a custom estimate after consultation.",
+  },
+  {
+    question: "What is included in the price?",
+    answer: "The price includes consultation, a free prototype proposal, complete development, mobile version, basic SEO optimization, and handover with onboarding.",
+  },
+  {
+    question: "Can I pay with an advance invoice?",
+    answer: "Yes. Payment is typically in two phases: an advance before work starts and the remaining balance after delivery.",
+  },
+  {
+    question: "Do I need my own domain and hosting?",
+    answer: "If you do not have a domain or hosting yet, I can help with selection and setup. If you already have them, I deploy on your existing hosting or recommend an alternative.",
+  },
+];
+
 import { SectionDivider } from "../../components/SectionDivider";
 
 export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
+  const { language } = useLanguage();
+  const isEn = language === "en";
+  const items = isEn ? faqDataEn : faqData;
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -49,16 +88,18 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
           <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,56px)", color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
-            Často kladené dotazy
+            {isEn ? "Frequently Asked Questions" : "Často kladené dotazy"}
           </h2>
           <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: "rgba(255,255,255,0.65)", margin: "0 auto" }}>
-            Zajímá vás, jak spolupráce probíhá v praxi? Připravili jsme odpovědi na otázky, které od klientů dostáváme nejčastěji.
+            {isEn
+              ? "Wondering how collaboration works in practice? Here are answers to the questions clients ask most often."
+              : "Zajímá vás, jak spolupráce probíhá v praxi? Připravili jsme odpovědi na otázky, které od klientů dostáváme nejčastěji."}
           </p>
         </div>
 
         {/* Accordion */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-          {faqData.map((faq, i) => {
+          {items.map((faq, i) => {
             const isOpen = open === i;
             return (
               <div

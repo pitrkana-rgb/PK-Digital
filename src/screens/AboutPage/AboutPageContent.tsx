@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 const FeatureIcon = ({ children }: { children: React.ReactNode }) => (
   <div style={{
@@ -55,6 +56,29 @@ const featurePoints = [
   },
 ];
 
+const featurePointsEn = [
+  {
+    Icon: DataIcon,
+    title: "Data-driven website design",
+    text: "With over 10 years of corporate experience in data and visualization, I design websites to be clear, structured, and aligned with business goals.",
+  },
+  {
+    Icon: AIIcon,
+    title: "Data, design, and AI together",
+    text: "Unlike common web designers, I combine web design with analytics and modern AI tools that help increase conversions and efficiency.",
+  },
+  {
+    Icon: SpeedIcon,
+    title: "Fast project delivery",
+    text: "Thanks to modern tools, I can prepare a prototype within days and usually deliver a complete website in 14 days.",
+  },
+  {
+    Icon: GrowthIcon,
+    title: "Website as a growth engine",
+    text: "Every website is built not just as a company presentation, but as a practical tool for acquiring customers.",
+  },
+];
+
 const useFadeIn = (threshold = 0.15) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -73,8 +97,11 @@ const useFadeIn = (threshold = 0.15) => {
 /** About page body — used on /kontakt after Firemní údaje (no top hero; starts with first image section) */
 export const AboutPageContent = (): JSX.Element => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const isEn = language === "en";
   const section1 = useFadeIn();
   const section2 = useFadeIn();
+  const points = isEn ? featurePointsEn : featurePoints;
 
   return (
     <>
@@ -103,7 +130,7 @@ export const AboutPageContent = (): JSX.Element => {
                   }} />
                   <img
                     src="/Founder.png"
-                    alt="Petr Kaňa – zakladatel PK-Digital"
+                    alt={isEn ? "Petr Kana - founder of PK-Digital" : "Petr Kaňa – zakladatel PK-Digital"}
                     style={{ width: "100%", height: "520px", objectFit: "cover", display: "block", position: "relative", zIndex: 1 }}
                     className="about-img"
                   />
@@ -120,24 +147,24 @@ export const AboutPageContent = (): JSX.Element => {
                   fontSize: "clamp(26px, 3.5vw, 42px)", lineHeight: 1.15,
                   color: "#fff", margin: "0 0 28px", letterSpacing: "-0.02em",
                 }}>
-                  <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Kdo tvoří</span>{" "}
-                  webové stránky
+                  <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{isEn ? "Who builds" : "Kdo tvoří"}</span>{" "}
+                  {isEn ? "your website" : "webové stránky"}
                 </h2>
                 <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
                   <p style={{
                     fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "17px",
                     color: "rgba(255,255,255,0.92)", lineHeight: 1.5, margin: 0,
                   }}>
-                    Pomáhám firmám vytvářet moderní weby, které přivádějí nové klienty.
+                    {isEn ? "I help companies build modern websites that bring in new clients." : "Pomáhám firmám vytvářet moderní weby, které přivádějí nové klienty."}
                   </p>
                   <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, margin: 0 }}>
-                    Jmenuji se Petr Kaňa a více než 10 let se věnuji práci s daty, analytikou a digitálními technologiemi. Během této doby jsem pomáhal firmám lépe porozumět jejich datům, vizualizovat je a využívat pro lepší rozhodování.
+                    {isEn ? "My name is Petr Kana and I have spent more than 10 years working with data, analytics, and digital technologies." : "Jmenuji se Petr Kaňa a více než 10 let se věnuji práci s daty, analytikou a digitálními technologiemi. Během této doby jsem pomáhal firmám lépe porozumět jejich datům, vizualizovat je a využívat pro lepší rozhodování."}
                   </p>
                   <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, margin: 0 }}>
-                    Dnes tyto zkušenosti propojuji s tvorbou moderních webových stránek a AI nástrojů. Díky tomu nevznikají jen designově hezké weby, ale funkční digitální nástroje, které pomáhají firmám růst, získávat nové zákazníky a efektivně pracovat s návštěvníky webu.
+                    {isEn ? "Today I combine this experience with modern web development and AI tools. The result is not only visually attractive websites, but practical digital systems that help companies grow." : "Dnes tyto zkušenosti propojuji s tvorbou moderních webových stránek a AI nástrojů. Díky tomu nevznikají jen designově hezké weby, ale funkční digitální nástroje, které pomáhají firmám růst, získávat nové zákazníky a efektivně pracovat s návštěvníky webu."}
                   </p>
                   <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, margin: 0 }}>
-                    Za projektem PK-Digital stojí jednoduchá myšlenka — propojit data, design a moderní technologie, aby web nebyl pouze vizitkou firmy, ale skutečným nástrojem pro její růst.
+                    {isEn ? "PK-Digital is built on one idea: connect data, design, and modern technology so a website becomes a real growth tool, not just a business card." : "Za projektem PK-Digital stojí jednoduchá myšlenka — propojit data, design a moderní technologie, aby web nebyl pouze vizitkou firmy, ale skutečným nástrojem pro její růst."}
                   </p>
                 </div>
 
@@ -165,7 +192,7 @@ export const AboutPageContent = (): JSX.Element => {
                     onMouseDown={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(0.97)"; }}
                     onMouseUp={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-3px)"; }}
                   >
-                    Nezávazná konzultace
+                    {isEn ? "Free consultation" : "Nezávazná konzultace"}
                   </button>
                 </div>
               </div>
@@ -196,14 +223,14 @@ export const AboutPageContent = (): JSX.Element => {
                   fontSize: "clamp(26px, 3.5vw, 42px)", lineHeight: 1.15,
                   color: "#fff", margin: "0 0 36px", letterSpacing: "-0.02em",
                 }}>
-                  Proč si vybrat{" "}
+                  {isEn ? "Why choose " : "Proč si vybrat "}
                   <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                    právě mě?
+                    {isEn ? "me?" : "právě mě?"}
                   </span>
                 </h2>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-                  {featurePoints.map((fp, i) => (
+                  {points.map((fp, i) => (
                     <div key={i} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
                       <FeatureIcon><fp.Icon /></FeatureIcon>
                       <div>

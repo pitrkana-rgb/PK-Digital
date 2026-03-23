@@ -2,21 +2,43 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { MenuIcon, XIcon } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-
-const navigationItems = [
-    { label: "Domů", targetId: "hero", path: "/" },
-    { label: "Služby", targetId: "pricing", path: "/" },
-    { label: "FAQ", targetId: "faq", path: "/" },
-    { label: "Kontakt", targetId: "company-info", path: "/kontakt" },
-];
-
-
+import { useLanguage } from "../i18n/LanguageContext";
 
 export const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+    const { language, setLanguage } = useLanguage();
+
+    const t = language === "en" ? {
+        navHome: "Home",
+        navServices: "Services",
+        navFaq: "FAQ",
+        navContact: "Contact",
+        writeUs: "Contact us",
+        openMenu: "Open menu",
+        closeMenu: "Close menu",
+        backHomeAria: "PK Digital – back to homepage",
+        languageLabel: "Language",
+    } : {
+        navHome: "Domů",
+        navServices: "Služby",
+        navFaq: "FAQ",
+        navContact: "Kontakt",
+        writeUs: "Napište nám",
+        openMenu: "Otevřít menu",
+        closeMenu: "Zavřít menu",
+        backHomeAria: "AI-agency – zpět na začátek",
+        languageLabel: "Jazyk",
+    };
+
+    const navigationItems = [
+        { label: t.navHome, targetId: "hero", path: "/" },
+        { label: t.navServices, targetId: "pricing", path: "/" },
+        { label: t.navFaq, targetId: "faq", path: "/" },
+        { label: t.navContact, targetId: undefined, path: "/kontakt" },
+    ] as const;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -36,19 +58,21 @@ export const Header = () => {
     };
 
     const handleNavClick = (item: typeof navigationItems[0]) => {
-        if (location.pathname === item.path && item.path === "/kontakt" && item.targetId) {
-            scrollToSection(item.targetId);
+        if (item.path === "/kontakt") {
+            if (location.pathname !== "/kontakt") {
+                navigate("/kontakt");
+            } else {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
             setMenuOpen(false);
             return;
         }
-        if (location.pathname === item.path && item.path === "/") {
+        if (location.pathname === item.path && item.path === "/" && item.targetId) {
             scrollToSection(item.targetId);
         } else {
             navigate(item.path);
-            if (item.path === "/") {
+            if (item.path === "/" && item.targetId) {
                 setTimeout(() => scrollToSection(item.targetId), 120);
-            } else if (item.targetId) {
-                setTimeout(() => scrollToSection(item.targetId), 180);
             }
         }
         setMenuOpen(false);
@@ -72,7 +96,7 @@ export const Header = () => {
                             type="button"
                             onClick={() => handleNavClick(navigationItems[0])}
                             className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-md"
-                            aria-label="AI-agency – zpět na začátek"
+                            aria-label={t.backHomeAria}
                         >
                             <img
                                 src="/Company_logo_V2.png"
@@ -110,6 +134,39 @@ export const Header = () => {
                     </div>
 
                     <div className="flex justify-end items-center gap-4">
+                        <div className="hidden md:flex items-center">
+                            <div
+                                role="group"
+                                aria-label={t.languageLabel}
+                                style={{
+                                    display: "inline-flex",
+                                    border: "1px solid rgba(255,255,255,0.2)",
+                                    borderRadius: "999px",
+                                    overflow: "hidden",
+                                }}
+                            >
+                                {(["cs", "en"] as const).map((lang) => (
+                                    <button
+                                        key={lang}
+                                        type="button"
+                                        onClick={() => setLanguage(lang)}
+                                        style={{
+                                            padding: "7px 12px",
+                                            background: language === lang ? "rgba(0,229,255,0.18)" : "transparent",
+                                            color: language === lang ? "#00E5FF" : "rgba(255,255,255,0.85)",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontFamily: "'Space Grotesk', sans-serif",
+                                            fontWeight: 600,
+                                            fontSize: "12px",
+                                            textTransform: "uppercase",
+                                        }}
+                                    >
+                                        {lang}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                         <div className="hidden md:block">
                             <Button
                                 type="button"
@@ -127,13 +184,13 @@ export const Header = () => {
                                 }}
                                 className="animate-pulse-glow hero-primary-btn hover:brightness-105 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[#00E5FF]"
                             >
-                                Napište nám
+                                {t.writeUs}
                             </Button>
                         </div>
 
                         <button
                             type="button"
-                            aria-label={menuOpen ? "Zavřít menu" : "Otevřít menu"}
+                            aria-label={menuOpen ? t.closeMenu : t.openMenu}
                             aria-expanded={menuOpen}
                             onClick={() => setMenuOpen(o => !o)}
                             className="flex md:hidden items-center justify-center"
@@ -233,6 +290,46 @@ export const Header = () => {
                         </button>
                     ))}
 
+                    <div
+                        style={{
+                            marginTop: "16px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "10px",
+                            border: "1px solid rgba(255,255,255,0.12)",
+                            borderRadius: "999px",
+                            padding: "6px",
+                            position: "sticky",
+                            bottom: "12px",
+                            background: "rgba(0,0,0,0.55)",
+                            backdropFilter: "blur(8px)",
+                        }}
+                    >
+                        {(["cs", "en"] as const).map((lang) => (
+                            <button
+                                key={`mobile-lang-${lang}`}
+                                type="button"
+                                onClick={() => setLanguage(lang)}
+                                style={{
+                                    minWidth: "56px",
+                                    padding: "8px 12px",
+                                    borderRadius: "999px",
+                                    border: "none",
+                                    cursor: "pointer",
+                                    fontFamily: "'Space Grotesk',sans-serif",
+                                    fontWeight: 600,
+                                    fontSize: "12px",
+                                    textTransform: "uppercase",
+                                    background: language === lang ? "rgba(0,229,255,0.18)" : "transparent",
+                                    color: language === lang ? "#00E5FF" : "rgba(255,255,255,0.85)",
+                                }}
+                            >
+                                {lang}
+                            </button>
+                        ))}
+                    </div>
+
                     <button
                         type="button"
                         onClick={() => { navigate("/napiste-nam"); setMenuOpen(false); }}
@@ -249,7 +346,7 @@ export const Header = () => {
                             cursor: "pointer",
                         }}
                     >
-                        Napište nám
+                        {t.writeUs}
                     </button>
                 </div>
             </div>

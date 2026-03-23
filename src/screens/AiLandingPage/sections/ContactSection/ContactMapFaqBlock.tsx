@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const FAQItem = ({ q, a }: { q: string; a: string }) => {
   const [open, setOpen] = useState(false);
@@ -57,7 +58,10 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
   );
 };
 
-export const ContactMapFaqBlock = (): JSX.Element => (
+export const ContactMapFaqBlock = (): JSX.Element => {
+  const { language } = useLanguage();
+  const isEn = language === "en";
+  return (
   <section
     style={{
       width: "100%",
@@ -87,7 +91,7 @@ export const ContactMapFaqBlock = (): JSX.Element => (
             }}
           >
             <iframe
-              title="Mapa"
+              title={isEn ? "Map" : "Mapa"}
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2612.981881518349!2d16.376824976939943!3d49.10609338356163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4712959828766103%3A0xc0fb13a79d029583!2zTsSbbsSNaWNlIDMyOSwgNjY0IDkxIEl2YW7EjWljZQ!5e0!3m2!1scs!2scz!4v1709030000000!5m2!1scs!2scz"
               width="100%"
               height="100%"
@@ -108,20 +112,20 @@ export const ContactMapFaqBlock = (): JSX.Element => (
               marginBottom: "24px",
             }}
           >
-            Často kladené dotazy
+            {isEn ? "Frequently Asked Questions" : "Často kladené dotazy"}
           </h3>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <FAQItem
-              q="Jak rychle odpovídáte?"
-              a="Garantujeme odpověď do 24 hodin, ale většinou se ozýváme mnohem dříve – často už během pár hodin."
+              q={isEn ? "How fast do you reply?" : "Jak rychle odpovídáte?"}
+              a={isEn ? "We guarantee a reply within 24 hours, but usually much sooner - often within a few hours." : "Garantujeme odpověď do 24 hodin, ale většinou se ozýváme mnohem dříve – často už během pár hodin."}
             />
             <FAQItem
-              q="Je první konzultace zdarma?"
-              a="Ano, první 15-30minutová konzultace je zcela zdarma. Probereme váš nápad a zjistíme, zda jsme pro sebe vhodní partneři."
+              q={isEn ? "Is the first consultation free?" : "Je první konzultace zdarma?"}
+              a={isEn ? "Yes, the first 15-30 minute consultation is completely free. We discuss your idea and see if we are a good fit." : "Ano, první 15-30minutová konzultace je zcela zdarma. Probereme váš nápad a zjistíme, zda jsme pro sebe vhodní partneři."}
             />
             <FAQItem
-              q="Můžeme se potkat osobně?"
-              a="Určitě! Sídlíme v Ivančicích u Brna a rádi vás uvidíme u nás v kanceláři nebo přijedeme za vámi v rámci Jihomoravského kraje. Jinak fungujeme skvěle online."
+              q={isEn ? "Can we meet in person?" : "Můžeme se potkat osobně?"}
+              a={isEn ? "Absolutely. We are based in Ivančice near Brno and can meet in our office or travel to you in South Moravia. We also work very effectively online." : "Určitě! Sídlíme v Ivančicích u Brna a rádi vás uvidíme u nás v kanceláři nebo přijedeme za vámi v rámci Jihomoravského kraje. Jinak fungujeme skvěle online."}
             />
           </div>
         </div>
@@ -134,3 +138,4 @@ export const ContactMapFaqBlock = (): JSX.Element => (
     `}</style>
   </section>
 );
+};

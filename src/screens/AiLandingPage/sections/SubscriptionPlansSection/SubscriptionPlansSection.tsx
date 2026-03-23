@@ -6,11 +6,11 @@ const pricingPlans = [
     name: "Tvorba webu na míru",
     description: "Navrhujeme weby, které jasně komunikují hodnotu a přivádí zákazníky.",
     features: [
-      "Konzultace a návrh prototypu včetně cenové kalkulace zdarma",
-      "Funkční web běžně dodán do 14 dnů",
-      "Plně optimalizovaná mobilní verze",
-      "Napojení na CRM a další systémy",
-      "Monitoring měření návštěvnosti",
+      "Web, který odpovídá vaší značce a stylu",
+      "Design, který vás odliší od konkurence",
+      "Bezproblémové zobrazení na mobilu i počítači",
+      "Možnost napojení na vaše nástroje a systémy",
+      "Připraveno pro další růst a rozšiřování",
     ],
     highlighted: true,
     cta: "Chci web",
@@ -19,10 +19,11 @@ const pricingPlans = [
     name: "Modernizace stránek",
     description: "Zvyšujeme výkon stávajících webů bez nutnosti začínat od nuly.",
     features: [
-      "Konzultace a návrh redesignu včetně cenové kalkulace zdarma",
-      "Nový vizuální návrh připraven běžně do 14 dnů",
-      "Optimalizace rychlosti a technického výkonu",
-      "Zlepšení UX a SEO optimalizace",
+      "Analýza slabých míst vašeho webu",
+      "Modernější vzhled bez nutnosti začínat od nuly",
+      "Lepší přehlednost a orientace pro návštěvníky",
+      "Rychlejší načítání a stabilnější fungování",
+      "Lepší viditelnost ve vyhledávání",
     ],
     highlighted: false,
     cta: "Chci modernizaci",
@@ -31,10 +32,11 @@ const pricingPlans = [
     name: "Automatizace a AI agenti",
     description: "Navrhujeme automatizace, které snižují náklady a nahrazují rutinní práci.",
     features: [
-      "Konzultace a mapování procesů zdarma",
-      "Do 3 dnů připravíme demo automatizace včetně cenové kalkulace",
-      "Nasazení automatizace běžně do 14 dnů",
-      "Monitoring, vyhodnocování a další optimalizace",
+      "Mapování procesů a identifikace úspor",
+      "Automatizace rutinní komunikace (AI, chatboty)",
+      "Integrace mezi systémy (CRM, email, web)",
+      "Snížení nákladů na operativu",
+      "Škálování bez navyšování týmu",
     ],
     highlighted: false,
     cta: "Chci automatizaci",
@@ -43,6 +45,49 @@ const pricingPlans = [
 
 import { SectionDivider } from "../../components/SectionDivider";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../../../../i18n/LanguageContext";
+
+const pricingPlansEn = [
+  {
+    name: "Website Development",
+    description: "We design websites that clearly communicate your value and bring customers.",
+    features: [
+      "Website aligned with your brand and style",
+      "Design that sets you apart from competitors",
+      "Seamless display on mobile and desktop",
+      "Option to integrate your tools and systems",
+      "Prepared for future growth and expansion",
+    ],
+    highlighted: true,
+    cta: "I want a website",
+  },
+  {
+    name: "Website Modernization",
+    description: "We improve performance of existing websites without starting from scratch.",
+    features: [
+      "Analysis of your website weak points",
+      "Modern look without starting from zero",
+      "Better clarity and navigation for visitors",
+      "Faster loading and more stable operation",
+      "Better search engine visibility",
+    ],
+    highlighted: false,
+    cta: "I want modernization",
+  },
+  {
+    name: "Automation and AI Agents",
+    description: "We design automations that reduce costs and replace repetitive work.",
+    features: [
+      "Process mapping and savings identification",
+      "Automation of routine communication (AI, chatbots)",
+      "Integrations between systems (CRM, email, web)",
+      "Reduced operating costs",
+      "Scaling without growing your team",
+    ],
+    highlighted: false,
+    cta: "I want automation",
+  },
+];
 
 /* ── Card component shared by desktop grid + mobile carousel ── */
 const PricingCard = ({ plan, navigate }: { plan: typeof pricingPlans[0]; navigate: (path: string) => void }) => (
@@ -166,10 +211,13 @@ const SWIPE_THRESHOLD = 50;
 
 export const SubscriptionPlansSection = (): JSX.Element => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [mobileIdx, setMobileIdx] = useState(0);
   const touchStartX = useRef<number>(0);
+  const isEn = language === "en";
+  const plans = isEn ? pricingPlansEn : pricingPlans;
 
-  const goTo = (idx: number) => setMobileIdx(Math.max(0, Math.min(pricingPlans.length - 1, idx)));
+  const goTo = (idx: number) => setMobileIdx(Math.max(0, Math.min(plans.length - 1, idx)));
 
   const onTouchStart = (e: any) => {
     touchStartX.current = e.touches[0].clientX;
@@ -188,19 +236,19 @@ export const SubscriptionPlansSection = (): JSX.Element => {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,56px)", color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
-            Vyberte službu
+          <h2 id="pricing-heading" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,56px)", color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
+            {isEn ? "Choose a Service" : "Vyberte službu"}
           </h2>
           <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: "rgba(255,255,255,0.65)", margin: "0 auto" }}>
-            Každý projekt je pro nás unikátní. Navrhneme řešení přesně podle vašich potřeb.
+            {isEn ? "Every project is unique for us. We design a solution tailored to your needs." : "Každý projekt je pro nás unikátní. Navrhneme řešení přesně podle vašich potřeb."}
             <br />
-            Do 3 dnů od konzultace získáte jasný plán, návrh řešení a cenovou kalkulaci – vše nezávazně a zdarma.
+            {isEn ? "Within 3 days after consultation, you get a clear plan, solution proposal, and pricing - all free and with no obligation." : "Do 3 dnů od konzultace získáte jasný plán, návrh řešení a cenovou kalkulaci – vše nezávazně a zdarma."}
           </p>
         </div>
 
         {/* Desktop grid (hidden on mobile) */}
         <div className="pricing-grid-desktop" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "24px", alignItems: "stretch" }}>
-          {pricingPlans.map(plan => (
+          {plans.map(plan => (
             <PricingCard key={plan.name} plan={plan} navigate={navigate} />
           ))}
         </div>
@@ -216,16 +264,16 @@ export const SubscriptionPlansSection = (): JSX.Element => {
               className="pricing-carousel-track"
               style={{
                 display: "flex",
-                width: `${pricingPlans.length * 100}%`,
-                transform: `translateX(${-mobileIdx * (100 / pricingPlans.length)}%)`,
+                width: `${plans.length * 100}%`,
+                transform: `translateX(${-mobileIdx * (100 / plans.length)}%)`,
                 transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
               }}
             >
-              {pricingPlans.map((plan) => (
+              {plans.map((plan) => (
                 <div
                   key={plan.name}
                   className="pricing-mobile-slide"
-                  style={{ flex: `0 0 ${100 / pricingPlans.length}%`, padding: "20px 0 4px", boxSizing: "border-box" }}
+                  style={{ flex: `0 0 ${100 / plans.length}%`, padding: "20px 0 4px", boxSizing: "border-box" }}
                 >
                   <PricingCard plan={plan} navigate={navigate} />
                 </div>
@@ -235,11 +283,11 @@ export const SubscriptionPlansSection = (): JSX.Element => {
 
           {/* Dots */}
           <div className="pricing-dots" style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "24px" }}>
-            {pricingPlans.map((_, i) => (
+            {plans.map((_, i) => (
               <button
                 key={i}
                 type="button"
-                aria-label={`Přejít na kartu ${i + 1}`}
+                aria-label={isEn ? `Go to card ${i + 1}` : `Přejít na kartu ${i + 1}`}
                 onClick={() => goTo(i)}
                 style={{
                   width: i === mobileIdx ? "28px" : "8px", height: "8px",
@@ -258,7 +306,7 @@ export const SubscriptionPlansSection = (): JSX.Element => {
               <button
                 key={label}
                 type="button"
-                aria-label={dir === -1 ? "Předchozí" : "Další"}
+                aria-label={dir === -1 ? (isEn ? "Previous" : "Předchozí") : (isEn ? "Next" : "Další")}
                 onClick={() => goTo(mobileIdx + dir)}
                 style={{
                   width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer",
@@ -267,7 +315,7 @@ export const SubscriptionPlansSection = (): JSX.Element => {
                   color: "rgba(255,255,255,0.7)",
                   fontFamily: "system-ui", fontSize: "16px",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  opacity: (dir === -1 && mobileIdx === 0) || (dir === 1 && mobileIdx === pricingPlans.length - 1) ? 0.3 : 1,
+                  opacity: (dir === -1 && mobileIdx === 0) || (dir === 1 && mobileIdx === plans.length - 1) ? 0.3 : 1,
                   transition: "background 200ms ease",
                 }}
                 onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,229,255,0.12)"; b.style.borderColor = "rgba(0,229,255,0.35)"; }}
@@ -299,12 +347,12 @@ export const SubscriptionPlansSection = (): JSX.Element => {
           flex-shrink: 0;
         }
 
-        /* Equal-height cards: mobile carousel slides */
+        /* Equal-height cards: mobile carousel slides (same height for every slide) */
         .pricing-mobile-slide {
           display: flex;
           flex-direction: column;
           align-items: stretch;
-          min-height: clamp(520px, 78vh, 760px);
+          box-sizing: border-box;
         }
         .pricing-mobile-slide .pricing-card-outer {
           flex: 1;
@@ -324,7 +372,23 @@ export const SubscriptionPlansSection = (): JSX.Element => {
           .pricing-carousel-track { will-change: transform; align-items: stretch; }
           .pricing-card { transform: scale(1) !important; }
           .popular-card { transform: scale(1) !important; }
-          .pricing-cta { padding: 10px 16px !important; font-size: 14px !important; margin-top: auto; }
+          /* +50px vs prior mobile clamp; fixed height so all three cards match */
+          .pricing-mobile-slide {
+            height: clamp(414px, calc(54.6vh + 50px), 582px);
+          }
+          /* Remove flex-grow on feature list so CTA stays under bullets; extra space at bottom of card */
+          .pricing-mobile-slide .pricing-card-body > ul {
+            flex: 0 0 auto !important;
+          }
+          .pricing-mobile-slide .pricing-card-body {
+            flex: 1 1 auto !important;
+            gap: 16px !important;
+          }
+          .pricing-mobile-slide .pricing-card-outer {
+            flex: 1 1 auto !important;
+            min-height: 0;
+          }
+          .pricing-cta { padding: 10px 16px !important; font-size: 14px !important; margin-top: 0; }
           .pricing-bullet { font-size: 13px !important; line-height: 1.55 !important; }
           .pricing-dots { margin-top: 18px !important; }
           .pricing-arrows { margin-top: 10px !important; }

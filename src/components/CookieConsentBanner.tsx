@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const STORAGE_KEY = "cookie-consent";
 
 export const CookieConsentBanner = (): JSX.Element | null => {
+  const { language } = useLanguage();
+  const isEn = language === "en";
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -29,7 +32,7 @@ export const CookieConsentBanner = (): JSX.Element | null => {
   return (
     <div
       role="dialog"
-      aria-label="Cookie souhlas"
+      aria-label={isEn ? "Cookie consent" : "Cookie souhlas"}
       style={{
         position: "fixed",
         bottom: 0,
@@ -48,9 +51,9 @@ export const CookieConsentBanner = (): JSX.Element | null => {
       }}
     >
       <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.9)", margin: 0, flex: "1 1 280px" }}>
-        Tento web používá cookies pro zlepšení vašeho zážitku.{" "}
+        {isEn ? "This website uses cookies to improve your experience. " : "Tento web používá cookies pro zlepšení vašeho zážitku. "}
         <Link to="/zasady-ochrany-soukromi" style={{ color: "#00E5FF", textDecoration: "underline" }}>
-          Zásady ochrany soukromí
+          {isEn ? "Privacy Policy" : "Zásady ochrany soukromí"}
         </Link>
       </p>
       <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
@@ -69,7 +72,7 @@ export const CookieConsentBanner = (): JSX.Element | null => {
             cursor: "pointer",
           }}
         >
-          Přijmout vše
+          {isEn ? "Accept all" : "Přijmout vše"}
         </button>
         <button
           type="button"
@@ -86,7 +89,7 @@ export const CookieConsentBanner = (): JSX.Element | null => {
             cursor: "pointer",
           }}
         >
-          Pouze nezbytné
+          {isEn ? "Essential only" : "Pouze nezbytné"}
         </button>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { SectionDivider } from "../../components/SectionDivider";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 /* ── Modern SaaS-style icons (unique gradient ids per SVG) ──────── */
 const ConsultationIcon = () => (
@@ -151,7 +152,42 @@ const steps = [
   },
 ];
 
-export const AiDesignFeaturesSection = (): JSX.Element => (
+const stepsEn = [
+  {
+    num: "01",
+    title: "Free consultation",
+    description:
+      "You fill in a short form and within 24 hours we call to schedule a free consultation and discuss your website goals.",
+    Icon: ConsultationIcon,
+  },
+  {
+    num: "02",
+    title: "Free prototype",
+    description:
+      "Within 3 days you get a front-end prototype and a tailored pricing proposal. Then you decide whether to continue.",
+    Icon: PrototypeIcon,
+  },
+  {
+    num: "03",
+    title: "Website development",
+    description:
+      "After prototype approval, we build the complete website, typically delivered within 14 days based on project complexity.",
+    Icon: DevelopmentIcon,
+  },
+  {
+    num: "04",
+    title: "Handover and management",
+    description:
+      "We personally walk you through the website, show key metrics, and teach you how to edit it easily.",
+    Icon: HandoverIcon,
+  },
+];
+
+export const AiDesignFeaturesSection = (): JSX.Element => {
+  const { language } = useLanguage();
+  const isEn = language === "en";
+  const items = isEn ? stepsEn : steps;
+  return (
   <section id="features" style={{ width: "100%", backgroundColor: "transparent", padding: "80px 0 100px", marginTop: "-50px", marginBottom: "-50px" }}>
     <SectionDivider />
     <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
@@ -159,11 +195,13 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
       {/* Section header */}
       <div className="how-it-works-head" style={{ marginBottom: "56px", textAlign: "center" }}>
         <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,52px)", lineHeight: 1.1, color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", maxWidth: "770px" }}>
-          Jak probíhá{" "}
-          <span style={{ background: "linear-gradient(135deg,#E040FB,#00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>spolupráce</span>
+          {isEn ? "How the " : "Jak probíhá "}
+          <span style={{ background: "linear-gradient(135deg,#E040FB,#00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{isEn ? "collaboration works" : "spolupráce"}</span>
         </h2>
         <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", margin: "0 auto" }}>
-          Díky pokročilým AI nástrojům dokážeme výrazně zrychlit vývoj webu — prototyp připravíme do 3 dnů a hotový web dodáme již za 14 dnů.
+          {isEn
+            ? "With advanced AI tools, we significantly accelerate development - prototype in 3 days and full website in 14 days."
+            : "Díky pokročilým AI nástrojům dokážeme výrazně zrychlit vývoj webu — prototyp připravíme do 3 dnů a hotový web dodáme již za 14 dnů."}
         </p>
       </div>
 
@@ -207,7 +245,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
             pointerEvents: "none",
           }}
         >
-          24 hodin
+          {isEn ? "24 hours" : "24 hodin"}
         </div>
         <div
           className="stepper-time-label"
@@ -230,7 +268,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
             pointerEvents: "none",
           }}
         >
-          3 dny
+          {isEn ? "3 days" : "3 dny"}
         </div>
         <div
           className="stepper-time-label"
@@ -253,10 +291,10 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
             pointerEvents: "none",
           }}
         >
-          14 dnů
+          {isEn ? "14 days" : "14 dnů"}
         </div>
 
-        {steps.map((step) => (
+        {items.map((step) => (
           <div
             key={step.num}
             className="step-block"
@@ -422,3 +460,4 @@ export const AiDesignFeaturesSection = (): JSX.Element => (
     `}</style>
   </section>
 );
+};

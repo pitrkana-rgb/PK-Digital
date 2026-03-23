@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 type AnimatedBadgeValue = {
   count: number;
@@ -80,6 +81,27 @@ const badges: Badge[] = [
     numericValue: 14,
     suffix: " dnů",
     description: "Standardně dodáme kompletní web do 14 dnů od schválení prototypu.",
+  },
+];
+
+const badgesEn: Badge[] = [
+  {
+    title: "Satisfaction guarantee",
+    numericValue: 100,
+    suffix: " %",
+    description: "We finalize your website only when you are fully satisfied with the result.",
+  },
+  {
+    title: "Free prototype",
+    numericValue: 3,
+    suffix: " days",
+    description: "Get a free website prototype within 3 days, then decide on future collaboration.",
+  },
+  {
+    title: "Website delivered",
+    numericValue: 14,
+    suffix: " days",
+    description: "We typically deliver a complete website within 14 days after prototype approval.",
   },
 ];
 
@@ -203,7 +225,10 @@ const AnimatedBadge = ({ badge, delay }: { badge: Badge; delay: number }) => {
 };
 
 /* ── Section ─────────────────────────────────────────────────────── */
-export const UserTestimonialsSection = (): JSX.Element => (
+export const UserTestimonialsSection = (): JSX.Element => {
+  const { language } = useLanguage();
+  const items = language === "en" ? badgesEn : badges;
+  return (
   <section
     className="stats-section"
     style={{ width: "100%", backgroundColor: "transparent", padding: "110px 0 60px" }}
@@ -213,7 +238,7 @@ export const UserTestimonialsSection = (): JSX.Element => (
         style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "24px" }}
         className="stats-grid"
       >
-        {badges.map((badge, i) => (
+        {items.map((badge, i) => (
           <AnimatedBadge key={badge.title} badge={badge} delay={i * 120} />
         ))}
       </div>
@@ -251,3 +276,4 @@ export const UserTestimonialsSection = (): JSX.Element => (
     `}</style>
   </section>
 );
+};

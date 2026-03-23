@@ -175,16 +175,25 @@ export const AiLandingPage = (): JSX.Element => {
           }}
           aria-hidden="true"
         />
-        {/* Base dark scrim (+0.20 vs previous 0.60 → 0.80) */}
+        {/* Base dark scrim (reduced by additional 10%) */}
         <div
           className="absolute inset-0"
-          style={{ background: "rgba(0,0,0,0.80)" }}
+          style={{ background: "rgba(0,0,0,0.61)" }}
         />
         {/* Bottom fade into page */}
         <div
           className="absolute inset-0"
           style={{
-            background: "linear-gradient(to bottom, transparent 70%, #010204 100%)",
+            background:
+              "linear-gradient(to bottom, rgba(1,2,4,0) 55%, rgba(1,2,4,0.72) 82%, #010204 100%)",
+          }}
+        />
+        {/* Hard bottom edge mask — ensures video seam is hidden */}
+        <div
+          className="absolute left-0 right-0 bottom-0"
+          style={{
+            height: "240px",
+            background: "linear-gradient(to bottom, rgba(1,2,4,0) 0%, #010204 82%)",
           }}
         />
       </div>
@@ -237,6 +246,17 @@ export const AiLandingPage = (): JSX.Element => {
       </main>
 
       <style>{`
+        /* Wide desktop: keep top of hero video in frame */
+        @media (min-width: 1200px) {
+          .hero-video-bg-wrap .hero-video {
+            object-position: center top !important;
+          }
+          .hero-video-bg-wrap .hero-video-poster {
+            background-position: center top !important;
+            background-size: cover;
+          }
+        }
+
         @media(max-width:768px) {
           /* Hero video area: 30% shorter on mobile (900px → 630px) */
           .hero-video-bg-wrap {

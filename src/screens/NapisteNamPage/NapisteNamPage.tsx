@@ -4,8 +4,19 @@ import { LandingStylePageRoot } from "../../components/PageBackground";
 import { SiteFooterSection } from "../AiLandingPage/sections/SiteFooterSection/SiteFooterSection";
 import { ContactFormBlock } from "../AiLandingPage/sections/ContactSection/ContactFormBlock";
 import { ContactMapFaqBlock } from "../AiLandingPage/sections/ContactSection/ContactMapFaqBlock";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 export const NapisteNamPage = (): JSX.Element => {
+  const { language } = useLanguage();
+  const t = language === "en" ? {
+    reply: "We reply within 24h",
+    titlePre: "Take the first step to your new website.",
+    titleAccent: "It only takes 5 minutes.",
+  } : {
+    reply: "Odpovídáme do 24h",
+    titlePre: "Udělejte první krok k novému webu.",
+    titleAccent: "Zabere to jen 5 minut.",
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -25,12 +36,12 @@ export const NapisteNamPage = (): JSX.Element => {
               textTransform: "uppercase", letterSpacing: "0.1em"
             }}>
               <span style={{ width: "8px", height: "8px", background: "#00E5FF", borderRadius: "50%", display: "inline-block" }} />
-              Odpovídáme do 24h
+              {t.reply}
             </span>
           </div>
           <h1 className="contact-hero-title" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#fff", margin: 0, letterSpacing: "-0.02em" }}>
-            Udělejte první krok k novému webu.{" "}
-            <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Zabere to jen 5 minut.</span>
+            {t.titlePre}{" "}
+            <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{t.titleAccent}</span>
           </h1>
         </div>
       </section>

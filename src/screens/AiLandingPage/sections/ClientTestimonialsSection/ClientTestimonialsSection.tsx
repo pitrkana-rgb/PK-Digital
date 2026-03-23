@@ -1,5 +1,6 @@
 import { useCallback, useState, type CSSProperties } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const GOOGLE_STAR = "#fbbc04";
 
@@ -21,9 +22,9 @@ const reviews: Review[] = [
   },
   {
     id: "2",
-    author: "Jan Novák",
-    date: "8. 2. 2026",
-    text: "Profesionální přístup od první konzultace. Web je přehledný, rychlý a přesně odpovídá našemu brandu — doporučuji všem, kdo chtějí moderní online prezentaci.",
+    author: "Marcel Abraham",
+    date: "21. 03. 2026",
+    text: "Vřele doporučuji, s výsledkem jsem maximálně spokojený. Skvělá komunikace, majitel aktivně vylepšoval mé zadání a výsledek je skvělý. Cílem bylo mít moderní stránky do jednoho měsíce. Výsledek - projekt hotový za polovinu času a design předčil mé očekávání!",
     avatarBg: "linear-gradient(135deg, #00897b, #00695c)",
   },
   {
@@ -234,8 +235,33 @@ const navBtnStyle: CSSProperties = {
 };
 
 export const ClientTestimonialsSection = (): JSX.Element => {
+  const { language } = useLanguage();
   const [carouselIndex, setCarouselIndex] = useState(0);
   const n = reviews.length;
+  const localizedReviews =
+    language === "en"
+      ? reviews.map((r) => {
+          if (r.id === "1") {
+            return {
+              ...r,
+              text: "Maximum satisfaction with the modernization of my website! I especially appreciate the excellent personal approach and very fast delivery - everything was completed within 14 days.",
+            };
+          }
+          if (r.id === "2") {
+            return {
+              ...r,
+              text: "I highly recommend them. I am fully satisfied with the result. Great communication, the owner actively improved my brief, and the output is excellent. The goal was a modern website within one month. Result: completed in half the time and the design exceeded my expectations!",
+            };
+          }
+          if (r.id === "3") {
+            return {
+              ...r,
+              text: "Great communication and a result exactly as agreed. The e-shop rebuild was delivered on time and customers appreciate the new look and loading speed.",
+            };
+          }
+          return r;
+        })
+      : reviews;
 
   const goPrev = useCallback(() => {
     setCarouselIndex((i) => (i - 1 + n) % n);
@@ -276,7 +302,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             textAlign: "center",
           }}
         >
-          Zkušenosti našich klientů
+          {language === "en" ? "Client Experience" : "Zkušenosti našich klientů"}
         </h2>
 
         <div className="gr-widget-row">
@@ -286,25 +312,25 @@ export const ClientTestimonialsSection = (): JSX.Element => {
               <GoogleLogoMark className="gr-google-logo-svg" />
             </div>
             <div className="gr-stats-copy">
-              <p className="gr-stats-title">Vynikající</p>
+              <p className="gr-stats-title">{language === "en" ? "Excellent" : "Vynikající"}</p>
               <div className="gr-stats-stars">
                 <GoogleStars size={26} />
               </div>
-              <p className="gr-stats-sub">Na základě 3 hodnocení</p>
+              <p className="gr-stats-sub">{language === "en" ? "Based on 3 reviews" : "Na základě 3 hodnocení"}</p>
               <a
                 className="gr-stats-link"
                 href="https://maps.app.goo.gl/HFuawq4yJgxCo54X6"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Zobrazit všechny recenze
+                {language === "en" ? "View all reviews" : "Zobrazit všechny recenze"}
               </a>
             </div>
           </aside>
 
           {/* Desktop / tablet: grid */}
           <div className="gr-cards-grid gr-cards-desktop">
-            {reviews.map((r) => (
+            {localizedReviews.map((r) => (
               <ReviewCard key={r.id} r={r} />
             ))}
           </div>
@@ -315,7 +341,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
               <button
                 type="button"
                 className="gr-carousel-nav gr-carousel-prev"
-                aria-label="Předchozí recenze"
+                aria-label={language === "en" ? "Previous review" : "Předchozí recenze"}
                 onClick={goPrev}
                 style={navBtnStyle}
               >
@@ -328,7 +354,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
                     transform: `translateX(-${carouselIndex * 100}%)`,
                   }}
                 >
-                  {reviews.map((r) => (
+                  {localizedReviews.map((r) => (
                     <div key={r.id} className="gr-carousel-slide">
                       <ReviewCard r={r} />
                     </div>
@@ -338,15 +364,15 @@ export const ClientTestimonialsSection = (): JSX.Element => {
               <button
                 type="button"
                 className="gr-carousel-nav gr-carousel-next"
-                aria-label="Další recenze"
+                aria-label={language === "en" ? "Next review" : "Další recenze"}
                 onClick={goNext}
                 style={navBtnStyle}
               >
                 ›
               </button>
             </div>
-            <div className="gr-carousel-dots" role="tablist" aria-label="Výběr recenze">
-              {reviews.map((r, i) => (
+            <div className="gr-carousel-dots" role="tablist" aria-label={language === "en" ? "Review picker" : "Výběr recenze"}>
+              {localizedReviews.map((r, i) => (
                 <button
                   key={r.id}
                   type="button"

@@ -8,20 +8,23 @@ import { PrivacyPolicyPage } from "./screens/PrivacyPolicyPage/PrivacyPolicyPage
 import { TermsPage } from "./screens/TermsPage/TermsPage";
 import { NotFoundPage } from "./screens/NotFoundPage/NotFoundPage";
 import { CookieConsentBanner } from "./components/CookieConsentBanner";
+import { LanguageProvider } from "./i18n/LanguageContext";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AiLandingPage />} />
-        <Route path="/kontakt" element={<ContactPage />} />
-        <Route path="/napiste-nam" element={<NapisteNamPage />} />
-        <Route path="/o-nas" element={<Navigate to="/kontakt" replace />} />
-        <Route path="/zasady-ochrany-soukromi" element={<PrivacyPolicyPage />} />
-        <Route path="/podminky-uziti" element={<TermsPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <CookieConsentBanner />
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AiLandingPage />} />
+          <Route path="/kontakt" element={<ContactPage />} />
+          <Route path="/napiste-nam" element={<NapisteNamPage />} />
+          <Route path="/o-nas" element={<Navigate to="/kontakt" replace />} />
+          <Route path="/zasady-ochrany-soukromi" element={<PrivacyPolicyPage />} />
+          <Route path="/podminky-uziti" element={<TermsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+        <CookieConsentBanner />
+      </BrowserRouter>
+    </LanguageProvider>
   </StrictMode>,
 );

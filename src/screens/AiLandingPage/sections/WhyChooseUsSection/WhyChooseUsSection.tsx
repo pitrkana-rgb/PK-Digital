@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionDivider } from "../../components/SectionDivider";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const usPoints = [
     "Bezplatný prototyp do 3 dnů",
@@ -20,6 +21,24 @@ const themPoints = [
     "Šablonový proces bez prostoru pro změny",
 ];
 
+const usPointsEn = [
+    "Free prototype within 3 days",
+    "AI tools that improve conversions",
+    "Average delivery time: 14 days",
+    "Continuous optimization based on data",
+    "Transparent pricing with no hidden fees",
+    "Personal approach and flexible communication",
+];
+
+const themPointsEn = [
+    "You pay before the first preview",
+    "Static websites without intelligence",
+    "Weeks to months of waiting",
+    "Delivery and then no further support",
+    "Unclear pricing and surcharges",
+    "Template process without room for changes",
+];
+
 const CheckIcon = () => (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
         <circle cx="10" cy="10" r="10" fill="rgba(0,229,255,0.14)" />
@@ -35,7 +54,7 @@ const CrossIcon = () => (
 );
 
 /* ── The two cards as individual components so they can be reused in carousel ── */
-const PkCard = () => (
+const PkCard = ({ points }: { points: string[] }) => (
     <div
         className="why-card"
         style={{
@@ -74,7 +93,7 @@ const PkCard = () => (
                 <img src="/Company_logo_V2.png" alt="PK Digital" style={{ height: "32px", width: "auto", display: "block" }} />
             </div>
             <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "18px" }}>
-                {usPoints.map((point, i) => (
+                {points.map((point, i) => (
                     <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
                         <CheckIcon />
                         <span className="why-bullet" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "15px", color: "#FFFFFF", lineHeight: 1.45 }}>{point}</span>
@@ -85,7 +104,7 @@ const PkCard = () => (
     </div>
 );
 
-const ThemCard = () => (
+const ThemCard = ({ points, title }: { points: string[]; title: string }) => (
     <div
         className="why-card"
         style={{
@@ -115,10 +134,10 @@ const ThemCard = () => (
     >
         <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingBottom: "24px", borderBottom: "1px solid rgba(255,255,255,0.10)" }}>
             <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "rgba(255,255,255,0.28)", flexShrink: 0, boxShadow: "0 0 14px rgba(255,255,255,0.08)" }} />
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "18px", color: "rgba(255,255,255,0.75)", letterSpacing: "-0.01em" }}>Běžné agentury</span>
+            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "18px", color: "rgba(255,255,255,0.75)", letterSpacing: "-0.01em" }}>{title}</span>
         </div>
         <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "18px" }}>
-            {themPoints.map((point, i) => (
+            {points.map((point, i) => (
                 <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
                     <CrossIcon />
                     <span className="why-bullet why-bullet-muted" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500, fontSize: "15px", color: "rgba(255,255,255,0.78)", lineHeight: 1.45, fontStyle: "normal" }}>{point}</span>
@@ -128,7 +147,6 @@ const ThemCard = () => (
     </div>
 );
 
-const cards = [<PkCard key="pk" />, <ThemCard key="them" />];
 const SWIPE_THRESHOLD = 50;
 
 export const WhyChooseUsSection = (): JSX.Element => {
@@ -137,6 +155,12 @@ export const WhyChooseUsSection = (): JSX.Element => {
     const [visible, setVisible] = useState(false);
     const [mobileIdx, setMobileIdx] = useState(0);
     const navigate = useNavigate();
+    const { language } = useLanguage();
+    const isEn = language === "en";
+    const cards = [
+      <PkCard key="pk" points={isEn ? usPointsEn : usPoints} />,
+      <ThemCard key="them" title={isEn ? "Typical agencies" : "Běžné agentury"} points={isEn ? themPointsEn : themPoints} />,
+    ];
 
     useEffect(() => {
         const el = ref.current;
@@ -201,13 +225,13 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         letterSpacing: "-0.02em",
                         maxWidth: "770px",
                     }}>
-                        Proč si vybrat{" "}
+                        {isEn ? "Why choose " : "Proč si vybrat "}
                         <span style={{
                             background: "linear-gradient(135deg, #E040FB, #00E5FF)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                             backgroundClip: "text",
-                        }}>právě nás</span>
+                        }}>{isEn ? "us" : "právě nás"}</span>
                     </h2>
                     <p className="section-sub" style={{
                         fontFamily: "'Space Grotesk', sans-serif",
@@ -215,14 +239,16 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         color: "rgba(255,255,255,0.55)",
                         margin: "0 auto",
                     }}>
-                        Stavíme weby rychle, využíváme AI a neseme odpovědnost za to, že vaše řešení skutečně funguje.
+                        {isEn
+                          ? "We build websites fast, use AI effectively, and take responsibility for delivering solutions that actually work."
+                          : "Stavíme weby rychle, využíváme AI a neseme odpovědnost za to, že vaše řešení skutečně funguje."}
                     </p>
                 </div>
 
                 {/* ── Desktop: 2-column grid ── */}
                 <div className="why-grid-desktop" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", alignItems: "stretch" }}>
-                    <PkCard />
-                    <ThemCard />
+                    <PkCard points={isEn ? usPointsEn : usPoints} />
+                    <ThemCard title={isEn ? "Typical agencies" : "Běžné agentury"} points={isEn ? themPointsEn : themPoints} />
                 </div>
 
                 {/* ── Mobile: sliding track carousel + touch swipe ── */}
@@ -251,7 +277,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                             <button
                                 key={i}
                                 type="button"
-                                aria-label={`Karta ${i + 1}`}
+                                aria-label={isEn ? `Card ${i + 1}` : `Karta ${i + 1}`}
                                 onClick={() => goTo(i)}
                                 style={{
                                     width: i === mobileIdx ? "28px" : "8px", height: "8px",
@@ -270,7 +296,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                             <button
                                 key={label}
                                 type="button"
-                                aria-label={dir === -1 ? "Předchozí" : "Další"}
+                                aria-label={dir === -1 ? (isEn ? "Previous" : "Předchozí") : (isEn ? "Next" : "Další")}
                                 onClick={() => goTo(mobileIdx + dir)}
                                 style={{
                                     width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer",
@@ -320,7 +346,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                             el.style.transform = "";
                         }}
                     >
-                        Začněte s bezplatnou konzultací
+                        {isEn ? "Start with a free consultation" : "Začněte s bezplatnou konzultací"}
                     </button>
                 </div>
             </div>

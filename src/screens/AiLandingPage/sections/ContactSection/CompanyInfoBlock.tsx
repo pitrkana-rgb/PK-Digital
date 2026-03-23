@@ -1,6 +1,7 @@
 import {
   Phone, MapPin, Building2, FileText, Mail, Landmark, Inbox,
 } from "lucide-react";
+import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const companyInfoOrdered = [
   { icon: Building2, label: "Název firmy", text: "PK-Digital" },
@@ -13,7 +14,22 @@ const companyInfoOrdered = [
   { icon: Landmark, label: "IBAN", text: "CZ60 5500 0000 0010 2529 0491" },
 ];
 
-export const CompanyInfoBlock = (): JSX.Element => (
+export const CompanyInfoBlock = (): JSX.Element => {
+  const { language } = useLanguage();
+  const isEn = language === "en";
+  const items = isEn
+    ? [
+      { icon: Building2, label: "Company name", text: "PK-Digital" },
+      { icon: MapPin, label: "Address", text: "Němčice 329, Ivančice 664 91" },
+      { icon: Phone, label: "Phone", text: "+420 725 703 868" },
+      { icon: Mail, label: "Email", text: "info@pk-digital.cz" },
+      { icon: FileText, label: "Company ID", text: "21185301" },
+      { icon: Inbox, label: "Data box", text: "f4i6cbb" },
+      { icon: Landmark, label: "Bank account", text: "1025290491/5500" },
+      { icon: Landmark, label: "IBAN", text: "CZ60 5500 0000 0010 2529 0491" },
+    ]
+    : companyInfoOrdered;
+  return (
   <section
     style={{
       width: "100%",
@@ -34,7 +50,7 @@ export const CompanyInfoBlock = (): JSX.Element => (
           textAlign: "center",
         }}
       >
-        Firemní údaje
+        {isEn ? "Company Information" : "Firemní údaje"}
       </h2>
       <div
         style={{
@@ -54,7 +70,7 @@ export const CompanyInfoBlock = (): JSX.Element => (
           }}
           className="company-info-grid"
         >
-          {companyInfoOrdered.map(({ icon: Icon, label, text }) => (
+          {items.map(({ icon: Icon, label, text }) => (
             <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: "16px" }}>
               <div
                 style={{
@@ -111,3 +127,4 @@ export const CompanyInfoBlock = (): JSX.Element => (
     `}</style>
   </section>
 );
+};
