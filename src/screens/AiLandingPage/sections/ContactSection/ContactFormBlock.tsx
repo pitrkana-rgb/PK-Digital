@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { CheckCircle2, ChevronDown, Send } from "lucide-react";
-import { supabase } from "../../../../lib/supabase";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const PROJECT_TYPE_OPTIONS = [
@@ -26,6 +25,7 @@ const FEATURES_OPTIONS = [
 ];
 
 const DOMAIN_OPTIONS = ["Ano", "Ne"];
+const SUBMIT_LEAD_FN_URL = "https://hmgicymajfjsnwkctvqf.supabase.co/functions/v1/submit-lead";
 
 type FormState = {
   name: string;
@@ -227,8 +227,31 @@ export const ContactFormBlock = (): JSX.Element => {
       message: `${isEn ? "Requested features" : "Požadované funkce"}: ${form.features.length ? form.features.join(", ") : isEn ? "None" : "Žádné"}\n${isEn ? "Domain/hosting" : "Doména/hosting"}: ${form.hasDomain}`,
     };
     try {
-      const { error } = await supabase.from("leads").insert([row]);
-      if (error) throw error;
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+      if (!anonKey) {
+        throw new Error("Missing Supabase anon key");
+      }
+
+      const response = await fetch(SUBMIT_LEAD_FN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${anonKey}`,
+        },
+        body: JSON.stringify(row),
+      });
+
+      if (!response.ok) {
+        let detail = "";
+        try {
+          const data = await response.json();
+          detail = data?.error || data?.message || "";
+        } catch {
+          /* ignore non-JSON response */
+        }
+        throw new Error(detail || `Request failed with status ${response.status}`);
+      }
+
       setForm(init);
       setSubmitted(true);
     } catch {
