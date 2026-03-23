@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type TouchEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type TouchEvent } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
@@ -379,11 +379,15 @@ const slidesEn: Slide[] = [
   },
 ];
 
+const OFFER_MOBILE_MQ = "(max-width:900px)";
+
 export const CoNabizimeSection = (): JSX.Element => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const [activeIdx, setActiveIdx] = useState(0);
+  const [mobileSlideMinHeight, setMobileSlideMinHeight] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
+  const offerCarouselTrackRef = useRef<HTMLDivElement | null>(null);
   const SWIPE_THRESHOLD = 50;
   const isEn = language === "en";
   const activeSlides = isEn ? slidesEn : slides;
@@ -412,6 +416,42 @@ export const CoNabizimeSection = (): JSX.Element => {
     if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
     else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
   };
+
+  useLayoutEffect(() => {
+    const track = offerCarouselTrackRef.current;
+    if (!track) return;
+
+    const mq = window.matchMedia(OFFER_MOBILE_MQ);
+
+    const measure = () => {
+      if (!mq.matches) {
+        setMobileSlideMinHeight(null);
+        return;
+      }
+      const slides = Array.from(track.querySelectorAll<HTMLElement>(".offer-slide"));
+      if (!slides.length) return;
+      slides.forEach((el) => {
+        el.style.minHeight = "";
+      });
+      void track.offsetHeight;
+      let maxH = 0;
+      slides.forEach((el) => {
+        maxH = Math.max(maxH, el.offsetHeight);
+      });
+      setMobileSlideMinHeight(maxH > 0 ? maxH : null);
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+    mq.addEventListener("change", measure);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      mq.removeEventListener("change", measure);
+      window.removeEventListener("resize", measure);
+    };
+  }, [isEn]);
 
   return (
     <section
@@ -472,11 +512,16 @@ export const CoNabizimeSection = (): JSX.Element => {
         <div className="offer-carousel" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div className="offer-carousel-viewport" aria-label={isEn ? "What we offer carousel" : "Carousel Co nabízíme"}>
             <div
+              ref={offerCarouselTrackRef}
               className="offer-carousel-track"
               style={{ transform: `translateX(${-activeIdx * 100}%)` }}
             >
               {activeSlides.map((slide) => (
-                <div key={slide.id} className="offer-slide">
+                <div
+                  key={slide.id}
+                  className="offer-slide"
+                  style={mobileSlideMinHeight != null ? { minHeight: mobileSlideMinHeight } : undefined}
+                >
                   <div className="offer-premium-card">
                     <div className="offer-premium-card-inner">
                       {/* Minimal ambient lights (gentle, premium, non-distracting) */}
@@ -1052,20 +1097,48 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         @media(max-width:900px){
-          .offer-premium-card-inner{ padding: 15px; }
-          .offer-gallery-grid{ flex-direction: column; gap: 8px; }
+          /* Equal slide height (minHeight from JS) + flex fill; CTA pinned to bottom of text column */
+          .offer-slide{
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+          }
+          .offer-premium-card{
+            flex: 1 1 auto;
+            min-height: 0;
+            width: 100%;
+          }
+          .offer-premium-card-inner{
+            padding: 15px;
+            flex: 1 1 auto;
+            min-height: 0;
+          }
+          .offer-gallery-grid{
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 auto;
+            min-height: 0;
+          }
           .offer-gallery-left{
-            padding: 40px 0;
+            /* 20px less padding above card title vs desktop-mobile 40px; 20px less below CTA before image */
+            padding: 20px 0 20px;
             text-align: left;
             display: flex;
             flex-direction: column;
             align-items: stretch;
+            flex: 1 1 auto;
+            min-height: 0;
           }
           .offer-left-copy{
             width: 100%;
             text-align: left;
+            flex: 0 1 auto;
+            min-height: 0;
           }
-          .offer-gallery-right{ width: 100%; }
+          .offer-gallery-right{
+            width: 100%;
+            flex: 0 0 auto;
+          }
           .offer-title-wrap{
             text-align: left;
             width: 100%;
@@ -1108,7 +1181,8 @@ export const CoNabizimeSection = (): JSX.Element => {
             padding: 10px 16px !important;
             font-size: 14px !important;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: auto !important;
+            flex-shrink: 0;
           }
           .notebook-screen{ transform: none; }
           .offer-carousel-controls{ margin-top: 0; }

@@ -372,23 +372,31 @@ export const SubscriptionPlansSection = (): JSX.Element => {
           .pricing-carousel-track { will-change: transform; align-items: stretch; }
           .pricing-card { transform: scale(1) !important; }
           .popular-card { transform: scale(1) !important; }
-          /* +50px vs prior mobile clamp; fixed height so all three cards match */
+          /* Fixed slide height so all three cards match (+20px vs previous mobile clamp) */
           .pricing-mobile-slide {
-            height: clamp(414px, calc(54.6vh + 50px), 582px);
+            height: clamp(454px, calc(54.6vh + 90px), 622px);
           }
-          /* Remove flex-grow on feature list so CTA stays under bullets; extra space at bottom of card */
+          /* Feature list does not grow; CTA uses margin-top:auto to sit at bottom of flex body */
           .pricing-mobile-slide .pricing-card-body > ul {
             flex: 0 0 auto !important;
           }
           .pricing-mobile-slide .pricing-card-body {
             flex: 1 1 auto !important;
             gap: 16px !important;
+            min-height: 0;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
           }
           .pricing-mobile-slide .pricing-card-outer {
             flex: 1 1 auto !important;
             min-height: 0;
           }
-          .pricing-cta { padding: 10px 16px !important; font-size: 14px !important; margin-top: 0; }
+          .pricing-mobile-slide .pricing-cta {
+            padding: 10px 16px !important;
+            font-size: 14px !important;
+            margin-top: auto !important;
+            flex-shrink: 0;
+          }
           .pricing-bullet { font-size: 13px !important; line-height: 1.55 !important; }
           .pricing-dots { margin-top: 18px !important; }
           .pricing-arrows { margin-top: 10px !important; }
