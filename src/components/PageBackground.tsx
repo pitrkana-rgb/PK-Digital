@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
+import { HeroBackgroundVideo } from "./HeroBackgroundVideo";
 
-/** Same base surface as `AiLandingPage` (gradients + dark tone; no hero video). */
+/** Same base surface as `AiLandingPage` (gradients + dark tone). */
 export const landingPageSurfaceStyle: CSSProperties = {
   backgroundColor: "#010204",
   backgroundImage:
@@ -28,13 +29,19 @@ type LandingStylePageRootProps = {
   className?: string;
   /** Merged after defaults (e.g. NotFound tweaks). */
   style?: CSSProperties;
+  /** Same looping hero video as the home page (desktop asset on all breakpoints). Default true. */
+  includeHeroVideo?: boolean;
 };
 
 /**
- * Full-page shell matching the landing page background (gradients + noise).
- * Does not include the hero video — use on inner routes (kontakt, legal, 404, …).
+ * Full-page shell matching the landing page background (gradients + noise + optional hero video).
  */
-export const LandingStylePageRoot = ({ children, className = "", style }: LandingStylePageRootProps): JSX.Element => (
+export const LandingStylePageRoot = ({
+  children,
+  className = "",
+  style,
+  includeHeroVideo = true,
+}: LandingStylePageRootProps): JSX.Element => (
   <div
     className={`relative w-full min-h-screen overflow-x-hidden ${className}`}
     style={{
@@ -45,6 +52,7 @@ export const LandingStylePageRoot = ({ children, className = "", style }: Landin
     }}
   >
     <NoiseTextureOverlay />
+    {includeHeroVideo ? <HeroBackgroundVideo /> : null}
     {children}
   </div>
 );
