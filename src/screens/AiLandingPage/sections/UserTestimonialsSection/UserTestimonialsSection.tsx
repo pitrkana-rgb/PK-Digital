@@ -68,19 +68,19 @@ const badges: Badge[] = [
     title: "Garance spokojenosti",
     numericValue: 100,
     suffix: " %",
-    description: "Web dokončujeme až ve chvíli, kdy jste s výsledkem plně spokojeni.",
+    description: "Neodevzdáváme, dokud nejste spokojeni.",
   },
   {
     title: "Prototyp zdarma",
     numericValue: 3,
     suffix: " dny",
-    description: "Do 3 dnů máte zdarma prototyp webu, podle kterého se rozhodnete o budoucí spolupráci.",
+    description: "Dle prototypu se rozhodnete o budoucí spolupráci.",
   },
   {
     title: "Hotový web",
     numericValue: 14,
     suffix: " dnů",
-    description: "Standardně dodáme kompletní web do 14 dnů od schválení prototypu.",
+    description: "Rychlé dodání bez kompromisů v kvalitě",
   },
 ];
 
@@ -253,7 +253,15 @@ export const UserTestimonialsSection = (): JSX.Element => {
         .badge-title-line2 { margin-top: 1px !important; }
         .badge-title-line2::before { content: none !important; }
         .badge-value { font-size: 22px !important; }
-        .badge-desc { font-size: 10px !important; line-height: 1.35 !important; display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+        /* Detail: three lines visible (was 2) */
+        .badge-desc {
+          font-size: 10px !important;
+          line-height: 1.35 !important;
+          display: -webkit-box !important;
+          -webkit-line-clamp: 3 !important;
+          -webkit-box-orient: vertical !important;
+          overflow: hidden !important;
+        }
         .stats-section { padding-top: 60px !important; padding-bottom: 40px !important; }
       }
       @media(min-width:768px){

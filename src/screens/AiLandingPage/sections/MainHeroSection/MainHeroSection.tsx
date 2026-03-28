@@ -142,7 +142,7 @@ export const MainHeroSection = (): JSX.Element => {
           fontWeight: 400,
           fontSize: "clamp(16px, 2.2vw, 19px)",
           lineHeight: 1.65,
-          color: "rgba(255,255,255,0.72)",
+          color: "rgba(255,255,255,0.88)",
           maxWidth: "680px",
           margin: "0 0 32px 0",
         }}>
