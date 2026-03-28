@@ -29,18 +29,18 @@ type LandingStylePageRootProps = {
   className?: string;
   /** Merged after defaults (e.g. NotFound tweaks). */
   style?: CSSProperties;
-  /** Same looping hero video as the home page (desktop asset on all breakpoints). Default true. */
+  /** Looping hero video (same as home). Off by default — only `AiLandingPage` includes it directly. */
   includeHeroVideo?: boolean;
 };
 
 /**
- * Full-page shell matching the landing page background (gradients + noise + optional hero video).
+ * Full-page shell matching the landing page background (gradients + noise). Hero video is landing-only.
  */
 export const LandingStylePageRoot = ({
   children,
   className = "",
   style,
-  includeHeroVideo = true,
+  includeHeroVideo = false,
 }: LandingStylePageRootProps): JSX.Element => (
   <div
     className={`relative w-full min-h-screen overflow-x-hidden ${className}`}
