@@ -2,6 +2,19 @@ import { useRef, useEffect, useState } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 
+const publicAssetUrl = (file: string): string => {
+    const f = file.replace(/^\//, "");
+    const base =
+        // Vite-style base
+        (globalThis as any)?.import?.meta?.env?.BASE_URL ??
+        // CRA-style base
+        (globalThis as any)?.process?.env?.PUBLIC_URL ??
+        "/";
+    const b = String(base || "/");
+    const normalized = b.endsWith("/") ? b : `${b}/`;
+    return `${normalized}${f}`;
+};
+
 const usPoints = [
     "Bezplatný prototyp do 3 dnů",
     "AI nástroje zvyšující konverze",
@@ -21,17 +34,28 @@ const usPointsEn = [
 ];
 
 const iconSrcs = [
-    "/prototyp_icon.png",
-    "/AI_icon.png",
-    "/doba_realizace_icon.png",
-    "/optimalizace_icon.png",
-    "/cenik_icon.png",
-    "/osobni_pristup_icon.png",
+    "prototyp_icon.png",
+    "AI_icon.png",
+    "doba_realizace_icon.png",
+    "optimalizace_icon.png",
+    "cenik_icon.png",
+    "osobni_pristup_icon.png",
 ] as const;
 
 const TrustBadgeIcon = ({ index }: { index: number }) => {
-    const src = iconSrcs[index] ?? iconSrcs[0];
-    return <img src={src} alt="" aria-hidden="true" className="why-trust-icon-img" />;
+    const src = publicAssetUrl(iconSrcs[index] ?? iconSrcs[0]);
+    return (
+        <img
+            src={src}
+            alt=""
+            aria-hidden="true"
+            className="why-trust-icon-img"
+            onError={(e) => {
+                // fallback for unusual base-path setups
+                (e.currentTarget as HTMLImageElement).src = `/${iconSrcs[index] ?? iconSrcs[0]}`;
+            }}
+        />
+    );
 };
 
 const TrustBadge = ({ text, index }: { text: string; index: number }) => (
