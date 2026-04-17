@@ -4,11 +4,8 @@ import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const publicAssetUrl = (file: string): string => {
   const f = file.replace(/^\//, "");
-  const base =
-    (globalThis as any)?.import?.meta?.env?.BASE_URL ??
-    (globalThis as any)?.process?.env?.PUBLIC_URL ??
-    "/";
-  const b = String(base || "/");
+  const base = (import.meta as any)?.env?.BASE_URL ?? "./";
+  const b = String(base || "./");
   const normalized = b.endsWith("/") ? b : `${b}/`;
   return `${normalized}${f}`;
 };
