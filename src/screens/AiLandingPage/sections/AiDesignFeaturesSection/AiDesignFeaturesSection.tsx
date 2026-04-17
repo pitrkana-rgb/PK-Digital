@@ -2,17 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 
-const publicAssetUrl = (file: string): string => {
-  const f = file.replace(/^\//, "");
-  const base = (import.meta as any)?.env?.BASE_URL ?? "/";
-  if (typeof window !== "undefined") {
-    const baseAbs = new URL(String(base || "/"), window.location.origin);
-    return new URL(f, baseAbs).toString();
-  }
-  const b = String(base || "/");
-  const normalized = b.endsWith("/") ? b : `${b}/`;
-  return `${normalized}${f}`;
-};
+import konzultaceIcon from "../../../../assets/icons/konzultace_icon.png";
+import prototypIcon from "../../../../assets/icons/prototyp_icon.png";
+import vyvojWebuIcon from "../../../../assets/icons/vyvoj_webu_icon.png";
+import predaniWebuIcon from "../../../../assets/icons/predani_webu_icon.png";
 
 type StepItem = {
   num: string;
@@ -27,28 +20,28 @@ const steps: StepItem[] = [
     title: "Nezávazná konzultace",
     description:
       "Vyplníte krátký dotazník a do 24 hodin vám zavolám, abychom domluvili bezplatnou konzultaci a probrali vaši představu o webu.",
-    iconSrc: "konzultace_icon.png",
+    iconSrc: konzultaceIcon,
   },
   {
     num: "02",
     title: "Prototyp zdarma",
     description:
       "Do 3 dnů získáte ukázku front-end verze webu a cenovou nabídku na míru. Podle prototypu se rozhodnete, zda chcete pokračovat.",
-    iconSrc: "prototyp_icon.png",
+    iconSrc: prototypIcon,
   },
   {
     num: "03",
     title: "Vývoj webu",
     description:
       "Po schválení prototypu připravím kompletní web, který je standardně hotový do 14 dnů dle náročnosti projektu.",
-    iconSrc: "vyvoj_webu_icon.png",
+    iconSrc: vyvojWebuIcon,
   },
   {
     num: "04",
     title: "Předání a správa",
     description:
       "Web vám osobně vysvětlím, ukážu statistiky návštěvnosti a naučím vás, jak jej jednoduše upravovat.",
-    iconSrc: "predani_webu_icon.png",
+    iconSrc: predaniWebuIcon,
   },
 ];
 
@@ -58,28 +51,28 @@ const stepsEn: StepItem[] = [
     title: "Free consultation",
     description:
       "You fill in a short form and within 24 hours we call to schedule a free consultation and discuss your website goals.",
-    iconSrc: "konzultace_icon.png",
+    iconSrc: konzultaceIcon,
   },
   {
     num: "02",
     title: "Free prototype",
     description:
       "Within 3 days you get a front-end prototype and a tailored pricing proposal. Then you decide whether to continue.",
-    iconSrc: "prototyp_icon.png",
+    iconSrc: prototypIcon,
   },
   {
     num: "03",
     title: "Website development",
     description:
       "After prototype approval, we build the complete website, typically delivered within 14 days based on project complexity.",
-    iconSrc: "vyvoj_webu_icon.png",
+    iconSrc: vyvojWebuIcon,
   },
   {
     num: "04",
     title: "Handover and management",
     description:
       "We personally walk you through the website, show key metrics, and teach you how to edit it easily.",
-    iconSrc: "predani_webu_icon.png",
+    iconSrc: predaniWebuIcon,
   },
 ];
 
@@ -178,15 +171,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
                 <div className="step-hex">
                   <div className="step-hex-inner">
                     <div className="step-hex-icon">
-                      <img
-                        src={publicAssetUrl(step.iconSrc)}
-                        alt=""
-                        aria-hidden="true"
-                        className="step-hex-icon-img"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = `/${step.iconSrc.replace(/^\//, "")}`;
-                        }}
-                      />
+                      <img src={step.iconSrc} alt="" aria-hidden="true" className="step-hex-icon-img" />
                     </div>
                     <div className="step-hex-num" style={{ color }}>
                       {isEn ? "STEP" : "KROK"} {idx + 1}

@@ -2,18 +2,12 @@ import { useRef, useEffect, useState } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 
-const publicAssetUrl = (file: string): string => {
-    const f = file.replace(/^\//, "");
-    // Route-proof absolute URL (works even on /en, /cs, etc.)
-    const base = (import.meta as any)?.env?.BASE_URL ?? "/";
-    if (typeof window !== "undefined") {
-        const baseAbs = new URL(String(base || "/"), window.location.origin);
-        return new URL(f, baseAbs).toString();
-    }
-    const b = String(base || "/");
-    const normalized = b.endsWith("/") ? b : `${b}/`;
-    return `${normalized}${f}`;
-};
+import prototypIcon from "../../../../assets/icons/prototyp_icon.png";
+import aiIcon from "../../../../assets/icons/AI_icon.png";
+import dobaRealizaceIcon from "../../../../assets/icons/doba_realizace_icon.png";
+import optimalizaceIcon from "../../../../assets/icons/optimalizace_icon.png";
+import cenikIcon from "../../../../assets/icons/cenik_icon.png";
+import osobniPristupIcon from "../../../../assets/icons/osobni_pristup_icon.png";
 
 const usPoints = [
     "Bezplatný prototyp do 3 dnů",
@@ -34,26 +28,21 @@ const usPointsEn = [
 ];
 
 const iconSrcs = [
-    "prototyp_icon.png",
-    "AI_icon.png",
-    "doba_realizace_icon.png",
-    "optimalizace_icon.png",
-    "cenik_icon.png",
-    "osobni_pristup_icon.png",
+    prototypIcon,
+    aiIcon,
+    dobaRealizaceIcon,
+    optimalizaceIcon,
+    cenikIcon,
+    osobniPristupIcon,
 ] as const;
 
 const TrustBadgeIcon = ({ index }: { index: number }) => {
-    const src = publicAssetUrl(iconSrcs[index] ?? iconSrcs[0]);
     return (
         <img
-            src={src}
+            src={iconSrcs[index] ?? iconSrcs[0]}
             alt=""
             aria-hidden="true"
             className="why-trust-icon-img"
-            onError={(e) => {
-                // fallback
-                (e.currentTarget as HTMLImageElement).src = `/${(iconSrcs[index] ?? iconSrcs[0]).replace(/^\//, "")}`;
-            }}
         />
     );
 };
