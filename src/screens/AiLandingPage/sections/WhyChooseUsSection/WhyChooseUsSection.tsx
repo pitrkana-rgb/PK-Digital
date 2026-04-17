@@ -4,10 +4,13 @@ import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const publicAssetUrl = (file: string): string => {
     const f = file.replace(/^\//, "");
-    // Vite uses import.meta.env.BASE_URL. In this repo, `vite.config.ts` sets `base: "./"`,
-    // so absolute `/icon.png` would break in production (and even locally if opened from a subpath).
-    const base = (import.meta as any)?.env?.BASE_URL ?? "./";
-    const b = String(base || "./");
+    // Route-proof absolute URL (works even on /en, /cs, etc.)
+    const base = (import.meta as any)?.env?.BASE_URL ?? "/";
+    if (typeof window !== "undefined") {
+        const baseAbs = new URL(String(base || "/"), window.location.origin);
+        return new URL(f, baseAbs).toString();
+    }
+    const b = String(base || "/");
     const normalized = b.endsWith("/") ? b : `${b}/`;
     return `${normalized}${f}`;
 };
@@ -48,8 +51,8 @@ const TrustBadgeIcon = ({ index }: { index: number }) => {
             aria-hidden="true"
             className="why-trust-icon-img"
             onError={(e) => {
-                // fallback for unusual base-path setups
-                (e.currentTarget as HTMLImageElement).src = `/${iconSrcs[index] ?? iconSrcs[0]}`;
+                // fallback
+                (e.currentTarget as HTMLImageElement).src = `/${(iconSrcs[index] ?? iconSrcs[0]).replace(/^\//, "")}`;
             }}
         />
     );

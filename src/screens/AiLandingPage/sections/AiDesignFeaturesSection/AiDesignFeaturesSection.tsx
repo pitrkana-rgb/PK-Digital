@@ -4,8 +4,12 @@ import { useLanguage } from "../../../../i18n/LanguageContext";
 
 const publicAssetUrl = (file: string): string => {
   const f = file.replace(/^\//, "");
-  const base = (import.meta as any)?.env?.BASE_URL ?? "./";
-  const b = String(base || "./");
+  const base = (import.meta as any)?.env?.BASE_URL ?? "/";
+  if (typeof window !== "undefined") {
+    const baseAbs = new URL(String(base || "/"), window.location.origin);
+    return new URL(f, baseAbs).toString();
+  }
+  const b = String(base || "/");
   const normalized = b.endsWith("/") ? b : `${b}/`;
   return `${normalized}${f}`;
 };
@@ -180,7 +184,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
                         aria-hidden="true"
                         className="step-hex-icon-img"
                         onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = `/${step.iconSrc}`;
+                          (e.currentTarget as HTMLImageElement).src = `/${step.iconSrc.replace(/^\//, "")}`;
                         }}
                       />
                     </div>
