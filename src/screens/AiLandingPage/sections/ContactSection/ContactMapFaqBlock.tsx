@@ -5,7 +5,7 @@ import { useLanguage } from "../../../../i18n/LanguageContext";
 const FAQItem = ({ q, a }: { q: string; a: string }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", overflow: "hidden" }}>
+    <div style={{ borderBottom: "1px solid rgba(2,6,23,0.10)", overflow: "hidden" }}>
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -26,7 +26,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
             fontFamily: "'Space Grotesk',sans-serif",
             fontWeight: 600,
             fontSize: "17px",
-            color: open ? "#00E5FF" : "#fff",
+            color: open ? "#00E5FF" : "#070B14",
             transition: "color 250ms ease",
           }}
         >
@@ -36,7 +36,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
           style={{
             transform: open ? "rotate(180deg)" : "rotate(0)",
             transition: "transform 300ms ease",
-            color: open ? "#00E5FF" : "rgba(255,255,255,0.3)",
+            color: open ? "#00E5FF" : "rgba(7,11,20,0.35)",
           }}
         />
       </button>
@@ -48,7 +48,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
           paddingBottom: open ? "24px" : "0",
           fontFamily: "'Space Grotesk',sans-serif",
           fontSize: "15px",
-          color: "rgba(255,255,255,0.6)",
+          color: "rgba(7,11,20,0.64)",
           lineHeight: 1.6,
         }}
       >
@@ -67,10 +67,10 @@ export const ContactMapFaqBlock = (): JSX.Element => {
       width: "100%",
       padding: "0 0 100px",
       position: "relative",
-      backgroundColor: "transparent",
+      backgroundColor: "#ffffff",
     }}
   >
-    <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
+    <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
       <div
         style={{
           display: "grid",
@@ -85,9 +85,9 @@ export const ContactMapFaqBlock = (): JSX.Element => {
             style={{
               borderRadius: "24px",
               overflow: "hidden",
-              border: "1px solid rgba(255,255,255,0.08)",
+              border: "1px solid rgba(2,6,23,0.10)",
               height: "400px",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+              boxShadow: "0 18px 40px rgba(2,6,23,0.10)",
             }}
           >
             <iframe
@@ -95,7 +95,7 @@ export const ContactMapFaqBlock = (): JSX.Element => {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2612.981881518349!2d16.376824976939943!3d49.10609338356163!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4712959828766103%3A0xc0fb13a79d029583!2zTsSbbsSNaWNlIDMyOSwgNjY0IDkxIEl2YW7EjWljZQ!5e0!3m2!1scs!2scz!4v1709030000000!5m2!1scs!2scz"
               width="100%"
               height="100%"
-              style={{ border: 0, filter: "grayscale(1) invert(1) opacity(0.7)" }}
+              style={{ border: 0, filter: "grayscale(1) opacity(0.7)" }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -108,7 +108,7 @@ export const ContactMapFaqBlock = (): JSX.Element => {
               fontFamily: "'Space Grotesk',sans-serif",
               fontWeight: 700,
               fontSize: "24px",
-              color: "#fff",
+              color: "#070B14",
               marginBottom: "24px",
             }}
           >

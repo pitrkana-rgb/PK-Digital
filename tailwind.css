@@ -236,7 +236,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
 
-    --card: transparent;
+    --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
 
     --primary: 222.2 47.4% 11.2%;
@@ -299,7 +299,7 @@
     @apply bg-background text-foreground;
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background-color: #000000;
+    background-color: #ffffff;
   }
 
   /* Global accessible focus ring */

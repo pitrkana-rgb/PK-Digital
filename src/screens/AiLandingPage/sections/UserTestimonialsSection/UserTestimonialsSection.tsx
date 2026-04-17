@@ -15,7 +15,8 @@ const useAnimatedBadgeValue = (badge: Badge, start = false, duration = 1500): An
     if (!start) return;
 
     let startTime: number | null = null;
-    const isTimeBadge = badge.suffix.includes("dn");
+    const isTimeBadge = badge.suffix.includes("dn") || badge.suffix.includes("day");
+    const useHoursIntro = isTimeBadge && !badge.valuePrefix;
 
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -26,21 +27,28 @@ const useAnimatedBadgeValue = (badge: Badge, start = false, duration = 1500): An
       if (!isTimeBadge) {
         setValue({ count: Math.round(eased * badge.numericValue), suffix: badge.suffix });
       } else {
-        const phaseSplit = 0.62;
+        if (useHoursIntro) {
+          const phaseSplit = 0.62;
 
-        if (progress <= phaseSplit) {
-          // Phase 1: enough visual motion via hours 1..24.
-          const phaseProgress = progress / phaseSplit;
-          const phaseEased = 1 - Math.pow(1 - phaseProgress, 3);
-          const hours = Math.max(1, Math.round(1 + phaseEased * 23));
-          setValue({ count: hours, suffix: " h" });
+          if (progress <= phaseSplit) {
+            // Phase 1: enough visual motion via hours 1..24.
+            const phaseProgress = progress / phaseSplit;
+            const phaseEased = 1 - Math.pow(1 - phaseProgress, 3);
+            const hours = Math.max(1, Math.round(1 + phaseEased * 23));
+            setValue({ count: hours, suffix: " h" });
+          } else {
+            // Phase 2: switch to final unit/value (days) and count up.
+            const phaseProgress = (progress - phaseSplit) / (1 - phaseSplit);
+            const phaseEased = 1 - Math.pow(1 - phaseProgress, 3);
+            const fromDays = 1;
+            const toDays = badge.numericValue;
+            const days = Math.round(fromDays + (toDays - fromDays) * phaseEased);
+            setValue({ count: days, suffix: badge.suffix });
+          }
         } else {
-          // Phase 2: switch to final unit/value (days) and count up.
-          const phaseProgress = (progress - phaseSplit) / (1 - phaseSplit);
-          const phaseEased = 1 - Math.pow(1 - phaseProgress, 3);
           const fromDays = 1;
           const toDays = badge.numericValue;
-          const days = Math.round(fromDays + (toDays - fromDays) * phaseEased);
+          const days = Math.round(fromDays + (toDays - fromDays) * eased);
           setValue({ count: days, suffix: badge.suffix });
         }
       }
@@ -60,63 +68,105 @@ interface Badge {
   title: string;
   numericValue: number;
   suffix: string;        // e.g. " %" or " dny" or " dnů"
-  description: string;
+  valuePrefix?: string; // e.g. "Do "
+  icon: "prototype" | "delivery" | "satisfaction";
 }
 
 const badges: Badge[] = [
   {
-    title: "Garance spokojenosti",
-    numericValue: 100,
-    suffix: " %",
-    description: "Neodevzdáváme, dokud nejste spokojeni.",
-  },
-  {
     title: "Prototyp zdarma",
     numericValue: 3,
-    suffix: " dny",
-    description: "Dle prototypu se rozhodnete o budoucí spolupráci.",
+    suffix: " dnů",
+    valuePrefix: "Do ",
+    icon: "prototype",
   },
   {
     title: "Hotový web",
     numericValue: 14,
     suffix: " dnů",
-    description: "Rychlé dodání bez kompromisů v kvalitě",
+    valuePrefix: "Do ",
+    icon: "delivery",
+  },
+  {
+    title: "Garance spokojenosti",
+    numericValue: 100,
+    suffix: " %",
+    icon: "satisfaction",
   },
 ];
 
 const badgesEn: Badge[] = [
   {
-    title: "Satisfaction guarantee",
-    numericValue: 100,
-    suffix: " %",
-    description: "We finalize your website only when you are fully satisfied with the result.",
-  },
-  {
     title: "Free prototype",
     numericValue: 3,
     suffix: " days",
-    description: "Get a free website prototype within 3 days, then decide on future collaboration.",
+    icon: "prototype",
   },
   {
     title: "Website delivered",
     numericValue: 14,
     suffix: " days",
-    description: "We typically deliver a complete website within 14 days after prototype approval.",
+    icon: "delivery",
+  },
+  {
+    title: "Satisfaction guarantee",
+    numericValue: 100,
+    suffix: " %",
+    icon: "satisfaction",
   },
 ];
 
-/* ── Animated badge card ─────────────────────────────────────────── */
-const AnimatedBadge = ({ badge, delay }: { badge: Badge; delay: number }) => {
+const BadgeIcon = ({ type, isHero }: { type: Badge["icon"]; isHero: boolean }) => {
+  const stroke = isHero ? "rgba(255,255,255,0.94)" : "rgba(7,11,20,0.88)";
+
+  if (type === "prototype") {
+    return (
+      <svg width="70" height="70" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+        <rect x="10" y="12" width="38" height="26" rx="8" stroke={stroke} strokeWidth="2.2" />
+        <path d="M18 22h22M18 28h14" stroke={stroke} strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M22 46h14" stroke={stroke} strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M29 38v8" stroke={stroke} strokeWidth="2.2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  if (type === "delivery") {
+    return (
+      <svg width="70" height="70" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+        <rect x="11" y="15" width="25" height="19" rx="4" stroke={stroke} strokeWidth="2.2" />
+        <path d="M36 21h7l4 5v8h-3" stroke={stroke} strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx="19" cy="39" r="4" stroke={stroke} strokeWidth="2.2" />
+        <circle cx="40" cy="39" r="4" stroke={stroke} strokeWidth="2.2" />
+        <path d="M23 39h13" stroke={stroke} strokeWidth="2.2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg width="70" height="70" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+      <path d="M29 10 16 15v10.5c0 8.5 5.3 15.9 13 18.5 7.7-2.6 13-10 13-18.5V15L29 10Z" stroke={stroke} strokeWidth="2.2" strokeLinejoin="round" />
+      <path d="m22.8 27.9 4.3 4.3 8.6-9.3" stroke={stroke} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M21 46h16" stroke={stroke} strokeWidth="2.2" strokeLinecap="round" opacity="0.65" />
+    </svg>
+  );
+};
+
+/* ── Animated metric (compact strip item) ─────────────────────────── */
+const AnimatedMetric = ({ badge, delay, isHero }: { badge: Badge; delay: number; isHero: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
-  // Trigger when card enters viewport
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold: 0.3 }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.25 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -129,158 +179,150 @@ const AnimatedBadge = ({ badge, delay }: { badge: Badge; delay: number }) => {
     return () => clearTimeout(t);
   }, [visible, delay]);
 
-  const animated = useAnimatedBadgeValue(badge, started, 2475);
-  const titleParts = badge.title.split(/\s+/);
-  const titleLine1 = titleParts[0] ?? "";
-  const titleLine2 = titleParts.slice(1).join(" ") ?? "";
+  const animated = useAnimatedBadgeValue(badge, started, 4200);
 
   return (
-    <div
-      ref={ref}
-      className="badge-card"
-      style={{
-        background: "linear-gradient(145deg, rgba(13,27,42,0.9), rgba(13,27,42,0.55))",
-        border: "1px solid rgba(0,229,255,0.12)",
-        borderRadius: "20px",
-        padding: "28px 24px 24px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "center",
-        gap: "12px",
-        transition: "border-color 250ms ease, transform 250ms ease, box-shadow 250ms ease",
-        position: "relative",
-        overflow: "hidden",
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLDivElement;
-        el.style.borderColor = "rgba(0,229,255,0.35)";
-        el.style.transform = "translateY(-6px)";
-        el.style.boxShadow = "0 0 20px rgba(0,229,255,0.18), 0 24px 48px rgba(0,0,0,0.35)";
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLDivElement;
-        el.style.borderColor = "rgba(0,229,255,0.12)";
-        el.style.transform = "";
-        el.style.boxShadow = "";
-      }}
-    >
-      {/* Top accent line */}
-      <div style={{
-        position: "absolute", top: 0, left: "32px", right: "32px",
-        height: "2px",
-        background: "linear-gradient(90deg, #00E5FF, transparent)",
-        borderRadius: "1px",
-      }} />
-
-      {/* Title — on mobile shows as 2 lines (e.g. GARANCE / SPOKOJENOSTI) */}
-      <span
-        className="badge-title"
-        style={{
-          fontFamily: "'Space Grotesk',sans-serif",
-          fontWeight: 500, fontSize: "12px",
-          letterSpacing: "0.1em", color: "#00E5FF",
-          textTransform: "uppercase" as const,
-        }}
-      >
-        <span className="badge-title-line1">{titleLine1}</span>
-        <span className="badge-title-line2">{titleLine2}</span>
-      </span>
-
-      {/* Animated value */}
+    <div ref={ref} className="stats-metric">
       <div
-        className="badge-value"
+        className="stats-metric-top"
         style={{
-          fontFamily: "'Space Grotesk',sans-serif",
-          fontWeight: 700,
-          fontSize: "clamp(26px, 4.5vw, 42px)",
-          color: "#F0F4F8",
-          lineHeight: 1,
-          letterSpacing: "-0.03em",
-          // Smooth pop-in when count starts
-          opacity: started ? 1 : 0,
-          transform: started ? "scale(1)" : "scale(0.85)",
-          transition: "opacity 300ms ease, transform 300ms ease",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "14px",
+          textAlign: "left",
         }}
-        aria-live="polite"
-        aria-atomic="true"
       >
-        {animated.count}{animated.suffix}
+        <div
+          className="stats-metric-icon"
+          style={{
+            flexShrink: 0,
+            opacity: started ? 1 : 0,
+            transform: started ? "translateY(0)" : "translateY(6px)",
+            transition: "opacity 320ms ease, transform 320ms ease",
+          }}
+        >
+          <BadgeIcon type={badge.icon} isHero={isHero} />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "4px" }}>
+        <div
+          className="stats-metric-value"
+          style={{
+            fontFamily: "'Space Grotesk',sans-serif",
+            fontWeight: 700,
+            fontSize: "40px",
+            lineHeight: 1.05,
+            color: isHero ? "#ffffff" : "#070B14",
+            opacity: started ? 1 : 0,
+            transform: started ? "translateY(0)" : "translateY(6px)",
+            transition: "opacity 320ms ease, transform 320ms ease",
+            letterSpacing: "-0.02em",
+            whiteSpace: "nowrap",
+          }}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {badge.valuePrefix ? <span style={{ fontWeight: 700 }}>{badge.valuePrefix}</span> : null}
+          {animated.count}
+          <span style={{ fontWeight: 700 }}>{animated.suffix}</span>
+        </div>
+        <div
+          className="stats-metric-title"
+          style={{
+            fontFamily: "'Space Grotesk',sans-serif",
+            fontWeight: 600,
+            fontSize: "17px",
+            lineHeight: 1.2,
+            color: isHero ? "rgba(255,255,255,0.82)" : "rgba(7,11,20,0.78)",
+            maxWidth: "180px",
+          }}
+        >
+          {badge.title}
+        </div>
       </div>
-
-      {/* Description */}
-      <p
-        className="badge-desc"
+      </div>
+      <div
+        className="stats-metric-desc"
         style={{
-          fontFamily: "'Space Grotesk',sans-serif",
-          fontWeight: 400, fontSize: "13px",
-          color: "rgba(255,255,255,0.55)",
-          lineHeight: 1.55, margin: 0,
+          display: "none",
         }}
       >
-        {badge.description}
-      </p>
+      </div>
     </div>
   );
 };
 
 /* ── Section ─────────────────────────────────────────────────────── */
-export const UserTestimonialsSection = (): JSX.Element => {
+export const UserTestimonialsSection = ({ variant = "default" }: { variant?: "default" | "hero" }): JSX.Element => {
   const { language } = useLanguage();
   const items = language === "en" ? badgesEn : badges;
+  const isHero = variant === "hero";
   return (
   <section
     className="stats-section"
-    style={{ width: "100%", backgroundColor: "transparent", padding: "110px 0 60px" }}
+    data-variant={variant}
+    style={{
+      width: "100%",
+      backgroundColor: "transparent",
+      padding: isHero ? "0" : "44px 0 80px",
+    }}
   >
-    <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
+    <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
       <div
-        style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "24px" }}
-        className="stats-grid"
+        className="stats-strip"
+        style={{
+          width: "100%",
+          background: "transparent",
+          border: "none",
+          borderRadius: 0,
+          boxShadow: "none",
+          padding: isHero ? "0" : "14px 18px",
+          position: "relative",
+        }}
       >
-        {items.map((badge, i) => (
-          <AnimatedBadge key={badge.title} badge={badge} delay={i * 120} />
-        ))}
+        <div
+          className="stats-strip-row"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))`,
+            gap: 0,
+            alignItems: "center",
+          }}
+        >
+          {items.map((badge, i) => (
+            <div
+              key={badge.title}
+              className="stats-strip-cell"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: isHero ? "0 8px" : "8px 8px",
+                position: "relative",
+              }}
+            >
+              <AnimatedMetric badge={badge} delay={i * 120} isHero={isHero} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
 
     <style>{`
       @media(max-width:767px){
-        .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; }
-        .badge-card { padding: 14px 10px !important; border-radius: 12px !important; gap: 6px !important; min-width: 0 !important; }
-        .badge-title { font-size: 9px !important; letter-spacing: 0.06em !important; display: block !important; }
-        .badge-title-line1, .badge-title-line2 { display: block !important; line-height: 1.25 !important; }
-        .badge-title-line2 { margin-top: 1px !important; }
-        .badge-title-line2::before { content: none !important; }
-        .badge-value { font-size: 22px !important; }
-        /* Detail: three lines visible (was 2) */
-        .badge-desc {
-          font-size: 10px !important;
-          line-height: 1.35 !important;
-          display: -webkit-box !important;
-          -webkit-line-clamp: 3 !important;
-          -webkit-box-orient: vertical !important;
-          overflow: hidden !important;
-        }
-        .stats-section { padding-top: 60px !important; padding-bottom: 40px !important; }
-      }
-      @media(min-width:768px){
-        .badge-title { display: flex !important; flex-wrap: nowrap !important; gap: 0.25em !important; }
-        .badge-title-line1, .badge-title-line2 { display: inline !important; }
-        .badge-title-line2::before { content: "\\00a0" !important; }
-        .badge-card {
-          width: calc(100% - 20px) !important;
-          max-width: calc(100% - 20px) !important;
-          margin-left: auto !important;
-          margin-right: auto !important;
-          box-sizing: border-box !important;
-        }
+        .stats-section[data-variant="hero"]{ display:none !important; }
+        .stats-section { padding-top: ${isHero ? "0" : "22px"} !important; padding-bottom: ${isHero ? "0" : "44px"} !important; }
+        .stats-strip { padding: 0 !important; border-radius: 0 !important; }
+        .stats-strip-row { grid-template-columns: 1fr !important; }
+        .stats-strip-cell { padding: 10px 6px !important; }
+        .stats-metric-top { gap: 10px !important; }
+        .stats-metric-icon svg { width: 53px !important; height: 53px !important; }
+        .stats-metric-value { font-size: 30px !important; }
+        .stats-metric-title { font-size: 13px !important; max-width: 100% !important; }
       }
       @media(prefers-reduced-motion:reduce){
-        .badge-card { transition: none !important; }
-        .badge-value { transition: none !important; opacity: 1 !important; transform: none !important; }
+        .stats-metric-value { transition: none !important; opacity: 1 !important; transform: none !important; }
       }
-      .badge-card:focus-visible { outline: 2px solid #00E5FF; outline-offset: 4px; }
     `}</style>
   </section>
 );

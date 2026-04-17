@@ -85,12 +85,23 @@ export const Header = () => {
                     zIndex: 10000,
                     backgroundColor: menuOpen && !isScrolled ? "#000" : undefined,
                 }}
-                className={`fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[1280px] px-6 transition-all duration-300 ${isScrolled
-                    ? "backdrop-blur-xl bg-black/60 border border-white/5 rounded-b-2xl shadow-lg"
-                    : ""
+                className={`fixed top-0 left-0 w-full transition-all duration-300 ${isScrolled
+                    ? "bg-black shadow-lg"
+                    : "bg-black"
                     }`}
             >
-                <nav className="grid grid-cols-2 md:grid-cols-3 items-center header-nav" style={{ paddingTop: "13px", paddingBottom: "13px" }}>
+                <nav
+                    className="grid grid-cols-2 md:grid-cols-3 items-center header-nav"
+                    style={{
+                        paddingTop: "13px",
+                        paddingBottom: "13px",
+                        maxWidth: "1400px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        paddingLeft: "24px",
+                        paddingRight: "24px",
+                    }}
+                >
                     <div className="flex justify-start">
                         <button
                             type="button"
@@ -120,10 +131,12 @@ export const Header = () => {
                                     style={{
                                         fontFamily: "'Space Grotesk', sans-serif",
                                         fontWeight: 500,
-                                        fontSize: "15px",
+                                        fontSize: "17px",
                                         color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? "#00E5FF" : "rgba(240,244,248,0.9)",
                                         transition: "color 0.2s ease",
                                         whiteSpace: "nowrap",
+                                        textTransform: "none",
+                                        letterSpacing: "0.01em",
                                     }}
                                     className="group-hover:!text-white"
                                 >
@@ -135,37 +148,46 @@ export const Header = () => {
 
                     <div className="flex justify-end items-center gap-4">
                         <div className="hidden md:flex items-center">
-                            <div
-                                role="group"
+                            <button
+                                type="button"
                                 aria-label={t.languageLabel}
+                                onClick={() => setLanguage(language === "cs" ? "en" : "cs")}
                                 style={{
                                     display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "10px",
                                     border: "1px solid rgba(255,255,255,0.2)",
                                     borderRadius: "999px",
-                                    overflow: "hidden",
+                                    padding: "7px 12px",
+                                    background: "rgba(0,0,0,0.15)",
+                                    color: "rgba(255,255,255,0.9)",
+                                    cursor: "pointer",
+                                    fontFamily: "'Space Grotesk', sans-serif",
+                                    fontWeight: 700,
+                                    fontSize: "12px",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.06em",
                                 }}
                             >
-                                {(["cs", "en"] as const).map((lang) => (
-                                    <button
-                                        key={lang}
-                                        type="button"
-                                        onClick={() => setLanguage(lang)}
-                                        style={{
-                                            padding: "7px 12px",
-                                            background: language === lang ? "rgba(0,229,255,0.18)" : "transparent",
-                                            color: language === lang ? "#00E5FF" : "rgba(255,255,255,0.85)",
-                                            border: "none",
-                                            cursor: "pointer",
-                                            fontFamily: "'Space Grotesk', sans-serif",
-                                            fontWeight: 600,
-                                            fontSize: "12px",
-                                            textTransform: "uppercase",
-                                        }}
-                                    >
-                                        {lang}
-                                    </button>
-                                ))}
-                            </div>
+                                <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: "0 0 0 1px rgba(255,255,255,0.16)" }}>
+                                    {language === "cs" ? (
+                                        <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="60" height="30" fill="#012169"/>
+                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" strokeWidth="6"/>
+                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" strokeWidth="3"/>
+                                            <path d="M30 0 v30 M0 15 h60" stroke="#fff" strokeWidth="10"/>
+                                            <path d="M30 0 v30 M0 15 h60" stroke="#C8102E" strokeWidth="6"/>
+                                        </svg>
+                                    ) : (
+                                        <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="60" height="15" fill="#fff"/>
+                                            <rect y="15" width="60" height="15" fill="#D7141A"/>
+                                            <path d="M0 0 L26 15 L0 30 Z" fill="#11457E"/>
+                                        </svg>
+                                    )}
+                                </span>
+                                <span>{language === "cs" ? "EN" : "CZ"}</span>
+                            </button>
                         </div>
                         <div className="hidden md:block">
                             <Button
@@ -179,6 +201,8 @@ export const Header = () => {
                                     fontFamily: "'Space Grotesk', sans-serif",
                                     fontWeight: 600,
                                     fontSize: "16px",
+                                    textTransform: "none",
+                                    letterSpacing: "0.01em",
                                     border: "none",
                                     transition: "transform 0.25s ease, filter 0.25s ease",
                                 }}
@@ -247,9 +271,9 @@ export const Header = () => {
                         borderLeft: "1px solid rgba(255,255,255,0.08)",
                         borderBottom: "1px solid rgba(255,255,255,0.08)",
                         borderBottomLeftRadius: "16px",
-                        boxShadow: "-8px 8px 40px rgba(0,0,0,0.8)",
+                        boxShadow: menuOpen ? "-8px 8px 40px rgba(0,0,0,0.8)" : "none",
                         padding: "24px",
-                        transform: menuOpen ? "translateX(0)" : "translateX(100%)",
+                        transform: menuOpen ? "translateX(0)" : "translateX(110%)",
                         transition: "transform 300ms ease",
                         display: "flex",
                         flexDirection: "column",
@@ -306,28 +330,47 @@ export const Header = () => {
                             backdropFilter: "blur(8px)",
                         }}
                     >
-                        {(["cs", "en"] as const).map((lang) => (
-                            <button
-                                key={`mobile-lang-${lang}`}
-                                type="button"
-                                onClick={() => setLanguage(lang)}
-                                style={{
-                                    minWidth: "56px",
-                                    padding: "8px 12px",
-                                    borderRadius: "999px",
-                                    border: "none",
-                                    cursor: "pointer",
-                                    fontFamily: "'Space Grotesk',sans-serif",
-                                    fontWeight: 600,
-                                    fontSize: "12px",
-                                    textTransform: "uppercase",
-                                    background: language === lang ? "rgba(0,229,255,0.18)" : "transparent",
-                                    color: language === lang ? "#00E5FF" : "rgba(255,255,255,0.85)",
-                                }}
-                            >
-                                {lang}
-                            </button>
-                        ))}
+                        <button
+                            type="button"
+                            onClick={() => setLanguage(language === "cs" ? "en" : "cs")}
+                            style={{
+                                width: "100%",
+                                padding: "10px 14px",
+                                borderRadius: "999px",
+                                border: "1px solid rgba(255,255,255,0.16)",
+                                cursor: "pointer",
+                                fontFamily: "'Space Grotesk',sans-serif",
+                                fontWeight: 700,
+                                fontSize: "12px",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.06em",
+                                background: "rgba(0,0,0,0.25)",
+                                color: "rgba(255,255,255,0.9)",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: "10px",
+                            }}
+                        >
+                            <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: "0 0 0 1px rgba(255,255,255,0.16)" }}>
+                                {language === "cs" ? (
+                                    <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="60" height="30" fill="#012169"/>
+                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" strokeWidth="6"/>
+                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" strokeWidth="3"/>
+                                        <path d="M30 0 v30 M0 15 h60" stroke="#fff" strokeWidth="10"/>
+                                        <path d="M30 0 v30 M0 15 h60" stroke="#C8102E" strokeWidth="6"/>
+                                    </svg>
+                                ) : (
+                                    <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="60" height="15" fill="#fff"/>
+                                        <rect y="15" width="60" height="15" fill="#D7141A"/>
+                                        <path d="M0 0 L26 15 L0 30 Z" fill="#11457E"/>
+                                    </svg>
+                                )}
+                            </span>
+                            <span>{language === "cs" ? "EN" : "CZ"}</span>
+                        </button>
                     </div>
 
                     <button
@@ -350,6 +393,12 @@ export const Header = () => {
                     </button>
                 </div>
             </div>
+
+            <style>{`
+              @media (min-width: 768px) {
+                .header-logo { height: 58px !important; }
+              }
+            `}</style>
         </>
     );
 };

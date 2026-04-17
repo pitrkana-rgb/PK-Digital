@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 
@@ -12,15 +11,6 @@ const usPoints = [
     "Osobní přístup a flexibilní komunikace",
 ];
 
-const themPoints = [
-    "Platíte ještě před prvním náhledem",
-    "Statické weby bez inteligence",
-    "Týdny až měsíce čekání",
-    "Odevzdání a konec spolupráce",
-    "Nejasné ceny a příplatky",
-    "Šablonový proces bez prostoru pro změny",
-];
-
 const usPointsEn = [
     "Free prototype within 3 days",
     "AI tools that improve conversions",
@@ -30,137 +20,35 @@ const usPointsEn = [
     "Personal approach and flexible communication",
 ];
 
-const themPointsEn = [
-    "You pay before the first preview",
-    "Static websites without intelligence",
-    "Weeks to months of waiting",
-    "Delivery and then no further support",
-    "Unclear pricing and surcharges",
-    "Template process without room for changes",
-];
+const iconSrcs = [
+    "/prototyp_icon.png",
+    "/AI_icon.png",
+    "/doba_realizace_icon.png",
+    "/optimalizace_icon.png",
+    "/cenik_icon.png",
+    "/osobni_pristup_icon.png",
+] as const;
 
-const CheckIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
-        <circle cx="10" cy="10" r="10" fill="rgba(0,229,255,0.14)" />
-        <path d="M6 10.5L8.5 13L14 7" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
+const TrustBadgeIcon = ({ index }: { index: number }) => {
+    const src = iconSrcs[index] ?? iconSrcs[0];
+    return <img src={src} alt="" aria-hidden="true" className="why-trust-icon-img" />;
+};
 
-const CrossIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
-        <circle cx="10" cy="10" r="10" fill="rgba(248,113,113,0.14)" />
-        <path d="M7 7L13 13M13 7L7 13" stroke="rgba(248,113,113,0.95)" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-);
-
-/* ── The two cards as individual components so they can be reused in carousel ── */
-const PkCard = ({ points }: { points: string[] }) => (
-    <div
-        className="why-card"
-        style={{
-            position: "relative",
-            width: "100%",
-            minWidth: 0,
-            borderRadius: "24px",
-            padding: "3px",
-            background: "linear-gradient(90deg, #E040FB, #00E5FF)",
-            boxShadow: "0 0 20px rgba(0, 229, 255, 0.22)",
-            transition: "transform 250ms ease, box-shadow 250ms ease",
-            transform: "scale(1.02)",
-            height: "100%",
-            boxSizing: "border-box",
-        }}
-        onMouseEnter={e => {
-            const el = e.currentTarget as HTMLDivElement;
-            el.style.transform = "scale(1.04) translateY(-4px)";
-            el.style.boxShadow = "0 0 24px rgba(0,229,255,0.28), 0 32px 80px rgba(0,0,0,0.45)";
-        }}
-        onMouseLeave={e => {
-            const el = e.currentTarget as HTMLDivElement;
-            el.style.transform = "scale(1.02)";
-            el.style.boxShadow = "0 0 20px rgba(0, 229, 255, 0.22)";
-        }}
-    >
-        <div style={{
-            borderRadius: "21px", padding: "40px",
-            backgroundColor: "#0D0D0D",
-            background: "radial-gradient(ellipse 60% 80% at 50% -10%, rgba(0,229,255,0.14) 0%, rgba(0,229,255,0) 70%), linear-gradient(145deg, #1A2633 0%, #0D0D0D 100%)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            height: "100%", display: "flex", flexDirection: "column", gap: "28px", boxSizing: "border-box",
-        }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingBottom: "24px", borderBottom: "1px solid rgba(0,229,255,0.18)" }}>
-                <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#00E5FF", boxShadow: "0 0 12px rgba(0,229,255,0.55)", flexShrink: 0 }} />
-                <img src="/Company_logo_V2.png" alt="PK Digital" style={{ height: "32px", width: "auto", display: "block" }} />
-            </div>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "18px" }}>
-                {points.map((point, i) => (
-                    <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                        <CheckIcon />
-                        <span className="why-bullet" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: "15px", color: "#FFFFFF", lineHeight: 1.45 }}>{point}</span>
-                    </li>
-                ))}
-            </ul>
+const TrustBadge = ({ text, index }: { text: string; index: number }) => (
+    <div className="why-trust-badge">
+        <div className="why-trust-icon">
+            <TrustBadgeIcon index={index} />
         </div>
+        <div className="why-trust-copy">{text}</div>
     </div>
 );
-
-const ThemCard = ({ points, title }: { points: string[]; title: string }) => (
-    <div
-        className="why-card"
-        style={{
-            width: "100%",
-            minWidth: 0,
-            borderRadius: "24px",
-            padding: "40px",
-            backgroundColor: "#0D0D0D",
-            background: "radial-gradient(ellipse 60% 80% at 50% -10%, rgba(0,229,255,0.14) 0%, rgba(0,229,255,0) 70%), linear-gradient(145deg, #1A2633 0%, #0D0D0D 100%)",
-            border: "1px solid rgba(255,255,255,0.14)",
-            display: "flex", flexDirection: "column", gap: "28px",
-            transition: "transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease",
-            height: "100%", boxSizing: "border-box",
-        }}
-        onMouseEnter={e => {
-            const el = e.currentTarget as HTMLDivElement;
-            el.style.transform = "translateY(-4px)";
-            el.style.boxShadow = "0 24px 48px rgba(0,0,0,0.5)";
-            el.style.borderColor = "rgba(0,229,255,0.18)";
-        }}
-        onMouseLeave={e => {
-            const el = e.currentTarget as HTMLDivElement;
-            el.style.transform = "";
-            el.style.boxShadow = "";
-            el.style.borderColor = "rgba(255,255,255,0.14)";
-        }}
-    >
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingBottom: "24px", borderBottom: "1px solid rgba(255,255,255,0.10)" }}>
-            <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "rgba(255,255,255,0.28)", flexShrink: 0, boxShadow: "0 0 14px rgba(255,255,255,0.08)" }} />
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "18px", color: "rgba(255,255,255,0.75)", letterSpacing: "-0.01em" }}>{title}</span>
-        </div>
-        <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "18px" }}>
-            {points.map((point, i) => (
-                <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                    <CrossIcon />
-                    <span className="why-bullet why-bullet-muted" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500, fontSize: "15px", color: "rgba(255,255,255,0.78)", lineHeight: 1.45, fontStyle: "normal" }}>{point}</span>
-                </li>
-            ))}
-        </ul>
-    </div>
-);
-
-const SWIPE_THRESHOLD = 50;
 
 export const WhyChooseUsSection = (): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
-    const touchStartX = useRef<number>(0);
     const [visible, setVisible] = useState(false);
-    const [mobileIdx, setMobileIdx] = useState(0);
-    const navigate = useNavigate();
     const { language } = useLanguage();
     const isEn = language === "en";
-    const cards = [
-      <PkCard key="pk" points={isEn ? usPointsEn : usPoints} />,
-      <ThemCard key="them" title={isEn ? "Typical agencies" : "Běžné agentury"} points={isEn ? themPointsEn : themPoints} />,
-    ];
+    const items = isEn ? usPointsEn : usPoints;
 
     useEffect(() => {
         const el = ref.current;
@@ -173,27 +61,16 @@ export const WhyChooseUsSection = (): JSX.Element => {
         return () => observer.disconnect();
     }, []);
 
-    const goTo = (idx: number) => setMobileIdx(Math.max(0, Math.min(cards.length - 1, idx)));
-
-    const onTouchStart = (e: any) => {
-        touchStartX.current = e.touches[0].clientX;
-    };
-    const onTouchEnd = (e: any) => {
-        const endX = e.changedTouches[0].clientX;
-        const delta = touchStartX.current - endX;
-        if (delta > SWIPE_THRESHOLD) goTo(mobileIdx + 1);
-        else if (delta < -SWIPE_THRESHOLD) goTo(mobileIdx - 1);
-    };
-
     return (
         <section
             ref={ref}
             style={{
                 width: "100%",
-                backgroundColor: "transparent",
-                padding: "40px 0 80px",
+                backgroundColor: "#ffffff",
+                padding: "40px 0 110px",
                 position: "relative",
-                overflow: "hidden",
+                overflow: "visible",
+                zIndex: 3,
             }}
         >
             <SectionDivider />
@@ -207,7 +84,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
 
             <div
                 style={{
-                    maxWidth: "1280px", margin: "0 auto", padding: "0 24px",
+                    maxWidth: "1400px", margin: "0 auto", padding: "0 24px",
                     opacity: visible ? 1 : 0,
                     transform: visible ? "translateY(0)" : "translateY(40px)",
                     transition: "opacity 0.7s ease, transform 0.7s ease",
@@ -218,25 +95,20 @@ export const WhyChooseUsSection = (): JSX.Element => {
                     <h2 style={{
                         fontFamily: "'Space Grotesk', sans-serif",
                         fontWeight: 700,
-                        fontSize: "clamp(32px, 4.5vw, 52px)",
+                        fontSize: "clamp(26px,3.6vw,42px)",
                         lineHeight: 1.1,
-                        color: "#fff",
+                        color: "#070B14",
                         margin: "0 auto 20px",
                         letterSpacing: "-0.02em",
                         maxWidth: "770px",
                     }}>
                         {isEn ? "Why choose " : "Proč si vybrat "}
-                        <span style={{
-                            background: "linear-gradient(135deg, #E040FB, #00E5FF)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
-                        }}>{isEn ? "us" : "právě nás"}</span>
+                        <span style={{ color: "#070B14" }}>{isEn ? "us" : "právě nás"}</span>
                     </h2>
                     <p className="section-sub" style={{
                         fontFamily: "'Space Grotesk', sans-serif",
                         fontWeight: 400, fontSize: "18px", lineHeight: 1.6,
-                        color: "rgba(255,255,255,0.55)",
+                        color: "rgba(7,11,20,0.62)",
                         margin: "0 auto",
                     }}>
                         {isEn
@@ -245,127 +117,71 @@ export const WhyChooseUsSection = (): JSX.Element => {
                     </p>
                 </div>
 
-                {/* ── Desktop: 2-column grid ── */}
-                <div className="why-grid-desktop" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", alignItems: "stretch" }}>
-                    <PkCard points={isEn ? usPointsEn : usPoints} />
-                    <ThemCard title={isEn ? "Typical agencies" : "Běžné agentury"} points={isEn ? themPointsEn : themPoints} />
+                <div className="why-trust-grid">
+                    {items.map((item, index) => (
+                        <TrustBadge key={item} text={item} index={index} />
+                    ))}
                 </div>
 
-                {/* ── Mobile: sliding track carousel + touch swipe ── */}
-                <div className="why-mobile-carousel">
-                    <div style={{ overflow: "hidden", width: "100%" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-                        <div
-                            className="why-carousel-track"
-                            style={{
-                                display: "flex",
-                                width: `${cards.length * 100}%`,
-                                transform: `translateX(${-mobileIdx * (100 / cards.length)}%)`,
-                                transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                            }}
-                        >
-                            {cards.map((card, i) => (
-                                <div key={i} style={{ flex: `0 0 ${100 / cards.length}%`, minWidth: 0, padding: "20px 0 4px", boxSizing: "border-box" }}>
-                                    {card}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Dots */}
-                    <div className="why-dots" style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "20px" }}>
-                        {cards.map((_, i) => (
-                            <button
-                                key={i}
-                                type="button"
-                                aria-label={isEn ? `Card ${i + 1}` : `Karta ${i + 1}`}
-                                onClick={() => goTo(i)}
-                                style={{
-                                    width: i === mobileIdx ? "28px" : "8px", height: "8px",
-                                    borderRadius: "999px", border: "none", cursor: "pointer",
-                                    background: i === mobileIdx ? "#00E5FF" : "rgba(255,255,255,0.2)",
-                                    transition: "width 250ms ease, background 250ms ease",
-                                    padding: 0,
-                                }}
-                            />
-                        ))}
-                    </div>
-
-                    {/* Arrows */}
-                    <div className="why-arrows" style={{ display: "flex", justifyContent: "center", gap: "12px", marginTop: "16px" }}>
-                        {[{ label: "←", dir: -1 }, { label: "→", dir: 1 }].map(({ label, dir }) => (
-                            <button
-                                key={label}
-                                type="button"
-                                aria-label={dir === -1 ? (isEn ? "Previous" : "Předchozí") : (isEn ? "Next" : "Další")}
-                                onClick={() => goTo(mobileIdx + dir)}
-                                style={{
-                                    width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer",
-                                    border: "1px solid rgba(255,255,255,0.15)",
-                                    background: "rgba(255,255,255,0.05)",
-                                    color: "rgba(255,255,255,0.7)",
-                                    fontFamily: "system-ui", fontSize: "16px",
-                                    display: "flex", alignItems: "center", justifyContent: "center",
-                                    opacity: (dir === -1 && mobileIdx === 0) || (dir === 1 && mobileIdx === cards.length - 1) ? 0.3 : 1,
-                                    transition: "background 200ms ease",
-                                }}
-                                onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(0,229,255,0.12)"; b.style.borderColor = "rgba(0,229,255,0.35)"; }}
-                                onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.05)"; b.style.borderColor = "rgba(255,255,255,0.15)"; }}
-                            >
-                                {label}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* CTA */}
-                <div style={{ textAlign: "center", marginTop: "52px" }}>
-                    <button
-                        type="button"
-                        className="animate-pulse-glow hero-primary-btn"
-                        onClick={() => navigate("/napiste-nam")}
-                        style={{
-                            background: "linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%)",
-                            color: "#070B14",
-                            border: "none",
-                            borderRadius: "12px",
-                            padding: "15px 32px",
-                            fontFamily: "'Space Grotesk', sans-serif",
-                            fontWeight: 600,
-                            fontSize: "16px",
-                            cursor: "pointer",
-                            transition: "transform 0.25s ease, filter 0.25s ease",
-                        }}
-                        onMouseEnter={e => {
-                            const el = e.currentTarget as HTMLButtonElement;
-                            el.style.filter = "brightness(1.1)";
-                            el.style.transform = "translateY(-3px)";
-                        }}
-                        onMouseLeave={e => {
-                            const el = e.currentTarget as HTMLButtonElement;
-                            el.style.filter = "";
-                            el.style.transform = "";
-                        }}
-                    >
-                        {isEn ? "Start with a free consultation" : "Začněte s bezplatnou konzultací"}
-                    </button>
-                </div>
             </div>
 
             <style>{`
-        .why-mobile-carousel { display: none; }
+        .why-trust-grid{
+          display:grid;
+          grid-template-columns: repeat(3, minmax(0,1fr));
+          gap:18px;
+        }
+        .why-trust-badge{
+          display:flex;
+          flex-direction: column;
+          align-items:center;
+          justify-content: center;
+          gap: 12px;
+          padding: 20px 22px;
+          border-radius:22px;
+          border: 1px solid rgba(71,85,105,0.16);
+          background:
+            radial-gradient(circle at 30% 25%, rgba(248,250,252,0.98) 0%, rgba(226,232,240,0.98) 55%, rgba(203,213,225,0.98) 100%);
+          box-shadow: 0 18px 42px rgba(2,6,23,0.10);
+          transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+        }
+        .why-trust-badge:hover{
+          transform: translateY(-4px);
+          box-shadow: 0 26px 56px rgba(2,6,23,0.14);
+        }
+        .why-trust-icon{
+          flex-shrink:0;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          background: transparent;
+          box-shadow: none;
+        }
+        .why-trust-icon-img{
+          width: 82px;
+          height: 82px;
+          object-fit: contain;
+          display:block;
+          filter: drop-shadow(0 10px 20px rgba(2,6,23,0.10));
+        }
+        .why-trust-copy{
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 1.4;
+          color: rgba(7,11,20,0.86);
+          text-align: center;
+          max-width: 26ch;
+        }
         @media(max-width: 768px) {
-          .why-grid-desktop { display: none !important; }
-          .why-mobile-carousel { display: block !important; }
-          .why-carousel-track { will-change: transform; }
-          .why-carousel-track > div { min-width: 0; width: 100%; }
-          .why-mobile-carousel .why-card { transform: scale(1) !important; width: 100% !important; max-width: 100% !important; }
+          .why-trust-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 14px !important; }
           .why-head { margin-bottom: 32px !important; }
-          .why-bullet { font-size: 13px !important; line-height: 1.55 !important; }
-          .why-dots { margin-top: 18px !important; }
-          .why-arrows { margin-top: 10px !important; }
+          .why-trust-badge { padding: 16px 18px !important; border-radius: 18px !important; }
+          .why-trust-copy { font-size: 14px !important; line-height: 1.55 !important; }
+          .why-trust-icon-img{ width: 64px !important; height: 64px !important; }
         }
         @media(prefers-reduced-motion: reduce) {
-          .why-grid-desktop > div { transition: none !important; }
+          .why-trust-badge { transition: none !important; }
         }
       `}</style>
         </section>

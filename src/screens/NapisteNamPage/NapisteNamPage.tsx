@@ -22,26 +22,32 @@ export const NapisteNamPage = (): JSX.Element => {
   }, []);
 
   return (
-    <LandingStylePageRoot>
+    <LandingStylePageRoot
+      style={{
+        backgroundColor: "#ffffff",
+        backgroundImage: "none",
+        color: "#070B14",
+      }}
+    >
       <Header />
 
-      <section className="contact-hero" style={{ position: "relative", paddingTop: "160px", paddingBottom: "48px", backgroundColor: "transparent" }}>
-        <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
+      <section className="contact-hero" style={{ position: "relative", paddingTop: "160px", paddingBottom: "48px", backgroundColor: "#ffffff" }}>
+        <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
           <div style={{ marginBottom: "24px" }}>
             <span style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
-              background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)",
+              background: "rgba(0,229,255,0.10)", border: "1px solid rgba(0,229,255,0.18)",
               borderRadius: "99px", padding: "6px 16px",
-              fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: "#00E5FF",
+              fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: "#0f6b78",
               textTransform: "uppercase", letterSpacing: "0.1em"
             }}>
-              <span style={{ width: "8px", height: "8px", background: "#00E5FF", borderRadius: "50%", display: "inline-block" }} />
+              <span style={{ width: "8px", height: "8px", background: "#0f6b78", borderRadius: "50%", display: "inline-block" }} />
               {t.reply}
             </span>
           </div>
-          <h1 className="contact-hero-title" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#fff", margin: 0, letterSpacing: "-0.02em" }}>
+          <h1 className="contact-hero-title" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#070B14", margin: 0, letterSpacing: "-0.02em" }}>
             {t.titlePre}{" "}
-            <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{t.titleAccent}</span>
+            <span style={{ color: "#070B14" }}>{t.titleAccent}</span>
           </h1>
         </div>
       </section>

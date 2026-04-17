@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type TouchEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
@@ -276,17 +276,15 @@ type Slide = {
 const slides: Slide[] = [
   {
     id: "tvorba-webu",
-    title: "Tvorba webových stránek",
+    title: "Web, který přináší zákazníky",
     description:
-      "Moderní web, který jasně komunikuje vaši hodnotu, získává zákazníky a je připravený na růst s vaším podnikáním.",
+      "Navrhneme a dodáme web do 14 dní — bez složitostí a bez rizika.",
     features: [
-      "Konzultace a návrh webu zdarma",
-      "Standardní dodání do 14 dnů",
-      "Design zaměřený pro konverze",
-      "Optimalizováno na mobil i počítač",
+      "Návrh zdarma do 3 dnů",
+      "Design zaměřený na konverze",
       "Jednoduchá správa bez vývojáře",
     ],
-    cta: "Chci web",
+    cta: "Nezávazná konzultace",
     image: tvorbaWebuUrl,
   },
   {
@@ -295,13 +293,11 @@ const slides: Slide[] = [
     description:
       "Kompletní modernizace vašeho stávajícího webu — nový design, vyšší rychlost, lepší konverze.",
     features: [
-      "Audit webu a identifikace slabých míst",
-      "Silnější značka díky modernímu designu",
-      "Rychlejší web s dopadem na SEO i výkon",
-      "Stabilní řešení připravené na růst",
-      "Jednoduchá budoucí správa webu",
+      "Zdarma audit webu",
+      "Identifikace slabých míst",
+      "Rychlejší web s dopadem na SEO",
     ],
-    cta: "Chci modernizaci",
+    cta: "Nezávazná konzultace",
     beforeAfter: {
       beforeSrc: modernizaceBeforeUrl,
       afterSrc: modernizaceAfterUrl,
@@ -318,10 +314,8 @@ const slides: Slide[] = [
       "Eliminace rutinní práce",
       "Okamžité zpracování požadavků",
       "Snížení nákladů až o desítky %",
-      "Zvýšení konverzí a kvality leadů",
-      "Škálování bez navyšování týmu",
     ],
-    cta: "Chci automatizaci",
+    cta: "Nezávazná konzultace",
     image: aiBotUrl,
   },
 ];
@@ -329,17 +323,15 @@ const slides: Slide[] = [
 const slidesEn: Slide[] = [
   {
     id: "tvorba-webu",
-    title: "Website Development",
+    title: "A website that brings customers",
     description:
-      "A modern website that clearly communicates your value, gains customers, and is ready to grow with your business.",
+      "We design and deliver your website in 14 days — no complexity and no risk.",
     features: [
-      "Free consultation and website concept",
-      "Standard delivery within 14 days",
+      "Free concept within 3 days",
       "Conversion-focused design",
-      "Optimized for mobile and desktop",
       "Easy management without a developer",
     ],
-    cta: "I want a website",
+    cta: "Free consultation",
     image: tvorbaWebuUrl,
   },
   {
@@ -348,13 +340,11 @@ const slidesEn: Slide[] = [
     description:
       "Complete modernization of your existing website - new design, higher speed, and better conversions.",
     features: [
-      "Website audit and weak-point identification",
-      "Stronger brand through modern design",
-      "Faster website with SEO and performance impact",
-      "Stable solution prepared for growth",
-      "Easy future website management",
+      "Free website audit",
+      "Weak-point identification",
+      "Faster website with SEO impact",
     ],
-    cta: "I want modernization",
+    cta: "Free consultation",
     beforeAfter: {
       beforeSrc: modernizaceBeforeUrl,
       afterSrc: modernizaceAfterUrl,
@@ -371,126 +361,73 @@ const slidesEn: Slide[] = [
       "Eliminate routine work",
       "Immediate request processing",
       "Reduce costs by tens of percent",
-      "Increase conversions and lead quality",
-      "Scale without expanding your team",
     ],
-    cta: "I want automation",
+    cta: "Free consultation",
     image: aiBotUrl,
   },
 ];
-
-const OFFER_MOBILE_MQ = "(max-width:900px)";
 
 export const CoNabizimeSection = (): JSX.Element => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const [activeIdx, setActiveIdx] = useState(0);
-  const [mobileSlideMinHeight, setMobileSlideMinHeight] = useState<number | null>(null);
-  const touchStartX = useRef<number | null>(null);
-  const offerCarouselTrackRef = useRef<HTMLDivElement | null>(null);
-  const SWIPE_THRESHOLD = 50;
   const isEn = language === "en";
   const activeSlides = isEn ? slidesEn : slides;
-
   const activeSlide = activeSlides[activeIdx];
+  const [cardVisible, setCardVisible] = useState(true);
+  const switchTimeoutRef = useRef<number | null>(null);
+  const touchStartX = useRef<number>(0);
+  const SWIPE_THRESHOLD = 50;
+
+  useEffect(() => {
+    return () => {
+      if (switchTimeoutRef.current) window.clearTimeout(switchTimeoutRef.current);
+    };
+  }, []);
 
   const goTo = (idx: number) => {
-    setActiveIdx(Math.max(0, Math.min(activeSlides.length - 1, idx)));
+    const nextIdx = Math.max(0, Math.min(activeSlides.length - 1, idx));
+    if (nextIdx === activeIdx) return;
+    setCardVisible(false);
+    if (switchTimeoutRef.current) window.clearTimeout(switchTimeoutRef.current);
+    switchTimeoutRef.current = window.setTimeout(() => {
+      setActiveIdx(nextIdx);
+      setCardVisible(true);
+    }, 150);
   };
 
-  const isBeforeAfterSliderTarget = (target: EventTarget | null) =>
-    target instanceof Element && Boolean(target.closest(".offer-before-after-slider"));
-
-  const onTouchStart = (e: TouchEvent) => {
-    if (isBeforeAfterSliderTarget(e.target)) {
-      touchStartX.current = null;
-      return;
-    }
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const onTouchEnd = (e: TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const endX = e.changedTouches[0].clientX;
-    const delta = touchStartX.current - endX;
-    touchStartX.current = null;
-    if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
-    else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
-  };
-
-  useLayoutEffect(() => {
-    const track = offerCarouselTrackRef.current;
-    if (!track) return;
-
-    const mq = window.matchMedia(OFFER_MOBILE_MQ);
-
-    const measure = () => {
-      if (!mq.matches) {
-        setMobileSlideMinHeight(null);
-        return;
-      }
-      const slides = Array.from(track.querySelectorAll<HTMLElement>(".offer-slide"));
-      if (!slides.length) return;
-      slides.forEach((el) => {
-        el.style.minHeight = "";
-      });
-      void track.offsetHeight;
-      let maxH = 0;
-      slides.forEach((el) => {
-        maxH = Math.max(maxH, el.offsetHeight);
-      });
-      setMobileSlideMinHeight(maxH > 0 ? maxH : null);
-    };
-
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(track);
-    mq.addEventListener("change", measure);
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      mq.removeEventListener("change", measure);
-      window.removeEventListener("resize", measure);
-    };
-  }, [isEn]);
+  const navItems = isEn
+    ? ["New website", "Website modernization", "Automation and AI agents"]
+    : ["Tvorba nového webu", "Modernizace stránek", "Automatizace a AI agenti"];
 
   return (
     <section
       id="co-nabizime"
       style={{
         width: "100%",
-        backgroundColor: "transparent",
-        padding: "80px 0 100px",
+        backgroundColor: "#ffffff",
+        padding: "60px 0 80px",
         marginTop: "-50px",
         marginBottom: "-50px",
       }}
     >
       <SectionDivider />
 
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
-        <div className="offer-head" style={{ textAlign: "center", marginBottom: "56px" }}>
+      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
+        <div className="offer-head" style={{ textAlign: "center", marginTop: "30px", marginBottom: "56px" }}>
           <h2
             style={{
               fontFamily: "'Space Grotesk',sans-serif",
               fontWeight: 700,
-              fontSize: "clamp(32px,4.5vw,52px)",
+              fontSize: "clamp(26px,3.6vw,42px)",
               lineHeight: 1.1,
-              color: "#fff",
+              color: "#070B14",
               margin: "0 auto 20px",
               letterSpacing: "-0.02em",
-              maxWidth: "770px",
+              maxWidth: "980px",
             }}
           >
-            {isEn ? "What we " : "Co "}
-            <span
-              style={{
-                background: "linear-gradient(135deg,#E040FB,#00E5FF)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              {isEn ? "offer" : "nabízíme"}
-            </span>
+            {isEn ? "We provide comprehensive digital services" : "Poskytujeme komplexní digitální služby"}
           </h2>
           <p
             className="section-sub offer-subheading"
@@ -499,206 +436,214 @@ export const CoNabizimeSection = (): JSX.Element => {
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: 1.6,
-              color: "rgba(255,255,255,0.65)",
+              color: "rgba(7,11,20,0.65)",
               margin: "0 auto",
+              maxWidth: "980px",
             }}
           >
             {isEn
-              ? "From building a new website to visual redesign and AI deployment - solutions for startups and growing businesses."
-              : "Od vytvoření nového webu přes vizuální redesign až po nasazení AI nástrojů – řešení pro začínající podnikatele i rostoucí firmy."}
+              ? "We help companies grow through higher sales and a steady flow of new customers. Thanks to advanced AI tools, we significantly speed up development - a prototype is ready in 3 days and the finished website can be delivered in just 14 days."
+              : "Pomáháme firmám růst díky vyšším prodejům a stabilnímu přísunu nových zákazníků. Díky pokročilým AI nástrojům výrazně zrychlujeme vývoj – prototyp připravíme do 3 dnů a hotový web dodáme již za 14 dnů."}
           </p>
         </div>
 
-        <div className="offer-carousel" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div className="offer-carousel-viewport" aria-label={isEn ? "What we offer carousel" : "Carousel Co nabízíme"}>
-            <div
-              ref={offerCarouselTrackRef}
-              className="offer-carousel-track"
-              style={{ transform: `translateX(${-activeIdx * 100}%)` }}
+        <div className="offer-tabs" role="tablist" aria-label={isEn ? "Services navigation" : "Navigace služeb"}>
+          {navItems.map((label, idx) => (
+            <button
+              key={label}
+              type="button"
+              role="tab"
+              aria-selected={idx === activeIdx}
+              className={`offer-tab-btn${idx === activeIdx ? " offer-tab-btn-active" : ""}`}
+              onClick={() => goTo(idx)}
             >
-              {activeSlides.map((slide) => (
-                <div
-                  key={slide.id}
-                  className="offer-slide"
-                  style={mobileSlideMinHeight != null ? { minHeight: mobileSlideMinHeight } : undefined}
-                >
-                  <div className="offer-premium-card">
-                    <div className="offer-premium-card-inner">
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <div
+          className="offer-carousel"
+          onTouchStart={(e) => { touchStartX.current = e.touches[0]!.clientX; }}
+          onTouchEnd={(e) => {
+            const endX = e.changedTouches[0]!.clientX;
+            const delta = touchStartX.current - endX;
+            if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
+            else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
+          }}
+        >
+          <div className={`offer-single-card${cardVisible ? " offer-single-card-visible" : ""}`}>
+            <div className="offer-premium-card">
+              <div className="offer-premium-card-inner">
                       {/* Minimal ambient lights (gentle, premium, non-distracting) */}
-                      <div className="offer-ambient-lights" aria-hidden="true">
-                        <div className="offer-blob offer-blob--a" />
-                        <div className="offer-blob offer-blob--b" />
-                        <div className="offer-blob offer-blob--c" />
+                <div className="offer-ambient-lights" aria-hidden="true">
+                  <div className="offer-blob offer-blob--a" />
+                  <div className="offer-blob offer-blob--b" />
+                  <div className="offer-blob offer-blob--c" />
+                </div>
+
+                <div className="offer-gallery-grid">
+                  <div className="offer-gallery-left">
+                    <div className="offer-left-copy">
+                      <div className="offer-title-wrap">
+                        {activeSlide.id === "tvorba-webu" ? (
+                          <h3 className="offer-title offer-title-large">
+                            {isEn ? "A website that brings customers" : "Web, který přináší zákazníky"}
+                          </h3>
+                        ) : activeSlide.id === "upgrade-webu" ? (
+                          <h3 className="offer-title offer-title-large">
+                            <span className="offer-title-accent">{isEn ? "Modernization" : "Modernizace"}</span>
+                            {isEn ? "" : " stránek"}
+                          </h3>
+                        ) : (
+                          <h3 className="offer-title offer-title-large">
+                            <span className="offer-title-accent">{isEn ? "Automation" : "Automatizace"}</span>
+                            {isEn ? " and AI Agents" : " a AI agenti"}
+                          </h3>
+                        )}
+                        <div className="offer-title-underline" aria-hidden="true" />
                       </div>
 
-                      <div className="offer-gallery-grid">
-                        {/* Left: text */}
-                        <div className="offer-gallery-left">
-                          <div className="offer-left-copy">
-                            <div className="offer-title-wrap">
-                              <h3 className="offer-title offer-title-large">{slide.title}</h3>
-                              <div className="offer-title-underline" aria-hidden="true" />
-                            </div>
+                      <p className="offer-desc">{activeSlide.description}</p>
 
-                            <p className="offer-desc">{slide.description}</p>
+                      {activeSlide.featuresSubheading ? (
+                        <p className="offer-features-subheading">{activeSlide.featuresSubheading}</p>
+                      ) : null}
 
-                            {slide.featuresSubheading ? (
-                              <p className="offer-features-subheading">{slide.featuresSubheading}</p>
-                            ) : null}
+                      <ul className="offer-bullets offer-bullets--checks">
+                        {activeSlide.features.map((f) => (
+                          <li key={f}>{f}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
 
-                            <ul className="offer-bullets">
-                              {slide.features.map((f) => (
-                                <li key={f}>{f}</li>
-                              ))}
-                            </ul>
+                  <div className="offer-gallery-right">
+                    {activeSlide.id === "tvorba-webu" || activeSlide.id === "automatizace-ai" ? (
+                      <div className={`offer-simple-media${activeSlide.id === "automatizace-ai" ? " offer-simple-media--ai-bot" : ""}`}>
+                        <img
+                          src={activeSlide.image}
+                          alt={activeSlide.title}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: activeSlide.id === "automatizace-ai" ? "contain" : "cover",
+                            objectPosition: "center",
+                            display: "block",
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="notebook">
+                        <div className="notebook-screen">
+                          <img className="notebook-frame-img" src={pcFrameUrl} alt="" aria-hidden="true" />
+                          <div className="notebook-screen-inner" aria-hidden="true">
+                            {activeSlide.beforeAfter ? <BeforeAfterSlider {...activeSlide.beforeAfter} /> : null}
                           </div>
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              navigate("/napiste-nam");
-                              setTimeout(() => {
-                                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                              }, 180);
-                            }}
-                            className="offer-cta animate-pulse-glow hero-primary-btn"
-                            style={{
-                              fontFamily: "'Space Grotesk', sans-serif",
-                              fontWeight: 600,
-                              fontSize: "16px",
-                              letterSpacing: "0",
-                            }}
-                          >
-                            {slide.cta}
-                          </button>
-                        </div>
-
-                        {/* Right: notebook/monitor visualization */}
-                        <div className="offer-gallery-right">
-                          {slide.id === "tvorba-webu" || slide.id === "automatizace-ai" ? (
-                            <div
-                              className={`offer-simple-media${slide.id === "automatizace-ai" ? " offer-simple-media--ai-bot" : ""}`}
-                            >
-                              <img
-                                src={slide.image}
-                                alt={slide.title}
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  objectFit: slide.id === "automatizace-ai" ? "contain" : "cover",
-                                  objectPosition: "center",
-                                  display: "block",
-                                }}
-                              />
-                            </div>
-                          ) : (
-                            <div className="notebook">
-                              <div className="notebook-screen">
-                                <img
-                                  className="notebook-frame-img"
-                                  src={pcFrameUrl}
-                                  alt=""
-                                  aria-hidden="true"
-                                />
-                                <div className="notebook-screen-inner" aria-hidden="true">
-                                  {slide.beforeAfter ? (
-                                    <BeforeAfterSlider {...slide.beforeAfter} />
-                                  ) : (
-                                    <img
-                                      src={slide.image}
-                                      alt={slide.title}
-                                      style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                        objectPosition: "center top",
-                                        display: "block",
-                                      }}
-                                    />
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          )}
                         </div>
                       </div>
+                    )}
+                  </div>
+
+                  {/* CTA + mobile dot navigation */}
+                  <div className="offer-gallery-actions">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate("/napiste-nam");
+                        setTimeout(() => {
+                          document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                        }, 180);
+                      }}
+                      className="offer-cta animate-pulse-glow hero-primary-btn"
+                      style={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontWeight: 600,
+                        fontSize: "16px",
+                        letterSpacing: "0",
+                      }}
+                    >
+                      {activeSlide.cta}
+                    </button>
+
+                    <div className="offer-mobile-dots" role="tablist" aria-label={isEn ? "Services picker" : "Výběr služby"}>
+                      {activeSlides.map((s, i) => (
+                        <button
+                          key={s.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={i === activeIdx}
+                          aria-label={isEn ? `Go to card ${i + 1}` : `Přejít na kartu ${i + 1}`}
+                          onClick={() => goTo(i)}
+                          className="offer-dot"
+                          data-active={i === activeIdx ? "true" : undefined}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-
-          {/* Controls */}
-          <div className="offer-carousel-controls">
-            <button
-              type="button"
-              className="offer-nav-btn"
-              aria-label={isEn ? "Previous" : "Předchozí"}
-              onClick={() => goTo(activeIdx - 1)}
-              style={{ opacity: activeIdx === 0 ? 0.35 : 1 }}
-            >
-              ←
-            </button>
-
-            <div className="offer-carousel-dots" aria-label={isEn ? "Card selection" : "Volba karty"}>
-              {activeSlides.map((s, i) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  className={`offer-dot ${i === activeIdx ? "offer-dot-active" : ""}`}
-                  aria-label={isEn ? `Card ${i + 1}` : `Karta ${i + 1}`}
-                  onClick={() => goTo(i)}
-                />
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className="offer-nav-btn"
-              aria-label={isEn ? "Next" : "Další"}
-              onClick={() => goTo(activeIdx + 1)}
-              style={{ opacity: activeIdx === activeSlides.length - 1 ? 0.35 : 1 }}
-            >
-              →
-            </button>
           </div>
         </div>
       </div>
 
       <style>{`
+        .offer-tabs{
+          display:flex;
+          justify-content:center;
+          gap:14px;
+          flex-wrap:wrap;
+          margin: 0 auto 10px;
+        }
+        .offer-tab-btn{
+          border:none;
+          border-radius:12px;
+          background: transparent;
+          color: rgba(7,11,20,0.78);
+          padding: 15px 24px;
+          font-family:"Space Grotesk", sans-serif;
+          font-size: 22px;
+          font-weight:600;
+          cursor:pointer;
+          transition: background 200ms ease, color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+        }
+        .offer-tab-btn:hover{
+          transform: translateY(-1px);
+          background: transparent;
+        }
+        .offer-tab-btn-active{
+          background: linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%);
+          color: #070B14;
+          border-color: transparent;
+          box-shadow: 0 16px 34px rgba(0,229,255,0.16);
+        }
         .offer-carousel{
           width: 100%;
           display:flex;
           flex-direction:column;
-          gap: 24px;
+          gap: 0;
         }
-
-        .offer-carousel-viewport{
-          width: 100%;
-          overflow: hidden;
+        .offer-single-card{
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity 180ms ease, transform 180ms ease;
         }
-
-        .offer-carousel-track{
-          display:flex;
-          width: 100%;
-          transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
-          will-change: transform;
+        .offer-single-card-visible{
+          opacity: 1;
+          transform: translateY(0);
         }
-
-        .offer-slide{
-          flex: 0 0 100%;
-          display: flex;
-          flex-direction: column;
-          /* Height from content + media aspect-ratio (no vh clamp — avoids jump below laptop) */
-          min-height: auto;
+        @media(min-width:901px){
+          .offer-head{ margin-bottom: 41px !important; }
+          .offer-carousel{ gap: 0 !important; }
         }
+        
 
         .offer-premium-card{
           border-radius: 28px;
-          padding: 1px;
-          background: linear-gradient(90deg, rgba(0,229,255,0.45) 0%, rgba(224,64,251,0.26) 100%);
-          box-shadow: 0 0 60px rgba(0,229,255,0.08);
+          padding: 0;
+          background: transparent;
+          box-shadow: none;
           flex: 0 1 auto;
           display: flex;
           flex-direction: column;
@@ -706,12 +651,9 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         .offer-premium-card-inner{
-          border-radius: 27px;
-          background:
-            radial-gradient(ellipse at 25% 0%, rgba(0,229,255,0.055) 0%, transparent 45%),
-            radial-gradient(ellipse at 85% 25%, rgba(224,64,251,0.045) 0%, transparent 42%),
-            linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.36) 100%);
-          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 28px;
+          background: transparent;
+          border: none;
           padding: 15px 28px;
           position: relative;
           overflow: hidden;
@@ -723,19 +665,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         /* Guaranteed dark fade above card background, below content */
-        .offer-premium-card-inner::before{
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(0,0,0,0.42) 0%,
-            rgba(0,0,0,0.46) 55%,
-            rgba(0,0,0,0.52) 100%
-          );
-          z-index: 1;
-          pointer-events: none;
-        }
+        .offer-premium-card-inner::before{ content: none; }
 
         .offer-premium-card-inner > *{
           position: relative;
@@ -817,7 +747,7 @@ export const CoNabizimeSection = (): JSX.Element => {
 
         .offer-gallery-grid{
           display:flex;
-          gap: 8px;
+          gap: 28px;
           align-items: center;
           flex: 0 1 auto;
           min-height: 0;
@@ -864,7 +794,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             margin-bottom: 0;
           }
           .offer-cta{
-            margin-top: auto;
+            margin-top: 30px;
             align-self: flex-start;
           }
         }
@@ -876,6 +806,13 @@ export const CoNabizimeSection = (): JSX.Element => {
           align-items:center;
           justify-content:center;
           padding: 5px 0;
+        }
+        /* Desktop: slightly smaller right-side visuals */
+        @media(min-width:901px){
+          .offer-gallery-right{
+            transform: scale(0.85);
+            transform-origin: center;
+          }
         }
 
         .offer-simple-media{
@@ -901,7 +838,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-title{
           font-family: "Space Grotesk", sans-serif;
           font-weight: 700;
-          color: #fff;
+          color: #070B14;
           margin: 0;
           letter-spacing: -0.02em;
           line-height: 1.15;
@@ -918,11 +855,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         .offer-title-underline{
-          width: 100%;
-          height: 2px;
-          margin: 12px 0 18px;
-          background: linear-gradient(90deg, rgba(0,229,255,0.95), rgba(224,64,251,0.65));
-          border-radius: 999px;
+          display:none;
         }
 
         .offer-desc{
@@ -930,7 +863,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 400;
           font-size: 16px;
           line-height: 1.7;
-          color: rgba(255,255,255,0.72);
+          color: rgba(7,11,20,0.70);
           margin: 0 0 18px;
         }
 
@@ -939,7 +872,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 600;
           font-size: 15px;
           line-height: 1.45;
-          color: rgba(255,255,255,0.9);
+          color: rgba(7,11,20,0.88);
           margin: 0 0 10px;
         }
 
@@ -954,7 +887,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 500;
           font-size: 13px;
           line-height: 1.45;
-          color: rgba(255,255,255,0.86);
+          color: rgba(7,11,20,0.82);
         }
 
         .offer-cta{
@@ -964,13 +897,60 @@ export const CoNabizimeSection = (): JSX.Element => {
           border-radius: 12px;
           padding: 15px 32px;
           font-family: "Space Grotesk", sans-serif;
-          font-weight: 700;
+          font-weight: 600;
           font-size: 16px;
           cursor: pointer;
           transition: filter 0.25s ease, transform 0.25s ease;
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          white-space: nowrap;
+        }
+        /* Card title highlight matches section heading */
+        .offer-title-accent{
+          background: none;
+          -webkit-background-clip: initial;
+          -webkit-text-fill-color: currentColor;
+          background-clip: initial;
+          color: #070B14;
+        }
+        .offer-bullets--checks{
+          list-style: none;
+          padding-left: 0;
+          margin: 0 0 22px;
+        }
+        .offer-bullets--checks li{
+          position: relative;
+          padding-left: 40px;
+          margin: 10px 0;
+          font-size: 18px;
+          line-height: 1.55;
+        }
+        .offer-bullets--checks li::before{
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 2px;
+          width: 28px;
+          height: 28px;
+          border-radius: 999px;
+          background: rgba(17,24,39,0.06);
+          box-shadow: 0 0 0 1px rgba(17,24,39,0.22) inset;
+        }
+        .offer-bullets--checks li::after{
+          content: "";
+          position: absolute;
+          left: 9px;
+          top: 13px;
+          width: 10px;
+          height: 6px;
+          border-left: 3px solid rgba(17,24,39,0.82);
+          border-bottom: 3px solid rgba(17,24,39,0.82);
+          transform: rotate(-45deg);
+        }
+        .offer-cta{
+          background: linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%) !important;
+          color: #070B14 !important;
         }
         .offer-cta:hover{
           filter: brightness(1.1);
@@ -1035,74 +1015,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           height: 100%;
         }
 
-        /* Controls */
-        .offer-carousel-controls{
-          display:flex;
-          align-items:center;
-          justify-content:space-between;
-          gap: 16px;
-          margin-top: 4px;
-        }
-
-        .offer-nav-btn{
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          border: 1px solid rgba(255,255,255,0.14);
-          background: rgba(255,255,255,0.05);
-          color: rgba(255,255,255,0.75);
-          cursor:pointer;
-          transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
-          font-family: system-ui;
-          font-size: 18px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-        }
-        .offer-nav-btn:hover{
-          background: rgba(0,229,255,0.12);
-          border-color: rgba(0,229,255,0.35);
-          transform: translateY(-2px);
-        }
-
-        .offer-carousel-dots{
-          display:flex;
-          gap: 10px;
-          align-items:center;
-          justify-content:center;
-          flex: 1 1 auto;
-        }
-
-        .offer-dot{
-          width: 10px;
-          height: 10px;
-          border-radius: 999px;
-          border: none;
-          cursor:pointer;
-          background: rgba(255,255,255,0.18);
-          transition: width 250ms ease, background 250ms ease;
-          padding: 0;
-        }
-        .offer-dot-active{
-          width: 28px;
-          background: rgba(0,229,255,0.95);
-        }
-
-        /* Large desktop: pin media column to top; height still content-driven */
-        @media (min-width: 1440px) {
-          .offer-gallery-right{
-            align-items: flex-start;
-            padding: 0;
-          }
-        }
-
         @media(max-width:900px){
-          /* Equal slide height (minHeight from JS) + flex fill; CTA pinned to bottom of text column */
-          .offer-slide{
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-          }
           .offer-premium-card{
             flex: 1 1 auto;
             min-height: 0;
@@ -1119,19 +1032,56 @@ export const CoNabizimeSection = (): JSX.Element => {
             flex: 1 1 auto;
             min-height: 0;
           }
+          .offer-gallery-actions{
+            width: 100%;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            margin-top: 8px;
+          }
+          .offer-mobile-dots{
+            display:flex;
+            justify-content:center;
+            gap: 8px;
+            margin-top: 0;
+          }
+          .offer-dot{
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            background: rgba(2,6,23,0.16);
+            transition: width 250ms ease, background 250ms ease;
+          }
+          .offer-dot[data-active="true"]{
+            width: 28px;
+            background: #00E5FF;
+          }
+          .offer-tabs{
+            gap: 10px;
+            margin-bottom: 20px;
+          }
+          .offer-tab-btn{
+            width: 100%;
+            max-width: 340px;
+            font-size: 13px;
+            padding: 10px 16px;
+          }
           .offer-gallery-left{
-            /* 20px less padding above card title vs desktop-mobile 40px; 20px less below CTA before image */
             padding: 20px 0 20px;
-            text-align: left;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            align-items: stretch;
+            align-items: center;
             flex: 1 1 auto;
             min-height: 0;
           }
           .offer-left-copy{
             width: 100%;
-            text-align: left;
+            text-align: center;
             flex: 0 1 auto;
             min-height: 0;
           }
@@ -1140,7 +1090,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             flex: 0 0 auto;
           }
           .offer-title-wrap{
-            text-align: left;
+            text-align: center;
             width: 100%;
           }
           /* Keep mobile titles readable, not bigger than section heading */
@@ -1149,26 +1099,27 @@ export const CoNabizimeSection = (): JSX.Element => {
           .offer-desc{
             font-size: 14px !important;
             line-height: 1.7 !important;
-            text-align: left !important;
+            text-align: center !important;
           }
           .offer-features-subheading{
             font-size: 14px !important;
-            text-align: left !important;
+            text-align: center !important;
             margin-bottom: 8px !important;
           }
-          .offer-bullets{
-            padding-left: 20px !important;
-            list-style-position: outside;
-            text-align: left;
-            margin-bottom: 11px !important;
-            align-self: stretch;
-            width: 100%;
-            box-sizing: border-box;
+          .offer-bullets--checks li{
+            font-size: 16px !important; /* 2px bigger than 14px description */
+            line-height: 1.65 !important;
           }
-          .offer-bullets li{
-            font-size: 14px !important;
-            line-height: 1.7 !important;
-            text-align: left !important;
+          .offer-bullets--checks li::before{
+            top: 2px !important;
+            width: 24px !important;
+            height: 24px !important;
+          }
+          .offer-bullets--checks li::after{
+            left: 8px !important;
+            top: 12px !important;
+            width: 9px !important;
+            height: 5px !important;
           }
           /* Match pricing mobile CTA: full card width, same padding & type size */
           .offer-cta{
@@ -1181,17 +1132,15 @@ export const CoNabizimeSection = (): JSX.Element => {
             padding: 10px 16px !important;
             font-size: 14px !important;
             font-weight: 600;
-            margin-top: auto !important;
+            margin-top: 30px !important;
             flex-shrink: 0;
           }
           .notebook-screen{ transform: none; }
-          .offer-carousel-controls{ margin-top: 0; }
+          .offer-tabs{ display:none !important; }
         }
 
-        /* Desktop: screen >= 1025px => double the card title size */
         @media(min-width:1025px){
           .offer-title-large{
-            /* keep desktop fixed size (32px) */
             font-size: 28px !important;
             line-height: 1.08;
           }

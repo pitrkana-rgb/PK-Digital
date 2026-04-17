@@ -65,9 +65,9 @@ const selectBase = {
   fontFamily: "'Space Grotesk',sans-serif",
   fontWeight: 500,
   fontSize: "15px",
-  color: "#fff",
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.12)",
+  color: "#070B14",
+  background: "rgba(2,6,23,0.03)",
+  border: "1px solid rgba(2,6,23,0.12)",
   borderRadius: "12px",
   padding: "12px 40px 12px 16px",
   width: "100%",
@@ -85,7 +85,7 @@ const labelStyle: React.CSSProperties = {
   fontWeight: 600,
   fontSize: "12px",
   letterSpacing: "0.08em",
-  color: "rgba(255,255,255,0.5)",
+  color: "rgba(7,11,20,0.55)",
   textTransform: "uppercase",
   marginBottom: "8px",
   display: "block",
@@ -145,18 +145,18 @@ function MultiSelectDropdown({
           e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.1)";
         }}
         onBlur={(e) => {
-          e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+          e.currentTarget.style.borderColor = "rgba(2,6,23,0.12)";
           e.currentTarget.style.boxShadow = "none";
         }}
       >
-        <span style={{ color: selected.size ? "#fff" : "rgba(255,255,255,0.45)" }}>
+        <span style={{ color: selected.size ? "#070B14" : "rgba(7,11,20,0.45)" }}>
           {displayText}
         </span>
         <ChevronDown
           style={{
             width: "18px",
             height: "18px",
-            color: "rgba(255,255,255,0.5)",
+            color: "rgba(7,11,20,0.45)",
             flexShrink: 0,
             transform: open ? "rotate(180deg)" : "none",
             transition: "transform 200ms ease",
@@ -171,10 +171,10 @@ function MultiSelectDropdown({
             left: 0,
             right: 0,
             marginTop: "4px",
-            background: "#0D0D0D",
-            border: "1px solid rgba(0,229,255,0.2)",
+            background: "#ffffff",
+            border: "1px solid rgba(2,6,23,0.12)",
             borderRadius: "12px",
-            boxShadow: "0 12px 32px rgba(0,0,0,0.5), 0 0 20px rgba(0,229,255,0.08)",
+            boxShadow: "0 18px 40px rgba(2,6,23,0.12)",
             zIndex: 20,
             padding: "8px",
             maxHeight: "260px",
@@ -197,7 +197,7 @@ function MultiSelectDropdown({
                   borderRadius: "8px",
                   border: "none",
                   background: isSelected ? "rgba(0,229,255,0.12)" : "transparent",
-                  color: isSelected ? "#00E5FF" : "rgba(255,255,255,0.85)",
+                  color: isSelected ? "#00E5FF" : "rgba(7,11,20,0.86)",
                   fontFamily: "'Space Grotesk',sans-serif",
                   fontSize: "14px",
                   cursor: "pointer",
@@ -212,7 +212,7 @@ function MultiSelectDropdown({
                   )}
                   {opt.name}
                 </span>
-                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
+                <span style={{ fontSize: "12px", color: "rgba(7,11,20,0.50)" }}>
                   +{formatPrice(opt.price_czk)}
                 </span>
               </button>
@@ -248,7 +248,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
       id="calculator"
       style={{
         width: "100%",
-        backgroundColor: "#000",
+        backgroundColor: "#ffffff",
         padding: "80px 0 100px",
         marginTop: "-50px",
         marginBottom: "-50px",
@@ -265,7 +265,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
               fontWeight: 700,
               fontSize: "clamp(28px,4.5vw,48px)",
               lineHeight: 1.1,
-              color: "#fff",
+              color: "#070B14",
               letterSpacing: "-0.02em",
               margin: "0 auto 16px",
               maxWidth: "700px",
@@ -274,7 +274,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
             Kolik bude váš web{" "}
             <span
               style={{
-                background: "linear-gradient(135deg,#E040FB,#00E5FF)",
+                background: "linear-gradient(135deg,#E040FB,#111827)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -288,7 +288,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
               fontFamily: "'Space Grotesk',sans-serif",
               fontWeight: 400,
               fontSize: "16px",
-              color: "rgba(255,255,255,0.55)",
+              color: "rgba(7,11,20,0.62)",
               lineHeight: 1.6,
               margin: "0 auto",
             }}
@@ -346,7 +346,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   }}
                 >
                   {PROJECT_OPTIONS.map((o) => (
-                    <option key={o.name} value={o.name} style={{ background: "#0D0D0D", color: "#fff" }}>
+                    <option key={o.name} value={o.name} style={{ background: "#ffffff", color: "#070B14" }}>
                       {o.name}
                     </option>
                   ))}
@@ -387,7 +387,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   }}
                 >
                   {PAGE_OPTIONS.map((o) => (
-                    <option key={o.name} value={o.name} style={{ background: "#0D0D0D", color: "#fff" }}>
+                    <option key={o.name} value={o.name} style={{ background: "#ffffff", color: "#070B14" }}>
                       {o.name}
                     </option>
                   ))}
@@ -435,10 +435,10 @@ export const PriceCalculatorSection = (): JSX.Element => {
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  <option value="Ne" style={{ background: "#0D0D0D", color: "#fff" }}>
+                  <option value="Ne" style={{ background: "#ffffff", color: "#070B14" }}>
                     Ne
                   </option>
-                  <option value="Ano" style={{ background: "#0D0D0D", color: "#fff" }}>
+                  <option value="Ano" style={{ background: "#ffffff", color: "#070B14" }}>
                     Ano
                   </option>
                 </select>

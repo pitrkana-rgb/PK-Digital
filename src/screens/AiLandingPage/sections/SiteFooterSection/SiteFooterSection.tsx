@@ -61,11 +61,11 @@ export const SiteFooterSection = (): JSX.Element => {
   };
 
   return (
-    <footer style={{ width: "100%", backgroundColor: "#000", position: "relative", overflow: "hidden" }}>
+    <footer style={{ width: "100%", backgroundColor: "#000000", position: "relative", overflow: "hidden" }}>
       {/* Orange gradient top border */}
       <div style={{ height: "1px", background: "linear-gradient(90deg,transparent 0%,#00E5FF 40%,rgba(0,229,255,0.25) 70%,transparent 100%)" }} />
 
-      <div className="footer-wrapper" style={{ maxWidth: "1280px", margin: "0 auto", padding: "56px 24px 40px" }}>
+      <div className="footer-wrapper" style={{ maxWidth: "1400px", margin: "0 auto", padding: "56px 24px 40px" }}>
         <div className="footer-top" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "48px", flexWrap: "wrap", marginBottom: "48px" }}>
 
           {/* Brand */}
@@ -77,7 +77,7 @@ export const SiteFooterSection = (): JSX.Element => {
                 style={{ height: "40px", width: "auto", display: "block" }}
               />
             </div>
-            <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: 1.65, margin: 0 }}>
+            <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: "rgba(255,255,255,0.55)", lineHeight: 1.65, margin: 0 }}>
               {t.footerDesc}
             </p>
           </div>
@@ -109,6 +109,22 @@ export const SiteFooterSection = (): JSX.Element => {
               >
                 {t.writeUs}
               </button>
+              <a
+                href="tel:+420725703868"
+                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.6)"; }}
+              >
+                +420 725 703 868
+              </a>
+              <a
+                href="mailto:info@pk-digital.cz"
+                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.6)"; }}
+              >
+                info@pk-digital.cz
+              </a>
             </div>
           </div>
         </div>

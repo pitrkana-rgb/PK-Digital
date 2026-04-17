@@ -70,7 +70,7 @@ const FloatingField = ({
         transformOrigin: "left",
         fontFamily: "'Space Grotesk',sans-serif", fontWeight: 500,
         fontSize: active ? "12px" : "15px",
-        color: focused ? "#00E5FF" : "rgba(255,255,255,0.4)",
+        color: focused ? "#00E5FF" : "rgba(7,11,20,0.45)",
         transition: "all 200ms cubic-bezier(0.2, 0.8, 0.2, 1)",
         pointerEvents: "none", zIndex: 1,
       }}>
@@ -86,12 +86,12 @@ const FloatingField = ({
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             style={{
-              background: "rgba(255,255,255,0.03)",
-              border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
+              background: "rgba(2,6,23,0.03)",
+              border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(2,6,23,0.12)"}`,
               borderRadius: "16px",
               padding: active ? "26px 40px 10px 20px" : "20px 40px 20px 20px",
               fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px",
-              color: value ? "#fff" : "transparent",
+              color: value ? "#070B14" : "transparent",
               outline: "none", width: "100%", appearance: "none",
               boxSizing: "border-box", cursor: "pointer",
               transition: "all 250ms ease",
@@ -99,9 +99,9 @@ const FloatingField = ({
             }}
           >
             <option value="" disabled hidden></option>
-            {options?.map(opt => <option key={opt} value={opt} style={{ background: "#0D0D0D", color: "#fff" }}>{opt}</option>)}
+            {options?.map(opt => <option key={opt} value={opt} style={{ background: "#ffffff", color: "#070B14" }}>{opt}</option>)}
           </select>
-          <ChevronDown style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", width: "18px", color: "rgba(255,255,255,0.3)", pointerEvents: "none" }} />
+          <ChevronDown style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", width: "18px", color: "rgba(7,11,20,0.35)", pointerEvents: "none" }} />
         </div>
       ) : (
         <input
@@ -113,11 +113,11 @@ const FloatingField = ({
           onBlur={() => setFocused(false)}
           placeholder={focused ? placeholder : ""}
           style={{
-            background: "rgba(255,255,255,0.03)",
-            border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
+            background: "rgba(2,6,23,0.03)",
+            border: `1px solid ${focused ? "#00E5FF" : error ? "rgba(248,113,113,0.5)" : "rgba(2,6,23,0.12)"}`,
             borderRadius: "16px",
             padding: active ? "28px 20px 10px" : "20px",
-            fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "#fff",
+            fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "#070B14",
             outline: "none", width: "100%",
             boxSizing: "border-box", transition: "all 250ms ease",
             boxShadow: focused ? "0 0 0 4px rgba(0,229,255,0.1)" : "none",
@@ -262,12 +262,12 @@ export const ContactFormBlock = (): JSX.Element => {
   };
 
   return (
-    <section id="contact" style={{ width: "100%", padding: "0 0 64px", position: "relative", backgroundColor: "transparent" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 24px" }}>
+    <section id="contact" style={{ width: "100%", padding: "0 0 64px", position: "relative", backgroundColor: "#ffffff" }}>
+      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <div style={{ marginBottom: "0" }}>
           <div style={{
-            background: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "#ffffff",
+            border: "1px solid rgba(2,6,23,0.10)",
             borderRadius: "24px",
             padding: "48px 40px",
             boxSizing: "border-box",
@@ -282,9 +282,9 @@ export const ContactFormBlock = (): JSX.Element => {
                 }}>
                   <CheckCircle2 color="#22C55E" size={40} />
                 </div>
-                <h3 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "28px", color: "#fff", marginBottom: "12px" }}>{isEn ? "Thank you for your request." : "Děkujeme za odeslání."}</h3>
-                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "17px", color: "rgba(255,255,255,0.6)", marginBottom: "32px" }}>{isEn ? "We will get back to you within 24 hours." : "Ozveme se do 24 hodin."}</p>
-                <button type="button" onClick={() => setSubmitted(false)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif" }}>{isEn ? "Send another message" : "Odeslat další zprávu"}</button>
+                <h3 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "28px", color: "#070B14", marginBottom: "12px" }}>{isEn ? "Thank you for your request." : "Děkujeme za odeslání."}</h3>
+                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "17px", color: "rgba(7,11,20,0.62)", marginBottom: "32px" }}>{isEn ? "We will get back to you within 24 hours." : "Ozveme se do 24 hodin."}</p>
+                <button type="button" onClick={() => setSubmitted(false)} style={{ background: "rgba(2,6,23,0.04)", border: "1px solid rgba(2,6,23,0.12)", color: "#070B14", padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif" }}>{isEn ? "Send another message" : "Odeslat další zprávu"}</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
@@ -300,15 +300,15 @@ export const ContactFormBlock = (): JSX.Element => {
                         aria-expanded={featuresOpen}
                         aria-controls="f-features-listbox"
                         style={{
-                          background: "rgba(255,255,255,0.03)",
-                          border: `1px solid ${featuresOpen ? "#00E5FF" : "rgba(255,255,255,0.1)"}`,
+                          background: "rgba(2,6,23,0.03)",
+                          border: `1px solid ${featuresOpen ? "#00E5FF" : "rgba(2,6,23,0.12)"}`,
                           borderRadius: "16px",
                           minHeight: "58px",
                           padding: "12px 16px",
                           fontFamily: "'Space Grotesk',sans-serif",
                           fontWeight: 400,
                           fontSize: "16px",
-                          color: "#fff",
+                          color: "#070B14",
                           textAlign: "left",
                           display: "flex",
                           alignItems: "center",
@@ -319,7 +319,7 @@ export const ContactFormBlock = (): JSX.Element => {
                           transition: "all 250ms ease",
                         }}
                       >
-                        <span style={{ color: form.features.length ? "#fff" : "rgba(255,255,255,0.4)" }}>
+                        <span style={{ color: form.features.length ? "#070B14" : "rgba(7,11,20,0.45)" }}>
                           {form.features.length
                             ? isEn ? `${form.features.length} selected options` : `${form.features.length} vybraných možností`
                             : isEn ? "Requested features / AI tools" : "Požadované funkce / AI nástroje"}
@@ -327,7 +327,7 @@ export const ContactFormBlock = (): JSX.Element => {
                         <ChevronDown
                           style={{
                             width: "18px",
-                            color: "rgba(255,255,255,0.5)",
+                            color: "rgba(7,11,20,0.45)",
                             transform: featuresOpen ? "rotate(180deg)" : "rotate(0deg)",
                             transition: "transform 200ms ease",
                           }}
@@ -339,8 +339,8 @@ export const ContactFormBlock = (): JSX.Element => {
                           role="listbox"
                           aria-multiselectable="true"
                           style={{
-                            background: "rgba(12,12,12,0.96)",
-                            border: "1px solid rgba(255,255,255,0.1)",
+                            background: "#ffffff",
+                            border: "1px solid rgba(2,6,23,0.12)",
                             borderRadius: "14px",
                             padding: "10px",
                             display: "grid",
@@ -368,7 +368,7 @@ export const ContactFormBlock = (): JSX.Element => {
                                   onChange={() => toggleFeature(opt)}
                                   style={{ width: "16px", height: "16px", accentColor: "#00E5FF" }}
                                 />
-                                <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: "#fff" }}>
+                                <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: "#070B14" }}>
                                   {opt}
                                 </span>
                               </label>
@@ -387,7 +387,7 @@ export const ContactFormBlock = (): JSX.Element => {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.85)" }}>
+                  <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontSize: "15px", color: "rgba(7,11,20,0.78)" }}>
                     <input
                       type="checkbox"
                       checked={form.gdprConsent}

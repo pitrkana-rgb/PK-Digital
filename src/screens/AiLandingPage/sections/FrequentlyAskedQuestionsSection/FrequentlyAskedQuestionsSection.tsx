@@ -81,16 +81,16 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" style={{ width: "100%", backgroundColor: "transparent", padding: "96px 0 120px", marginTop: "-50px", marginBottom: "-80px" }}>
+    <section id="faq" style={{ width: "100%", backgroundColor: "#ffffff", padding: "76px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
       <SectionDivider />
       <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 24px" }}>
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,4.5vw,56px)", color: "#fff", margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
+          <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: "#070B14", margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
             {isEn ? "Frequently Asked Questions" : "Často kladené dotazy"}
           </h2>
-          <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: "rgba(255,255,255,0.65)", margin: "0 auto" }}>
+          <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: "rgba(7,11,20,0.65)", margin: "0 auto" }}>
             {isEn
               ? "Wondering how collaboration works in practice? Here are answers to the questions clients ask most often."
               : "Zajímá vás, jak spolupráce probíhá v praxi? Připravili jsme odpovědi na otázky, které od klientů dostáváme nejčastěji."}
@@ -105,8 +105,8 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
               <div
                 key={faq.question}
                 style={{
-                  borderBottom: "1px solid rgba(255,255,255,0.08)",
-                  borderTop: i === 0 ? "1px solid rgba(255,255,255,0.08)" : "none",
+                  borderBottom: "1px solid rgba(2,6,23,0.10)",
+                  borderTop: i === 0 ? "1px solid rgba(2,6,23,0.10)" : "none",
                 }}
               >
                 <button
@@ -126,7 +126,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                   <span style={{
                     fontFamily: "'Space Grotesk',sans-serif", fontWeight: isOpen ? 600 : 500,
                     fontSize: "18px",
-                    color: isOpen ? "#00E5FF" : "#F0F4F8",
+                    color: isOpen ? "#08939e" : "#070B14",
                     lineHeight: 1.4,
                     transition: "color 200ms ease",
                   }}>
@@ -134,15 +134,15 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                   </span>
                   <div style={{
                     flexShrink: 0, width: "32px", height: "32px", borderRadius: "50%",
-                    background: isOpen ? "rgba(0,229,255,0.12)" : "rgba(13,27,42,0.65)",
-                    border: `1px solid ${isOpen ? "rgba(0,229,255,0.35)" : "rgba(0,229,255,0.12)"}`,
+                    background: isOpen ? "rgba(8,147,158,0.10)" : "rgba(2,6,23,0.04)",
+                    border: `1px solid ${isOpen ? "rgba(8,147,158,0.28)" : "rgba(0,229,255,0.12)"}`,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     transition: "background 200ms ease, border-color 200ms ease, transform 200ms ease",
                     transform: isOpen ? "rotate(0deg)" : "rotate(0deg)",
                   }}>
                     {isOpen
-                      ? <MinusIcon style={{ width: "14px", height: "14px", color: "#00E5FF" }} />
-                      : <PlusIcon style={{ width: "14px", height: "14px", color: "rgba(255,255,255,0.6)" }} />
+                      ? <MinusIcon style={{ width: "14px", height: "14px", color: "#08939e" }} />
+                      : <PlusIcon style={{ width: "14px", height: "14px", color: "rgba(7,11,20,0.55)" }} />
                     }
                   </div>
                 </button>
@@ -159,7 +159,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                 >
                   <p style={{
                     fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px",
-                    lineHeight: 1.7, color: "rgba(255,255,255,0.65)", padding: "0 0 24px 0", margin: 0,
+                    lineHeight: 1.7, color: "rgba(7,11,20,0.68)", padding: "0 0 24px 0", margin: 0,
                   }}>
                     {faq.answer}
                   </p>

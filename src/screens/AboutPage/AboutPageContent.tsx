@@ -5,8 +5,8 @@ import { useLanguage } from "../../i18n/LanguageContext";
 const FeatureIcon = ({ children }: { children: React.ReactNode }) => (
   <div style={{
     width: "40px", height: "40px", borderRadius: "10px", flexShrink: 0,
-    background: "rgba(0,229,255,0.08)", border: "1px solid rgba(0,229,255,0.18)",
-    color: "#00E5FF", display: "flex", alignItems: "center", justifyContent: "center",
+    background: "rgba(2,6,23,0.05)", border: "1px solid rgba(2,6,23,0.10)",
+    color: "#0f6b78", display: "flex", alignItems: "center", justifyContent: "center",
   }}>
     {children}
   </div>
@@ -107,7 +107,7 @@ export const AboutPageContent = (): JSX.Element => {
     <>
       <main style={{ position: "relative", zIndex: 1 }}>
         <section style={{ padding: "80px 0", position: "relative" }}>
-          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(2,6,23,0.08), transparent)" }} />
           <div
             ref={section1.ref}
             style={{
@@ -121,12 +121,12 @@ export const AboutPageContent = (): JSX.Element => {
               <div className="about-img-col">
                 <div style={{
                   position: "relative", borderRadius: "24px", overflow: "hidden",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: "0 32px 80px rgba(0,0,0,0.5)",
+                  border: "1px solid rgba(2,6,23,0.10)",
+                  boxShadow: "0 24px 56px rgba(2,6,23,0.10)",
                 }}>
                   <div style={{
                     position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
-                    background: "linear-gradient(145deg, rgba(0,229,255,0.06), transparent 60%)",
+                    background: "linear-gradient(145deg, rgba(0,229,255,0.08), transparent 60%)",
                   }} />
                   <img
                     src="/Founder.png"
@@ -145,25 +145,25 @@ export const AboutPageContent = (): JSX.Element => {
                 <h2 style={{
                   fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700,
                   fontSize: "clamp(26px, 3.5vw, 42px)", lineHeight: 1.15,
-                  color: "#fff", margin: "0 0 28px", letterSpacing: "-0.02em",
+                  color: "#070B14", margin: "0 0 28px", letterSpacing: "-0.02em",
                 }}>
-                  <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{isEn ? "Who builds" : "Kdo tvoří"}</span>{" "}
+                  <span style={{ color: "#070B14" }}>{isEn ? "Who builds" : "Kdo tvoří"}</span>{" "}
                   {isEn ? "your website" : "webové stránky"}
                 </h2>
                 <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
                   <p style={{
                     fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "17px",
-                    color: "rgba(255,255,255,0.92)", lineHeight: 1.5, margin: 0,
+                    color: "rgba(7,11,20,0.92)", lineHeight: 1.5, margin: 0,
                   }}>
                     {isEn ? "I help companies build modern websites that bring in new clients." : "Pomáhám firmám vytvářet moderní weby, které přivádějí nové klienty."}
                   </p>
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, margin: 0 }}>
+                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
                     {isEn ? "My name is Petr Kana and I have spent more than 10 years working with data, analytics, and digital technologies." : "Jmenuji se Petr Kaňa a více než 10 let se věnuji práci s daty, analytikou a digitálními technologiemi. Během této doby jsem pomáhal firmám lépe porozumět jejich datům, vizualizovat je a využívat pro lepší rozhodování."}
                   </p>
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, margin: 0 }}>
+                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
                     {isEn ? "Today I combine this experience with modern web development and AI tools. The result is not only visually attractive websites, but practical digital systems that help companies grow." : "Dnes tyto zkušenosti propojuji s tvorbou moderních webových stránek a AI nástrojů. Díky tomu nevznikají jen designově hezké weby, ale funkční digitální nástroje, které pomáhají firmám růst, získávat nové zákazníky a efektivně pracovat s návštěvníky webu."}
                   </p>
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, margin: 0 }}>
+                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
                     {isEn ? "PK-Digital is built on one idea: connect data, design, and modern technology so a website becomes a real growth tool, not just a business card." : "Za projektem PK-Digital stojí jednoduchá myšlenka — propojit data, design a moderní technologie, aby web nebyl pouze vizitkou firmy, ale skutečným nástrojem pro její růst."}
                   </p>
                 </div>
@@ -201,11 +201,11 @@ export const AboutPageContent = (): JSX.Element => {
         </section>
 
         <section style={{ padding: "80px 0 120px", position: "relative" }}>
-          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(2,6,23,0.08), transparent)" }} />
           <div style={{
             position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
             width: "800px", height: "500px", pointerEvents: "none",
-            background: "radial-gradient(ellipse at center, rgba(224,64,251,0.05) 0%, transparent 65%)",
+            background: "radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 65%)",
           }} />
           <div
             ref={section2.ref}
@@ -221,10 +221,10 @@ export const AboutPageContent = (): JSX.Element => {
                 <h2 style={{
                   fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700,
                   fontSize: "clamp(26px, 3.5vw, 42px)", lineHeight: 1.15,
-                  color: "#fff", margin: "0 0 36px", letterSpacing: "-0.02em",
+                  color: "#070B14", margin: "0 0 36px", letterSpacing: "-0.02em",
                 }}>
                   {isEn ? "Why choose " : "Proč si vybrat "}
-                  <span style={{ background: "linear-gradient(135deg, #E040FB, #00E5FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  <span style={{ color: "#070B14" }}>
                     {isEn ? "me?" : "právě mě?"}
                   </span>
                 </h2>
@@ -236,13 +236,13 @@ export const AboutPageContent = (): JSX.Element => {
                       <div>
                         <h3 style={{
                           fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "16px",
-                          color: "#F0F4F8", margin: "0 0 6px", lineHeight: 1.3,
+                          color: "#070B14", margin: "0 0 6px", lineHeight: 1.3,
                         }}>
                           {fp.title}
                         </h3>
                         <p style={{
                           fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px",
-                          color: "rgba(255,255,255,0.6)", lineHeight: 1.65, margin: 0,
+                          color: "rgba(7,11,20,0.68)", lineHeight: 1.65, margin: 0,
                         }}>
                           {fp.text}
                         </p>
@@ -255,12 +255,12 @@ export const AboutPageContent = (): JSX.Element => {
               <div className="about-img-col">
                 <div style={{
                   position: "relative", borderRadius: "24px", overflow: "hidden",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: "0 32px 80px rgba(0,0,0,0.5)",
+                  border: "1px solid rgba(2,6,23,0.10)",
+                  boxShadow: "0 24px 56px rgba(2,6,23,0.10)",
                 }}>
                   <div style={{
                     position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
-                    background: "linear-gradient(145deg, rgba(224,64,251,0.04), transparent 60%)",
+                    background: "linear-gradient(145deg, rgba(0,229,255,0.08), transparent 60%)",
                   }} />
                   <img
                     src="/Studio.png"

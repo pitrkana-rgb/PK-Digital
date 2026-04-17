@@ -5,15 +5,17 @@ import { MainHeroSection } from "./sections/MainHeroSection";
 import { ReadyToDesignSection } from "./sections/ReadyToDesignSection";
 import { SiteFooterSection } from "./sections/SiteFooterSection/SiteFooterSection";
 import { SubscriptionPlansSection } from "./sections/SubscriptionPlansSection/SubscriptionPlansSection";
-import { UserTestimonialsSection } from "./sections/UserTestimonialsSection";
 import { ClientTestimonialsSection } from "./sections/ClientTestimonialsSection";
 import { WhyChooseUsSection } from "./sections/WhyChooseUsSection/WhyChooseUsSection";
 import { CoNabizimeSection } from "./sections/CoNabizimeSection/CoNabizimeSection";
+import { BrandLogosCarouselSection } from "./sections/BrandLogosCarouselSection/BrandLogosCarouselSection";
+import { PrototypeShowcaseSection } from "./sections/PrototypeShowcaseSection/PrototypeShowcaseSection";
+import { UserTestimonialsSection } from "./sections/UserTestimonialsSection";
 // Hidden for now – re-enable by uncommenting import and section below
 // import { PriceCalculatorSection } from "./sections/PriceCalculatorSection/PriceCalculatorSection";
 import { Header } from "../../components/Header";
 import { HeroBackgroundVideo } from "../../components/HeroBackgroundVideo";
-import { landingPageSurfaceStyle, NoiseTextureOverlay } from "../../components/PageBackground";
+import { NoiseTextureOverlay } from "../../components/PageBackground";
 
 export const AiLandingPage = (): JSX.Element => {
   useEffect(() => {
@@ -47,65 +49,99 @@ export const AiLandingPage = (): JSX.Element => {
     <div
       className="relative w-full min-h-screen overflow-x-hidden"
       style={{
-        ...landingPageSurfaceStyle,
+        backgroundColor: "#ffffff",
+        color: "#070B14",
         fontFamily: "'Space Grotesk', 'Inter', sans-serif",
       }}
     >
-      <NoiseTextureOverlay />
-      <HeroBackgroundVideo />
-
       <Header />
 
       <main className="relative">
-        <section id="hero">
-          <MainHeroSection />
+        {/* Dark header + hero only */}
+        <section
+          style={{
+            position: "relative",
+            backgroundColor: "#000000",
+            color: "#ffffff",
+            overflow: "hidden",
+            zIndex: 2,
+          }}
+        >
+          <NoiseTextureOverlay />
+          <HeroBackgroundVideo />
+
+          <section id="hero">
+            <MainHeroSection />
+          </section>
+
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 40,
+              zIndex: 2,
+              pointerEvents: "none",
+            }}
+          >
+            <div style={{ pointerEvents: "auto" }}>
+              <UserTestimonialsSection variant="hero" />
+            </div>
+          </div>
+
         </section>
 
-        <section id="trust" data-animate-on-scroll>
-          <UserTestimonialsSection />
-        </section>
+        {/* White page content */}
+        <section style={{ backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
+          <section>
+            <BrandLogosCarouselSection />
+          </section>
 
-        <section id="features" data-animate-on-scroll className="section-mb-mobile">
-          <AiDesignFeaturesSection />
-        </section>
+          <section id="co-nabizime" data-animate-on-scroll className="section-mb-mobile">
+            <CoNabizimeSection />
+          </section>
 
-        <section id="co-nabizime" data-animate-on-scroll className="section-mb-mobile">
-          <CoNabizimeSection />
-        </section>
+          <section data-animate-on-scroll className="section-mb-mobile">
+            <PrototypeShowcaseSection />
+          </section>
 
-        <section id="why-us" data-animate-on-scroll className="section-mb-mobile">
-          <WhyChooseUsSection />
-        </section>
+          <section id="why-us" data-animate-on-scroll className="section-mb-mobile">
+            <WhyChooseUsSection />
+          </section>
 
-        <section data-animate-on-scroll className="section-mb-mobile">
-          <ClientTestimonialsSection />
-        </section>
+          <section id="features" data-animate-on-scroll className="section-mb-mobile">
+            <AiDesignFeaturesSection />
+          </section>
 
-        <section id="pricing" data-animate-on-scroll className="section-mb-mobile">
-          <SubscriptionPlansSection />
-        </section>
+          <section data-animate-on-scroll className="section-mb-mobile">
+            <ClientTestimonialsSection />
+          </section>
 
-        {/* Price calculator hidden – uncomment to show */}
-        {/* <section id="calculator" data-animate-on-scroll className="section-mb-mobile">
+          <section id="pricing" data-animate-on-scroll className="section-mb-mobile">
+            <SubscriptionPlansSection />
+          </section>
+
+          {/* Price calculator hidden – uncomment to show */}
+          {/* <section id="calculator" data-animate-on-scroll className="section-mb-mobile">
           <PriceCalculatorSection />
         </section> */}
 
-        <section id="faq" data-animate-on-scroll className="section-mb-mobile">
-          <FrequentlyAskedQuestionsSection />
-        </section>
+          <section id="faq" data-animate-on-scroll className="section-mb-mobile">
+            <FrequentlyAskedQuestionsSection />
+          </section>
 
-        <section data-animate-on-scroll className="section-mb-mobile">
-          <ReadyToDesignSection />
-        </section>
+          <section data-animate-on-scroll className="section-mb-mobile">
+            <ReadyToDesignSection />
+          </section>
 
-        <SiteFooterSection />
+          <SiteFooterSection />
+        </section>
       </main>
 
       <style>{`
         @media(max-width:768px) {
-          .hero-section-mobile { margin-top: -200px !important; }
-          .hero-content-wrap { margin-top: -220px !important; }
-          .stats-section { margin-top: -50px !important; }
+          /* Hero spacing is handled inside MainHeroSection */
+          .stats-section { margin-top: 0 !important; }
 
           /* ── Unified section subheading size (matches hero mobile: 14px) ── */
           .section-sub {

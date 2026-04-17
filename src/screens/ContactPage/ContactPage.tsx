@@ -11,7 +11,13 @@ export const ContactPage = (): JSX.Element => {
   }, []);
 
   return (
-    <LandingStylePageRoot>
+    <LandingStylePageRoot
+      style={{
+        backgroundColor: "#ffffff",
+        backgroundImage: "none",
+        color: "#070B14",
+      }}
+    >
       <Header />
 
       <div style={{ position: "relative", zIndex: 1, paddingTop: "120px" }}>
