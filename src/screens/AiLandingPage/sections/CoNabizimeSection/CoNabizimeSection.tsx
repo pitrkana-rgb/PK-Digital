@@ -515,6 +515,25 @@ export const CoNabizimeSection = (): JSX.Element => {
                           <li key={f}>{f}</li>
                         ))}
                       </ul>
+
+                      <button
+                        type="button"
+                        className="offer-cta offer-cta-desktop animate-pulse-glow hero-primary-btn"
+                        onClick={() => {
+                          navigate("/napiste-nam");
+                          setTimeout(() => {
+                            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                          }, 180);
+                        }}
+                        style={{
+                          fontFamily: "'Space Grotesk', sans-serif",
+                          fontWeight: 600,
+                          fontSize: "16px",
+                          letterSpacing: "0",
+                        }}
+                      >
+                        {activeSlide.cta}
+                      </button>
                     </div>
                   </div>
 
@@ -555,7 +574,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                           document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
                         }, 180);
                       }}
-                      className="offer-cta animate-pulse-glow hero-primary-btn"
+                      className="offer-cta offer-cta-mobile animate-pulse-glow hero-primary-btn"
                       style={{
                         fontFamily: "'Space Grotesk', sans-serif",
                         fontWeight: 600,
@@ -753,6 +772,14 @@ export const CoNabizimeSection = (): JSX.Element => {
           min-height: 0;
         }
 
+        /* Mobile-only row: CTA + swipe dots (hidden on desktop) */
+        .offer-gallery-actions{
+          display: none;
+        }
+        .offer-mobile-dots{
+          display: none;
+        }
+
         .offer-gallery-left{
           flex: 1 1 35%;
           min-width: 0;
@@ -792,10 +819,6 @@ export const CoNabizimeSection = (): JSX.Element => {
           .offer-bullets{
             text-align: left;
             margin-bottom: 0;
-          }
-          .offer-cta{
-            margin-top: 30px;
-            align-self: flex-start;
           }
         }
 
@@ -917,7 +940,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-bullets--checks{
           list-style: none;
           padding-left: 0;
-          margin: 0 0 22px;
+          margin: 0;
         }
         .offer-bullets--checks li{
           position: relative;
@@ -951,6 +974,13 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-cta{
           background: linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%) !important;
           color: #070B14 !important;
+        }
+        .offer-cta-desktop{
+          margin-top: 30px;
+          align-self: flex-start;
+        }
+        .offer-cta-mobile{
+          display:none;
         }
         .offer-cta:hover{
           filter: brightness(1.1);
@@ -1034,12 +1064,14 @@ export const CoNabizimeSection = (): JSX.Element => {
           }
           .offer-gallery-actions{
             width: 100%;
-            display:flex;
+            display:flex !important;
             flex-direction: column;
             align-items: center;
             gap: 18px;
             margin-top: 8px;
           }
+          .offer-cta-desktop{ display:none !important; }
+          .offer-cta-mobile{ display:flex !important; justify-content:center; }
           .offer-mobile-dots{
             display:flex;
             justify-content:center;
