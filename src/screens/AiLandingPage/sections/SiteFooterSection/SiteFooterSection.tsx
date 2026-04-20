@@ -1,5 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import companyLogoV3Url from "../../../../../Images/Company_logo_v3.png";
+import { pk } from "../../../../design/pkLandingColors";
 
 export const SiteFooterSection = (): JSX.Element => {
   const navigate = useNavigate();
@@ -61,9 +63,9 @@ export const SiteFooterSection = (): JSX.Element => {
   };
 
   return (
-    <footer style={{ width: "100%", backgroundColor: "#000000", position: "relative", overflow: "hidden" }}>
+    <footer style={{ width: "100%", backgroundColor: pk.hero, position: "relative", overflow: "hidden" }}>
       {/* Orange gradient top border */}
-      <div style={{ height: "1px", background: "linear-gradient(90deg,transparent 0%,#00E5FF 40%,rgba(0,229,255,0.25) 70%,transparent 100%)" }} />
+      <div style={{ height: "1px", background: pk.gradientFooterRule }} />
 
       <div className="footer-wrapper" style={{ maxWidth: "1400px", margin: "0 auto", padding: "56px 24px 40px" }}>
         <div className="footer-top" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "48px", flexWrap: "wrap", marginBottom: "48px" }}>
@@ -72,12 +74,13 @@ export const SiteFooterSection = (): JSX.Element => {
           <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "300px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <img
-                src="/Company_logo_V2.png"
+                src={companyLogoV3Url}
                 alt="PK Digital logo"
+                className="footer-logo"
                 style={{ height: "40px", width: "auto", display: "block" }}
               />
             </div>
-            <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: "rgba(255,255,255,0.55)", lineHeight: 1.65, margin: 0 }}>
+            <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark55, lineHeight: 1.65, margin: 0 }}>
               {t.footerDesc}
             </p>
           </div>
@@ -87,12 +90,12 @@ export const SiteFooterSection = (): JSX.Element => {
 
             {/* Nav links */}
             <nav style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#00E5FF", textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.nav}</span>
+              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.nav}</span>
               {navLinks.map(link => (
                 <button key={`${link.path}-${link.label}`} type="button" onClick={() => handleNavClick(link)}
-                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", transition: "color 200ms ease" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.6)"; }}
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark60; }}
                 >
                   {link.label}
                 </button>
@@ -101,27 +104,27 @@ export const SiteFooterSection = (): JSX.Element => {
 
             {/* Contact */}
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: "#00E5FF", textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.contactTitle}</span>
+              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.contactTitle}</span>
               <button type="button" onClick={() => navigate("/napiste-nam")}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", transition: "color 200ms ease" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.6)"; }}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark60; }}
               >
                 {t.writeUs}
               </button>
               <a
                 href="tel:+420725703868"
-                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.6)"; }}
+                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark60; }}
               >
                 +420 725 703 868
               </a>
               <a
                 href="mailto:info@pk-digital.cz"
-                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: "rgba(255,255,255,0.6)", textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.6)"; }}
+                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark60; }}
               >
                 info@pk-digital.cz
               </a>
@@ -130,20 +133,20 @@ export const SiteFooterSection = (): JSX.Element => {
         </div>
 
         {/* Bottom bar */}
-        <div className="footer-bottom" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
-          <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: "rgba(255,255,255,0.35)", margin: 0 }}>
+        <div className="footer-bottom" style={{ borderTop: `1px solid ${pk.onDarkBorder06}`, paddingTop: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+          <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark35, margin: 0 }}>
             {t.rights}
           </p>
           <div style={{ display: "flex", gap: "24px" }}>
             <button type="button" onClick={() => navigate("/zasady-ochrany-soukromi")}
-              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "13px", color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 200ms ease" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.35)"; }}
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "13px", color: pk.onDark35, textDecoration: "none", transition: "color 200ms ease" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark70; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark35; }}
             >{t.privacy}</button>
             <button type="button" onClick={() => navigate("/podminky-uziti")}
-              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "13px", color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 200ms ease" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.35)"; }}
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "13px", color: pk.onDark35, textDecoration: "none", transition: "color 200ms ease" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark70; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark35; }}
             >{t.terms}</button>
           </div>
         </div>

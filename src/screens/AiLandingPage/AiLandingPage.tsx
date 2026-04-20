@@ -16,6 +16,7 @@ import { UserTestimonialsSection } from "./sections/UserTestimonialsSection";
 import { Header } from "../../components/Header";
 import { HeroBackgroundVideo } from "../../components/HeroBackgroundVideo";
 import { NoiseTextureOverlay } from "../../components/PageBackground";
+import { pk } from "../../design/pkLandingColors";
 
 export const AiLandingPage = (): JSX.Element => {
   useEffect(() => {
@@ -49,8 +50,8 @@ export const AiLandingPage = (): JSX.Element => {
     <div
       className="relative w-full min-h-screen overflow-x-hidden"
       style={{
-        backgroundColor: "#ffffff",
-        color: "#070B14",
+        backgroundColor: pk.page,
+        color: pk.ink,
         fontFamily: "'Space Grotesk', 'Inter', sans-serif",
       }}
     >
@@ -61,8 +62,8 @@ export const AiLandingPage = (): JSX.Element => {
         <section
           style={{
             position: "relative",
-            backgroundColor: "#000000",
-            color: "#ffffff",
+            backgroundColor: pk.hero,
+            color: pk.onDark,
             overflow: "hidden",
             zIndex: 2,
           }}
@@ -92,7 +93,7 @@ export const AiLandingPage = (): JSX.Element => {
         </section>
 
         {/* White page content */}
-        <section style={{ backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
+        <section style={{ backgroundColor: pk.page, position: "relative", zIndex: 1 }}>
           <section>
             <BrandLogosCarouselSection />
           </section>

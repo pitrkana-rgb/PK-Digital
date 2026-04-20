@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SectionDivider } from "../../components/SectionDivider";
 import { ChevronDown, Check } from "lucide-react";
+import { pk } from "../../../../design/pkLandingColors";
 
 /* ── Pricing data ────────────────────────────────────────────────── */
 const PROJECT_OPTIONS = [
@@ -65,9 +66,9 @@ const selectBase = {
   fontFamily: "'Space Grotesk',sans-serif",
   fontWeight: 500,
   fontSize: "15px",
-  color: "#070B14",
-  background: "rgba(2,6,23,0.03)",
-  border: "1px solid rgba(2,6,23,0.12)",
+  color: pk.ink,
+  background: pk.slateTint03,
+  border: `1px solid ${pk.slateTint12}`,
   borderRadius: "12px",
   padding: "12px 40px 12px 16px",
   width: "100%",
@@ -85,7 +86,7 @@ const labelStyle: React.CSSProperties = {
   fontWeight: 600,
   fontSize: "12px",
   letterSpacing: "0.08em",
-  color: "rgba(7,11,20,0.55)",
+  color: pk.ink55,
   textTransform: "uppercase",
   marginBottom: "8px",
   display: "block",
@@ -141,22 +142,22 @@ function MultiSelectDropdown({
           justifyContent: "space-between",
         }}
         onFocus={(e) => {
-          e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)";
-          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.1)";
+          e.currentTarget.style.borderColor = pk.accent40;
+          e.currentTarget.style.boxShadow = `0 0 0 3px ${pk.accent10}`;
         }}
         onBlur={(e) => {
-          e.currentTarget.style.borderColor = "rgba(2,6,23,0.12)";
+          e.currentTarget.style.borderColor = pk.slateTint12;
           e.currentTarget.style.boxShadow = "none";
         }}
       >
-        <span style={{ color: selected.size ? "#070B14" : "rgba(7,11,20,0.45)" }}>
+        <span style={{ color: selected.size ? pk.ink : pk.ink45 }}>
           {displayText}
         </span>
         <ChevronDown
           style={{
             width: "18px",
             height: "18px",
-            color: "rgba(7,11,20,0.45)",
+            color: pk.ink45,
             flexShrink: 0,
             transform: open ? "rotate(180deg)" : "none",
             transition: "transform 200ms ease",
@@ -171,10 +172,10 @@ function MultiSelectDropdown({
             left: 0,
             right: 0,
             marginTop: "4px",
-            background: "#ffffff",
-            border: "1px solid rgba(2,6,23,0.12)",
+            background: pk.page,
+            border: `1px solid ${pk.slateTint12}`,
             borderRadius: "12px",
-            boxShadow: "0 18px 40px rgba(2,6,23,0.12)",
+            boxShadow: `0 18px 40px ${pk.slateTint12}`,
             zIndex: 20,
             padding: "8px",
             maxHeight: "260px",
@@ -196,8 +197,8 @@ function MultiSelectDropdown({
                   padding: "10px 12px",
                   borderRadius: "8px",
                   border: "none",
-                  background: isSelected ? "rgba(0,229,255,0.12)" : "transparent",
-                  color: isSelected ? "#00E5FF" : "rgba(7,11,20,0.86)",
+                  background: isSelected ? pk.accent12 : "transparent",
+                  color: isSelected ? pk.accent : pk.ink86,
                   fontFamily: "'Space Grotesk',sans-serif",
                   fontSize: "14px",
                   cursor: "pointer",
@@ -206,13 +207,13 @@ function MultiSelectDropdown({
               >
                 <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   {isSelected ? (
-                    <Check style={{ width: "16px", height: "16px", color: "#00E5FF" }} />
+                    <Check style={{ width: "16px", height: "16px", color: pk.accent }} />
                   ) : (
                     <span style={{ width: "16px", height: "16px" }} />
                   )}
                   {opt.name}
                 </span>
-                <span style={{ fontSize: "12px", color: "rgba(7,11,20,0.50)" }}>
+                <span style={{ fontSize: "12px", color: pk.ink50 }}>
                   +{formatPrice(opt.price_czk)}
                 </span>
               </button>
@@ -248,7 +249,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
       id="calculator"
       style={{
         width: "100%",
-        backgroundColor: "#ffffff",
+        backgroundColor: pk.page,
         padding: "80px 0 100px",
         marginTop: "-50px",
         marginBottom: "-50px",
@@ -265,7 +266,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
               fontWeight: 700,
               fontSize: "clamp(28px,4.5vw,48px)",
               lineHeight: 1.1,
-              color: "#070B14",
+              color: pk.ink,
               letterSpacing: "-0.02em",
               margin: "0 auto 16px",
               maxWidth: "700px",
@@ -274,7 +275,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
             Kolik bude váš web{" "}
             <span
               style={{
-                background: "linear-gradient(135deg,#E040FB,#111827)",
+                background: pk.gradientCalculatorAccent,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -288,7 +289,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
               fontFamily: "'Space Grotesk',sans-serif",
               fontWeight: 400,
               fontSize: "16px",
-              color: "rgba(7,11,20,0.62)",
+              color: pk.ink62,
               lineHeight: 1.6,
               margin: "0 auto",
             }}
@@ -301,12 +302,12 @@ export const PriceCalculatorSection = (): JSX.Element => {
         <div
           className="calc-card"
           style={{
-            background: "rgba(13,13,13,0.95)",
-            border: "1px solid rgba(0,229,255,0.2)",
+            background: pk.charcoal95,
+            border: `1px solid ${pk.accent20}`,
             borderRadius: "24px",
             padding: "32px 28px",
             boxShadow:
-              "0 0 0 1px rgba(0,229,255,0.08), 0 0 40px rgba(0,229,255,0.06), 0 24px 48px rgba(0,0,0,0.4)",
+              `0 0 0 1px ${pk.accent08}, 0 0 40px ${pk.accent06}, 0 24px 48px ${pk.black40}`,
             position: "relative",
             overflow: "hidden",
           }}
@@ -319,7 +320,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
               left: 0,
               right: 0,
               height: "2px",
-              background: "linear-gradient(90deg, transparent, #00E5FF, #E040FB, transparent)",
+              background: pk.gradientCalculatorShine,
               opacity: 0.8,
             }}
           />
@@ -337,16 +338,16 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   }}
                   style={selectBase}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.1)";
+                    e.currentTarget.style.borderColor = pk.accent40;
+                    e.currentTarget.style.boxShadow = `0 0 0 3px ${pk.accent10}`;
                   }}
                   onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                    e.currentTarget.style.borderColor = pk.onDarkBorder12;
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
                   {PROJECT_OPTIONS.map((o) => (
-                    <option key={o.name} value={o.name} style={{ background: "#ffffff", color: "#070B14" }}>
+                    <option key={o.name} value={o.name} style={{ background: pk.page, color: pk.ink }}>
                       {o.name}
                     </option>
                   ))}
@@ -359,7 +360,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
                     transform: "translateY(-50%)",
                     width: "18px",
                     height: "18px",
-                    color: "rgba(255,255,255,0.4)",
+                    color: pk.onDark40,
                     pointerEvents: "none",
                   }}
                 />
@@ -378,16 +379,16 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   }}
                   style={selectBase}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.1)";
+                    e.currentTarget.style.borderColor = pk.accent40;
+                    e.currentTarget.style.boxShadow = `0 0 0 3px ${pk.accent10}`;
                   }}
                   onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                    e.currentTarget.style.borderColor = pk.onDarkBorder12;
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
                   {PAGE_OPTIONS.map((o) => (
-                    <option key={o.name} value={o.name} style={{ background: "#ffffff", color: "#070B14" }}>
+                    <option key={o.name} value={o.name} style={{ background: pk.page, color: pk.ink }}>
                       {o.name}
                     </option>
                   ))}
@@ -400,7 +401,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
                     transform: "translateY(-50%)",
                     width: "18px",
                     height: "18px",
-                    color: "rgba(255,255,255,0.4)",
+                    color: pk.onDark40,
                     pointerEvents: "none",
                   }}
                 />
@@ -427,18 +428,18 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   onChange={(e) => setDomain(e.target.value as "Ano" | "Ne")}
                   style={selectBase}
                   onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)";
-                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.1)";
+                    e.currentTarget.style.borderColor = pk.accent40;
+                    e.currentTarget.style.boxShadow = `0 0 0 3px ${pk.accent10}`;
                   }}
                   onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                    e.currentTarget.style.borderColor = pk.onDarkBorder12;
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  <option value="Ne" style={{ background: "#ffffff", color: "#070B14" }}>
+                  <option value="Ne" style={{ background: pk.page, color: pk.ink }}>
                     Ne
                   </option>
-                  <option value="Ano" style={{ background: "#ffffff", color: "#070B14" }}>
+                  <option value="Ano" style={{ background: pk.page, color: pk.ink }}>
                     Ano
                   </option>
                 </select>
@@ -450,7 +451,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
                     transform: "translateY(-50%)",
                     width: "18px",
                     height: "18px",
-                    color: "rgba(255,255,255,0.4)",
+                    color: pk.onDark40,
                     pointerEvents: "none",
                   }}
                 />
@@ -461,7 +462,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
             <div
               style={{
                 height: "1px",
-                background: "linear-gradient(90deg, transparent, rgba(0,229,255,0.2), transparent)",
+                background: `linear-gradient(90deg, transparent, ${pk.accent20}, transparent)`,
               }}
             />
 
@@ -473,7 +474,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   fontWeight: 600,
                   fontSize: "12px",
                   letterSpacing: "0.08em",
-                  color: "rgba(255,255,255,0.45)",
+                  color: pk.onDark45,
                   textTransform: "uppercase",
                   marginBottom: "12px",
                 }}
@@ -487,7 +488,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   fontSize: "clamp(36px,6vw,52px)",
                   lineHeight: 1,
                   letterSpacing: "-0.03em",
-                  background: "linear-gradient(135deg, #fff 30%, #00E5FF 100%)",
+                  background: pk.gradientPriceDisplay,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -511,16 +512,16 @@ export const PriceCalculatorSection = (): JSX.Element => {
                 style={{
                   width: "100%",
                   padding: "16px 24px",
-                  background: "linear-gradient(135deg, #0ABDC6, #00E5FF)",
+                  background: pk.gradientCtaSoft,
                   border: "none",
                   borderRadius: "14px",
-                  color: "#000",
+                  color: pk.hero,
                   fontFamily: "'Space Grotesk',sans-serif",
                   fontWeight: 700,
                   fontSize: "16px",
                   cursor: "pointer",
                   transition: "all 280ms cubic-bezier(0.2,0.8,0.2,1)",
-                  boxShadow: "0 12px 32px rgba(0,229,255,0.25)",
+                  boxShadow: `0 12px 32px ${pk.accent25}`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -531,13 +532,13 @@ export const PriceCalculatorSection = (): JSX.Element => {
                   const b = e.currentTarget as HTMLButtonElement;
                   b.style.transform = "translateY(-3px)";
                   b.style.filter = "brightness(1.1)";
-                  b.style.boxShadow = "0 18px 40px rgba(0,229,255,0.35)";
+                  b.style.boxShadow = `0 18px 40px ${pk.accent35}`;
                 }}
                 onMouseLeave={(e) => {
                   const b = e.currentTarget as HTMLButtonElement;
                   b.style.transform = "";
                   b.style.filter = "";
-                  b.style.boxShadow = "0 12px 32px rgba(0,229,255,0.25)";
+                  b.style.boxShadow = `0 12px 32px ${pk.accent25}`;
                 }}
               >
                 Získat přesnou nabídku
@@ -548,12 +549,12 @@ export const PriceCalculatorSection = (): JSX.Element => {
       </div>
 
       <style>{`
-        .calc-card:focus-within { border-color: rgba(0,229,255,0.35); box-shadow: 0 0 0 1px rgba(0,229,255,0.12), 0 0 48px rgba(0,229,255,0.08); }
+        .calc-card:focus-within { border-color: var(--pk-accent-35); box-shadow: 0 0 0 1px var(--pk-accent-12), 0 0 48px var(--pk-accent-08); }
         @media (max-width: 600px) {
           .calc-card { padding: 24px 20px !important; }
         }
         @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-        select option { background: #0D0D0D !important; color: #fff !important; }
+        select option { background: var(--pk-panel-darker) !important; color: var(--pk-on-dark) !important; }
       `}</style>
     </section>
   );

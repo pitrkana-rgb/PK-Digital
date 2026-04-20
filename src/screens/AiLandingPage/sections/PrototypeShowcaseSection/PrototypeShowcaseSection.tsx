@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import { pk } from "../../../../design/pkLandingColors";
 import investicniPoradceImg from "../../../../../Images/Prototypes/investiční poradce.png";
 import realitniMaklerImg from "../../../../../Images/Prototypes/realitní makléř.png";
 import fitnessTrenerImg from "../../../../../Images/Prototypes/fitness trenér.png";
@@ -101,9 +102,9 @@ const CheckChip = () => (
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      background: "rgba(0,229,255,0.10)",
-      boxShadow: "0 0 0 1px rgba(0,163,199,0.18) inset",
-      color: "#0284c7",
+      background: pk.accent10,
+      boxShadow: `0 0 0 1px ${pk.prototypeRing18} inset`,
+      color: pk.linkSky,
       flexShrink: 0,
       marginTop: 1,
       fontSize: 13,
@@ -181,7 +182,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
       ref={(el) => { sectionRef.current = el; }}
       style={{
         width: "100%",
-        backgroundColor: "#ffffff",
+        backgroundColor: pk.page,
         padding: "40px 0 84px",
         marginTop: "-30px",
       }}
@@ -194,7 +195,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
               fontWeight: 700,
               fontSize: "clamp(26px,3.6vw,42px)",
               lineHeight: 1.1,
-              color: "#070B14",
+              color: pk.ink,
               margin: "0 auto 18px",
               letterSpacing: "-0.02em",
               maxWidth: "860px",
@@ -209,7 +210,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: 1.6,
-              color: "rgba(7,11,20,0.65)",
+              color: pk.ink65,
               margin: "0 auto",
               maxWidth: "860px",
             }}
@@ -306,7 +307,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                   borderRadius: "999px",
                   border: "none",
                   cursor: "pointer",
-                  background: i === mobileIdx ? "#00E5FF" : "rgba(2,6,23,0.16)",
+                  background: i === mobileIdx ? pk.accent : pk.slateTint16,
                   transition: "width 250ms ease, background 250ms ease",
                   padding: 0,
                 }}
@@ -346,11 +347,10 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         }
         .prototype-mobile-carousel{ display:none; }
         .prototype-card{
-          background:
-            radial-gradient(circle at 30% 25%, rgba(248,250,252,0.98) 0%, rgba(226,232,240,0.98) 55%, rgba(203,213,225,0.98) 100%);
-          border: 1px solid rgba(71,85,105,0.16);
+          background: var(--pk-page);
+          border: 1px solid var(--pk-slate-600-border-16);
           border-radius: 28px;
-          box-shadow: 0 20px 48px rgba(2,6,23,0.08);
+          box-shadow: 0 20px 48px var(--pk-slate-tint-08);
           padding: 20px;
           display:flex;
           flex-direction:column;
@@ -363,8 +363,8 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         .prototype-card:nth-child(3){ animation-delay: 2000ms; }
         .prototype-card:hover{
           transform: translateY(-6px);
-          box-shadow: 0 26px 56px rgba(2,6,23,0.12);
-          border-color: rgba(0,163,199,0.18);
+          box-shadow: 0 26px 56px var(--pk-slate-tint-12);
+          border-color: var(--pk-prototype-ring-18);
         }
         @keyframes prototypeCardFadeIn{
           from{ opacity: 0; transform: translateY(18px); }
@@ -376,9 +376,9 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         .prototype-mockup{
           border-radius: 22px;
           overflow: hidden;
-          background: linear-gradient(135deg, #08111f 0%, #10233b 48%, #132f51 100%);
+          background: var(--pk-gradient-prototype-card);
           min-height: 220px;
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+          box-shadow: inset 0 1px 0 var(--pk-on-dark-10);
         }
         .prototype-mockup-image{
           display:block;
@@ -394,8 +394,8 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           margin-bottom: 14px;
           padding: 7px 12px;
           border-radius: 999px;
-          background: rgba(2,6,23,0.05);
-          color: rgba(7,11,20,0.72);
+          background: var(--pk-slate-tint-05);
+          color: var(--pk-ink-72);
           font-family: "Space Grotesk", sans-serif;
           font-size: 12px;
           font-weight: 700;
@@ -409,7 +409,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           font-size: 24px;
           line-height: 1.18;
           letter-spacing: -0.02em;
-          color: #070B14;
+          color: var(--pk-ink);
         }
         .prototype-benefits{
           list-style:none;
@@ -426,22 +426,22 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           font-family: "Space Grotesk", sans-serif;
           font-size: 15px;
           line-height: 1.5;
-          color: rgba(7,11,20,0.82);
+          color: var(--pk-ink-82);
         }
         .prototype-trust{
           margin: 0 0 20px;
           font-family: "Space Grotesk", sans-serif;
           font-size: 13px;
           line-height: 1.55;
-          color: rgba(7,11,20,0.56);
+          color: var(--pk-ink-55);
         }
         .prototype-cta{
           margin-top:auto;
           border:none;
           border-radius: 12px;
           padding: 15px 20px;
-          background: linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%);
-          color: #070B14;
+          background: var(--pk-gradient-cta-soft);
+          color: var(--pk-ink);
           font-family: "Space Grotesk", sans-serif;
           font-weight: 700;
           font-size: 16px;
@@ -464,7 +464,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         .prototype-modal-backdrop{
           position:absolute;
           inset:0;
-          background: rgba(2,6,23,0.58);
+          background: var(--pk-slate-tint-58);
           backdrop-filter: blur(8px);
         }
         .prototype-modal-shell{
@@ -472,10 +472,10 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           z-index:1;
           width:min(1320px, 100%);
           height:min(84vh, 920px);
-          background:#ffffff;
+          background: var(--pk-page);
           border-radius: 24px;
           overflow:hidden;
-          box-shadow: 0 30px 80px rgba(2,6,23,0.28);
+          box-shadow: 0 30px 80px var(--pk-slate-tint-28);
           display:flex;
           flex-direction:column;
         }
@@ -485,8 +485,8 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           justify-content:space-between;
           gap:16px;
           padding: 18px 20px;
-          border-bottom: 1px solid rgba(2,6,23,0.08);
-          background: rgba(255,255,255,0.94);
+          border-bottom: 1px solid var(--pk-slate-tint-08);
+          background: var(--pk-on-dark-94);
         }
         .prototype-modal-label{
           font-family:"Space Grotesk", sans-serif;
@@ -494,7 +494,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           font-weight:700;
           letter-spacing:0.05em;
           text-transform:uppercase;
-          color: rgba(7,11,20,0.56);
+          color: var(--pk-ink-55);
           margin-bottom:6px;
         }
         .prototype-modal-title{
@@ -502,7 +502,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           font-family:"Space Grotesk", sans-serif;
           font-size:20px;
           font-weight:700;
-          color:#070B14;
+          color: var(--pk-ink);
           line-height:1.25;
         }
         .prototype-modal-close{
@@ -510,8 +510,8 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           height:40px;
           border:none;
           border-radius:999px;
-          background: rgba(2,6,23,0.05);
-          color:#070B14;
+          background: var(--pk-slate-tint-05);
+          color: var(--pk-ink);
           font-size:28px;
           line-height:1;
           cursor:pointer;
@@ -521,7 +521,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           width:100%;
           height:100%;
           border:none;
-          background:#ffffff;
+          background: var(--pk-page);
         }
         @media (max-width: 1024px){
           .prototype-grid-desktop{ display:none !important; }

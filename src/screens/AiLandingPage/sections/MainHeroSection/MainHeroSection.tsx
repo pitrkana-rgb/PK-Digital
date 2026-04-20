@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import heroPcFrameUrl from "../../../../../Images/Hero_PC_frame_V2.png";
+import { pk } from "../../../../design/pkLandingColors";
 
 const splitTextForReveal = (text: string): [string, string] => {
   const midpoint = Math.floor(text.length / 2);
@@ -25,14 +26,14 @@ const ScrollIndicator = () => (
         fontFamily: "'Space Grotesk', sans-serif",
         fontSize: "12px",
         fontWeight: 400,
-        color: "rgba(255,255,255,0.4)",
+        color: pk.onDark40,
         letterSpacing: "0.1em",
         textTransform: "uppercase" as const,
       }}
     >
       Scroll
     </span>
-    <div className="animate-bounce" style={{ color: "#00E5FF" }}>
+    <div className="animate-bounce" style={{ color: pk.accent }}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="m6 9 6 6 6-6" />
       </svg>
@@ -81,8 +82,8 @@ export const MainHeroSection = (): JSX.Element => {
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)
+            linear-gradient(${pk.heroGridLine} 1px, transparent 1px),
+            linear-gradient(90deg, ${pk.heroGridLine} 1px, transparent 1px)
           `,
           backgroundSize: "80px 80px",
           maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 100%)",
@@ -92,7 +93,7 @@ export const MainHeroSection = (): JSX.Element => {
         <div style={{
           position: "absolute", top: "5%", right: "-5%",
           width: "400px", height: "400px",
-          background: "radial-gradient(circle, rgba(0,229,255,0.10) 0%, transparent 70%)",
+          background: `radial-gradient(circle, ${pk.accent10} 0%, transparent 70%)`,
           filter: "blur(60px)",
         }} />
       </div>
@@ -124,7 +125,7 @@ export const MainHeroSection = (): JSX.Element => {
           fontWeight: 800,
           fontSize: "clamp(16px, 4.5vw, 40px)",
           lineHeight: 1.05,
-          color: "#FFFFFF",
+          color: pk.onDark,
           margin: "0 0 16px 0",
           letterSpacing: "-0.02em",
           maxWidth: "100%",
@@ -133,20 +134,20 @@ export const MainHeroSection = (): JSX.Element => {
           <span className="hero-headline-part hero-headline-part-left">
             {t.headlinePre}{" "}
             <span style={{
-              background: "linear-gradient(135deg, #E040FB 0%, #00E5FF 100%)",
+              background: pk.gradientHeroAccent,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              filter: "drop-shadow(0 0 20px rgba(0,229,255,0.35))",
+              filter: pk.heroHeadlineGlow,
             }}>AI</span>
             {t.headlineMid ? `${t.headlineMid}` : ""}
           </span>{" "}
           <span className="hero-headline-part hero-headline-part-right" style={{
-            background: "linear-gradient(135deg, #E040FB 0%, #00E5FF 100%)",
+            background: pk.gradientHeroAccent,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            filter: "drop-shadow(0 0 20px rgba(0,229,255,0.35))",
+            filter: pk.heroHeadlineGlow,
           }}>{t.headlineAccent}</span>
         </h1>
 
@@ -156,7 +157,7 @@ export const MainHeroSection = (): JSX.Element => {
           fontWeight: 400,
           fontSize: "clamp(14px, 2.0vw, 17px)",
           lineHeight: 1.65,
-          color: "rgba(255,255,255,0.88)",
+          color: pk.onDark88,
           maxWidth: "640px",
           margin: "0 0 32px 0",
         }}>
@@ -184,8 +185,8 @@ export const MainHeroSection = (): JSX.Element => {
             className="animate-pulse-glow hero-primary-btn"
             onClick={() => navigate("/napiste-nam")}
             style={{
-              background: "linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%)",
-              color: "#070B14",
+              background: pk.gradientCta,
+              color: pk.ink,
               border: "none",
               borderRadius: "12px",
               padding: "15px 32px",
@@ -217,9 +218,9 @@ export const MainHeroSection = (): JSX.Element => {
               document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
             style={{
-              background: "rgba(255,255,255,0.05)",
-              color: "#FFFFFF",
-              border: "1px solid rgba(0,229,255,0.25)",
+              background: pk.onDark05,
+              color: pk.onDark,
+              border: `1px solid ${pk.accent25}`,
               borderRadius: "12px",
               padding: "15px 32px",
               fontFamily: "'Space Grotesk', sans-serif",
@@ -230,8 +231,8 @@ export const MainHeroSection = (): JSX.Element => {
               whiteSpace: "nowrap",
               backdropFilter: "blur(8px)",
             }}
-            onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.1)"; b.style.borderColor = "rgba(255,255,255,0.4)"; }}
-            onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.05)"; b.style.borderColor = "rgba(255,255,255,0.2)"; }}
+            onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = pk.onDark10; b.style.borderColor = pk.onDark40; }}
+            onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = pk.onDark05; b.style.borderColor = pk.onDarkBorder20; }}
             onMouseDown={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(0.98)"; }}
             onMouseUp={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)"; }}
           >
@@ -243,17 +244,17 @@ export const MainHeroSection = (): JSX.Element => {
         <div className="hero-google-overview" style={{ marginTop: "16px", display: "flex", alignItems: "center", gap: "12px", justifyContent: "center" }}>
           <div aria-hidden="true" style={{ width: 28, height: 28, flexShrink: 0 }}>
             <svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              <path fill={pk.brandGoogleBlue} d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill={pk.brandGoogleGreen} d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill={pk.brandGoogleYellow} d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill={pk.brandGoogleRed} d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 800, fontSize: 18, color: "rgba(255,255,255,0.92)", lineHeight: 1 }}>
+            <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 800, fontSize: 18, color: pk.onDark92, lineHeight: 1 }}>
               5.0
             </div>
-            <div aria-label="5 out of 5" style={{ display: "inline-flex", gap: 3, color: "#fbbc04" }}>
+            <div aria-label="5 out of 5" style={{ display: "inline-flex", gap: 3, color: pk.ratingStar }}>
               {Array.from({ length: 5 }).map((_, i) => (
                 <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
@@ -338,7 +339,7 @@ export const MainHeroSection = (): JSX.Element => {
         .animate-scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) { .animate-scroll-dot { animation: none; } }
         #hero-primary-cta:focus-visible, #hero-secondary-cta:focus-visible {
-          outline: 2px solid #00E5FF; outline-offset: 3px;
+          outline: 2px solid var(--pk-accent); outline-offset: 3px;
         }
         .hero-headline-part,
         .hero-subheading-part,
@@ -488,7 +489,7 @@ export const MainHeroSection = (): JSX.Element => {
             width: min(520px, 100%);
             margin: 10px auto 18px;
             opacity: 0.98;
-            filter: drop-shadow(0 18px 40px rgba(0,0,0,0.35));
+            filter: drop-shadow(0 18px 40px var(--pk-black-35));
           }
           .hero-mobile-frame-img{
             opacity: 0;

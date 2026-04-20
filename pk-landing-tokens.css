@@ -1,0 +1,338 @@
+/**
+ * PK Digital — landing color system (single source of truth).
+ * All semantic colors for the marketing landing + shared chrome reference var(--pk-*).
+ * Do not duplicate hex/rgb in components — use var(--pk-*) or `pk` from src/design/pkLandingColors.ts.
+ */
+
+:root {
+  /* ─── Core brand (from existing landing) ─── */
+  --pk-accent: #00e5ff;
+  --pk-accent-strong: #0abdc6;
+  --pk-accent-magenta: #e040fb;
+  --pk-accent-teal: #08939e;
+
+  /* ─── Neutrals / ink (slate) ─── */
+  --pk-ink: #070b14;
+  --pk-ink-45: rgb(7 11 20 / 0.45);
+  --pk-ink-55: rgb(7 11 20 / 0.55);
+  --pk-ink-62: rgb(7 11 20 / 0.62);
+  --pk-ink-65: rgb(7 11 20 / 0.65);
+  --pk-ink-68: rgb(7 11 20 / 0.68);
+  --pk-ink-70: rgb(7 11 20 / 0.7);
+  --pk-ink-78: rgb(7 11 20 / 0.78);
+  --pk-ink-82: rgb(7 11 20 / 0.82);
+  --pk-ink-86: rgb(7 11 20 / 0.86);
+  --pk-ink-88: rgb(7 11 20 / 0.88);
+
+  /* ─── Slate chrome (borders / chips on light UI) ─── */
+  --pk-slate-2: 2 6 23;
+  --pk-slate-border: rgb(var(--pk-slate-2) / 0.1);
+  --pk-slate-border-strong: rgb(var(--pk-slate-2) / 0.16);
+  --pk-slate-ring: rgb(var(--pk-slate-2) / 0.22);
+  --pk-slate-600-border-16: rgb(71 85 105 / 0.16);
+  --pk-slate-tint-04: rgb(var(--pk-slate-2) / 0.04);
+  --pk-slate-tint-06: rgb(var(--pk-slate-2) / 0.06);
+  --pk-slate-tint-10: rgb(var(--pk-slate-2) / 0.1);
+  --pk-slate-shadow-14: rgb(var(--pk-slate-2) / 0.14);
+
+  /* ─── Surfaces ─── */
+  --pk-page: #ffffff;
+  --pk-hero: #000000;
+  --pk-void: #010204;
+  --pk-void-mid: #02040a;
+  --pk-panel-dark: #17191c;
+  --pk-panel-darker: #0d0d0d;
+  --pk-band-muted: #f3f4f6;
+  --pk-screen-hole: #000000;
+
+  /* ─── Text on dark / inverse UI ─── */
+  --pk-on-dark: #ffffff;
+  --pk-on-dark-90: rgb(255 255 255 / 0.9);
+  --pk-on-dark-70: rgb(255 255 255 / 0.7);
+  --pk-on-dark-60: rgb(255 255 255 / 0.6);
+  --pk-on-dark-55: rgb(255 255 255 / 0.55);
+  --pk-on-dark-52: rgb(255 255 255 / 0.52);
+  --pk-on-dark-35: rgb(255 255 255 / 0.35);
+  --pk-on-dark-muted: rgb(240 244 248 / 0.9);
+  --pk-on-dark-40: rgb(255 255 255 / 0.4);
+  --pk-on-dark-88: rgb(255 255 255 / 0.88);
+  --pk-on-dark-92: rgb(255 255 255 / 0.92);
+  --pk-on-dark-05: rgb(255 255 255 / 0.05);
+  --pk-on-dark-10: rgb(255 255 255 / 0.1);
+  --pk-hero-grid-line: rgb(255 255 255 / 0.025);
+  --pk-on-dark-border-06: rgb(255 255 255 / 0.06);
+  --pk-on-dark-border-08: rgb(255 255 255 / 0.08);
+  --pk-on-dark-border-12: rgb(255 255 255 / 0.12);
+  --pk-on-dark-border-16: rgb(255 255 255 / 0.16);
+  --pk-on-dark-border-20: rgb(255 255 255 / 0.2);
+  --pk-on-dark-border-30: rgb(255 255 255 / 0.3);
+
+  /* ─── Accents / glow (alpha) ─── */
+  --pk-accent-00: rgb(0 229 255 / 0);
+  --pk-accent-06: rgb(0 229 255 / 0.06);
+  --pk-accent-08: rgb(0 229 255 / 0.08);
+  --pk-accent-10: rgb(0 229 255 / 0.1);
+  --pk-accent-12: rgb(0 229 255 / 0.12);
+  --pk-accent-16: rgb(0 229 255 / 0.16);
+  --pk-accent-18: rgb(0 229 255 / 0.18);
+  --pk-accent-20: rgb(0 229 255 / 0.2);
+  --pk-accent-25: rgb(0 229 255 / 0.25);
+  --pk-accent-35: rgb(0 229 255 / 0.35);
+  --pk-accent-40: rgb(0 229 255 / 0.4);
+  --pk-accent-65: rgb(0 229 255 / 0.65);
+  --pk-accent-95: rgb(0 229 255 / 0.95);
+  --pk-teal-tint-10: rgb(8 147 158 / 0.1);
+  --pk-teal-tint-28: rgb(8 147 158 / 0.28);
+
+  /* ─── Magenta / violet atmosphere ─── */
+  --pk-violet-glow-016: rgb(123 97 255 / 0.016);
+  --pk-violet-00: rgb(123 97 255 / 0);
+  --pk-magenta-16: rgb(224 64 251 / 0.16);
+
+  /* ─── Overlays ─── */
+  --pk-black-00: rgb(0 0 0 / 0);
+  --pk-black-40: rgb(0 0 0 / 0.4);
+  --pk-black-35: rgb(0 0 0 / 0.35);
+  --pk-black-50: rgb(0 0 0 / 0.5);
+  --pk-black-60: rgb(0 0 0 / 0.6);
+  --pk-black-61: rgb(0 0 0 / 0.61);
+  --pk-black-78: rgb(0 0 0 / 0.78);
+  --pk-black-98: rgb(13 13 13 / 0.98);
+  --pk-charcoal-72: rgb(13 13 13 / 0.72);
+  --pk-black-15: rgb(0 0 0 / 0.15);
+  --pk-black-25: rgb(0 0 0 / 0.25);
+  --pk-black-55: rgb(0 0 0 / 0.55);
+  --pk-black-80: rgb(0 0 0 / 0.8);
+
+  /* ─── Utility / state ─── */
+  --pk-focus-ring: #ff5a1f;
+  --pk-rating-star: #fbbc04;
+
+  /* ─── How it works — horizontal gradient (left → center → right) ─── */
+  --pk-step-grad-left: #721e4a;
+  --pk-step-grad-mid: #301f4f;
+  --pk-step-grad-right: #07275e;
+  /**
+   * Four step colors for dots / line segments / titles (left → … → mid → right).
+   * Second stop = midpoint(left, mid); fourth = right; line gradients connect adjacent stops.
+   */
+  --pk-step-violet: var(--pk-step-grad-left);
+  --pk-step-violet-deep: #511f4d;
+  --pk-step-teal: var(--pk-step-grad-mid);
+  --pk-step-teal-deep: var(--pk-step-grad-right);
+
+  /* ─── Prototype / links ─── */
+  --pk-link-sky: #0284c7;
+
+  /* ─── Neutrals used in pricing / forms ─── */
+  --pk-neutral-900: #111827;
+
+  /* Cool gray (≈ neutral-900 family) — checklist chrome on light cards */
+  --pk-cool-gray-06: rgb(17 24 39 / 0.06);
+  --pk-cool-gray-22: rgb(17 24 39 / 0.22);
+  --pk-cool-gray-82: rgb(17 24 39 / 0.82);
+
+  /* Slate tints on light UI (extended) */
+  --pk-slate-tint-03: rgb(var(--pk-slate-2) / 0.03);
+  --pk-slate-tint-05: rgb(var(--pk-slate-2) / 0.05);
+  --pk-slate-tint-08: rgb(var(--pk-slate-2) / 0.08);
+  --pk-slate-tint-09: rgb(var(--pk-slate-2) / 0.09);
+  --pk-slate-tint-12: rgb(var(--pk-slate-2) / 0.12);
+  --pk-slate-tint-16: rgb(var(--pk-slate-2) / 0.16);
+  --pk-slate-tint-18: rgb(var(--pk-slate-2) / 0.18);
+  --pk-slate-tint-28: rgb(var(--pk-slate-2) / 0.28);
+  --pk-slate-tint-55: rgb(var(--pk-slate-2) / 0.55);
+  --pk-slate-tint-58: rgb(var(--pk-slate-2) / 0.58);
+  --pk-slate-500-22: rgb(100 116 139 / 0.22);
+  --pk-slate-600-55: rgb(71 85 105 / 0.55);
+
+  /* Ink alpha on light surfaces (extended) */
+  --pk-ink-10: rgb(7 11 20 / 0.1);
+  --pk-ink-35: rgb(7 11 20 / 0.35);
+  --pk-ink-50: rgb(7 11 20 / 0.5);
+  --pk-ink-64: rgb(7 11 20 / 0.64);
+  --pk-ink-72: rgb(7 11 20 / 0.72);
+  --pk-ink-74: rgb(7 11 20 / 0.74);
+  --pk-ink-92: rgb(7 11 20 / 0.92);
+
+  /* Accent alpha (extended — focus rings, glows) */
+  --pk-accent-22: rgb(0 229 255 / 0.22);
+  --pk-accent-28: rgb(0 229 255 / 0.28);
+  --pk-accent-55: rgb(0 229 255 / 0.55);
+  --pk-accent-80: rgb(0 229 255 / 0.8);
+
+  /* White on dark UI (extended) */
+  --pk-on-dark-06: rgb(255 255 255 / 0.06);
+  --pk-on-dark-45: rgb(255 255 255 / 0.45);
+  --pk-on-dark-72: rgb(255 255 255 / 0.72);
+  --pk-on-dark-78: rgb(255 255 255 / 0.78);
+  --pk-on-dark-82: rgb(255 255 255 / 0.82);
+  --pk-on-dark-85: rgb(255 255 255 / 0.85);
+  --pk-on-dark-94: rgb(255 255 255 / 0.94);
+
+  /* Prototype chip / mockup ring */
+  --pk-prototype-ring-18: rgb(0 163 199 / 0.18);
+
+  /* Dark CTA / elevated panels */
+  --pk-cta-panel: #242628;
+  --pk-cta-panel-elevated: #1b1d20;
+  --pk-charcoal-95: rgb(13 13 13 / 0.95);
+
+  /* Form validation (light + dark) */
+  --pk-success-500: #22c55e;
+  --pk-success-12: rgb(34 197 94 / 0.12);
+  --pk-success-10: rgb(34 197 94 / 0.1);
+  --pk-error-400: #f87171;
+  --pk-error-300: #fca5a5;
+  --pk-error-red-50: rgb(248 113 113 / 0.5);
+  --pk-error-red-75: rgb(248 113 113 / 0.75);
+
+  /* Milestone headline cyan stops */
+  --pk-cyan-600: #0096c7;
+  --pk-cyan-500: #00a3c7;
+
+  /* Magenta atmosphere (CTA radial) */
+  --pk-magenta-14: rgb(224 64 251 / 0.14);
+
+  /* Deep navy cards (prototype section) */
+  --pk-surface-night-950: #08111f;
+  --pk-surface-night-900: #10233b;
+  --pk-surface-night-800: #132f51;
+
+  /* Ambient blobs */
+  --pk-green-glow-16: rgb(74 222 128 / 0.16);
+  --pk-green-74-00: rgb(74 222 128 / 0);
+
+  /* Offer-section ambient blobs (legacy tints) */
+  --pk-cyan-194-18: rgb(0 194 255 / 0.18);
+  --pk-cyan-194-00: rgb(0 194 255 / 0);
+  --pk-sky-56-18: rgb(56 189 248 / 0.18);
+  --pk-sky-56-00: rgb(56 189 248 / 0);
+
+  /* Frost text on dark (legacy text-primary) */
+  --pk-frost: #f0f4f8;
+  --pk-muted-blue-gray: #8899aa;
+
+  /* ─── Google “G” brand (official hues — centralized) ─── */
+  --pk-brand-google-blue: #4285f4;
+  --pk-brand-google-green: #34a853;
+  --pk-brand-google-yellow: #fbbc05;
+  --pk-brand-google-red: #ea4335;
+
+  /* ─── Czech / UK flag decoration (official hues — centralized) ─── */
+  --pk-flag-uk-navy: #012169;
+  --pk-flag-uk-white: #ffffff;
+  --pk-flag-uk-red: #c8102e;
+  --pk-flag-cz-white: #ffffff;
+  --pk-flag-cz-red: #d7141a;
+  --pk-flag-cz-blue: #11457e;
+
+  /* ─── Gradients (composed only from tokens above) ─── */
+  --pk-gradient-cta: linear-gradient(135deg, var(--pk-accent-strong) 0%, var(--pk-accent) 100%);
+  --pk-gradient-cta-soft: linear-gradient(135deg, var(--pk-accent-strong), var(--pk-accent));
+  --pk-gradient-hero-accent: linear-gradient(135deg, var(--pk-accent-magenta) 0%, var(--pk-accent) 100%);
+  --pk-hero-headline-glow: drop-shadow(0 0 20px var(--pk-accent-35));
+  --pk-gradient-popular: linear-gradient(90deg, var(--pk-accent-magenta), var(--pk-accent));
+  --pk-gradient-footer-rule: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--pk-accent) 40%,
+    var(--pk-accent-25) 70%,
+    transparent 100%
+  );
+  --pk-gradient-page-depth: radial-gradient(
+      1100px 620px at 12% 100%,
+      var(--pk-accent-08) 0%,
+      var(--pk-accent-00) 68%
+    ),
+    radial-gradient(900px 540px at 100% 14%, var(--pk-violet-glow-016) 0%, var(--pk-violet-00) 70%),
+    linear-gradient(180deg, var(--pk-void-mid) 0%, var(--pk-void) 100%);
+  --pk-gradient-hero-fade: linear-gradient(to bottom, var(--pk-black-00) 55%, var(--pk-black-78) 82%, var(--pk-hero) 100%);
+  --pk-gradient-hero-fade-strong: linear-gradient(to bottom, var(--pk-black-00) 0%, var(--pk-hero) 82%);
+  --pk-gradient-prototype-card: linear-gradient(
+    135deg,
+    var(--pk-surface-night-950) 0%,
+    var(--pk-surface-night-900) 48%,
+    var(--pk-surface-night-800) 100%
+  );
+  --pk-gradient-pricing-mesh: radial-gradient(
+      ellipse 60% 80% at 50% -10%,
+      var(--pk-accent-10) 0%,
+      var(--pk-accent-00) 70%
+    ),
+    var(--pk-page);
+  --pk-gradient-calculator-cta: linear-gradient(135deg, var(--pk-page) 30%, var(--pk-accent) 100%);
+  --pk-gradient-calculator-accent: linear-gradient(135deg, var(--pk-accent-magenta), var(--pk-neutral-900));
+  --pk-gradient-calculator-shine: linear-gradient(90deg, transparent, var(--pk-accent), var(--pk-accent-magenta), transparent);
+  --pk-gradient-price-display: linear-gradient(135deg, var(--pk-page) 30%, var(--pk-accent) 100%);
+  --pk-gradient-milestone-wordmark: linear-gradient(
+    135deg,
+    var(--pk-accent-magenta) 0%,
+    var(--pk-cyan-600) 55%,
+    var(--pk-cyan-500) 100%
+  );
+
+  /* “Silver” trust cards (Why choose us) */
+  --pk-gradient-trust-card: radial-gradient(
+    circle at 30% 25%,
+    rgb(248 250 252 / 0.98) 0%,
+    rgb(226 232 240 / 0.98) 55%,
+    rgb(203 213 225 / 0.98) 100%
+  );
+  --pk-shadow-trust-card: 0 18px 42px var(--pk-slate-border);
+  --pk-shadow-trust-card-hover: 0 26px 56px var(--pk-slate-shadow-14);
+  --pk-drop-shadow-trust-icon: drop-shadow(0 10px 20px var(--pk-slate-border));
+
+  /* ─── Testimonial avatar blobs (existing landing) ─── */
+  --pk-avatar-indigo-from: #5c6bc0;
+  --pk-avatar-indigo-to: #3949ab;
+  --pk-avatar-teal-from: #00897b;
+  --pk-avatar-teal-to: #00695c;
+  --pk-avatar-rose-from: #ec407a;
+  --pk-avatar-rose-to: #c2185b;
+  --pk-avatar-a: linear-gradient(135deg, var(--pk-avatar-indigo-from), var(--pk-avatar-indigo-to));
+  --pk-avatar-b: linear-gradient(135deg, var(--pk-avatar-teal-from), var(--pk-avatar-teal-to));
+  --pk-avatar-c: linear-gradient(135deg, var(--pk-avatar-rose-from), var(--pk-avatar-rose-to));
+
+  /* ─── Legacy aliases (used in tailwind.css utilities) ─── */
+  --accent-primary: var(--pk-accent);
+  --accent-gradient-from: var(--pk-accent-strong);
+  --accent-gradient-to: var(--pk-accent);
+  --accent-secondary: var(--pk-accent-strong);
+  --accent-magenta: var(--pk-accent-magenta);
+  --bg-primary: var(--pk-ink);
+  --pk-surface-1: #0d1b2a;
+  --surface-1: var(--pk-surface-1);
+  --text-primary: var(--pk-frost);
+  --text-secondary: var(--pk-muted-blue-gray);
+}
+
+/**
+ * Legacy names consumed by tailwind.config.js (Figma export).
+ * Values preserved from the original tailwind.css :root block.
+ */
+:root {
+  --avaliable: rgba(10, 195, 0, 1);
+  --back: rgba(242, 242, 242, 1);
+  --colorwhitewhite: rgba(255, 255, 255, 1);
+  --colorwhitewhite-7: rgba(217, 217, 217, 1);
+  --colorwhitewhite-9: rgba(145, 145, 145, 1);
+  --dark-modecontainer-background: rgba(0, 0, 0, 0.5);
+  --dark-modecontainer-border: rgba(255, 255, 255, 0.07);
+  --elements: rgba(214, 219, 220, 1);
+  --neutral-01: rgba(255, 255, 255, 1);
+  --neutral-02: rgba(188, 188, 188, 1);
+  --shadow-blur-sm:
+    0px 10px 10px 0px rgba(0, 0, 0, 0.1), 0px 4px 4px 0px rgba(0, 0, 0, 0.05), 0px 1px 0px 0px rgba(0,
+      0,
+      0,
+      0.05);
+  --text-font-family: "Space Grotesk", "Inter", sans-serif;
+  --text-font-size: 16px;
+  --text-font-style: normal;
+  --text-font-weight: 400;
+  --text-letter-spacing: 0px;
+  --text-line-height: 24px;
+  --textgrey: rgba(143, 142, 142, 1);
+  --theme-colorsprimary: rgba(242, 63, 93, 1);
+}

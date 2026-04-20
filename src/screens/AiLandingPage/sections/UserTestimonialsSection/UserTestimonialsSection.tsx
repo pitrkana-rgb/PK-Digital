@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import { pk } from "../../../../design/pkLandingColors";
 
 type AnimatedBadgeValue = {
   count: number;
@@ -117,7 +118,7 @@ const badgesEn: Badge[] = [
 ];
 
 const BadgeIcon = ({ type, isHero }: { type: Badge["icon"]; isHero: boolean }) => {
-  const stroke = isHero ? "rgba(255,255,255,0.94)" : "rgba(7,11,20,0.88)";
+  const stroke = isHero ? pk.onDark94 : pk.ink88;
 
   if (type === "prototype") {
     return (
@@ -212,7 +213,7 @@ const AnimatedMetric = ({ badge, delay, isHero }: { badge: Badge; delay: number;
             fontWeight: 700,
             fontSize: "40px",
             lineHeight: 1.05,
-            color: isHero ? "#ffffff" : "#070B14",
+            color: isHero ? pk.onDark : pk.ink,
             opacity: started ? 1 : 0,
             transform: started ? "translateY(0)" : "translateY(6px)",
             transition: "opacity 320ms ease, transform 320ms ease",
@@ -233,7 +234,7 @@ const AnimatedMetric = ({ badge, delay, isHero }: { badge: Badge; delay: number;
             fontWeight: 600,
             fontSize: "17px",
             lineHeight: 1.2,
-            color: isHero ? "rgba(255,255,255,0.82)" : "rgba(7,11,20,0.78)",
+            color: isHero ? pk.onDark82 : pk.ink78,
             maxWidth: "180px",
           }}
         >

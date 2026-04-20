@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../i18n/LanguageContext";
+import { pk } from "../design/pkLandingColors";
 
 const STORAGE_KEY = "cookie-consent";
 
@@ -40,19 +41,19 @@ export const CookieConsentBanner = (): JSX.Element | null => {
         right: 0,
         zIndex: 9999,
         padding: "20px 24px",
-        backgroundColor: "rgba(13, 13, 13, 0.98)",
-        borderTop: "1px solid rgba(0, 229, 255, 0.2)",
+        backgroundColor: pk.black98,
+        borderTop: `1px solid ${pk.accent20}`,
         display: "flex",
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
         gap: "16px",
-        boxShadow: "0 -4px 24px rgba(0,0,0,0.4)",
+        boxShadow: `0 -4px 24px ${pk.black40}`,
       }}
     >
-      <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: "rgba(255,255,255,0.9)", margin: 0, flex: "1 1 280px" }}>
+      <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: pk.onDark90, margin: 0, flex: "1 1 280px" }}>
         {isEn ? "This website uses cookies to improve your experience. " : "Tento web používá cookies pro zlepšení vašeho zážitku. "}
-        <Link to="/zasady-ochrany-soukromi" style={{ color: "#00E5FF", textDecoration: "underline" }}>
+        <Link to="/zasady-ochrany-soukromi" style={{ color: pk.accent, textDecoration: "underline" }}>
           {isEn ? "Privacy Policy" : "Zásady ochrany soukromí"}
         </Link>
       </p>
@@ -63,8 +64,8 @@ export const CookieConsentBanner = (): JSX.Element | null => {
           style={{
             padding: "10px 20px",
             borderRadius: "10px",
-            background: "linear-gradient(135deg, #0ABDC6, #00E5FF)",
-            color: "#000",
+            background: pk.gradientCtaSoft,
+            color: pk.hero,
             border: "none",
             fontFamily: "'Space Grotesk',sans-serif",
             fontWeight: 600,
@@ -81,8 +82,8 @@ export const CookieConsentBanner = (): JSX.Element | null => {
             padding: "10px 20px",
             borderRadius: "10px",
             background: "transparent",
-            color: "rgba(255,255,255,0.9)",
-            border: "1px solid rgba(255,255,255,0.3)",
+            color: pk.onDark90,
+            border: `1px solid ${pk.onDarkBorder30}`,
             fontFamily: "'Space Grotesk',sans-serif",
             fontWeight: 500,
             fontSize: "14px",

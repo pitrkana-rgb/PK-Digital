@@ -3,6 +3,8 @@ import { Button } from "./ui/button";
 import { MenuIcon, XIcon } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../i18n/LanguageContext";
+import companyLogoV3Url from "../../Images/Company_logo_v3.png";
+import { pk } from "../design/pkLandingColors";
 
 export const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -83,7 +85,7 @@ export const Header = () => {
             <header
                 style={{
                     zIndex: 10000,
-                    backgroundColor: menuOpen && !isScrolled ? "#000" : undefined,
+                    backgroundColor: menuOpen && !isScrolled ? pk.hero : undefined,
                 }}
                 className={`fixed top-0 left-0 w-full transition-all duration-300 ${isScrolled
                     ? "bg-black shadow-lg"
@@ -106,14 +108,14 @@ export const Header = () => {
                         <button
                             type="button"
                             onClick={() => handleNavClick(navigationItems[0])}
-                            className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-md"
+                            className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pk-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--pk-hero)] rounded-md"
                             aria-label={t.backHomeAria}
                         >
                             <img
-                                src="/Company_logo_V2.png"
+                                src={companyLogoV3Url}
                                 alt="PK Digital logo"
                                 className="header-logo"
-                                style={{ height: "52px", width: "auto", display: "block" }}
+                                style={{ height: "57.2px", width: "auto", display: "block" }}
                             />
                         </button>
                     </div>
@@ -132,7 +134,7 @@ export const Header = () => {
                                         fontFamily: "'Space Grotesk', sans-serif",
                                         fontWeight: 500,
                                         fontSize: "17px",
-                                        color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? "#00E5FF" : "rgba(240,244,248,0.9)",
+                                        color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? pk.accent : pk.onDarkMuted,
                                         transition: "color 0.2s ease",
                                         whiteSpace: "nowrap",
                                         textTransform: "none",
@@ -156,11 +158,11 @@ export const Header = () => {
                                     display: "inline-flex",
                                     alignItems: "center",
                                     gap: "10px",
-                                    border: "1px solid rgba(255,255,255,0.2)",
+                                    border: `1px solid ${pk.onDarkBorder20}`,
                                     borderRadius: "999px",
                                     padding: "7px 12px",
-                                    background: "rgba(0,0,0,0.15)",
-                                    color: "rgba(255,255,255,0.9)",
+                                    background: pk.black15,
+                                    color: pk.onDark90,
                                     cursor: "pointer",
                                     fontFamily: "'Space Grotesk', sans-serif",
                                     fontWeight: 700,
@@ -169,20 +171,20 @@ export const Header = () => {
                                     letterSpacing: "0.06em",
                                 }}
                             >
-                                <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: "0 0 0 1px rgba(255,255,255,0.16)" }}>
+                                <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: `0 0 0 1px ${pk.onDarkBorder16}` }}>
                                     {language === "cs" ? (
                                         <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="60" height="30" fill="#012169"/>
-                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" strokeWidth="6"/>
-                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" strokeWidth="3"/>
-                                            <path d="M30 0 v30 M0 15 h60" stroke="#fff" strokeWidth="10"/>
-                                            <path d="M30 0 v30 M0 15 h60" stroke="#C8102E" strokeWidth="6"/>
+                                            <rect width="60" height="30" fill={pk.flagUkNavy}/>
+                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkWhite} strokeWidth="6"/>
+                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkRed} strokeWidth="3"/>
+                                            <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkWhite} strokeWidth="10"/>
+                                            <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkRed} strokeWidth="6"/>
                                         </svg>
                                     ) : (
                                         <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="60" height="15" fill="#fff"/>
-                                            <rect y="15" width="60" height="15" fill="#D7141A"/>
-                                            <path d="M0 0 L26 15 L0 30 Z" fill="#11457E"/>
+                                            <rect width="60" height="15" fill={pk.flagCzWhite}/>
+                                            <rect y="15" width="60" height="15" fill={pk.flagCzRed}/>
+                                            <path d="M0 0 L26 15 L0 30 Z" fill={pk.flagCzBlue}/>
                                         </svg>
                                     )}
                                 </span>
@@ -194,8 +196,8 @@ export const Header = () => {
                                 type="button"
                                 onClick={() => navigate("/napiste-nam")}
                                 style={{
-                                    background: "linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%)",
-                                    color: "#070B14",
+                                    background: pk.gradientCta,
+                                    color: pk.ink,
                                     borderRadius: "12px",
                                     padding: "15px 32px",
                                     fontFamily: "'Space Grotesk', sans-serif",
@@ -206,7 +208,7 @@ export const Header = () => {
                                     border: "none",
                                     transition: "transform 0.25s ease, filter 0.25s ease",
                                 }}
-                                className="animate-pulse-glow hero-primary-btn hover:brightness-105 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[#00E5FF]"
+                                className="animate-pulse-glow hero-primary-btn hover:brightness-105 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[color:var(--pk-accent)]"
                             >
                                 {t.writeUs}
                             </Button>
@@ -222,7 +224,7 @@ export const Header = () => {
                                 background: "none",
                                 border: "none",
                                 cursor: "pointer",
-                                color: "#fff",
+                                color: pk.onDark,
                                 padding: "8px",
                             }}
                         >
@@ -250,7 +252,7 @@ export const Header = () => {
                         position: "absolute",
                         inset: 0,
                         zIndex: 0,
-                        background: "rgba(0,0,0,0.6)",
+                        background: pk.black60,
                         opacity: menuOpen ? 1 : 0,
                         transition: "opacity 300ms ease",
                     }}
@@ -265,13 +267,13 @@ export const Header = () => {
                         zIndex: 1,
                         width: "280px",
                         height: "fit-content",
-                        backgroundColor: "#000",
+                        backgroundColor: pk.hero,
                         backdropFilter: "blur(10px)",
                         WebkitBackdropFilter: "blur(10px)",
-                        borderLeft: "1px solid rgba(255,255,255,0.08)",
-                        borderBottom: "1px solid rgba(255,255,255,0.08)",
+                        borderLeft: `1px solid ${pk.onDarkBorder08}`,
+                        borderBottom: `1px solid ${pk.onDarkBorder08}`,
                         borderBottomLeftRadius: "16px",
-                        boxShadow: menuOpen ? "-8px 8px 40px rgba(0,0,0,0.8)" : "none",
+                        boxShadow: menuOpen ? `-8px 8px 40px ${pk.black80}` : "none",
                         padding: "24px",
                         transform: menuOpen ? "translateX(0)" : "translateX(110%)",
                         transition: "transform 300ms ease",
@@ -284,7 +286,7 @@ export const Header = () => {
                         <button
                             type="button"
                             onClick={() => setMenuOpen(false)}
-                            style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.6)", padding: "4px" }}
+                            style={{ background: "none", border: "none", cursor: "pointer", color: pk.onDark60, padding: "4px" }}
                         >
                             <XIcon size={20} />
                         </button>
@@ -302,10 +304,10 @@ export const Header = () => {
                                 fontFamily: "'Space Grotesk', sans-serif",
                                 fontWeight: 500,
                                 fontSize: "18px",
-                                color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? "#00E5FF" : "#F0F4F8",
+                                color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? pk.accent : pk.frost,
                                 textAlign: "left",
                                 padding: "14px 0",
-                                borderBottom: "1px solid rgba(255,255,255,0.08)",
+                                borderBottom: `1px solid ${pk.onDarkBorder08}`,
                                 transition: "color 200ms ease",
                                 width: "100%",
                             }}
@@ -321,12 +323,12 @@ export const Header = () => {
                             alignItems: "center",
                             justifyContent: "center",
                             gap: "10px",
-                            border: "1px solid rgba(255,255,255,0.12)",
+                            border: `1px solid ${pk.onDarkBorder12}`,
                             borderRadius: "999px",
                             padding: "6px",
                             position: "sticky",
                             bottom: "12px",
-                            background: "rgba(0,0,0,0.55)",
+                            background: pk.black55,
                             backdropFilter: "blur(8px)",
                         }}
                     >
@@ -337,35 +339,35 @@ export const Header = () => {
                                 width: "100%",
                                 padding: "10px 14px",
                                 borderRadius: "999px",
-                                border: "1px solid rgba(255,255,255,0.16)",
+                                border: `1px solid ${pk.onDarkBorder16}`,
                                 cursor: "pointer",
                                 fontFamily: "'Space Grotesk',sans-serif",
                                 fontWeight: 700,
                                 fontSize: "12px",
                                 textTransform: "uppercase",
                                 letterSpacing: "0.06em",
-                                background: "rgba(0,0,0,0.25)",
-                                color: "rgba(255,255,255,0.9)",
+                                background: pk.black25,
+                                color: pk.onDark90,
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 gap: "10px",
                             }}
                         >
-                            <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: "0 0 0 1px rgba(255,255,255,0.16)" }}>
+                            <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: `0 0 0 1px ${pk.onDarkBorder16}` }}>
                                 {language === "cs" ? (
                                     <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="60" height="30" fill="#012169"/>
-                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" strokeWidth="6"/>
-                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" strokeWidth="3"/>
-                                        <path d="M30 0 v30 M0 15 h60" stroke="#fff" strokeWidth="10"/>
-                                        <path d="M30 0 v30 M0 15 h60" stroke="#C8102E" strokeWidth="6"/>
+                                        <rect width="60" height="30" fill={pk.flagUkNavy}/>
+                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkWhite} strokeWidth="6"/>
+                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkRed} strokeWidth="3"/>
+                                        <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkWhite} strokeWidth="10"/>
+                                        <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkRed} strokeWidth="6"/>
                                     </svg>
                                 ) : (
                                     <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="60" height="15" fill="#fff"/>
-                                        <rect y="15" width="60" height="15" fill="#D7141A"/>
-                                        <path d="M0 0 L26 15 L0 30 Z" fill="#11457E"/>
+                                        <rect width="60" height="15" fill={pk.flagCzWhite}/>
+                                        <rect y="15" width="60" height="15" fill={pk.flagCzRed}/>
+                                        <path d="M0 0 L26 15 L0 30 Z" fill={pk.flagCzBlue}/>
                                     </svg>
                                 )}
                             </span>
@@ -378,8 +380,8 @@ export const Header = () => {
                         onClick={() => { navigate("/napiste-nam"); setMenuOpen(false); }}
                         style={{
                             marginTop: "24px",
-                            background: "linear-gradient(135deg,#0ABDC6,#00E5FF)",
-                            color: "#070B14",
+                            background: pk.gradientCtaSoft,
+                            color: pk.ink,
                             border: "none",
                             borderRadius: "999px",
                             padding: "14px 24px",
@@ -396,7 +398,7 @@ export const Header = () => {
 
             <style>{`
               @media (min-width: 768px) {
-                .header-logo { height: 58px !important; }
+                .header-logo { height: 63.8px !important; }
               }
             `}</style>
         </>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import { pk } from "../../../../design/pkLandingColors";
 import pcFrameUrl from "../../../../../Images/PC_frame.png";
 import tvorbaWebuUrl from "../../../../../Images/Tvorba webu.png";
 import aiBotUrl from "../../../../../Images/AI bot.png";
@@ -192,8 +193,8 @@ const BeforeAfterSlider = ({
           left: `${pos}%`,
           width: 2,
           transform: "translateX(-1px)",
-          background: "rgba(0,229,255,0.65)",
-          boxShadow: "0 0 28px rgba(0,229,255,0.25)",
+          background: pk.accent65,
+          boxShadow: `0 0 28px ${pk.accent25}`,
           pointerEvents: "none",
           zIndex: 5,
           transition: transitionStyle,
@@ -212,9 +213,9 @@ const BeforeAfterSlider = ({
           width: 44,
           height: 44,
           borderRadius: 999,
-          background: "rgba(13,13,13,0.72)",
-          border: "1px solid rgba(0,229,255,0.25)",
-          boxShadow: "0 0 28px rgba(0,229,255,0.18)",
+          background: pk.charcoal72,
+          border: `1px solid ${pk.accent25}`,
+          boxShadow: `0 0 28px ${pk.accent18}`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -236,7 +237,7 @@ const BeforeAfterSlider = ({
             height="14"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="rgba(0,229,255,0.95)"
+            stroke={pk.accent95}
             strokeWidth="2.6"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -248,7 +249,7 @@ const BeforeAfterSlider = ({
             height="14"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="rgba(0,229,255,0.95)"
+            stroke={pk.accent95}
             strokeWidth="2.6"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -405,7 +406,7 @@ export const CoNabizimeSection = (): JSX.Element => {
       id="co-nabizime"
       style={{
         width: "100%",
-        backgroundColor: "#ffffff",
+        backgroundColor: pk.page,
         padding: "60px 0 80px",
         marginTop: "-50px",
         marginBottom: "-50px",
@@ -421,7 +422,7 @@ export const CoNabizimeSection = (): JSX.Element => {
               fontWeight: 700,
               fontSize: "clamp(26px,3.6vw,42px)",
               lineHeight: 1.1,
-              color: "#070B14",
+              color: pk.ink,
               margin: "0 auto 20px",
               letterSpacing: "-0.02em",
               maxWidth: "980px",
@@ -436,7 +437,7 @@ export const CoNabizimeSection = (): JSX.Element => {
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: 1.6,
-              color: "rgba(7,11,20,0.65)",
+              color: pk.ink65,
               margin: "0 auto",
               maxWidth: "980px",
             }}
@@ -619,7 +620,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           border:none;
           border-radius:12px;
           background: transparent;
-          color: rgba(7,11,20,0.78);
+          color: var(--pk-ink-78);
           padding: 15px 24px;
           font-family:"Space Grotesk", sans-serif;
           font-size: 22px;
@@ -632,10 +633,10 @@ export const CoNabizimeSection = (): JSX.Element => {
           background: transparent;
         }
         .offer-tab-btn-active{
-          background: linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%);
-          color: #070B14;
+          background: var(--pk-gradient-cta);
+          color: var(--pk-ink);
           border-color: transparent;
-          box-shadow: 0 16px 34px rgba(0,229,255,0.16);
+          box-shadow: 0 16px 34px var(--pk-accent-16);
         }
         .offer-carousel{
           width: 100%;
@@ -707,7 +708,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           filter: blur(120px);
           opacity: 0.12;
           transform: translate3d(0,0,0);
-          background: radial-gradient(circle at 30% 30%, rgba(0,194,255,0.18) 0%, rgba(0,194,255,0) 62%);
+          background: radial-gradient(circle at 30% 30%, var(--pk-cyan-194-18) 0%, var(--pk-cyan-194-00) 62%);
           animation-timing-function: ease-in-out;
           animation-iteration-count: infinite;
           will-change: transform;
@@ -717,7 +718,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           left: -8%;
           top: 10%;
           opacity: 0.08;
-          background: radial-gradient(circle at 30% 30%, rgba(0,194,255,0.18) 0%, rgba(0,194,255,0) 62%);
+          background: radial-gradient(circle at 30% 30%, var(--pk-cyan-194-18) 0%, var(--pk-cyan-194-00) 62%);
           animation-name: offerBlobMoveA;
           animation-duration: 34s;
         }
@@ -726,7 +727,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           left: 36%;
           top: -18%;
           opacity: 0.05;
-          background: radial-gradient(circle at 30% 30%, rgba(74,222,128,0.16) 0%, rgba(74,222,128,0) 62%);
+          background: radial-gradient(circle at 30% 30%, var(--pk-green-glow-16) 0%, var(--pk-green-74-00) 62%);
           animation-name: offerBlobMoveB;
           animation-duration: 40s;
         }
@@ -735,7 +736,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           left: 52%;
           top: 45%;
           opacity: 0.06;
-          background: radial-gradient(circle at 30% 30%, rgba(56,189,248,0.18) 0%, rgba(56,189,248,0) 62%);
+          background: radial-gradient(circle at 30% 30%, var(--pk-sky-56-18) 0%, var(--pk-sky-56-00) 62%);
           animation-name: offerBlobMoveC;
           animation-duration: 28s;
         }
@@ -861,7 +862,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-title{
           font-family: "Space Grotesk", sans-serif;
           font-weight: 700;
-          color: #070B14;
+          color: var(--pk-ink);
           margin: 0;
           letter-spacing: -0.02em;
           line-height: 1.15;
@@ -886,7 +887,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 400;
           font-size: 16px;
           line-height: 1.7;
-          color: rgba(7,11,20,0.70);
+          color: var(--pk-ink-70);
           margin: 0 0 18px;
         }
 
@@ -895,7 +896,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 600;
           font-size: 15px;
           line-height: 1.45;
-          color: rgba(7,11,20,0.88);
+          color: var(--pk-ink-88);
           margin: 0 0 10px;
         }
 
@@ -910,12 +911,12 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 500;
           font-size: 13px;
           line-height: 1.45;
-          color: rgba(7,11,20,0.82);
+          color: var(--pk-ink-82);
         }
 
         .offer-cta{
-          background: linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%);
-          color: #070B14;
+          background: var(--pk-gradient-cta);
+          color: var(--pk-ink);
           border: none;
           border-radius: 12px;
           padding: 15px 32px;
@@ -935,7 +936,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           -webkit-background-clip: initial;
           -webkit-text-fill-color: currentColor;
           background-clip: initial;
-          color: #070B14;
+          color: var(--pk-ink);
         }
         .offer-bullets--checks{
           list-style: none;
@@ -957,8 +958,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           width: 28px;
           height: 28px;
           border-radius: 999px;
-          background: rgba(17,24,39,0.06);
-          box-shadow: 0 0 0 1px rgba(17,24,39,0.22) inset;
+          background: var(--pk-cool-gray-06);
+          box-shadow: 0 0 0 1px var(--pk-cool-gray-22) inset;
         }
         .offer-bullets--checks li::after{
           content: "";
@@ -967,13 +968,13 @@ export const CoNabizimeSection = (): JSX.Element => {
           top: 13px;
           width: 10px;
           height: 6px;
-          border-left: 3px solid rgba(17,24,39,0.82);
-          border-bottom: 3px solid rgba(17,24,39,0.82);
+          border-left: 3px solid var(--pk-cool-gray-82);
+          border-bottom: 3px solid var(--pk-cool-gray-82);
           transform: rotate(-45deg);
         }
         .offer-cta{
-          background: linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%) !important;
-          color: #070B14 !important;
+          background: var(--pk-gradient-cta) !important;
+          color: var(--pk-ink) !important;
         }
         .offer-cta-desktop{
           margin-top: 30px;
@@ -1036,7 +1037,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           height: 60.6203%;
           border-radius: 2.4%;
           overflow:hidden;
-          background: #000;
+          background: var(--pk-screen-hole);
           z-index: 1;
         }
 
@@ -1085,12 +1086,12 @@ export const CoNabizimeSection = (): JSX.Element => {
             border: none;
             padding: 0;
             cursor: pointer;
-            background: rgba(2,6,23,0.16);
+            background: var(--pk-slate-border-strong);
             transition: width 250ms ease, background 250ms ease;
           }
           .offer-dot[data-active="true"]{
             width: 28px;
-            background: #00E5FF;
+            background: var(--pk-accent);
           }
           .offer-tabs{
             gap: 10px;

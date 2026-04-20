@@ -1,5 +1,6 @@
 import { useState } from "react";
 import heroBackgroundUrl from "../../Images/Hero_background.png";
+import { pk } from "../design/pkLandingColors";
 
 /**
  * Top-of-page looping hero background (same asset as desktop everywhere).
@@ -37,20 +38,19 @@ export const HeroBackgroundVideo = (): JSX.Element => {
         />
         <div
           className="absolute inset-0"
-          style={{ background: "rgba(0,0,0,0.61)" }}
+          style={{ background: pk.black61 }}
         />
         <div
           className="absolute inset-0"
           style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0) 55%, rgba(0,0,0,0.78) 82%, #000000 100%)",
+            background: pk.gradientHeroFade,
           }}
         />
         <div
           className="absolute left-0 right-0 bottom-0"
           style={{
             height: "240px",
-            background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000000 82%)",
+            background: pk.gradientHeroFadeStrong,
           }}
         />
       </div>

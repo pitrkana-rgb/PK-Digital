@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import { pk } from "../../../../design/pkLandingColors";
 
 import konzultaceIcon from "../../../../assets/icons/konzultace_icon.png";
 import prototypIcon from "../../../../assets/icons/prototyp_icon.png";
@@ -83,7 +84,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
   const baseDelay = 490; // 30% faster vs 700ms
   const stepInterval = 980; // 30% faster vs 1400ms
   // ~20% darker tones vs previous (per design request)
-  const stepColors = ["#8644C6", "#632FBE", "#1CA6B8", "#057E93"];
+  const stepColors = [pk.stepViolet, pk.stepVioletDeep, pk.stepTeal, pk.stepTealDeep];
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const [started, setStarted] = useState(false);
@@ -108,17 +109,17 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
   }, []);
 
   return (
-  <section ref={sectionRef} id="features" style={{ width: "100%", backgroundColor: "#ffffff", padding: "70px 0 80px", marginTop: "-50px", marginBottom: "-50px" }}>
+  <section ref={sectionRef} id="features" style={{ width: "100%", backgroundColor: pk.page, padding: "70px 0 80px", marginTop: "-50px", marginBottom: "-50px" }}>
     <SectionDivider />
     <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
 
       {/* Section header */}
       <div className="how-it-works-head" style={{ marginBottom: "56px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", lineHeight: 1.1, color: "#070B14", margin: "0 auto 20px", letterSpacing: "-0.02em", maxWidth: "770px" }}>
+        <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", lineHeight: 1.1, color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", maxWidth: "770px" }}>
           {isEn ? "How the " : "Jak probíhá "}
-          <span style={{ color: "#070B14" }}>{isEn ? "collaboration works" : "spolupráce"}</span>
+          <span style={{ color: pk.ink }}>{isEn ? "collaboration works" : "spolupráce"}</span>
         </h2>
-        <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: "rgba(7,11,20,0.65)", margin: "0 auto" }}>
+        <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: 1.6, color: pk.ink65, margin: "0 auto" }}>
           {isEn
             ? "With advanced AI tools, we significantly accelerate development - prototype in 3 days and full website in 14 days."
             : "Díky pokročilým AI nástrojům dokážeme výrazně zrychlit vývoj webu — prototyp připravíme do 3 dnů a hotový web dodáme již za 14 dnů."}
@@ -190,7 +191,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
                 <h3 className="step-title-gradient" style={{ color }}>
                   {step.title}
                 </h3>
-                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: "rgba(7,11,20,0.65)", lineHeight: 1.65, margin: 0 }}>
+                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.ink65, lineHeight: 1.65, margin: 0 }}>
                   {step.description}
                 </p>
               </div>
@@ -231,7 +232,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         width: 75%;
         height: 6px;
         border-radius: 999px;
-        background: rgba(7,11,20,0.10);
+        background: var(--pk-ink-10);
         overflow: hidden;
         z-index: 0;
       }
@@ -256,9 +257,9 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         width: var(--dot);
         height: var(--dot);
         border-radius: 999px;
-        background: #ffffff;
-        border: 6px solid rgba(0,229,255,0.55);
-        box-shadow: 0 12px 30px rgba(2,6,23,0.14);
+        background: var(--pk-page);
+        border: 6px solid var(--pk-accent-55);
+        box-shadow: 0 12px 30px var(--pk-slate-shadow-14);
         z-index: 2;
         margin: 0 auto;
       }
@@ -268,8 +269,8 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         height: 196px;
         /* Strong, smooth outside halo (like reference) */
         filter:
-          drop-shadow(0 26px 44px rgba(2,6,23,0.14))
-          drop-shadow(0 10px 18px rgba(2,6,23,0.10));
+          drop-shadow(0 26px 44px var(--pk-slate-shadow-14))
+          drop-shadow(0 10px 18px var(--pk-slate-tint-10));
       }
       .step-hex{
         position: absolute;
@@ -279,13 +280,9 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         display:flex;
         align-items:center;
         justify-content:center;
-        background:
-          radial-gradient(circle at 30% 25%, rgba(248,250,252,0.98) 0%, rgba(226,232,240,0.98) 52%, rgba(203,213,225,0.98) 100%);
-        border: 1px solid rgba(71,85,105,0.55);
-        box-shadow:
-          0 18px 46px rgba(2,6,23,0.10),
-          inset 0 1px 0 rgba(255,255,255,0.85),
-          inset 0 -14px 22px rgba(2,6,23,0.08);
+        background: var(--pk-page);
+        border: 1px solid var(--pk-slate-600-55);
+        box-shadow: 0 18px 46px var(--pk-slate-tint-10);
         clip-path: polygon(25% 6%, 75% 6%, 96% 50%, 75% 94%, 25% 94%, 4% 50%);
         margin-bottom: 8px;
       }
@@ -304,7 +301,6 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         height: 83px;
         object-fit: contain;
         display:block;
-        filter: drop-shadow(0 12px 22px rgba(2,6,23,0.10));
       }
       .step-hex-num{
         font-family: "Space Grotesk", sans-serif;
@@ -318,12 +314,12 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         height: var(--connector-h);
         margin: 0 auto;
         width: 2px;
-        background-image: radial-gradient(circle, rgba(2,6,23,0.55) 1.3px, transparent 1.9px);
+        background-image: radial-gradient(circle, var(--pk-slate-tint-55) 1.3px, transparent 1.9px);
         background-size: 4px 9px;
         background-repeat: repeat-y;
         background-position: center;
         opacity: 0.92;
-        box-shadow: 0 0 0 1px rgba(100,116,139,0.22);
+        box-shadow: 0 0 0 1px var(--pk-slate-500-22);
       }
       .step-title-gradient{
         font-family: "Space Grotesk", sans-serif;
@@ -348,9 +344,9 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
           text-align: left !important;
           padding: 16px !important;
           gap: 16px !important;
-          background: #ffffff;
-          border: 1px solid rgba(2,6,23,0.10);
-          border-left: 2px solid rgba(0,229,255,0.35) !important;
+          background: var(--pk-page);
+          border: 1px solid var(--pk-slate-tint-10);
+          border-left: 2px solid var(--pk-accent-35) !important;
           border-radius: 16px;
         }
         .step-hex-wrap{ flex-shrink: 0 !important; }

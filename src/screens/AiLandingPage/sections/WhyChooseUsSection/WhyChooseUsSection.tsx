@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import { pk } from "../../../../design/pkLandingColors";
 
 import prototypIcon from "../../../../assets/icons/prototyp_icon.png";
 import aiIcon from "../../../../assets/icons/AI_icon.png";
@@ -79,7 +80,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
             ref={ref}
             style={{
                 width: "100%",
-                backgroundColor: "#ffffff",
+                backgroundColor: pk.page,
                 padding: "40px 0 110px",
                 position: "relative",
                 overflow: "visible",
@@ -91,7 +92,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
             <div style={{
                 position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
                 width: "900px", height: "500px",
-                background: "radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 70%)",
+                background: `radial-gradient(ellipse at center, ${pk.accent06} 0%, transparent 70%)`,
                 pointerEvents: "none",
             }} />
 
@@ -110,18 +111,18 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         fontWeight: 700,
                         fontSize: "clamp(26px,3.6vw,42px)",
                         lineHeight: 1.1,
-                        color: "#070B14",
+                        color: pk.ink,
                         margin: "0 auto 20px",
                         letterSpacing: "-0.02em",
                         maxWidth: "770px",
                     }}>
                         {isEn ? "Why choose " : "Proč si vybrat "}
-                        <span style={{ color: "#070B14" }}>{isEn ? "us" : "právě nás"}</span>
+                        <span style={{ color: pk.ink }}>{isEn ? "us" : "právě nás"}</span>
                     </h2>
                     <p className="section-sub" style={{
                         fontFamily: "'Space Grotesk', sans-serif",
                         fontWeight: 400, fontSize: "18px", lineHeight: 1.6,
-                        color: "rgba(7,11,20,0.62)",
+                        color: pk.ink62,
                         margin: "0 auto",
                     }}>
                         {isEn
@@ -152,15 +153,14 @@ export const WhyChooseUsSection = (): JSX.Element => {
           gap: 12px;
           padding: 20px 22px;
           border-radius:22px;
-          border: 1px solid rgba(71,85,105,0.16);
-          background:
-            radial-gradient(circle at 30% 25%, rgba(248,250,252,0.98) 0%, rgba(226,232,240,0.98) 55%, rgba(203,213,225,0.98) 100%);
-          box-shadow: 0 18px 42px rgba(2,6,23,0.10);
+          border: 1px solid var(--pk-slate-600-border-16);
+          background: var(--pk-page);
+          box-shadow: var(--pk-shadow-trust-card);
           transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
         }
         .why-trust-badge:hover{
           transform: translateY(-4px);
-          box-shadow: 0 26px 56px rgba(2,6,23,0.14);
+          box-shadow: var(--pk-shadow-trust-card-hover);
         }
         .why-trust-icon{
           flex-shrink:0;
@@ -175,14 +175,13 @@ export const WhyChooseUsSection = (): JSX.Element => {
           height: 82px;
           object-fit: contain;
           display:block;
-          filter: drop-shadow(0 10px 20px rgba(2,6,23,0.10));
         }
         .why-trust-copy{
           font-family: "Space Grotesk", sans-serif;
           font-weight: 600;
           font-size: 18px;
           line-height: 1.4;
-          color: rgba(7,11,20,0.86);
+          color: var(--pk-ink-86);
           text-align: center;
           max-width: 26ch;
         }

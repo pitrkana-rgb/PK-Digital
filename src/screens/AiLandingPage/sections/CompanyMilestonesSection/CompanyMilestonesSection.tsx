@@ -1,4 +1,6 @@
 import { useRef, useEffect, useState } from "react";
+import { SectionDivider } from "../../components/SectionDivider";
+import { pk } from "../../../../design/pkLandingColors";
 
 const milestones = [
   {
@@ -81,8 +83,8 @@ const MilestoneCard = ({ milestone, index }: { milestone: typeof milestones[0]; 
             position: "relative",
             borderRadius: "24px",
             overflow: "hidden",
-            border: "1px solid rgba(255,255,255,0.1)",
-            boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+            border: `1px solid ${pk.onDark10}`,
+            boxShadow: `0 20px 40px ${pk.black40}`,
           }}>
             <img
               src={milestone.image}
@@ -92,7 +94,7 @@ const MilestoneCard = ({ milestone, index }: { milestone: typeof milestones[0]; 
             {/* Overlay gradient */}
             <div style={{
               position: "absolute", inset: 0,
-              background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)",
+              background: `linear-gradient(to top, ${pk.black80} 0%, transparent 60%)`,
             }} />
           </div>
         </div>
@@ -102,22 +104,22 @@ const MilestoneCard = ({ milestone, index }: { milestone: typeof milestones[0]; 
           <div style={{
             display: "inline-flex", alignItems: "center", justifyContent: "center",
             width: "80px", height: "80px", borderRadius: "50%",
-            background: "linear-gradient(135deg, #0ABDC6, #00E5FF)",
-            boxShadow: "0 0 22px rgba(0,229,255,0.28)",
+            background: pk.gradientCtaSoft,
+            boxShadow: `0 0 22px ${pk.accent28}`,
             marginBottom: "24px",
-            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "24px", color: "#000",
+            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "24px", color: pk.hero,
           }}>
             {milestone.year}
           </div>
           <h3 style={{
             fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "32px",
-            color: "#070B14", marginBottom: "16px",
+            color: pk.ink, marginBottom: "16px",
           }}>
             {milestone.title}
           </h3>
           <p style={{
             fontFamily: "'Space Grotesk', sans-serif", fontWeight: 400, fontSize: "17px",
-            lineHeight: 1.6, color: "rgba(7,11,20,0.70)", margin: 0,
+            lineHeight: 1.6, color: pk.ink70, margin: 0,
           }}>
             {milestone.description}
           </p>
@@ -127,17 +129,15 @@ const MilestoneCard = ({ milestone, index }: { milestone: typeof milestones[0]; 
   );
 };
 
-import { SectionDivider } from "../../components/SectionDivider";
-
 export const CompanyMilestonesSection = (): JSX.Element => (
-  <section id="timeline" style={{ width: "100%", backgroundColor: "#ffffff", padding: "100px 0", marginTop: "-50px", marginBottom: "0px" }}>
+  <section id="timeline" style={{ width: "100%", backgroundColor: pk.page, padding: "100px 0", marginTop: "-50px", marginBottom: "0px" }}>
     <SectionDivider />
     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }} className="milestones-container">
 
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "80px" }}>
-        <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,5vw,56px)", lineHeight: 1.1, color: "#070B14", margin: "0 auto 32px", letterSpacing: "-0.02em", maxWidth: "800px" }}>
-          Kdo <span style={{ background: "linear-gradient(135deg,#E040FB 0%, #0096C7 55%, #00A3C7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>jsme</span>
+        <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,5vw,56px)", lineHeight: 1.1, color: pk.ink, margin: "0 auto 32px", letterSpacing: "-0.02em", maxWidth: "800px" }}>
+          Kdo <span style={{ background: pk.gradientMilestoneWordmark, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>jsme</span>
         </h2>
       </div>
 
@@ -146,7 +146,7 @@ export const CompanyMilestonesSection = (): JSX.Element => (
         {/* Vertical line through center */}
         <div style={{
           position: "absolute", top: "0", bottom: "0", left: "50%", transform: "translateX(-50%)",
-          width: "4px", background: "linear-gradient(180deg, #00E5FF 0%, rgba(0,229,255,0.12) 100%)",
+          width: "4px", background: `linear-gradient(180deg, ${pk.accent} 0%, ${pk.accent12} 100%)`,
           zIndex: 0,
         }} className="timeline-line" />
 

@@ -1,11 +1,11 @@
 import type { CSSProperties, ReactNode } from "react";
 import { HeroBackgroundVideo } from "./HeroBackgroundVideo";
+import { pk } from "../design/pkLandingColors";
 
 /** Same base surface as `AiLandingPage` (gradients + dark tone). */
 export const landingPageSurfaceStyle: CSSProperties = {
-  backgroundColor: "#010204",
-  backgroundImage:
-    "radial-gradient(1100px 620px at 12% 100%, rgba(0,229,255,0.02) 0%, rgba(0,229,255,0.00) 68%), radial-gradient(900px 540px at 100% 14%, rgba(123,97,255,0.016) 0%, rgba(123,97,255,0.00) 70%), linear-gradient(180deg, #02040A 0%, #010204 100%)",
+  backgroundColor: pk.void,
+  backgroundImage: pk.gradientPageDepth,
 };
 
 export const NoiseTextureOverlay = (): JSX.Element => (
@@ -47,7 +47,7 @@ export const LandingStylePageRoot = ({
     style={{
       ...landingPageSurfaceStyle,
       fontFamily: "'Space Grotesk', 'Inter', sans-serif",
-      color: "#fff",
+      color: pk.onDark,
       ...style,
     }}
   >

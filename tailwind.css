@@ -7,48 +7,11 @@
   }
 }
 
-:root {
-  --avaliable: rgba(10, 195, 0, 1);
-  --back: rgba(242, 242, 242, 1);
-  --colorwhitewhite: rgba(255, 255, 255, 1);
-  --colorwhitewhite-7: rgba(217, 217, 217, 1);
-  --colorwhitewhite-9: rgba(145, 145, 145, 1);
-  --dark-modecontainer-background: rgba(0, 0, 0, 0.5);
-  --dark-modecontainer-border: rgba(255, 255, 255, 0.07);
-  --elements: rgba(214, 219, 220, 1);
-  --neutral-01: rgba(255, 255, 255, 1);
-  --neutral-02: rgba(188, 188, 188, 1);
-  --shadow-blur-sm:
-    0px 10px 10px 0px rgba(0, 0, 0, 0.1), 0px 4px 4px 0px rgba(0, 0, 0, 0.05), 0px 1px 0px 0px rgba(0,
-      0,
-      0,
-      0.05);
-  --text-font-family: "Space Grotesk", "Inter", sans-serif;
-  --text-font-size: 16px;
-  --text-font-style: normal;
-  --text-font-weight: 400;
-  --text-letter-spacing: 0px;
-  --text-line-height: 24px;
-  --textgrey: rgba(143, 142, 142, 1);
-  --theme-colorsprimary: rgba(242, 63, 93, 1);
-}
-
-:root {
-  --animate-spin: spin 1s linear infinite;
-  --accent-primary: #00E5FF;
-  --accent-gradient-from: #0ABDC6;
-  --accent-gradient-to: #00E5FF;
-  --accent-secondary: #0ABDC6;
-  --accent-magenta: #E040FB;
-  --bg-primary: #070B14;
-  --surface-1: #0D1B2A;
-  --text-primary: #F0F4F8;
-  --text-secondary: #8899AA;
-}
+/* Brand + legacy Tailwind theme vars: pk-landing-tokens.css (linked from index.html). */
 
 ::selection {
-  background: rgba(0, 229, 255, 0.35);
-  color: #070B14;
+  background: var(--pk-accent-35);
+  color: var(--pk-ink);
 }
 
 .animate-fade-in {
@@ -69,7 +32,7 @@
   display: block;
   height: 2px;
   width: 0;
-  background: var(--accent-primary, #00E5FF);
+  background: var(--accent-primary, var(--pk-accent));
   border-radius: 1px;
   margin-top: 3px;
   transition: width 0.25s ease;
@@ -144,15 +107,15 @@
 
 @keyframes pulse-glow {
   0% {
-    box-shadow: 0 12px 30px rgba(0, 229, 255, 0.25), 0 0 0 0 rgba(0, 229, 255, 0.4);
+    box-shadow: 0 12px 30px var(--pk-accent-25), 0 0 0 0 var(--pk-accent-40);
   }
 
   70% {
-    box-shadow: 0 12px 30px rgba(0, 229, 255, 0.25), 0 0 0 14px rgba(0, 229, 255, 0);
+    box-shadow: 0 12px 30px var(--pk-accent-25), 0 0 0 14px var(--pk-accent-00);
   }
 
   100% {
-    box-shadow: 0 12px 30px rgba(0, 229, 255, 0.25), 0 0 0 0 rgba(0, 229, 255, 0);
+    box-shadow: 0 12px 30px var(--pk-accent-25), 0 0 0 0 var(--pk-accent-00);
   }
 }
 
@@ -299,12 +262,12 @@
     @apply bg-background text-foreground;
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background-color: #ffffff;
+    background-color: var(--pk-page);
   }
 
   /* Global accessible focus ring */
   :focus-visible {
-    outline: 2px solid #FF5A1F;
+    outline: 2px solid var(--pk-focus-ring);
     outline-offset: 2px;
   }
 }

@@ -2,6 +2,7 @@ import {
   Phone, MapPin, Building2, FileText, Mail, Landmark, Inbox,
 } from "lucide-react";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import { pk } from "../../../../design/pkLandingColors";
 
 const companyInfoOrdered = [
   { icon: Building2, label: "Název firmy", text: "PK-Digital" },
@@ -35,7 +36,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
       width: "100%",
       padding: "0 0 64px",
       position: "relative",
-      backgroundColor: "#ffffff",
+      backgroundColor: pk.page,
     }}
   >
     <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
@@ -45,7 +46,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
           fontFamily: "'Space Grotesk',sans-serif",
           fontWeight: 700,
           fontSize: "clamp(22px, 2.5vw, 28px)",
-          color: "#070B14",
+          color: pk.ink,
           marginBottom: "24px",
           textAlign: "center",
         }}
@@ -54,8 +55,8 @@ export const CompanyInfoBlock = (): JSX.Element => {
       </h2>
       <div
         style={{
-          background: "#ffffff",
-          border: "1px solid rgba(2,6,23,0.10)",
+          background: pk.page,
+          border: `1px solid ${pk.slateTint10}`,
           borderRadius: "20px",
           padding: "32px 40px",
         }}
@@ -77,11 +78,11 @@ export const CompanyInfoBlock = (): JSX.Element => {
                   width: "40px",
                   height: "40px",
                   borderRadius: "10px",
-                  background: "rgba(2,6,23,0.06)",
+                  background: pk.slateTint06,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#070B14",
+                  color: pk.ink,
                   flexShrink: 0,
                 }}
               >
@@ -92,7 +93,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
                   style={{
                     fontFamily: "'Space Grotesk',sans-serif",
                     fontSize: "11px",
-                    color: "rgba(7,11,20,0.55)",
+                    color: pk.ink55,
                     fontWeight: 600,
                     letterSpacing: "0.05em",
                     marginBottom: "4px",
@@ -104,7 +105,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
                   style={{
                     fontFamily: "'Space Grotesk',sans-serif",
                     fontSize: "14px",
-                    color: "#070B14",
+                    color: pk.ink,
                     lineHeight: 1.45,
                   }}
                 >

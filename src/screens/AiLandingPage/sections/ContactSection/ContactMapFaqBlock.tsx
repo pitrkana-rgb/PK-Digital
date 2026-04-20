@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import { pk } from "../../../../design/pkLandingColors";
 
 const FAQItem = ({ q, a }: { q: string; a: string }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ borderBottom: "1px solid rgba(2,6,23,0.10)", overflow: "hidden" }}>
+    <div style={{ borderBottom: `1px solid ${pk.slateTint10}`, overflow: "hidden" }}>
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -26,7 +27,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
             fontFamily: "'Space Grotesk',sans-serif",
             fontWeight: 600,
             fontSize: "17px",
-            color: open ? "#00E5FF" : "#070B14",
+            color: open ? pk.accent : pk.ink,
             transition: "color 250ms ease",
           }}
         >
@@ -36,7 +37,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
           style={{
             transform: open ? "rotate(180deg)" : "rotate(0)",
             transition: "transform 300ms ease",
-            color: open ? "#00E5FF" : "rgba(7,11,20,0.35)",
+            color: open ? pk.accent : pk.ink35,
           }}
         />
       </button>
@@ -48,7 +49,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
           paddingBottom: open ? "24px" : "0",
           fontFamily: "'Space Grotesk',sans-serif",
           fontSize: "15px",
-          color: "rgba(7,11,20,0.64)",
+          color: pk.ink64,
           lineHeight: 1.6,
         }}
       >
@@ -67,7 +68,7 @@ export const ContactMapFaqBlock = (): JSX.Element => {
       width: "100%",
       padding: "0 0 100px",
       position: "relative",
-      backgroundColor: "#ffffff",
+      backgroundColor: pk.page,
     }}
   >
     <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
@@ -85,9 +86,9 @@ export const ContactMapFaqBlock = (): JSX.Element => {
             style={{
               borderRadius: "24px",
               overflow: "hidden",
-              border: "1px solid rgba(2,6,23,0.10)",
+              border: `1px solid ${pk.slateTint10}`,
               height: "400px",
-              boxShadow: "0 18px 40px rgba(2,6,23,0.10)",
+              boxShadow: `0 18px 40px ${pk.slateTint10}`,
             }}
           >
             <iframe
@@ -108,7 +109,7 @@ export const ContactMapFaqBlock = (): JSX.Element => {
               fontFamily: "'Space Grotesk',sans-serif",
               fontWeight: 700,
               fontSize: "24px",
-              color: "#070B14",
+              color: pk.ink,
               marginBottom: "24px",
             }}
           >

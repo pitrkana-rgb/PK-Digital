@@ -1,8 +1,7 @@
 import { useCallback, useState, type CSSProperties } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
-
-const GOOGLE_STAR = "#fbbc04";
+import { pk } from "../../../../design/pkLandingColors";
 
 type Review = {
   id: string;
@@ -18,21 +17,21 @@ const reviews: Review[] = [
     author: "Pavel Zezula",
     date: "19. 3. 2026",
     text: "Maximální spokojenost s modernizací mých stránek! Nejvíce oceňuji skvělý osobní přístup a bleskovou rychlost zpracování – vše bylo hotovo do 14 dnů.",
-    avatarBg: "linear-gradient(135deg, #5c6bc0, #3949ab)",
+    avatarBg: pk.avatarA,
   },
   {
     id: "2",
     author: "Marcel Abraham",
     date: "21. 03. 2026",
     text: "Vřele doporučuji, s výsledkem jsem maximálně spokojený. Skvělá komunikace, majitel aktivně vylepšoval mé zadání a výsledek je skvělý. Cílem bylo mít moderní stránky do jednoho měsíce. Výsledek - projekt hotový za polovinu času a design předčil mé očekávání!",
-    avatarBg: "linear-gradient(135deg, #00897b, #00695c)",
+    avatarBg: pk.avatarB,
   },
   {
     id: "3",
     author: "Lucie Horáková",
     date: "22. 1. 2026",
     text: "Skvělá komunikace a výsledek přesně podle domluvy. Přestavba e-shopu proběhla v termínu a zákazníci oceňují nový vzhled i rychlost načítání.",
-    avatarBg: "linear-gradient(135deg, #ec407a, #c2185b)",
+    avatarBg: pk.avatarC,
   },
 ];
 
@@ -63,7 +62,7 @@ function GoogleStars({ size = 22 }: { size?: number }) {
           width={size}
           height={size}
           viewBox="0 0 24 24"
-          fill={GOOGLE_STAR}
+          fill={pk.ratingStar}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -85,19 +84,19 @@ function GoogleLogoMark({ style, className }: { style?: CSSProperties; className
       style={{ display: "block", ...style }}
     >
       <path
-        fill="#4285F4"
+        fill={pk.brandGoogleBlue}
         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
       />
       <path
-        fill="#34A853"
+        fill={pk.brandGoogleGreen}
         d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
       />
       <path
-        fill="#FBBC05"
+        fill={pk.brandGoogleYellow}
         d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
       />
       <path
-        fill="#EA4335"
+        fill={pk.brandGoogleRed}
         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
       />
     </svg>
@@ -108,19 +107,19 @@ function GoogleGIcon({ size = 22 }: { size?: number }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={size} height={size} aria-hidden>
       <path
-        fill="#4285F4"
+        fill={pk.brandGoogleBlue}
         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
       />
       <path
-        fill="#34A853"
+        fill={pk.brandGoogleGreen}
         d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
       />
       <path
-        fill="#FBBC05"
+        fill={pk.brandGoogleYellow}
         d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
       />
       <path
-        fill="#EA4335"
+        fill={pk.brandGoogleRed}
         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
       />
     </svg>
@@ -130,10 +129,10 @@ function GoogleGIcon({ size = 22 }: { size?: number }) {
 const cardShell: CSSProperties = {
   boxSizing: "border-box",
   padding: "20px 18px 22px",
-  background: "#ffffff",
-  border: "1px solid rgba(2, 6, 23, 0.10)",
+  background: pk.page,
+  border: `1px solid ${pk.slateTint10}`,
   borderRadius: "12px",
-  boxShadow: "0 20px 48px rgba(2,6,23,0.09)",
+  boxShadow: `0 20px 48px ${pk.slateTint09}`,
 };
 
 function ReviewCard({ r }: { r: Review }) {
@@ -171,7 +170,7 @@ function ReviewCard({ r }: { r: Review }) {
               fontFamily: "'Space Grotesk', sans-serif",
               fontWeight: 700,
               fontSize: "14px",
-              color: "#ffffff",
+              color: pk.onDark,
             }}
           >
             {initialsFrom(r.author)}
@@ -182,7 +181,7 @@ function ReviewCard({ r }: { r: Review }) {
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontWeight: 700,
                 fontSize: "14px",
-                color: "rgba(7,11,20,0.92)",
+                color: pk.ink92,
               }}
             >
               {r.author}
@@ -192,7 +191,7 @@ function ReviewCard({ r }: { r: Review }) {
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontSize: "11px",
-                color: "rgba(7,11,20,0.50)",
+                color: pk.ink50,
               }}
             >
               {r.date}
@@ -214,7 +213,7 @@ function ReviewCard({ r }: { r: Review }) {
           fontFamily: "'Space Grotesk', sans-serif",
           fontSize: "13px",
           lineHeight: 1.6,
-          color: "rgba(7,11,20,0.74)",
+          color: pk.ink74,
           margin: 0,
           flex: "1 1 auto",
         }}
@@ -230,9 +229,9 @@ const navBtnStyle: CSSProperties = {
   width: "40px",
   height: "40px",
   borderRadius: "50%",
-  border: "1px solid rgba(2,6,23,0.12)",
-  background: "rgba(2,6,23,0.04)",
-  color: "rgba(7,11,20,0.82)",
+  border: `1px solid ${pk.slateTint12}`,
+  background: pk.slateTint04,
+  color: pk.ink82,
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
@@ -284,7 +283,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
       className="google-reviews-section"
       style={{
         width: "100%",
-        backgroundColor: "#ffffff",
+        backgroundColor: pk.page,
         padding: "76px 0 100px",
         marginTop: "-50px",
         overflow: "visible",
@@ -304,7 +303,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             fontFamily: "'Space Grotesk', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(22px, 3.2vw, 38px)",
-            color: "#070B14",
+            color: pk.ink,
             margin: "0 0 40px",
             letterSpacing: "-0.02em",
             lineHeight: 1.15,
@@ -449,7 +448,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-family: Roboto, "Segoe UI", system-ui, sans-serif;
           font-weight: 700;
           font-size: 26px;
-          color: #070B14;
+          color: var(--pk-ink);
           margin: 0 0 10px;
           line-height: 1.2;
         }
@@ -464,7 +463,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-family: Roboto, "Segoe UI", system-ui, sans-serif;
           font-weight: 800;
           font-size: 22px;
-          color: #070B14;
+          color: var(--pk-ink);
           line-height: 1;
         }
         .gr-stats-stars {
@@ -474,7 +473,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-family: Roboto, "Segoe UI", system-ui, sans-serif;
           font-weight: 400;
           font-size: 14px;
-          color: rgba(7, 11, 20, 0.62);
+          color: var(--pk-ink-62);
           margin: 0;
           line-height: 1.45;
         }
@@ -482,7 +481,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-family: "Space Grotesk", system-ui, sans-serif;
           font-weight: 500;
           font-size: 20px;
-          color: rgba(7,11,20,0.68);
+          color: var(--pk-ink-68);
           line-height: 1.6;
           margin: 10px 0 0;
           max-width: 36ch;
@@ -493,17 +492,17 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-family: Roboto, "Segoe UI", system-ui, sans-serif;
           font-size: 13px;
           font-weight: 500;
-          color: #070B14;
+          color: var(--pk-ink);
           text-decoration: underline;
           text-underline-offset: 3px;
           transition: color 0.2s ease, opacity 0.2s ease;
         }
         .gr-stats-link:hover {
-          color: rgba(7,11,20,0.78);
+          color: var(--pk-ink-78);
           opacity: 1;
         }
         .gr-stats-link:focus-visible {
-          outline: 2px solid #00e5ff;
+          outline: 2px solid var(--pk-accent);
           outline-offset: 3px;
           border-radius: 4px;
         }
@@ -560,17 +559,17 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           border-radius: 999px;
           border: none;
           padding: 0;
-          background: rgba(2, 6, 23, 0.16);
+          background: var(--pk-slate-tint-16);
           cursor: pointer;
           transition: width 0.2s ease, background 0.2s ease;
         }
         .gr-carousel-dot[data-active="true"] {
           width: 22px;
-          background: #00e5ff;
+          background: var(--pk-accent);
         }
         .gr-carousel-nav:hover {
-          background: rgba(0, 229, 255, 0.12) !important;
-          border-color: rgba(0, 229, 255, 0.35) !important;
+          background: var(--pk-accent-12) !important;
+          border-color: var(--pk-accent-35) !important;
         }
         @media (max-width: 1100px) {
           .gr-cards-desktop {

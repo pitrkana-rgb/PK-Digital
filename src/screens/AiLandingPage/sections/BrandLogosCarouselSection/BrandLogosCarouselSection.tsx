@@ -5,6 +5,7 @@ import nextLogo from "../../../../../Images/technology_list/Next.png";
 import nuxtLogo from "../../../../../Images/technology_list/Nuxt.png";
 import expressLogo from "../../../../../Images/technology_list/Express.png";
 import tailwindLogo from "../../../../../Images/technology_list/Tailwind.png";
+import { pk } from "../../../../design/pkLandingColors";
 
 const logos = [
   { src: reactLogo, alt: "React" },
@@ -24,7 +25,7 @@ export const BrandLogosCarouselSection = (): JSX.Element => {
       aria-label="Technology logos"
       style={{
         width: "100%",
-        background: "#F3F4F6",
+        background: pk.bandMuted,
         padding: "15px 0",
         overflow: "hidden",
         position: "relative",
