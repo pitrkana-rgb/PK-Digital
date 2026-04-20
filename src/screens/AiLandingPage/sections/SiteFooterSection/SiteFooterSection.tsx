@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
-import companyLogoV3Url from "../../../../../Images/Company_logo_v3.png";
+import companyLogoV3Url from "../../../../../Images/Company_logo_V3.png";
 import { pk } from "../../../../design/pkLandingColors";
 
 export const SiteFooterSection = (): JSX.Element => {
