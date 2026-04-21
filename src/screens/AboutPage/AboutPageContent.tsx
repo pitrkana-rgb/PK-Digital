@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../i18n/LanguageContext";
+import founderV3Url from "../../../Images/Founder_V3.png";
+import founderV2Url from "../../../Images/Founder_V2.png";
 
 const FeatureIcon = ({ children }: { children: React.ReactNode }) => (
   <div style={{
@@ -106,8 +108,7 @@ export const AboutPageContent = (): JSX.Element => {
   return (
     <>
       <main style={{ position: "relative", zIndex: 1 }}>
-        <section style={{ padding: "80px 0", position: "relative" }}>
-          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(2,6,23,0.08), transparent)" }} />
+        <section className="about-who-section" style={{ padding: "10px 0 80px", position: "relative" }}>
           <div
             ref={section1.ref}
             style={{
@@ -129,7 +130,7 @@ export const AboutPageContent = (): JSX.Element => {
                     background: "linear-gradient(145deg, rgba(0,229,255,0.08), transparent 60%)",
                   }} />
                   <img
-                    src="/Founder.png"
+                    src={founderV3Url}
                     alt={isEn ? "Petr Kana - founder of PK-Digital" : "Petr Kaňa – zakladatel PK-Digital"}
                     style={{ width: "100%", height: "520px", objectFit: "cover", display: "block", position: "relative", zIndex: 1 }}
                     className="about-img"
@@ -200,8 +201,7 @@ export const AboutPageContent = (): JSX.Element => {
           </div>
         </section>
 
-        <section style={{ padding: "80px 0 120px", position: "relative" }}>
-          <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: "1px", background: "linear-gradient(90deg, transparent, rgba(2,6,23,0.08), transparent)" }} />
+        <section className="about-why-section" style={{ padding: "80px 0 0", position: "relative" }}>
           <div style={{
             position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
             width: "800px", height: "500px", pointerEvents: "none",
@@ -216,7 +216,7 @@ export const AboutPageContent = (): JSX.Element => {
               transition: "opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s",
             }}
           >
-            <div className="about-row about-row-reverse">
+            <div className="about-row about-row-reverse about-row-why">
               <div className="about-text-col" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <h2 style={{
                   fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700,
@@ -253,26 +253,12 @@ export const AboutPageContent = (): JSX.Element => {
               </div>
 
               <div className="about-img-col">
-                <div style={{
-                  position: "relative", borderRadius: "24px", overflow: "hidden",
-                  border: "1px solid rgba(2,6,23,0.10)",
-                  boxShadow: "0 24px 56px rgba(2,6,23,0.10)",
-                }}>
-                  <div style={{
-                    position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
-                    background: "linear-gradient(145deg, rgba(0,229,255,0.08), transparent 60%)",
-                  }} />
-                  <img
-                    src="/Studio.png"
-                    alt="PK-Digital studio"
-                    style={{ width: "100%", height: "520px", objectFit: "cover", display: "block", position: "relative", zIndex: 1 }}
-                    className="about-img"
-                  />
-                  <div style={{
-                    position: "absolute", bottom: 0, left: 0, right: 0, height: "120px", zIndex: 2,
-                    background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.6))",
-                  }} />
-                </div>
+                <img
+                  src={founderV2Url}
+                  alt="PK-Digital studio"
+                  className="about-img-full"
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                />
               </div>
             </div>
           </div>
@@ -290,22 +276,47 @@ export const AboutPageContent = (): JSX.Element => {
           height: 520px;
           object-fit: cover;
         }
+        .about-img-full{
+          height: auto;
+          object-fit: contain;
+        }
+        @media (min-width: 901px) {
+          .about-why-section{
+            padding-top: 0px !important;
+          }
+        }
         @media (max-width: 900px) {
+          .about-who-section{
+            padding-bottom: 10px !important;
+          }
           .about-row {
             grid-template-columns: 1fr !important;
             gap: 40px !important;
           }
           .about-img-col { order: -1; }
           .about-text-col { order: 1; }
+          /* For “Proč si vybrat právě mě?” keep image below text on mobile */
+          .about-row-why .about-img-col { order: 2 !important; }
+          .about-row-why .about-text-col { order: 1 !important; }
           .about-img {
-            height: 280px !important;
+            height: 380px !important;
             object-position: center top;
+          }
+          .about-img-full{
+            height: auto !important;
+            width: 70% !important;
+            margin: 0 auto;
           }
         }
         @media (max-width: 600px) {
           .about-img {
-            height: 220px !important;
+            height: 320px !important;
             object-position: center top;
+          }
+          .about-img-full{
+            height: auto !important;
+            width: 70% !important;
+            margin: 0 auto;
           }
         }
         @media (max-width: 768px) {
