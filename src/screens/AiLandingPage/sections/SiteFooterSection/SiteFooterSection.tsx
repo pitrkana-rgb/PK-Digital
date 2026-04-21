@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
-import companyLogoV3Url from "../../../../../Images/Company_logo_V3.png";
+import companyLogoV4Url from "../../../../../Images/Company_logo_V4.png";
 import { pk } from "../../../../design/pkLandingColors";
 
 export const SiteFooterSection = (): JSX.Element => {
@@ -74,10 +74,10 @@ export const SiteFooterSection = (): JSX.Element => {
           <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "300px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <img
-                src={companyLogoV3Url}
+                src={companyLogoV4Url}
                 alt="PK Digital logo"
                 className="footer-logo"
-                style={{ height: "40px", width: "auto", display: "block" }}
+                style={{ height: "48px", width: "auto", display: "block" }}
               />
             </div>
             <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark55, lineHeight: 1.65, margin: 0 }}>
@@ -183,7 +183,7 @@ export const SiteFooterSection = (): JSX.Element => {
             text-align: center !important;
             gap: 12px !important;
           }
-          .footer-logo { height: 32px !important; }
+          .footer-logo { height: 38.4px !important; }
         }
       `}</style>
 

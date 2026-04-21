@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { MenuIcon, XIcon } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../i18n/LanguageContext";
-import companyLogoV3Url from "../../Images/Company_logo_V3.png";
+import companyLogoV4Url from "../../Images/Company_logo_V4.png";
 import { pk } from "../design/pkLandingColors";
 
 export const Header = () => {
@@ -112,10 +112,10 @@ export const Header = () => {
                             aria-label={t.backHomeAria}
                         >
                             <img
-                                src={companyLogoV3Url}
+                                src={companyLogoV4Url}
                                 alt="PK Digital logo"
                                 className="header-logo"
-                                style={{ height: "57.2px", width: "auto", display: "block" }}
+                                style={{ height: "51.48px", width: "auto", display: "block" }}
                             />
                         </button>
                     </div>
@@ -398,7 +398,7 @@ export const Header = () => {
 
             <style>{`
               @media (min-width: 768px) {
-                .header-logo { height: 63.8px !important; }
+                .header-logo { height: 57.42px !important; }
               }
             `}</style>
         </>
