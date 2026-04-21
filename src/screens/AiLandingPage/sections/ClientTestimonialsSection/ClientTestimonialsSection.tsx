@@ -1,4 +1,4 @@
-import { useCallback, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
@@ -245,6 +245,9 @@ export const ClientTestimonialsSection = (): JSX.Element => {
   const { language } = useLanguage();
   const [carouselIndex, setCarouselIndex] = useState(0);
   const n = reviews.length;
+  const viewportRef = useRef<HTMLDivElement | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchDeltaXRef = useRef<number>(0);
   const localizedReviews =
     language === "en"
       ? reviews.map((r) => {
@@ -277,6 +280,40 @@ export const ClientTestimonialsSection = (): JSX.Element => {
   const goNext = useCallback(() => {
     setCarouselIndex((i) => (i + 1) % n);
   }, [n]);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const tick = () => {
+      // Only auto-advance when the mobile carousel is visible.
+      const isMobile = window.matchMedia?.("(max-width: 900px)")?.matches ?? false;
+      if (!isMobile) return;
+      setCarouselIndex((i) => (i + 1) % n);
+    };
+
+    const id = window.setInterval(tick, 3000);
+    return () => window.clearInterval(id);
+  }, [n]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0]?.clientX ?? null;
+    touchDeltaXRef.current = 0;
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    const startX = touchStartXRef.current;
+    if (startX == null) return;
+    const x = e.touches[0]?.clientX ?? startX;
+    touchDeltaXRef.current = x - startX;
+  };
+  const onTouchEnd = () => {
+    const dx = touchDeltaXRef.current;
+    touchStartXRef.current = null;
+    touchDeltaXRef.current = 0;
+    const threshold = 42;
+    if (dx > threshold) goPrev();
+    if (dx < -threshold) goNext();
+  };
 
   return (
     <section
@@ -360,7 +397,14 @@ export const ClientTestimonialsSection = (): JSX.Element => {
               >
                 ‹
               </button>
-              <div className="gr-carousel-viewport">
+              <div
+                className="gr-carousel-viewport"
+                ref={viewportRef}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                onTouchCancel={onTouchEnd}
+              >
                 <div
                   className="gr-carousel-track"
                   style={{
@@ -530,9 +574,10 @@ export const ClientTestimonialsSection = (): JSX.Element => {
         .gr-carousel-viewport {
           flex: 1 1 0;
           min-width: 0;
-          overflow: visible;
-          border-radius: 12px;
-          padding-bottom: 16px;
+          overflow: hidden;
+          border-radius: 18px;
+          padding: 0;
+          touch-action: pan-y;
         }
         .gr-carousel-track {
           display: flex;
@@ -615,10 +660,18 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           .google-reviews-section {
             padding: 56px 0 !important;
           }
+          /* Space around each slide without revealing adjacent slides */
+          .gr-carousel-slide{
+            padding: 26px 18px 20px;
+          }
           .gr-carousel-mobile .gr-review-card {
             text-align: center !important;
             height: clamp(340px, 56vh, 420px);
             max-height: 420px;
+            /* Premium shadow that won't get clipped with viewport padding */
+            box-shadow:
+              0 18px 40px var(--pk-slate-shadow-14),
+              0 6px 18px var(--pk-slate-tint-10);
           }
           .gr-carousel-mobile .gr-review-header {
             flex-direction: column !important;
