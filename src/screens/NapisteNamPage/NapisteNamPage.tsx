@@ -5,6 +5,7 @@ import { SiteFooterSection } from "../AiLandingPage/sections/SiteFooterSection/S
 import { ContactFormBlock } from "../AiLandingPage/sections/ContactSection/ContactFormBlock";
 import { ContactMapFaqBlock } from "../AiLandingPage/sections/ContactSection/ContactMapFaqBlock";
 import { useLanguage } from "../../i18n/LanguageContext";
+import { pk } from "../../design/pkLandingColors";
 
 export const NapisteNamPage = (): JSX.Element => {
   const { language } = useLanguage();
@@ -36,16 +37,17 @@ export const NapisteNamPage = (): JSX.Element => {
           <div style={{ marginBottom: "24px" }}>
             <span style={{
               display: "inline-flex", alignItems: "center", gap: "8px",
-              background: "rgba(0,229,255,0.10)", border: "1px solid rgba(0,229,255,0.18)",
+              background: pk.accent08,
+              border: `1px solid ${pk.accent25}`,
               borderRadius: "99px", padding: "6px 16px",
-              fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: "#0f6b78",
-              textTransform: "uppercase", letterSpacing: "0.1em"
+              fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "12px", color: pk.accentStrong,
+              textTransform: "uppercase", letterSpacing: "0.1em",
             }}>
-              <span style={{ width: "8px", height: "8px", background: "#0f6b78", borderRadius: "50%", display: "inline-block" }} />
+              <span style={{ width: "8px", height: "8px", background: pk.accentStrong, borderRadius: "50%", display: "inline-block" }} />
               {t.reply}
             </span>
           </div>
-          <h1 className="contact-hero-title" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#070B14", margin: 0, letterSpacing: "-0.02em" }}>
+          <h1 className="contact-hero-title" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4.5vw, 42px)", lineHeight: 1.2, color: "#070B14", margin: 0, letterSpacing: "-0.02em" }}>
             {t.titlePre}{" "}
             <span style={{ color: "#070B14" }}>{t.titleAccent}</span>
           </h1>

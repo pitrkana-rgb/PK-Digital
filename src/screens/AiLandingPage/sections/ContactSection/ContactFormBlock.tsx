@@ -53,14 +53,26 @@ const init: FormState = {
 };
 
 const FloatingField = ({
-  label, id, type = "text", value, onChange, error, placeholder, isSelect, options
+  label, id, type = "text", value, onChange, error, placeholder, isSelect, options, inverse = false,
 }: {
   label: string; id: string; type?: string; value: string;
   onChange: (v: string) => void; error?: string; placeholder: string;
   isSelect?: boolean; options?: string[];
+  /** Dark fields on hero-style background */
+  inverse?: boolean;
 }) => {
   const [focused, setFocused] = useState(false);
   const active = focused || value.length > 0;
+
+  const labelIdle = inverse ? pk.onDark45 : pk.ink45;
+  const labelColor = focused ? pk.accent : labelIdle;
+  const fieldBg = inverse ? pk.panelDark : pk.slateTint03;
+  const fieldBorder = inverse
+    ? (focused ? pk.accent : error ? pk.errorRed50 : pk.onDarkBorder12)
+    : (focused ? pk.accent : error ? pk.errorRed50 : pk.slateTint12);
+  const textColor = inverse ? pk.onDark : pk.ink;
+  const chevronColor = inverse ? pk.onDark55 : pk.ink35;
+  const optBg = inverse ? pk.panelDarker : pk.page;
 
   return (
     <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "4px" }}>
@@ -69,9 +81,9 @@ const FloatingField = ({
         top: active ? "8px" : "50%",
         transform: active ? "translateY(0) scale(0.85)" : "translateY(-50%)",
         transformOrigin: "left",
-        fontFamily: "'Space Grotesk',sans-serif", fontWeight: 500,
+        fontFamily: "'Montserrat',sans-serif", fontWeight: 500,
         fontSize: active ? "12px" : "15px",
-        color: focused ? pk.accent : pk.ink45,
+        color: labelColor,
         transition: "all 200ms cubic-bezier(0.2, 0.8, 0.2, 1)",
         pointerEvents: "none", zIndex: 1,
       }}>
@@ -87,12 +99,12 @@ const FloatingField = ({
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             style={{
-              background: pk.slateTint03,
-              border: `1px solid ${focused ? pk.accent : error ? pk.errorRed50 : pk.slateTint12}`,
+              background: fieldBg,
+              border: `1px solid ${fieldBorder}`,
               borderRadius: "16px",
               padding: active ? "26px 40px 10px 20px" : "20px 40px 20px 20px",
-              fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px",
-              color: value ? pk.ink : "transparent",
+              fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "16px",
+              color: value ? textColor : "transparent",
               outline: "none", width: "100%", appearance: "none",
               boxSizing: "border-box", cursor: "pointer",
               transition: "all 250ms ease",
@@ -100,9 +112,9 @@ const FloatingField = ({
             }}
           >
             <option value="" disabled hidden></option>
-            {options?.map(opt => <option key={opt} value={opt} style={{ background: pk.page, color: pk.ink }}>{opt}</option>)}
+            {options?.map(opt => <option key={opt} value={opt} style={{ background: optBg, color: inverse ? pk.onDark92 : pk.ink }}>{opt}</option>)}
           </select>
-          <ChevronDown style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", width: "18px", color: pk.ink35, pointerEvents: "none" }} />
+          <ChevronDown style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", width: "18px", color: chevronColor, pointerEvents: "none" }} />
         </div>
       ) : (
         <input
@@ -114,18 +126,18 @@ const FloatingField = ({
           onBlur={() => setFocused(false)}
           placeholder={focused ? placeholder : ""}
           style={{
-            background: pk.slateTint03,
-            border: `1px solid ${focused ? pk.accent : error ? pk.errorRed50 : pk.slateTint12}`,
+            background: fieldBg,
+            border: `1px solid ${fieldBorder}`,
             borderRadius: "16px",
             padding: active ? "28px 20px 10px" : "20px",
-            fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: pk.ink,
+            fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "16px", color: textColor,
             outline: "none", width: "100%",
             boxSizing: "border-box", transition: "all 250ms ease",
             boxShadow: focused ? `0 0 0 4px ${pk.accent10}` : "none",
           }}
         />
       )}
-      {error && <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "12px", color: pk.error400, paddingLeft: "4px", marginTop: "2px" }}>{error}</span>}
+      {error && <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "12px", color: pk.error400, paddingLeft: "4px", marginTop: "2px" }}>{error}</span>}
     </div>
   );
 };
@@ -267,15 +279,22 @@ export const ContactFormBlock = (): JSX.Element => {
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <div style={{ marginBottom: "0" }}>
           <div style={{
-            background: pk.page,
-            border: `1px solid ${pk.slateTint10}`,
+            background: pk.hero,
+            border: `1px solid ${pk.onDarkBorder12}`,
             borderRadius: "24px",
             padding: "48px 40px",
             boxSizing: "border-box",
+            boxShadow: `inset 0 1px 0 ${pk.onDarkBorder08}`,
           }} className="contact-form-card"
           >
             {submitted ? (
-              <div style={{ textAlign: "center", padding: "40px 0" }}>
+              <div style={{
+                textAlign: "center",
+                padding: "32px 24px",
+                background: pk.page,
+                borderRadius: "16px",
+                border: `1px solid ${pk.slateTint10}`,
+              }}>
                 <div style={{
                   width: "80px", height: "80px", borderRadius: "50%", background: pk.success10,
                   border: `2px solid ${pk.success500}`, display: "flex", alignItems: "center", justifyContent: "center",
@@ -283,17 +302,17 @@ export const ContactFormBlock = (): JSX.Element => {
                 }}>
                   <CheckCircle2 color={pk.success500} size={40} />
                 </div>
-                <h3 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "28px", color: pk.ink, marginBottom: "12px" }}>{isEn ? "Thank you for your request." : "Děkujeme za odeslání."}</h3>
-                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "17px", color: pk.ink62, marginBottom: "32px" }}>{isEn ? "We will get back to you within 24 hours." : "Ozveme se do 24 hodin."}</p>
-                <button type="button" onClick={() => setSubmitted(false)} style={{ background: pk.slateTint04, border: `1px solid ${pk.slateTint12}`, color: pk.ink, padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif" }}>{isEn ? "Send another message" : "Odeslat další zprávu"}</button>
+                <h3 style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "28px", color: pk.ink, marginBottom: "12px" }}>{isEn ? "Thank you for your request." : "Děkujeme za odeslání."}</h3>
+                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.ink62, marginBottom: "32px" }}>{isEn ? "We will get back to you within 24 hours." : "Ozveme se do 24 hodin."}</p>
+                <button type="button" onClick={() => setSubmitted(false)} style={{ background: pk.slateTint04, border: `1px solid ${pk.slateTint12}`, color: pk.ink, padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif" }}>{isEn ? "Send another message" : "Odeslat další zprávu"}</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
                 <div className="contact-form-grid">
                   <div className="contact-form-col" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-                    <FloatingField id="f-name" label={isEn ? "Name (required)" : "Jméno (povinné)"} value={form.name} onChange={set("name") as (v: string) => void} error={errors.name} placeholder={isEn ? "John Smith" : "Jan Novák"} />
-                    <FloatingField id="f-email" label={isEn ? "Email (required)" : "E-mail (povinné)"} type="email" value={form.email} onChange={set("email") as (v: string) => void} error={errors.email} placeholder={isEn ? "john@company.com" : "jan@firma.cz"} />
-                    <FloatingField id="f-type" label={isEn ? "Project type (required)" : "Typ projektu (povinné)"} isSelect options={PROJECT_OPTIONS} value={form.projectType} onChange={set("projectType") as (v: string) => void} error={errors.projectType} placeholder="" />
+                    <FloatingField inverse id="f-name" label={isEn ? "Name (required)" : "Jméno (povinné)"} value={form.name} onChange={set("name") as (v: string) => void} error={errors.name} placeholder={isEn ? "John Smith" : "Jan Novák"} />
+                    <FloatingField inverse id="f-email" label={isEn ? "Email (required)" : "E-mail (povinné)"} type="email" value={form.email} onChange={set("email") as (v: string) => void} error={errors.email} placeholder={isEn ? "john@company.com" : "jan@firma.cz"} />
+                    <FloatingField inverse id="f-type" label={isEn ? "Project type (required)" : "Typ projektu (povinné)"} isSelect options={PROJECT_OPTIONS} value={form.projectType} onChange={set("projectType") as (v: string) => void} error={errors.projectType} placeholder="" />
                     <div ref={featuresDropdownRef} style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                       <button
                         type="button"
@@ -301,15 +320,15 @@ export const ContactFormBlock = (): JSX.Element => {
                         aria-expanded={featuresOpen}
                         aria-controls="f-features-listbox"
                         style={{
-                          background: pk.slateTint03,
-                          border: `1px solid ${featuresOpen ? pk.accent : pk.slateTint12}`,
+                          background: pk.panelDark,
+                          border: `1px solid ${featuresOpen ? pk.accent : pk.onDarkBorder12}`,
                           borderRadius: "16px",
                           minHeight: "58px",
                           padding: "12px 16px",
-                          fontFamily: "'Space Grotesk',sans-serif",
+                          fontFamily: "'Montserrat',sans-serif",
                           fontWeight: 400,
                           fontSize: "16px",
-                          color: pk.ink,
+                          color: pk.onDark,
                           textAlign: "left",
                           display: "flex",
                           alignItems: "center",
@@ -320,7 +339,7 @@ export const ContactFormBlock = (): JSX.Element => {
                           transition: "all 250ms ease",
                         }}
                       >
-                        <span style={{ color: form.features.length ? pk.ink : pk.ink45 }}>
+                        <span style={{ color: form.features.length ? pk.onDark : pk.onDark45 }}>
                           {form.features.length
                             ? isEn ? `${form.features.length} selected options` : `${form.features.length} vybraných možností`
                             : isEn ? "Requested features / AI tools" : "Požadované funkce / AI nástroje"}
@@ -328,7 +347,7 @@ export const ContactFormBlock = (): JSX.Element => {
                         <ChevronDown
                           style={{
                             width: "18px",
-                            color: pk.ink45,
+                            color: pk.onDark55,
                             transform: featuresOpen ? "rotate(180deg)" : "rotate(0deg)",
                             transition: "transform 200ms ease",
                           }}
@@ -340,8 +359,8 @@ export const ContactFormBlock = (): JSX.Element => {
                           role="listbox"
                           aria-multiselectable="true"
                           style={{
-                            background: pk.page,
-                            border: `1px solid ${pk.slateTint12}`,
+                            background: pk.panelDarker,
+                            border: `1px solid ${pk.onDarkBorder12}`,
                             borderRadius: "14px",
                             padding: "10px",
                             display: "grid",
@@ -369,7 +388,7 @@ export const ContactFormBlock = (): JSX.Element => {
                                   onChange={() => toggleFeature(opt)}
                                   style={{ width: "16px", height: "16px", accentColor: pk.accent }}
                                 />
-                                <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: pk.ink }}>
+                                <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.onDark }}>
                                   {opt}
                                 </span>
                               </label>
@@ -380,15 +399,15 @@ export const ContactFormBlock = (): JSX.Element => {
                     </div>
                   </div>
                   <div className="contact-form-col" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-                    <FloatingField id="f-company" label={isEn ? "Company" : "Firma"} value={form.company} onChange={set("company") as (v: string) => void} placeholder={isEn ? "Company Ltd." : "Firma s.r.o."} />
-                    <FloatingField id="f-phone" label={isEn ? "Phone (required)" : "Telefon (povinné)"} type="tel" value={form.phone} onChange={set("phone") as (v: string) => void} error={errors.phone} placeholder="+420 725 703 868" />
-                    <FloatingField id="f-domain" label={isEn ? "Do you have a domain / hosting? (required)" : "Máte doménu / webhosting? (povinné)"} isSelect options={DOMAIN} value={form.hasDomain} onChange={set("hasDomain") as (v: string) => void} error={errors.hasDomain} placeholder="" />
-                    <FloatingField id="f-budget" label={isEn ? "Budget" : "Rozpočet"} value={form.budget} onChange={set("budget") as (v: string) => void} placeholder={isEn ? "e.g. 30 000 CZK" : "např. 30 000 Kč"} />
+                    <FloatingField inverse id="f-company" label={isEn ? "Company" : "Firma"} value={form.company} onChange={set("company") as (v: string) => void} placeholder={isEn ? "Company Ltd." : "Firma s.r.o."} />
+                    <FloatingField inverse id="f-phone" label={isEn ? "Phone (required)" : "Telefon (povinné)"} type="tel" value={form.phone} onChange={set("phone") as (v: string) => void} error={errors.phone} placeholder="+420 725 703 868" />
+                    <FloatingField inverse id="f-domain" label={isEn ? "Do you have a domain / hosting? (required)" : "Máte doménu / webhosting? (povinné)"} isSelect options={DOMAIN} value={form.hasDomain} onChange={set("hasDomain") as (v: string) => void} error={errors.hasDomain} placeholder="" />
+                    <FloatingField inverse id="f-budget" label={isEn ? "Budget" : "Rozpočet"} value={form.budget} onChange={set("budget") as (v: string) => void} placeholder={isEn ? "e.g. 30 000 CZK" : "např. 30 000 Kč"} />
                   </div>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontSize: "15px", color: pk.ink78 }}>
+                  <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark78 }}>
                     <input
                       type="checkbox"
                       checked={form.gdprConsent}
@@ -402,12 +421,12 @@ export const ContactFormBlock = (): JSX.Element => {
                     </span>
                   </label>
                   {errors.gdprConsent && (
-                    <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "12px", color: pk.error400, paddingLeft: "30px" }}>{errors.gdprConsent}</span>
+                    <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "12px", color: pk.error400, paddingLeft: "30px" }}>{errors.gdprConsent}</span>
                   )}
                 </div>
 
                 {submitError && (
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: pk.error400, margin: 0 }} role="alert">
+                  <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.error400, margin: 0 }} role="alert">
                     {submitError}
                   </p>
                 )}
@@ -420,14 +439,14 @@ export const ContactFormBlock = (): JSX.Element => {
                     className="animate-pulse-glow hero-primary-btn"
                     style={{
                       marginTop: "8px",
-                      padding: "15px 32px",
+                      padding: "9px 22px",
                       borderRadius: "12px",
-                      background: pk.gradientCtaSoft,
+                      background: pk.gradientPopular,
                       border: "none",
                       color: pk.ink,
-                      fontFamily: "'Space Grotesk',sans-serif",
+                      fontFamily: "'Montserrat',sans-serif",
                       fontWeight: 600,
-                      fontSize: "16px",
+                      fontSize: "14px",
                       cursor: loading ? "wait" : "pointer",
                       display: "inline-flex",
                       alignItems: "center",

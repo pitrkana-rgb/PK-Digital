@@ -1,54 +1,61 @@
 import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
-import { MenuIcon, XIcon } from "lucide-react";
+import { MenuIcon, XIcon, Phone, Mail } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../i18n/LanguageContext";
-import companyLogoV4Url from "../../Images/Company_logo_V4.png";
+import companyLogoV4BlackUrl from "../../Images/Company_logo_V4_black.png";
 import { pk } from "../design/pkLandingColors";
 
+const HEADER_PHONE_DISPLAY = "+420 725 703 868";
+const HEADER_PHONE_HREF = "tel:+420725703868";
+const HEADER_EMAIL_DISPLAY = "info@pk-digital.cz";
+const HEADER_EMAIL_HREF = "mailto:info@pk-digital.cz";
+
+/** Matches header + hero primary CTA (tightened in steps vs original 15px). */
+const HEADER_CTA_PAD_Y = Math.round(11 * 0.8);
+const HEADER_CTA_PAD_X = Math.round(28 * 0.8);
+const CONTACT_ICON_PX = Math.round(15 * 1.3);
+const CONTACT_ICON_DRAWER_PX = Math.round(17 * 1.3);
+
 export const Header = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [headerGlass, setHeaderGlass] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setHeaderGlass(window.scrollY > 16);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
     const navigate = useNavigate();
     const location = useLocation();
-    const { language, setLanguage } = useLanguage();
+    const { language } = useLanguage();
 
     const t = language === "en" ? {
-        navHome: "Home",
         navServices: "Services",
-        navFaq: "FAQ",
+        navReference: "Reference",
+        navFaq: "Common questions",
         navContact: "Contact",
         writeUs: "Contact us",
         openMenu: "Open menu",
         closeMenu: "Close menu",
         backHomeAria: "PK Digital – back to homepage",
-        languageLabel: "Language",
     } : {
-        navHome: "Domů",
         navServices: "Služby",
-        navFaq: "FAQ",
+        navReference: "Reference",
+        navFaq: "Časté dotazy",
         navContact: "Kontakt",
         writeUs: "Napište nám",
         openMenu: "Otevřít menu",
         closeMenu: "Zavřít menu",
         backHomeAria: "AI-agency – zpět na začátek",
-        languageLabel: "Jazyk",
     };
 
     const navigationItems = [
-        { label: t.navHome, targetId: "hero", path: "/" },
-        { label: t.navServices, targetId: "pricing", path: "/" },
-        { label: t.navFaq, targetId: "faq", path: "/" },
-        { label: t.navContact, targetId: undefined, path: "/kontakt" },
+        { label: t.navServices, targetId: "co-nabizime" as const, path: "/" as const },
+        { label: t.navReference, targetId: "reference" as const, path: "/" as const },
+        { label: t.navFaq, targetId: "faq" as const, path: "/" as const },
+        { label: t.navContact, path: "/kontakt" as const },
     ] as const;
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
 
     const scrollToSection = (targetId: string) => {
         const element = document.getElementById(targetId);
@@ -80,23 +87,39 @@ export const Header = () => {
         setMenuOpen(false);
     };
 
+    const goHome = () => {
+        setMenuOpen(false);
+        if (location.pathname !== "/") {
+            navigate("/");
+            setTimeout(() => scrollToSection("hero"), 120);
+        } else {
+            scrollToSection("hero");
+        }
+    };
+
+    const navItemIsActive = (item: (typeof navigationItems)[number]) => {
+        if (item.path === "/kontakt") return location.pathname === "/kontakt";
+        return false;
+    };
+
     return (
         <>
             <header
                 style={{
                     zIndex: 10000,
-                    backgroundColor: menuOpen && !isScrolled ? pk.hero : undefined,
+                    backgroundColor: headerGlass ? pk.headerGlassSurface : pk.page,
+                    backdropFilter: headerGlass ? "blur(14px) saturate(1.35)" : "none",
+                    WebkitBackdropFilter: headerGlass ? "blur(14px) saturate(1.35)" : "none",
+                    borderBottom: headerGlass ? `1px solid ${pk.headerGlassBorder}` : "none",
+                    boxShadow: headerGlass ? "0 8px 28px rgb(15 23 42 / 0.06)" : "0 1px 0 rgb(15 23 42 / 0.05)",
                 }}
-                className={`fixed top-0 left-0 w-full transition-all duration-300 ${isScrolled
-                    ? "bg-black shadow-lg"
-                    : "bg-black"
-                    }`}
+                className="fixed top-0 left-0 w-full transition-all duration-300 ease-out"
             >
                 <nav
-                    className="grid grid-cols-2 md:grid-cols-3 items-center header-nav"
+                    className="flex flex-nowrap items-center justify-between gap-x-3 md:gap-x-4 header-nav min-w-0"
                     style={{
-                        paddingTop: "13px",
-                        paddingBottom: "13px",
+                        paddingTop: "15px",
+                        paddingBottom: "15px",
                         maxWidth: "1400px",
                         marginLeft: "auto",
                         marginRight: "auto",
@@ -104,43 +127,45 @@ export const Header = () => {
                         paddingRight: "24px",
                     }}
                 >
-                    <div className="flex justify-start">
+                    <div className="flex justify-start shrink-0">
                         <button
                             type="button"
-                            onClick={() => handleNavClick(navigationItems[0])}
-                            className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pk-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--pk-hero)] rounded-md"
+                            onClick={goHome}
+                            className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pk-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md"
                             aria-label={t.backHomeAria}
                         >
                             <img
-                                src={companyLogoV4Url}
+                                src={companyLogoV4BlackUrl}
                                 alt="PK Digital logo"
                                 className="header-logo"
-                                style={{ height: "51.48px", width: "auto", display: "block" }}
+                                style={{ height: "59.2px", width: "auto", display: "block" }}
                             />
                         </button>
                     </div>
 
-                    <div className="hidden md:flex justify-center items-center gap-8">
+                    {/* Inline nav only from xl up — one row; narrower viewports use the drawer */}
+                    <div className="hidden xl:flex flex-1 min-w-0 justify-center items-center gap-6 flex-nowrap px-2 overflow-hidden">
                         {navigationItems.map((item, index) => (
                             <button
                                 key={`nav-${index}`}
                                 type="button"
                                 onClick={() => handleNavClick(item)}
-                                className="nav-link-underline flex flex-col items-center group focus-visible:outline-none"
+                                className="nav-link-underline flex items-center group focus-visible:outline-none shrink-0"
                                 style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
                             >
                                 <span
                                     style={{
-                                        fontFamily: "'Space Grotesk', sans-serif",
-                                        fontWeight: 500,
-                                        fontSize: "17px",
-                                        color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? pk.accent : pk.onDarkMuted,
+                                        fontFamily: "'Montserrat', sans-serif",
+                                        fontWeight: 600,
+                                        fontSize: "13px",
+                                        color: navItemIsActive(item) ? pk.brand4 : pk.ink,
                                         transition: "color 0.2s ease",
                                         whiteSpace: "nowrap",
-                                        textTransform: "none",
-                                        letterSpacing: "0.01em",
+                                        textTransform: "uppercase",
+                                        letterSpacing: "0.06em",
+                                        lineHeight: 1,
                                     }}
-                                    className="group-hover:!text-white"
+                                    className="group-hover:text-[color:var(--pk-brand-4)]"
                                 >
                                     {item.label}
                                 </span>
@@ -148,70 +173,74 @@ export const Header = () => {
                         ))}
                     </div>
 
-                    <div className="flex justify-end items-center gap-4">
-                        <div className="hidden md:flex items-center">
-                            <button
-                                type="button"
-                                aria-label={t.languageLabel}
-                                onClick={() => setLanguage(language === "cs" ? "en" : "cs")}
+                    <div className="flex justify-end items-center gap-3 md:gap-4 shrink-0 min-w-0">
+                        {/* Phone + email where language toggle was — md+ so the bar stays one row with logo + CTA + menu */}
+                        <div className="hidden md:flex items-center gap-3 lg:gap-4 flex-shrink-0 min-w-0">
+                            <div
+                                aria-hidden="true"
+                                className="hidden lg:block"
+                                style={{
+                                    width: "1px",
+                                    height: "22px",
+                                    background: pk.slateBorderStrong,
+                                    flexShrink: 0,
+                                }}
+                            />
+                            <a
+                                href={HEADER_PHONE_HREF}
                                 style={{
                                     display: "inline-flex",
                                     alignItems: "center",
-                                    gap: "10px",
-                                    border: `1px solid ${pk.onDarkBorder20}`,
-                                    borderRadius: "999px",
-                                    padding: "7px 12px",
-                                    background: pk.black15,
-                                    color: pk.onDark90,
-                                    cursor: "pointer",
-                                    fontFamily: "'Space Grotesk', sans-serif",
-                                    fontWeight: 700,
-                                    fontSize: "12px",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.06em",
+                                    gap: "6px",
+                                    textDecoration: "none",
+                                    color: pk.ink,
+                                    fontFamily: "'Montserrat', sans-serif",
+                                    fontWeight: 500,
+                                    fontSize: "13px",
+                                    whiteSpace: "nowrap",
                                 }}
                             >
-                                <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: `0 0 0 1px ${pk.onDarkBorder16}` }}>
-                                    {language === "cs" ? (
-                                        <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="60" height="30" fill={pk.flagUkNavy}/>
-                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkWhite} strokeWidth="6"/>
-                                            <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkRed} strokeWidth="3"/>
-                                            <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkWhite} strokeWidth="10"/>
-                                            <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkRed} strokeWidth="6"/>
-                                        </svg>
-                                    ) : (
-                                        <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="60" height="15" fill={pk.flagCzWhite}/>
-                                            <rect y="15" width="60" height="15" fill={pk.flagCzRed}/>
-                                            <path d="M0 0 L26 15 L0 30 Z" fill={pk.flagCzBlue}/>
-                                        </svg>
-                                    )}
-                                </span>
-                                <span>{language === "cs" ? "EN" : "CZ"}</span>
-                            </button>
+                                <Phone size={CONTACT_ICON_PX} strokeWidth={2} color={pk.brand4} aria-hidden />
+                                <span>{HEADER_PHONE_DISPLAY}</span>
+                            </a>
+                            <a
+                                href={HEADER_EMAIL_HREF}
+                                className="hidden lg:inline-flex items-center gap-[6px]"
+                                style={{
+                                    textDecoration: "none",
+                                    color: pk.ink,
+                                    fontFamily: "'Montserrat', sans-serif",
+                                    fontWeight: 500,
+                                    fontSize: "13px",
+                                    whiteSpace: "nowrap",
+                                }}
+                            >
+                                <Mail size={CONTACT_ICON_PX} strokeWidth={2} color={pk.brand4} aria-hidden />
+                                <span>{HEADER_EMAIL_DISPLAY}</span>
+                            </a>
                         </div>
                         <div className="hidden md:block">
-                            <Button
+                            <button
                                 type="button"
                                 onClick={() => navigate("/napiste-nam")}
                                 style={{
-                                    background: pk.gradientCta,
+                                    background: pk.gradientPopular,
                                     color: pk.ink,
                                     borderRadius: "12px",
-                                    padding: "15px 32px",
-                                    fontFamily: "'Space Grotesk', sans-serif",
+                                    padding: `${HEADER_CTA_PAD_Y}px ${HEADER_CTA_PAD_X}px`,
+                                    fontFamily: "'Montserrat', sans-serif",
                                     fontWeight: 600,
                                     fontSize: "16px",
                                     textTransform: "none",
                                     letterSpacing: "0.01em",
                                     border: "none",
+                                    cursor: "pointer",
                                     transition: "transform 0.25s ease, filter 0.25s ease",
                                 }}
-                                className="animate-pulse-glow hero-primary-btn hover:brightness-105 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[color:var(--pk-accent)]"
+                                className="animate-pulse-glow hero-primary-btn hover:brightness-105 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--pk-accent)] focus-visible:outline-offset-2"
                             >
                                 {t.writeUs}
-                            </Button>
+                            </button>
                         </div>
 
                         <button
@@ -219,12 +248,12 @@ export const Header = () => {
                             aria-label={menuOpen ? t.closeMenu : t.openMenu}
                             aria-expanded={menuOpen}
                             onClick={() => setMenuOpen(o => !o)}
-                            className="flex md:hidden items-center justify-center"
+                            className="flex xl:hidden items-center justify-center shrink-0"
                             style={{
                                 background: "none",
                                 border: "none",
                                 cursor: "pointer",
-                                color: pk.onDark,
+                                color: pk.ink,
                                 padding: "8px",
                             }}
                         >
@@ -267,13 +296,13 @@ export const Header = () => {
                         zIndex: 1,
                         width: "280px",
                         height: "fit-content",
-                        backgroundColor: pk.hero,
+                        backgroundColor: pk.page,
                         backdropFilter: "blur(10px)",
                         WebkitBackdropFilter: "blur(10px)",
-                        borderLeft: `1px solid ${pk.onDarkBorder08}`,
-                        borderBottom: `1px solid ${pk.onDarkBorder08}`,
+                        borderLeft: `1px solid ${pk.slateBorderStrong}`,
+                        borderBottom: `1px solid ${pk.slateBorderStrong}`,
                         borderBottomLeftRadius: "16px",
-                        boxShadow: menuOpen ? `-8px 8px 40px ${pk.black80}` : "none",
+                        boxShadow: menuOpen ? `-8px 8px 40px ${pk.slateTint28}` : "none",
                         padding: "24px",
                         transform: menuOpen ? "translateX(0)" : "translateX(110%)",
                         transition: "transform 300ms ease",
@@ -286,30 +315,32 @@ export const Header = () => {
                         <button
                             type="button"
                             onClick={() => setMenuOpen(false)}
-                            style={{ background: "none", border: "none", cursor: "pointer", color: pk.onDark60, padding: "4px" }}
+                            style={{ background: "none", border: "none", cursor: "pointer", color: pk.ink55, padding: "4px" }}
                         >
                             <XIcon size={20} />
                         </button>
                     </div>
 
-                    {navigationItems.map(item => (
+                    {navigationItems.map((item, mobIdx) => (
                         <button
-                            key={item.targetId}
+                            key={`mob-nav-${mobIdx}-${item.path}`}
                             type="button"
                             onClick={() => handleNavClick(item)}
                             style={{
                                 background: "none",
                                 border: "none",
                                 cursor: "pointer",
-                                fontFamily: "'Space Grotesk', sans-serif",
-                                fontWeight: 500,
-                                fontSize: "18px",
-                                color: (location.pathname === item.path && (item.path !== "/" || item.targetId === "hero")) ? pk.accent : pk.frost,
+                                fontFamily: "'Montserrat', sans-serif",
+                                fontWeight: 600,
+                                fontSize: "16px",
+                                color: navItemIsActive(item) ? pk.brand4 : pk.ink82,
                                 textAlign: "left",
                                 padding: "14px 0",
-                                borderBottom: `1px solid ${pk.onDarkBorder08}`,
+                                borderBottom: `1px solid ${pk.slateTint08}`,
                                 transition: "color 200ms ease",
                                 width: "100%",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.05em",
                             }}
                         >
                             {item.label}
@@ -317,75 +348,62 @@ export const Header = () => {
                     ))}
 
                     <div
+                        aria-hidden="true"
                         style={{
-                            marginTop: "16px",
+                            height: "1px",
+                            background: pk.slateTint08,
+                            margin: "12px 0 8px",
+                        }}
+                    />
+                    <a
+                        href={HEADER_PHONE_HREF}
+                        onClick={() => setMenuOpen(false)}
+                        style={{
                             display: "flex",
                             alignItems: "center",
-                            justifyContent: "center",
                             gap: "10px",
-                            border: `1px solid ${pk.onDarkBorder12}`,
-                            borderRadius: "999px",
-                            padding: "6px",
-                            position: "sticky",
-                            bottom: "12px",
-                            background: pk.black55,
-                            backdropFilter: "blur(8px)",
+                            textDecoration: "none",
+                            color: pk.ink,
+                            fontFamily: "'Montserrat', sans-serif",
+                            fontWeight: 500,
+                            fontSize: "15px",
+                            padding: "10px 0",
                         }}
                     >
-                        <button
-                            type="button"
-                            onClick={() => setLanguage(language === "cs" ? "en" : "cs")}
-                            style={{
-                                width: "100%",
-                                padding: "10px 14px",
-                                borderRadius: "999px",
-                                border: `1px solid ${pk.onDarkBorder16}`,
-                                cursor: "pointer",
-                                fontFamily: "'Space Grotesk',sans-serif",
-                                fontWeight: 700,
-                                fontSize: "12px",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.06em",
-                                background: pk.black25,
-                                color: pk.onDark90,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                gap: "10px",
-                            }}
-                        >
-                            <span aria-hidden="true" style={{ width: 18, height: 12, display: "inline-flex", borderRadius: 2, overflow: "hidden", boxShadow: `0 0 0 1px ${pk.onDarkBorder16}` }}>
-                                {language === "cs" ? (
-                                    <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="60" height="30" fill={pk.flagUkNavy}/>
-                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkWhite} strokeWidth="6"/>
-                                        <path d="M0 0 L60 30 M60 0 L0 30" stroke={pk.flagUkRed} strokeWidth="3"/>
-                                        <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkWhite} strokeWidth="10"/>
-                                        <path d="M30 0 v30 M0 15 h60" stroke={pk.flagUkRed} strokeWidth="6"/>
-                                    </svg>
-                                ) : (
-                                    <svg viewBox="0 0 60 30" width="18" height="12" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="60" height="15" fill={pk.flagCzWhite}/>
-                                        <rect y="15" width="60" height="15" fill={pk.flagCzRed}/>
-                                        <path d="M0 0 L26 15 L0 30 Z" fill={pk.flagCzBlue}/>
-                                    </svg>
-                                )}
-                            </span>
-                            <span>{language === "cs" ? "EN" : "CZ"}</span>
-                        </button>
-                    </div>
+                        <Phone size={CONTACT_ICON_DRAWER_PX} strokeWidth={2} color={pk.brand4} aria-hidden />
+                        {HEADER_PHONE_DISPLAY}
+                    </a>
+                    <a
+                        href={HEADER_EMAIL_HREF}
+                        onClick={() => setMenuOpen(false)}
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                            textDecoration: "none",
+                            color: pk.ink,
+                            fontFamily: "'Montserrat', sans-serif",
+                            fontWeight: 500,
+                            fontSize: "15px",
+                            padding: "6px 0 14px",
+                            borderBottom: `1px solid ${pk.slateTint08}`,
+                        }}
+                    >
+                        <Mail size={CONTACT_ICON_DRAWER_PX} strokeWidth={2} color={pk.brand4} aria-hidden />
+                        {HEADER_EMAIL_DISPLAY}
+                    </a>
 
                     <button
                         type="button"
                         onClick={() => { navigate("/napiste-nam"); setMenuOpen(false); }}
                         style={{
                             marginTop: "24px",
-                            background: pk.gradientCtaSoft,
+                            background: pk.gradientPopular,
                             color: pk.ink,
                             border: "none",
                             borderRadius: "999px",
-                            padding: "14px 24px",
-                            fontFamily: "'Space Grotesk',sans-serif",
+                            padding: `${HEADER_CTA_PAD_Y}px ${HEADER_CTA_PAD_X}px`,
+                            fontFamily: "'Montserrat',sans-serif",
                             fontWeight: 600,
                             fontSize: "16px",
                             cursor: "pointer",
@@ -398,7 +416,7 @@ export const Header = () => {
 
             <style>{`
               @media (min-width: 768px) {
-                .header-logo { height: 57.42px !important; }
+                .header-logo { height: 66px !important; }
               }
             `}</style>
         </>

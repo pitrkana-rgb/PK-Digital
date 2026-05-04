@@ -24,11 +24,11 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
       >
         <span
           style={{
-            fontFamily: "'Space Grotesk',sans-serif",
-            fontWeight: 600,
+            fontFamily: "'Montserrat',sans-serif",
+            fontWeight: open ? 700 : 500,
             fontSize: "17px",
-            color: open ? pk.accent : pk.ink,
-            transition: "color 250ms ease",
+            color: pk.ink,
+            transition: "font-weight 250ms ease",
           }}
         >
           {q}
@@ -37,7 +37,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
           style={{
             transform: open ? "rotate(180deg)" : "rotate(0)",
             transition: "transform 300ms ease",
-            color: open ? pk.accent : pk.ink35,
+            color: open ? pk.accentStrong : pk.ink35,
           }}
         />
       </button>
@@ -47,7 +47,7 @@ const FAQItem = ({ q, a }: { q: string; a: string }) => {
           opacity: open ? 1 : 0,
           transition: "all 300ms cubic-bezier(0.2, 0.8, 0.2, 1)",
           paddingBottom: open ? "24px" : "0",
-          fontFamily: "'Space Grotesk',sans-serif",
+          fontFamily: "'Montserrat',sans-serif",
           fontSize: "15px",
           color: pk.ink64,
           lineHeight: 1.6,
@@ -106,7 +106,7 @@ export const ContactMapFaqBlock = (): JSX.Element => {
         <div>
           <h3
             style={{
-              fontFamily: "'Space Grotesk',sans-serif",
+              fontFamily: "'Montserrat',sans-serif",
               fontWeight: 700,
               fontSize: "24px",
               color: pk.ink,

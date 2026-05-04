@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../i18n/LanguageContext";
+import { pk } from "../../design/pkLandingColors";
 import founderV3Url from "../../../Images/Founder_V3.png";
 import founderV2Url from "../../../Images/Founder_V2.png";
 
@@ -144,7 +145,7 @@ export const AboutPageContent = (): JSX.Element => {
 
               <div className="about-text-col" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <h2 style={{
-                  fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700,
+                  fontFamily: "'Montserrat',sans-serif", fontWeight: 700,
                   fontSize: "clamp(26px, 3.5vw, 42px)", lineHeight: 1.15,
                   color: "#070B14", margin: "0 0 28px", letterSpacing: "-0.02em",
                 }}>
@@ -153,18 +154,18 @@ export const AboutPageContent = (): JSX.Element => {
                 </h2>
                 <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
                   <p style={{
-                    fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "17px",
+                    fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "17px",
                     color: "rgba(7,11,20,0.92)", lineHeight: 1.5, margin: 0,
                   }}>
                     {isEn ? "I help companies build modern websites that bring in new clients." : "Pomáhám firmám vytvářet moderní weby, které přivádějí nové klienty."}
                   </p>
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
+                  <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
                     {isEn ? "My name is Petr Kana and I have spent more than 10 years working with data, analytics, and digital technologies." : "Jmenuji se Petr Kaňa a více než 10 let se věnuji práci s daty, analytikou a digitálními technologiemi. Během této doby jsem pomáhal firmám lépe porozumět jejich datům, vizualizovat je a využívat pro lepší rozhodování."}
                   </p>
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
+                  <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
                     {isEn ? "Today I combine this experience with modern web development and AI tools. The result is not only visually attractive websites, but practical digital systems that help companies grow." : "Dnes tyto zkušenosti propojuji s tvorbou moderních webových stránek a AI nástrojů. Díky tomu nevznikají jen designově hezké weby, ale funkční digitální nástroje, které pomáhají firmám růst, získávat nové zákazníky a efektivně pracovat s návštěvníky webu."}
                   </p>
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
+                  <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "16px", color: "rgba(7,11,20,0.68)", lineHeight: 1.7, margin: 0 }}>
                     {isEn ? "PK-Digital is built on one idea: connect data, design, and modern technology so a website becomes a real growth tool, not just a business card." : "Za projektem PK-Digital stojí jednoduchá myšlenka — propojit data, design a moderní technologie, aby web nebyl pouze vizitkou firmy, ale skutečným nástrojem pro její růst."}
                   </p>
                 </div>
@@ -176,14 +177,14 @@ export const AboutPageContent = (): JSX.Element => {
                     className="animate-pulse-glow hero-primary-btn"
                     onClick={() => navigate("/napiste-nam")}
                     style={{
-                      background: "linear-gradient(135deg, #0ABDC6 0%, #00E5FF 100%)",
+                      background: pk.gradientPopular,
                       color: "#070B14",
                       border: "none",
                       borderRadius: "12px",
-                      padding: "15px 32px",
-                      fontFamily: "'Space Grotesk',sans-serif",
+                      padding: "9px 22px",
+                      fontFamily: "'Montserrat',sans-serif",
                       fontWeight: 600,
-                      fontSize: "16px",
+                      fontSize: "14px",
                       cursor: "pointer",
                       transition: "transform 0.25s ease, filter 0.25s ease",
                       whiteSpace: "nowrap",
@@ -219,7 +220,7 @@ export const AboutPageContent = (): JSX.Element => {
             <div className="about-row about-row-reverse about-row-why">
               <div className="about-text-col" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <h2 style={{
-                  fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700,
+                  fontFamily: "'Montserrat',sans-serif", fontWeight: 700,
                   fontSize: "clamp(26px, 3.5vw, 42px)", lineHeight: 1.15,
                   color: "#070B14", margin: "0 0 36px", letterSpacing: "-0.02em",
                 }}>
@@ -235,13 +236,13 @@ export const AboutPageContent = (): JSX.Element => {
                       <FeatureIcon><fp.Icon /></FeatureIcon>
                       <div>
                         <h3 style={{
-                          fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "16px",
+                          fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "16px",
                           color: "#070B14", margin: "0 0 6px", lineHeight: 1.3,
                         }}>
                           {fp.title}
                         </h3>
                         <p style={{
-                          fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px",
+                          fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "14px",
                           color: "rgba(7,11,20,0.68)", lineHeight: 1.65, margin: 0,
                         }}>
                           {fp.text}

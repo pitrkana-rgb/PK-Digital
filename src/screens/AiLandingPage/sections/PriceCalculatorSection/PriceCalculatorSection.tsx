@@ -63,7 +63,7 @@ function useAnimatedPrice(target: number) {
 
 /* ── Shared select styles ────────────────────────────────────────── */
 const selectBase = {
-  fontFamily: "'Space Grotesk',sans-serif",
+  fontFamily: "'Montserrat',sans-serif",
   fontWeight: 500,
   fontSize: "15px",
   color: pk.ink,
@@ -82,7 +82,7 @@ const selectBase = {
 };
 
 const labelStyle: React.CSSProperties = {
-  fontFamily: "'Space Grotesk',sans-serif",
+  fontFamily: "'Montserrat',sans-serif",
   fontWeight: 600,
   fontSize: "12px",
   letterSpacing: "0.08em",
@@ -199,7 +199,7 @@ function MultiSelectDropdown({
                   border: "none",
                   background: isSelected ? pk.accent12 : "transparent",
                   color: isSelected ? pk.accent : pk.ink86,
-                  fontFamily: "'Space Grotesk',sans-serif",
+                  fontFamily: "'Montserrat',sans-serif",
                   fontSize: "14px",
                   cursor: "pointer",
                   textAlign: "left",
@@ -262,7 +262,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
           <h2
             style={{
-              fontFamily: "'Space Grotesk',sans-serif",
+              fontFamily: "'Montserrat',sans-serif",
               fontWeight: 700,
               fontSize: "clamp(28px,4.5vw,48px)",
               lineHeight: 1.1,
@@ -286,7 +286,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
           </h2>
           <p
             style={{
-              fontFamily: "'Space Grotesk',sans-serif",
+              fontFamily: "'Montserrat',sans-serif",
               fontWeight: 400,
               fontSize: "16px",
               color: pk.ink62,
@@ -470,7 +470,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
             <div style={{ textAlign: "center", padding: "8px 0" }}>
               <div
                 style={{
-                  fontFamily: "'Space Grotesk',sans-serif",
+                  fontFamily: "'Montserrat',sans-serif",
                   fontWeight: 600,
                   fontSize: "12px",
                   letterSpacing: "0.08em",
@@ -483,7 +483,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
               </div>
               <div
                 style={{
-                  fontFamily: "'Space Grotesk',sans-serif",
+                  fontFamily: "'Montserrat',sans-serif",
                   fontWeight: 800,
                   fontSize: "clamp(36px,6vw,52px)",
                   lineHeight: 1,
@@ -511,14 +511,14 @@ export const PriceCalculatorSection = (): JSX.Element => {
                 }}
                 style={{
                   width: "100%",
-                  padding: "16px 24px",
-                  background: pk.gradientCtaSoft,
+                  padding: "9px 22px",
+                  background: pk.gradientPopular,
                   border: "none",
                   borderRadius: "14px",
-                  color: pk.hero,
-                  fontFamily: "'Space Grotesk',sans-serif",
+                  color: pk.ink,
+                  fontFamily: "'Montserrat',sans-serif",
                   fontWeight: 700,
-                  fontSize: "16px",
+                  fontSize: "14px",
                   cursor: "pointer",
                   transition: "all 280ms cubic-bezier(0.2,0.8,0.2,1)",
                   boxShadow: `0 12px 32px ${pk.accent25}`,

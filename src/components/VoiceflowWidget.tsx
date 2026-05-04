@@ -82,7 +82,7 @@ export const VoiceflowWidget = (): JSX.Element => {
                     border: "none",
                     borderRadius: "999px",
                     cursor: "pointer",
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "'Montserrat', sans-serif",
                     fontWeight: 600,
                     fontSize: "15px",
                     boxShadow: hovered

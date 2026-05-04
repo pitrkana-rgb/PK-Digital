@@ -167,7 +167,7 @@ function ReviewCard({ r }: { r: Review }) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Montserrat', sans-serif",
               fontWeight: 700,
               fontSize: "14px",
               color: pk.onDark,
@@ -178,7 +178,7 @@ function ReviewCard({ r }: { r: Review }) {
           <div className="gr-review-name-wrap" style={{ textAlign: "left" }}>
             <div
               style={{
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "'Montserrat', sans-serif",
                 fontWeight: 700,
                 fontSize: "14px",
                 color: pk.ink92,
@@ -189,7 +189,7 @@ function ReviewCard({ r }: { r: Review }) {
             <time
               dateTime={toIsoDate(r.date)}
               style={{
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: "'Montserrat', sans-serif",
                 fontSize: "11px",
                 color: pk.ink50,
               }}
@@ -210,7 +210,7 @@ function ReviewCard({ r }: { r: Review }) {
       <p
         className="gr-review-body"
         style={{
-          fontFamily: "'Space Grotesk', sans-serif",
+          fontFamily: "'Montserrat', sans-serif",
           fontSize: "13px",
           lineHeight: 1.6,
           color: pk.ink74,
@@ -317,6 +317,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
 
   return (
     <section
+      id="reference"
       className="google-reviews-section"
       style={{
         width: "100%",
@@ -337,14 +338,15 @@ export const ClientTestimonialsSection = (): JSX.Element => {
       >
         <h2
           style={{
-            fontFamily: "'Space Grotesk', sans-serif",
+            fontFamily: "'Montserrat', sans-serif",
             fontWeight: 700,
-            fontSize: "clamp(22px, 3.2vw, 38px)",
+            fontSize: "clamp(26px, 3.6vw, 42px)",
             color: pk.ink,
-            margin: "0 0 40px",
+            margin: "0 auto 40px",
             letterSpacing: "-0.02em",
-            lineHeight: 1.15,
+            lineHeight: 1.1,
             textAlign: "center",
+            maxWidth: "980px",
           }}
         >
           {language === "en" ? "What do customers say about us?" : "Co o nás říkají zákazníci?"}
@@ -522,7 +524,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           line-height: 1.45;
         }
         .gr-stats-note{
-          font-family: "Space Grotesk", system-ui, sans-serif;
+          font-family: "Montserrat", system-ui, sans-serif;
           font-weight: 500;
           font-size: 20px;
           color: var(--pk-ink-68);

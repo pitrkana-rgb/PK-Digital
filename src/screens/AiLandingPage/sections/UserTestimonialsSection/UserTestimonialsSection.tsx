@@ -209,7 +209,7 @@ const AnimatedMetric = ({ badge, delay, isHero }: { badge: Badge; delay: number;
         <div
           className="stats-metric-value"
           style={{
-            fontFamily: "'Space Grotesk',sans-serif",
+            fontFamily: "'Montserrat',sans-serif",
             fontWeight: 700,
             fontSize: "40px",
             lineHeight: 1.05,
@@ -230,7 +230,7 @@ const AnimatedMetric = ({ badge, delay, isHero }: { badge: Badge; delay: number;
         <div
           className="stats-metric-title"
           style={{
-            fontFamily: "'Space Grotesk',sans-serif",
+            fontFamily: "'Montserrat',sans-serif",
             fontWeight: 600,
             fontSize: "17px",
             lineHeight: 1.2,

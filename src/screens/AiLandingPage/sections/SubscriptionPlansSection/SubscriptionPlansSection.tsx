@@ -130,7 +130,7 @@ const PricingCard = ({
         position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)",
         background: pk.gradientPopular,
         borderRadius: "999px", padding: "4px 16px",
-        fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "12px", color: pk.hero,
+        fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "12px", color: pk.hero,
         letterSpacing: "0.06em", textTransform: "uppercase" as const,
         whiteSpace: "nowrap", zIndex: 10,
       }}>
@@ -158,14 +158,14 @@ const PricingCard = ({
       {/* Plan name */}
       <div>
         <h3 style={{
-          fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700,
+          fontFamily: "'Montserrat',sans-serif", fontWeight: 700,
           fontSize: plan.highlighted ? "26px" : "22px",
           color: pk.ink,
           marginBottom: "12px",
         }}>
           {plan.name}
         </h3>
-        <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.ink70, lineHeight: 1.6, margin: 0 }}>
+        <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.ink70, lineHeight: 1.6, margin: 0 }}>
           {plan.description}
         </p>
       </div>
@@ -184,7 +184,7 @@ const PricingCard = ({
             }}>
               <CheckIcon style={{ width: "11px", height: "11px", color: pk.ink, strokeWidth: 3 }} />
             </div>
-            <span className="pricing-bullet" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 500, fontSize: "15px", color: pk.ink86, lineHeight: 1.5 }}>{f}</span>
+            <span className="pricing-bullet" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 500, fontSize: "15px", color: pk.ink86, lineHeight: 1.5 }}>{f}</span>
           </li>
         ))}
       </ul>
@@ -196,11 +196,11 @@ const PricingCard = ({
         onClick={() => navigate("/napiste-nam")}
         style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-          padding: "15px 32px",
-          background: pk.gradientCtaSoft,
+          padding: "9px 22px",
+          background: pk.gradientPopular,
           border: "none",
           borderRadius: "12px",
-          fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "16px",
+          fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "14px",
           color: pk.ink, cursor: "pointer",
           transition: "transform 0.25s ease, filter 0.25s ease",
           boxShadow: "none",
@@ -245,10 +245,10 @@ export const SubscriptionPlansSection = (): JSX.Element => {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <h2 id="pricing-heading" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
+          <h2 id="pricing-heading" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
             {isEn ? "Choose a Service" : "Vyberte službu"}
           </h2>
-          <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: pk.ink65, margin: "0 auto" }}>
+          <p className="section-sub" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "18px", color: pk.ink65, margin: "0 auto" }}>
             {isEn ? "Every project is unique for us. We design a solution tailored to your needs." : "Každý projekt je pro nás unikátní. Navrhneme řešení přesně podle vašich potřeb."}
             <br />
             {isEn ? "Within 3 days after consultation, you get a clear plan, solution proposal, and pricing - all free and with no obligation." : "Do 3 dnů od konzultace získáte jasný plán, návrh řešení a cenovou kalkulaci – vše nezávazně a zdarma."}

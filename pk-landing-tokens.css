@@ -37,7 +37,13 @@
 
   /* ─── Surfaces ─── */
   --pk-page: #ffffff;
-  --pk-hero: #000000;
+  /* Header: subtle frosted glass when scrolled */
+  --pk-header-glass-surface: rgb(255 255 255 / 0.88);
+  --pk-header-glass-border: rgb(15 23 42 / 0.06);
+  /* Hero / inverse band: slightly lighter blue‑gray for a premium, softer read */
+  --pk-hero: #1a1f28;
+  /* Header + primary chrome CTA: cyan‑shifted solid, on‑brand with accent + brand blues */
+  --pk-header-cta-fill: #2ea3c4;
   --pk-void: #010204;
   --pk-void-mid: #02040a;
   --pk-panel-dark: #17191c;
@@ -227,11 +233,23 @@
   --pk-flag-cz-red: #d7141a;
   --pk-flag-cz-blue: #11457e;
 
+  /* ─── Brand gradient palette (left → right) ─── */
+  --pk-brand-1: #9955c9;
+  --pk-brand-2: #7556d3;
+  --pk-brand-3: #4773d5;
+  --pk-brand-4: #4b88d7;
+
   /* ─── Gradients (composed only from tokens above) ─── */
-  --pk-gradient-cta: linear-gradient(135deg, var(--pk-accent-strong) 0%, var(--pk-accent) 100%);
-  --pk-gradient-cta-soft: linear-gradient(135deg, var(--pk-accent-strong), var(--pk-accent));
-  --pk-gradient-hero-accent: linear-gradient(135deg, var(--pk-accent-magenta) 0%, var(--pk-accent) 100%);
-  --pk-hero-headline-glow: drop-shadow(0 0 20px var(--pk-accent-35));
+  --pk-gradient-brand: linear-gradient(90deg, var(--pk-brand-1) 0%, var(--pk-brand-2) 33%, var(--pk-brand-3) 66%, var(--pk-brand-4) 100%);
+  /* Background-aware brand gradients */
+  --pk-gradient-on-dark: var(--pk-gradient-popular);
+  --pk-gradient-on-light: var(--pk-gradient-brand);
+
+  /* Defaults (most sections are on light background) */
+  --pk-gradient-cta: var(--pk-gradient-on-light);
+  --pk-gradient-cta-soft: linear-gradient(90deg, var(--pk-brand-1), var(--pk-brand-4));
+  --pk-gradient-hero-accent: var(--pk-gradient-on-dark);
+  --pk-hero-headline-glow: drop-shadow(0 0 20px rgb(153 85 201 / 0.35));
   --pk-gradient-popular: linear-gradient(90deg, var(--pk-accent-magenta), var(--pk-accent));
   --pk-gradient-footer-rule: linear-gradient(
     90deg,
@@ -265,12 +283,7 @@
   --pk-gradient-calculator-accent: linear-gradient(135deg, var(--pk-accent-magenta), var(--pk-neutral-900));
   --pk-gradient-calculator-shine: linear-gradient(90deg, transparent, var(--pk-accent), var(--pk-accent-magenta), transparent);
   --pk-gradient-price-display: linear-gradient(135deg, var(--pk-page) 30%, var(--pk-accent) 100%);
-  --pk-gradient-milestone-wordmark: linear-gradient(
-    135deg,
-    var(--pk-accent-magenta) 0%,
-    var(--pk-cyan-600) 55%,
-    var(--pk-cyan-500) 100%
-  );
+  --pk-gradient-milestone-wordmark: var(--pk-gradient-brand);
 
   /* “Silver” trust cards (Why choose us) */
   --pk-gradient-trust-card: radial-gradient(
@@ -327,7 +340,7 @@
       0,
       0,
       0.05);
-  --text-font-family: "Space Grotesk", "Inter", sans-serif;
+  --text-font-family: "Montserrat", "Inter", sans-serif;
   --text-font-size: 16px;
   --text-font-style: normal;
   --text-font-weight: 400;

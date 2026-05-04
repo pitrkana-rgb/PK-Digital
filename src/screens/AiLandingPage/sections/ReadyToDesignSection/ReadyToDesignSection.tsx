@@ -68,7 +68,7 @@ const DarkFloatingField = ({
     background: pk.onDark06,
     border: `1px solid ${focused ? pk.accent80 : error ? pk.errorRed75 : pk.onDarkBorder12}`,
     borderRadius: "16px",
-    fontFamily: "'Space Grotesk',sans-serif",
+    fontFamily: "'Montserrat',sans-serif",
     fontWeight: 400,
     fontSize: "16px",
     color: pk.onDark,
@@ -88,7 +88,7 @@ const DarkFloatingField = ({
         top: active ? "8px" : "50%",
         transform: active ? "translateY(0) scale(0.85)" : "translateY(-50%)",
         transformOrigin: "left",
-        fontFamily: "'Space Grotesk',sans-serif",
+        fontFamily: "'Montserrat',sans-serif",
         fontWeight: 500,
         fontSize: active ? "12px" : "15px",
         color: focused ? pk.accent : pk.onDark52,
@@ -139,7 +139,7 @@ const DarkFloatingField = ({
           }}
         />
       )}
-      {error ? <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "12px", color: pk.error300, paddingLeft: "4px", marginTop: "2px" }}>{error}</span> : null}
+      {error ? <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "12px", color: pk.error300, paddingLeft: "4px", marginTop: "2px" }}>{error}</span> : null}
     </div>
   );
 };
@@ -308,7 +308,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
             <div style={{ position: "relative", zIndex: 1, marginBottom: "26px", maxWidth: "760px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
               <h2
                 style={{
-                  fontFamily: "'Space Grotesk',sans-serif",
+                  fontFamily: "'Montserrat',sans-serif",
                   fontWeight: 800,
                   fontSize: "clamp(26px, 3.2vw, 40px)",
                   lineHeight: 1.12,
@@ -322,7 +322,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
                 style={{
                   margin: "14px 0 0",
                   maxWidth: "720px",
-                  fontFamily: "'Space Grotesk',sans-serif",
+                  fontFamily: "'Montserrat',sans-serif",
                   fontWeight: 400,
                   fontSize: "14px",
                   lineHeight: 1.6,
@@ -340,16 +340,16 @@ export const ReadyToDesignSection = (): JSX.Element => {
                 <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: pk.success12, border: `2px solid ${pk.success500}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px" }}>
                   <CheckCircle2 color={pk.success500} size={40} />
                 </div>
-                <h3 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "28px", color: pk.onDark, marginBottom: "12px" }}>
+                <h3 style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "28px", color: pk.onDark, marginBottom: "12px" }}>
                   {isEn ? "Thank you for your request." : "Děkujeme za odeslání."}
                 </h3>
-                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "17px", color: pk.onDark72, marginBottom: "32px" }}>
+                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.onDark72, marginBottom: "32px" }}>
                   {isEn ? "We will get back to you within 24 hours." : "Ozveme se do 24 hodin."}
                 </p>
                 <button
                   type="button"
                   onClick={() => setSubmitted(false)}
-                  style={{ background: pk.onDarkBorder08, border: `1px solid ${pk.onDarkBorder16}`, color: pk.onDark, padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif" }}
+                  style={{ background: pk.onDarkBorder08, border: `1px solid ${pk.onDarkBorder16}`, color: pk.onDark, padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif" }}
                 >
                   {isEn ? "Send another request" : "Odeslat další poptávku"}
                 </button>
@@ -373,7 +373,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
                           borderRadius: "16px",
                           minHeight: "58px",
                           padding: "12px 16px",
-                          fontFamily: "'Space Grotesk',sans-serif",
+                          fontFamily: "'Montserrat',sans-serif",
                           fontWeight: 400,
                           fontSize: "16px",
                           color: pk.onDark,
@@ -414,7 +414,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
                             return (
                               <label key={opt} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "6px 8px", borderRadius: "10px", cursor: "pointer", background: checked ? pk.accent12 : "transparent" }}>
                                 <input type="checkbox" checked={checked} onChange={() => toggleFeature(opt)} style={{ width: "16px", height: "16px", accentColor: pk.accent }} />
-                                <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: pk.onDark }}>{opt}</span>
+                                <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.onDark }}>{opt}</span>
                               </label>
                             );
                           })}
@@ -432,7 +432,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontSize: "15px", color: pk.onDark78 }}>
+                  <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark78 }}>
                     <input
                       type="checkbox"
                       checked={form.gdprConsent}
@@ -447,11 +447,11 @@ export const ReadyToDesignSection = (): JSX.Element => {
                       </Link>.
                     </span>
                   </label>
-                  {errors.gdprConsent ? <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "12px", color: pk.error300, paddingLeft: "30px" }}>{errors.gdprConsent}</span> : null}
+                  {errors.gdprConsent ? <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "12px", color: pk.error300, paddingLeft: "30px" }}>{errors.gdprConsent}</span> : null}
                 </div>
 
                 {submitError ? (
-                  <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: pk.error300, margin: 0 }} role="alert">
+                  <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.error300, margin: 0 }} role="alert">
                     {submitError}
                   </p>
                 ) : null}
@@ -464,14 +464,14 @@ export const ReadyToDesignSection = (): JSX.Element => {
                     className="animate-pulse-glow hero-primary-btn"
                     style={{
                       marginTop: "8px",
-                      padding: "15px 32px",
+                      padding: "9px 22px",
                       borderRadius: "12px",
-                      background: pk.gradientCtaSoft,
+                      background: pk.gradientPopular,
                       border: "none",
                       color: pk.ink,
-                      fontFamily: "'Space Grotesk',sans-serif",
+                      fontFamily: "'Montserrat',sans-serif",
                       fontWeight: 600,
-                      fontSize: "16px",
+                      fontSize: "14px",
                       cursor: loading ? "wait" : "pointer",
                       display: "inline-flex",
                       alignItems: "center",

@@ -4,18 +4,15 @@ import { FrequentlyAskedQuestionsSection } from "./sections/FrequentlyAskedQuest
 import { MainHeroSection } from "./sections/MainHeroSection";
 import { ReadyToDesignSection } from "./sections/ReadyToDesignSection";
 import { SiteFooterSection } from "./sections/SiteFooterSection/SiteFooterSection";
-import { SubscriptionPlansSection } from "./sections/SubscriptionPlansSection/SubscriptionPlansSection";
 import { ClientTestimonialsSection } from "./sections/ClientTestimonialsSection";
 import { WhyChooseUsSection } from "./sections/WhyChooseUsSection/WhyChooseUsSection";
 import { CoNabizimeSection } from "./sections/CoNabizimeSection/CoNabizimeSection";
 import { BrandLogosCarouselSection } from "./sections/BrandLogosCarouselSection/BrandLogosCarouselSection";
 import { PrototypeShowcaseSection } from "./sections/PrototypeShowcaseSection/PrototypeShowcaseSection";
-import { UserTestimonialsSection } from "./sections/UserTestimonialsSection";
 // Hidden for now – re-enable by uncommenting import and section below
 // import { PriceCalculatorSection } from "./sections/PriceCalculatorSection/PriceCalculatorSection";
 import { Header } from "../../components/Header";
 import { HeroBackgroundVideo } from "../../components/HeroBackgroundVideo";
-import { NoiseTextureOverlay } from "../../components/PageBackground";
 import { pk } from "../../design/pkLandingColors";
 
 export const AiLandingPage = (): JSX.Element => {
@@ -52,13 +49,13 @@ export const AiLandingPage = (): JSX.Element => {
       style={{
         backgroundColor: pk.page,
         color: pk.ink,
-        fontFamily: "'Space Grotesk', 'Inter', sans-serif",
+        fontFamily: "'Montserrat', 'Inter', sans-serif",
       }}
     >
       <Header />
 
       <main className="relative">
-        {/* Dark header + hero only */}
+        {/* Header + hero */}
         <section
           style={{
             position: "relative",
@@ -68,27 +65,10 @@ export const AiLandingPage = (): JSX.Element => {
             zIndex: 2,
           }}
         >
-          <NoiseTextureOverlay />
           <HeroBackgroundVideo />
-
           <section id="hero">
             <MainHeroSection />
           </section>
-
-          <div
-            style={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              bottom: 40,
-              zIndex: 2,
-              pointerEvents: "none",
-            }}
-          >
-            <div style={{ pointerEvents: "auto" }}>
-              <UserTestimonialsSection variant="hero" />
-            </div>
-          </div>
 
         </section>
 
@@ -116,10 +96,6 @@ export const AiLandingPage = (): JSX.Element => {
 
           <section data-animate-on-scroll className="section-mb-mobile">
             <ClientTestimonialsSection />
-          </section>
-
-          <section id="pricing" data-animate-on-scroll className="section-mb-mobile">
-            <SubscriptionPlansSection />
           </section>
 
           {/* Price calculator hidden – uncomment to show */}
@@ -154,7 +130,6 @@ export const AiLandingPage = (): JSX.Element => {
           #features > section,
           #co-nabizime > section,
           #why-us > section,
-          #pricing > section,
           #faq > section {
             padding-top: 40px !important;
             padding-bottom: 40px !important;

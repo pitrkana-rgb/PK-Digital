@@ -88,10 +88,10 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
+          <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
             {isEn ? "Frequently Asked Questions" : "Často kladené dotazy"}
           </h2>
-          <p className="section-sub" style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "18px", color: pk.ink65, margin: "0 auto" }}>
+          <p className="section-sub" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "18px", color: pk.ink65, margin: "0 auto" }}>
             {isEn
               ? "Wondering how collaboration works in practice? Here are answers to the questions clients ask most often."
               : "Zajímá vás, jak spolupráce probíhá v praxi? Připravili jsme odpovědi na otázky, které od klientů dostáváme nejčastěji."}
@@ -125,24 +125,24 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                   className="faq-trigger"
                 >
                   <span style={{
-                    fontFamily: "'Space Grotesk',sans-serif", fontWeight: isOpen ? 600 : 500,
+                    fontFamily: "'Montserrat',sans-serif", fontWeight: isOpen ? 700 : 500,
                     fontSize: "18px",
-                    color: isOpen ? pk.accentTeal : pk.ink,
+                    color: pk.ink,
                     lineHeight: 1.4,
-                    transition: "color 200ms ease",
+                    transition: "font-weight 200ms ease",
                   }}>
                     {faq.question}
                   </span>
                   <div style={{
                     flexShrink: 0, width: "32px", height: "32px", borderRadius: "50%",
-                    background: isOpen ? pk.tealTint10 : pk.slateTint04,
-                    border: `1px solid ${isOpen ? pk.tealTint28 : pk.accent12}`,
+                    background: isOpen ? pk.accent08 : pk.slateTint04,
+                    border: `1px solid ${isOpen ? pk.accent25 : pk.slateBorderStrong}`,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     transition: "background 200ms ease, border-color 200ms ease, transform 200ms ease",
                     transform: isOpen ? "rotate(0deg)" : "rotate(0deg)",
                   }}>
                     {isOpen
-                      ? <MinusIcon style={{ width: "14px", height: "14px", color: pk.accentTeal }} />
+                      ? <MinusIcon style={{ width: "14px", height: "14px", color: pk.accentStrong }} />
                       : <PlusIcon style={{ width: "14px", height: "14px", color: pk.ink55 }} />
                     }
                   </div>
@@ -159,7 +159,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                   }}
                 >
                   <p style={{
-                    fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "16px",
+                    fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "16px",
                     lineHeight: 1.7, color: pk.ink68, padding: "0 0 24px 0", margin: 0,
                   }}>
                     {faq.answer}

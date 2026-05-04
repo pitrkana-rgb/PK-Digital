@@ -1,7 +1,140 @@
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import heroPcFrameUrl from "../../../../../Images/Hero_PC_frame_V2.png";
 import { pk } from "../../../../design/pkLandingColors";
+
+const HERO_TYPING = { typeMs: 1000, holdMs: 2000, deleteMs: 1000, startDelayMs: 1000 } as const;
+/** Align hero primary/secondary CTA height with header CTA. */
+const HERO_CTA_PAD_Y = Math.round(11 * 0.8);
+const HERO_CTA_PAD_X = Math.round(28 * 0.8);
+
+const HERO_TYPING_MESSAGES_CS = [
+  "KVALITNÍ WEB JE INVESTICE",
+  "ZÍSKÁTE PROTOTYP WEBU ZDARMA",
+  "PRO KAŽDÝ TYP BUSINESSU",
+  "ŽÁDNÉ MĚSÍČNÍ POPLATKY",
+  "MOŽNÁ PODPORA 24/7",
+] as const;
+
+const HERO_TYPING_MESSAGES_EN = [
+  "A QUALITY WEBSITE IS AN INVESTMENT",
+  "GET A FREE WEBSITE PROTOTYPE",
+  "FOR EVERY TYPE OF BUSINESS",
+  "NO MONTHLY FEES",
+  "SUPPORT AVAILABLE 24/7",
+] as const;
+
+const HeroTypingLine = ({ messages }: { messages: readonly string[] }) => {
+  const [text, setText] = useState("");
+  const messagesRef = useRef(messages);
+  messagesRef.current = messages;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) {
+      setText(messagesRef.current[0] ?? "");
+      return;
+    }
+    let cancelled = false;
+    let msgIndex = 0;
+    let phase: "type" | "hold" | "del" = "type";
+    let phaseStart = performance.now();
+    let raf = 0;
+    let loopStarted = false;
+
+    const tick = (now: number) => {
+      if (cancelled) return;
+      const list = messagesRef.current;
+      const msg = list[msgIndex] ?? "";
+      const elapsed = now - phaseStart;
+      if (phase === "type") {
+        const p = Math.min(1, elapsed / HERO_TYPING.typeMs);
+        setText(msg.slice(0, Math.max(0, Math.ceil(p * msg.length))));
+        if (p >= 1) {
+          phase = "hold";
+          phaseStart = now;
+        }
+      } else if (phase === "hold") {
+        setText(msg);
+        if (elapsed >= HERO_TYPING.holdMs) {
+          phase = "del";
+          phaseStart = now;
+        }
+      } else {
+        const p = Math.min(1, elapsed / HERO_TYPING.deleteMs);
+        setText(msg.slice(0, Math.max(0, Math.floor((1 - p) * msg.length))));
+        if (p >= 1) {
+          msgIndex = (msgIndex + 1) % list.length;
+          phase = "type";
+          phaseStart = now;
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    const startLoop = () => {
+      if (cancelled || loopStarted) return;
+      loopStarted = true;
+      phaseStart = performance.now();
+      raf = requestAnimationFrame(tick);
+    };
+
+    const delayTimer = window.setTimeout(startLoop, HERO_TYPING.startDelayMs);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(delayTimer);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <div
+      className="hero-typing-line"
+      aria-live="polite"
+      aria-atomic="true"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "nowrap",
+        gap: "10px",
+        width: "100%",
+        minHeight: "44px",
+        margin: "0 0 28px 0",
+        maxWidth: "640px",
+        overflow: "hidden",
+        fontFamily: "'Montserrat', sans-serif",
+        fontWeight: 600,
+        fontSize: "clamp(22px, 3.2vw, 26px)",
+        letterSpacing: "0.04em",
+        lineHeight: 1.35,
+        color: pk.onDark92,
+      }}
+    >
+      <div className="hero-typing-inner">
+        <span aria-hidden="true" style={{ flexShrink: 0, color: pk.onDark }}>
+          ✓
+        </span>
+        <span
+          className="hero-typing-text"
+          style={{
+            minWidth: 0,
+            flex: "1 1 auto",
+            textAlign: "left",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+          }}
+        >
+          {text}
+          <span className="hero-typing-cursor" aria-hidden="true">
+            |
+          </span>
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const splitTextForReveal = (text: string): [string, string] => {
   const midpoint = Math.floor(text.length / 2);
@@ -23,10 +156,10 @@ const ScrollIndicator = () => (
   >
     <span
       style={{
-        fontFamily: "'Space Grotesk', sans-serif",
+        fontFamily: "'Montserrat', sans-serif",
         fontSize: "12px",
         fontWeight: 400,
-        color: pk.onDark40,
+        color: pk.ink55,
         letterSpacing: "0.1em",
         textTransform: "uppercase" as const,
       }}
@@ -60,6 +193,7 @@ export const MainHeroSection = (): JSX.Element => {
     ctaSecondary: "Naše služby",
   };
   const [subheadingLead, subheadingTrail] = splitTextForReveal(t.subheading);
+  const typingMessages = language === "en" ? HERO_TYPING_MESSAGES_EN : HERO_TYPING_MESSAGES_CS;
 
   return (
     <section
@@ -70,34 +204,9 @@ export const MainHeroSection = (): JSX.Element => {
         paddingBottom: "0",
         marginTop: "-50px",
         marginBottom: "0px",
+        backgroundColor: "transparent",
       }}
     >
-      {/* Particle grid overlay */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{ zIndex: 1 }}
-        aria-hidden="true"
-      >
-        {/* Subtle grid lines */}
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: `
-            linear-gradient(${pk.heroGridLine} 1px, transparent 1px),
-            linear-gradient(90deg, ${pk.heroGridLine} 1px, transparent 1px)
-          `,
-          backgroundSize: "80px 80px",
-          maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 100%)",
-        }} />
-        {/* Teal glow right */}
-        <div style={{
-          position: "absolute", top: "5%", right: "-5%",
-          width: "400px", height: "400px",
-          background: `radial-gradient(circle, ${pk.accent10} 0%, transparent 70%)`,
-          filter: "blur(60px)",
-        }} />
-      </div>
-
       {/* Hero content — same horizontal alignment as other sections (max-width 1536px + 24px padding) */}
       <div
         className="hero-shell relative z-10"
@@ -119,11 +228,12 @@ export const MainHeroSection = (): JSX.Element => {
               style={{ width: "100%", maxWidth: "none", padding: 0, marginTop: 0 }}
             >
 
+        <div className="hero-heading-block">
         {/* Headline */}
         <h1 className="hero-headline" style={{
-          fontFamily: "'Space Grotesk', sans-serif",
+          fontFamily: "'Montserrat', sans-serif",
           fontWeight: 800,
-          fontSize: "clamp(16px, 4.5vw, 40px)",
+          fontSize: "clamp(13px, 3.6vw, 32px)",
           lineHeight: 1.05,
           color: pk.onDark,
           margin: "0 0 16px 0",
@@ -134,7 +244,7 @@ export const MainHeroSection = (): JSX.Element => {
           <span className="hero-headline-part hero-headline-part-left">
             {t.headlinePre}{" "}
             <span style={{
-              background: pk.gradientHeroAccent,
+              background: pk.gradientPopular,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -143,7 +253,7 @@ export const MainHeroSection = (): JSX.Element => {
             {t.headlineMid ? `${t.headlineMid}` : ""}
           </span>{" "}
           <span className="hero-headline-part hero-headline-part-right" style={{
-            background: pk.gradientHeroAccent,
+            background: pk.gradientPopular,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -153,17 +263,20 @@ export const MainHeroSection = (): JSX.Element => {
 
         {/* Paragraph */}
         <p className="hero-subheading" style={{
-          fontFamily: "'Space Grotesk', sans-serif",
+          fontFamily: "'Montserrat', sans-serif",
           fontWeight: 400,
           fontSize: "clamp(14px, 2.0vw, 17px)",
           lineHeight: 1.65,
           color: pk.onDark88,
           maxWidth: "640px",
-          margin: "0 0 32px 0",
+          margin: "0 0 20px 0",
         }}>
           <span className="hero-subheading-part hero-subheading-part-left">{subheadingLead}</span>{" "}
           <span className="hero-subheading-part hero-subheading-part-right">{subheadingTrail}</span>
         </p>
+        </div>
+
+        <HeroTypingLine messages={typingMessages} />
 
         {/* Mobile-only: show PC frame under subheading */}
         <div className="hero-mobile-frame" aria-hidden="true">
@@ -185,12 +298,12 @@ export const MainHeroSection = (): JSX.Element => {
             className="animate-pulse-glow hero-primary-btn"
             onClick={() => navigate("/napiste-nam")}
             style={{
-              background: pk.gradientCta,
+              background: pk.gradientPopular,
               color: pk.ink,
               border: "none",
               borderRadius: "12px",
-              padding: "15px 32px",
-              fontFamily: "'Space Grotesk', sans-serif",
+              padding: `${HERO_CTA_PAD_Y}px ${HERO_CTA_PAD_X}px`,
+              fontFamily: "'Montserrat', sans-serif",
               fontWeight: 600,
               fontSize: "16px",
               cursor: "pointer",
@@ -210,20 +323,20 @@ export const MainHeroSection = (): JSX.Element => {
             type="button"
             className="hero-secondary-btn"
             onClick={() => {
-              const pricingHeading = document.getElementById("pricing-heading");
-              if (pricingHeading) {
-                pricingHeading.scrollIntoView({ behavior: "smooth", block: "start" });
-                return;
+              const el = document.getElementById("co-nabizime");
+              if (el) {
+                const headerOffset = 80;
+                const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+                window.scrollTo({ top, behavior: "smooth" });
               }
-              document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
             style={{
               background: pk.onDark05,
               color: pk.onDark,
               border: `1px solid ${pk.accent25}`,
               borderRadius: "12px",
-              padding: "15px 32px",
-              fontFamily: "'Space Grotesk', sans-serif",
+              padding: `${HERO_CTA_PAD_Y}px ${HERO_CTA_PAD_X}px`,
+              fontFamily: "'Montserrat', sans-serif",
               fontWeight: 500,
               fontSize: "16px",
               cursor: "pointer",
@@ -240,8 +353,16 @@ export const MainHeroSection = (): JSX.Element => {
           </button>
         </div>
 
-        {/* Google overview */}
-        <div className="hero-google-overview" style={{ marginTop: "16px", display: "flex", alignItems: "center", gap: "12px", justifyContent: "center" }}>
+        <div
+          className="hero-google-overview"
+          style={{
+            marginTop: "30px",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            justifyContent: "center",
+          }}
+        >
           <div aria-hidden="true" style={{ width: 28, height: 28, flexShrink: 0 }}>
             <svg viewBox="0 0 24 24" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
               <path fill={pk.brandGoogleBlue} d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -251,7 +372,7 @@ export const MainHeroSection = (): JSX.Element => {
             </svg>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 800, fontSize: 18, color: pk.onDark92, lineHeight: 1 }}>
+            <div style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 800, fontSize: 18, color: pk.onDark92, lineHeight: 1 }}>
               5.0
             </div>
             <div aria-label="5 out of 5" style={{ display: "inline-flex", gap: 3, color: pk.ratingStar }}>
@@ -263,6 +384,7 @@ export const MainHeroSection = (): JSX.Element => {
             </div>
           </div>
         </div>
+
         </div>
             </div>
           </div>
@@ -338,6 +460,29 @@ export const MainHeroSection = (): JSX.Element => {
         }
         .animate-scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) { .animate-scroll-dot { animation: none; } }
+        @keyframes heroTypingCursorBlink {
+          0%, 49% { opacity: 1; }
+          50%, 100% { opacity: 0; }
+        }
+        .hero-typing-cursor {
+          display: inline-block;
+          margin-left: 1px;
+          font-weight: 400;
+          animation: heroTypingCursorBlink 1s step-end infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-typing-cursor { animation: none; opacity: 1; }
+        }
+        .hero-typing-inner {
+          display: contents;
+        }
+        @media (min-width: 769px) {
+          .hero-typing-line {
+            justify-content: flex-start !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+          }
+        }
         #hero-primary-cta:focus-visible, #hero-secondary-cta:focus-visible {
           outline: 2px solid var(--pk-accent); outline-offset: 3px;
         }
@@ -392,9 +537,12 @@ export const MainHeroSection = (): JSX.Element => {
         .hero-media-rail-inner{ display:none; }
         @media (min-width: 769px) {
           .hero-content-shift{
-            transform: translateY(-120px);
+            transform: translateY(-20px);
           }
-          .hero-google-overview{
+          .hero-heading-block {
+            transform: translateY(-30px);
+          }
+          .hero-google-overview {
             justify-content: flex-start !important;
           }
           /* Left content aligns with header logo rail */
@@ -421,7 +569,7 @@ export const MainHeroSection = (): JSX.Element => {
             position: absolute;
             right: 20px;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(calc(-50% + 50px));
             width: min(56vw, 920px);
             max-width: 920px;
           }
@@ -489,7 +637,7 @@ export const MainHeroSection = (): JSX.Element => {
             width: min(520px, 100%);
             margin: 10px auto 18px;
             opacity: 0.98;
-            filter: drop-shadow(0 18px 40px var(--pk-black-35));
+            filter: drop-shadow(0 18px 40px var(--pk-slate-tint-16));
           }
           .hero-mobile-frame-img{
             opacity: 0;
@@ -508,11 +656,8 @@ export const MainHeroSection = (): JSX.Element => {
             padding: 0 !important;
             margin-top: 20px !important;
           }
-          .hero-google-overview{
-            margin-bottom: 0 !important;
-          }
           .hero-headline {
-            font-size: 24px !important;
+            font-size: 19px !important;
             line-height: 1.1 !important;
             max-width: 100% !important;
             margin-bottom: 10px !important;
@@ -525,8 +670,30 @@ export const MainHeroSection = (): JSX.Element => {
             margin-right: auto !important;
             margin-bottom: 20px !important;
           }
+          .hero-typing-inner {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            max-width: 100%;
+            flex-wrap: wrap;
+          }
+          .hero-typing-line {
+            font-size: clamp(14px, 3.6vw, 20px) !important;
+            min-height: 36px !important;
+            justify-content: center !important;
+            flex-wrap: wrap !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+          .hero-typing-text {
+            flex: 0 1 auto !important;
+            text-align: center !important;
+            white-space: normal !important;
+            justify-content: center;
+          }
           .hero-primary-btn, .hero-secondary-btn {
-            padding: 10px 20px !important;
+            padding: 9px 22px !important;
             font-size: 14px !important;
           }
         }

@@ -107,18 +107,18 @@ const MilestoneCard = ({ milestone, index }: { milestone: typeof milestones[0]; 
             background: pk.gradientCtaSoft,
             boxShadow: `0 0 22px ${pk.accent28}`,
             marginBottom: "24px",
-            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "24px", color: pk.hero,
+            fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: "24px", color: pk.hero,
           }}>
             {milestone.year}
           </div>
           <h3 style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "32px",
+            fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: "32px",
             color: pk.ink, marginBottom: "16px",
           }}>
             {milestone.title}
           </h3>
           <p style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontWeight: 400, fontSize: "17px",
+            fontFamily: "'Montserrat', sans-serif", fontWeight: 400, fontSize: "17px",
             lineHeight: 1.6, color: pk.ink70, margin: 0,
           }}>
             {milestone.description}
@@ -136,7 +136,7 @@ export const CompanyMilestonesSection = (): JSX.Element => (
 
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "80px" }}>
-        <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: "clamp(32px,5vw,56px)", lineHeight: 1.1, color: pk.ink, margin: "0 auto 32px", letterSpacing: "-0.02em", maxWidth: "800px" }}>
+        <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(32px,5vw,56px)", lineHeight: 1.1, color: pk.ink, margin: "0 auto 32px", letterSpacing: "-0.02em", maxWidth: "800px" }}>
           Kdo <span style={{ background: pk.gradientMilestoneWordmark, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>jsme</span>
         </h2>
       </div>

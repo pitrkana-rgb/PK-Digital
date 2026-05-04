@@ -46,7 +46,7 @@ export const LandingStylePageRoot = ({
     className={`relative w-full min-h-screen overflow-x-hidden ${className}`}
     style={{
       ...landingPageSurfaceStyle,
-      fontFamily: "'Space Grotesk', 'Inter', sans-serif",
+      fontFamily: "'Montserrat', 'Inter', sans-serif",
       color: pk.onDark,
       ...style,
     }}

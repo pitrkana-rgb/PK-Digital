@@ -36,7 +36,7 @@ export const SiteFooterSection = (): JSX.Element => {
 
   const navLinks = [
     { label: t.home, id: "hero", path: "/" },
-    { label: t.services, id: "pricing", path: "/" },
+    { label: t.services, id: "co-nabizime", path: "/" },
     { label: t.faq, id: "faq", path: "/" },
     { label: t.contact, id: undefined, path: "/kontakt" },
   ] as const;
@@ -77,10 +77,10 @@ export const SiteFooterSection = (): JSX.Element => {
                 src={companyLogoV4Url}
                 alt="PK Digital logo"
                 className="footer-logo"
-                style={{ height: "48px", width: "auto", display: "block" }}
+                style={{ height: "72px", width: "auto", display: "block" }}
               />
             </div>
-            <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark55, lineHeight: 1.65, margin: 0 }}>
+            <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark55, lineHeight: 1.65, margin: 0 }}>
               {t.footerDesc}
             </p>
           </div>
@@ -90,10 +90,10 @@ export const SiteFooterSection = (): JSX.Element => {
 
             {/* Nav links */}
             <nav style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.nav}</span>
+              <span style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.nav}</span>
               {navLinks.map(link => (
                 <button key={`${link.path}-${link.label}`} type="button" onClick={() => handleNavClick(link)}
-                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark60; }}
                 >
@@ -104,9 +104,9 @@ export const SiteFooterSection = (): JSX.Element => {
 
             {/* Contact */}
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.contactTitle}</span>
+              <span style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.contactTitle}</span>
               <button type="button" onClick={() => navigate("/napiste-nam")}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark60; }}
               >
@@ -114,7 +114,7 @@ export const SiteFooterSection = (): JSX.Element => {
               </button>
               <a
                 href="tel:+420725703868"
-                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark60; }}
               >
@@ -122,7 +122,7 @@ export const SiteFooterSection = (): JSX.Element => {
               </a>
               <a
                 href="mailto:info@pk-digital.cz"
-                style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark60; }}
               >
@@ -134,17 +134,17 @@ export const SiteFooterSection = (): JSX.Element => {
 
         {/* Bottom bar */}
         <div className="footer-bottom" style={{ borderTop: `1px solid ${pk.onDarkBorder06}`, paddingTop: "24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
-          <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark35, margin: 0 }}>
+          <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark35, margin: 0 }}>
             {t.rights}
           </p>
           <div style={{ display: "flex", gap: "24px" }}>
             <button type="button" onClick={() => navigate("/zasady-ochrany-soukromi")}
-              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "13px", color: pk.onDark35, textDecoration: "none", transition: "color 200ms ease" }}
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "13px", color: pk.onDark35, textDecoration: "none", transition: "color 200ms ease" }}
               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark70; }}
               onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark35; }}
             >{t.privacy}</button>
             <button type="button" onClick={() => navigate("/podminky-uziti")}
-              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Space Grotesk',sans-serif", fontWeight: 400, fontSize: "13px", color: pk.onDark35, textDecoration: "none", transition: "color 200ms ease" }}
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "13px", color: pk.onDark35, textDecoration: "none", transition: "color 200ms ease" }}
               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark70; }}
               onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark35; }}
             >{t.terms}</button>
@@ -183,7 +183,7 @@ export const SiteFooterSection = (): JSX.Element => {
             text-align: center !important;
             gap: 12px !important;
           }
-          .footer-logo { height: 38.4px !important; }
+          .footer-logo { height: 57.6px !important; }
         }
       `}</style>
 

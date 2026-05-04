@@ -180,6 +180,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
   return (
     <section
       ref={(el) => { sectionRef.current = el; }}
+      className="prototype-showcase-section"
       style={{
         width: "100%",
         backgroundColor: pk.page,
@@ -191,7 +192,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         <div style={{ textAlign: "center", marginBottom: "42px" }}>
           <h2
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Montserrat', sans-serif",
               fontWeight: 700,
               fontSize: "clamp(26px,3.6vw,42px)",
               lineHeight: 1.1,
@@ -206,7 +207,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           <p
             className="section-sub"
             style={{
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: "'Montserrat', sans-serif",
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: 1.6,
@@ -340,6 +341,11 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
       ) : null}
 
       <style>{`
+        @media (min-width: 901px) {
+          .prototype-showcase-section {
+            padding-top: 30px !important;
+          }
+        }
         .prototype-grid{
           display:grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -396,7 +402,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           border-radius: 999px;
           background: var(--pk-slate-tint-05);
           color: var(--pk-ink-72);
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-size: 12px;
           font-weight: 700;
           letter-spacing: 0.05em;
@@ -404,7 +410,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         }
         .prototype-title{
           margin: 0 0 16px;
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-weight: 700;
           font-size: 24px;
           line-height: 1.18;
@@ -423,14 +429,14 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           display:flex;
           align-items:flex-start;
           gap: 10px;
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-size: 15px;
           line-height: 1.5;
           color: var(--pk-ink-82);
         }
         .prototype-trust{
           margin: 0 0 20px;
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-size: 13px;
           line-height: 1.55;
           color: var(--pk-ink-55);
@@ -439,12 +445,12 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           margin-top:auto;
           border:none;
           border-radius: 12px;
-          padding: 15px 20px;
-          background: var(--pk-gradient-cta-soft);
+          padding: 9px 22px;
+          background: var(--pk-gradient-popular);
           color: var(--pk-ink);
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-weight: 700;
-          font-size: 16px;
+          font-size: 14px;
           cursor:pointer;
           transition: transform 220ms ease, filter 220ms ease;
         }
@@ -489,7 +495,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           background: var(--pk-on-dark-94);
         }
         .prototype-modal-label{
-          font-family:"Space Grotesk", sans-serif;
+          font-family:"Montserrat", sans-serif;
           font-size:12px;
           font-weight:700;
           letter-spacing:0.05em;
@@ -499,7 +505,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         }
         .prototype-modal-title{
           margin:0;
-          font-family:"Space Grotesk", sans-serif;
+          font-family:"Montserrat", sans-serif;
           font-size:20px;
           font-weight:700;
           color: var(--pk-ink);

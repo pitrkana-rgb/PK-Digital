@@ -51,7 +51,7 @@ export const CookieConsentBanner = (): JSX.Element | null => {
         boxShadow: `0 -4px 24px ${pk.black40}`,
       }}
     >
-      <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: "14px", color: pk.onDark90, margin: 0, flex: "1 1 280px" }}>
+      <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.onDark90, margin: 0, flex: "1 1 280px" }}>
         {isEn ? "This website uses cookies to improve your experience. " : "Tento web používá cookies pro zlepšení vašeho zážitku. "}
         <Link to="/zasady-ochrany-soukromi" style={{ color: pk.accent, textDecoration: "underline" }}>
           {isEn ? "Privacy Policy" : "Zásady ochrany soukromí"}
@@ -64,10 +64,10 @@ export const CookieConsentBanner = (): JSX.Element | null => {
           style={{
             padding: "10px 20px",
             borderRadius: "10px",
-            background: pk.gradientCtaSoft,
-            color: pk.hero,
+            background: pk.gradientPopular,
+            color: pk.ink,
             border: "none",
-            fontFamily: "'Space Grotesk',sans-serif",
+            fontFamily: "'Montserrat',sans-serif",
             fontWeight: 600,
             fontSize: "14px",
             cursor: "pointer",
@@ -84,7 +84,7 @@ export const CookieConsentBanner = (): JSX.Element | null => {
             background: "transparent",
             color: pk.onDark90,
             border: `1px solid ${pk.onDarkBorder30}`,
-            fontFamily: "'Space Grotesk',sans-serif",
+            fontFamily: "'Montserrat',sans-serif",
             fontWeight: 500,
             fontSize: "14px",
             cursor: "pointer",

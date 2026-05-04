@@ -20,6 +20,18 @@ type BeforeAfter = {
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
+/** Inactive: colored icons; active: `*_white.png` (first tab uses `Icon_tvorba_webu_white.png` in /public). */
+const offerTabIconFile = (slideId: string, isActive: boolean) => {
+  if (!isActive) {
+    if (slideId === "tvorba-webu") return "Icon_novy_web.png";
+    if (slideId === "upgrade-webu") return "Icon_modernizace.png";
+    return "Icon_Automatizace.png";
+  }
+  if (slideId === "tvorba-webu") return "Icon_tvorba_webu_white.png";
+  if (slideId === "upgrade-webu") return "Icon_modernizace_white.png";
+  return "Icon_Automatizace_white.png";
+};
+
 const BeforeAfterSlider = ({
   beforeSrc,
   afterSrc,
@@ -372,6 +384,7 @@ export const CoNabizimeSection = (): JSX.Element => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const [activeIdx, setActiveIdx] = useState(0);
+  const activeIdxRef = useRef(0);
   const isEn = language === "en";
   const activeSlides = isEn ? slidesEn : slides;
   const activeSlide = activeSlides[activeIdx];
@@ -379,11 +392,20 @@ export const CoNabizimeSection = (): JSX.Element => {
   const switchTimeoutRef = useRef<number | null>(null);
   const touchStartX = useRef<number>(0);
   const SWIPE_THRESHOLD = 50;
+  const [offerMobileReorder, setOfferMobileReorder] = useState(false);
 
   useEffect(() => {
     return () => {
       if (switchTimeoutRef.current) window.clearTimeout(switchTimeoutRef.current);
     };
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const sync = () => setOfferMobileReorder(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   const goTo = (idx: number) => {
@@ -401,24 +423,32 @@ export const CoNabizimeSection = (): JSX.Element => {
     ? ["New website", "Website modernization", "Automation and AI agents"]
     : ["Tvorba nového webu", "Modernizace stránek", "Automatizace a AI agenti"];
 
+  const navSubItems = isEn
+    ? ["Custom website, built for growth", "Better UX, speed, and conversions", "Smarter processes, less manual work"]
+    : ["Weby na míru, které přinášejí zákazníky", "Lepší výkon, UX a vyšší konverze", "Chytré procesy, které šetří čas i náklady"];
+
+  useEffect(() => {
+    activeIdxRef.current = activeIdx;
+  }, [activeIdx]);
+
   return (
     <section
-      id="co-nabizime"
       style={{
         width: "100%",
         backgroundColor: pk.page,
-        padding: "60px 0 80px",
+        padding: "60px 0 90px",
         marginTop: "-50px",
         marginBottom: "-50px",
+        overflow: "visible",
       }}
     >
       <SectionDivider />
 
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
-        <div className="offer-head" style={{ textAlign: "center", marginTop: "30px", marginBottom: "56px" }}>
+        <div className="offer-head" style={{ textAlign: "center", marginTop: "12px", marginBottom: "48px" }}>
           <h2
             style={{
-              fontFamily: "'Space Grotesk',sans-serif",
+              fontFamily: "'Montserrat',sans-serif",
               fontWeight: 700,
               fontSize: "clamp(26px,3.6vw,42px)",
               lineHeight: 1.1,
@@ -433,7 +463,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           <p
             className="section-sub offer-subheading"
             style={{
-              fontFamily: "'Space Grotesk',sans-serif",
+              fontFamily: "'Montserrat',sans-serif",
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: 1.6,
@@ -448,41 +478,55 @@ export const CoNabizimeSection = (): JSX.Element => {
           </p>
         </div>
 
-        <div className="offer-tabs" role="tablist" aria-label={isEn ? "Services navigation" : "Navigace služeb"}>
-          {navItems.map((label, idx) => (
+        <div className="offer-shell">
+          <div className="offer-tabs-wrap" role="tablist" aria-label={isEn ? "Services navigation" : "Navigace služeb"}>
+          {activeSlides.map((slide, idx) => (
             <button
-              key={label}
+              key={slide.id}
               type="button"
               role="tab"
               aria-selected={idx === activeIdx}
-              className={`offer-tab-btn${idx === activeIdx ? " offer-tab-btn-active" : ""}`}
+              className={`offer-tab${idx === activeIdx ? " is-active" : ""}`}
               onClick={() => goTo(idx)}
+              style={
+                offerMobileReorder
+                  ? { order: idx <= activeIdx ? idx + 1 : idx + 2 }
+                  : undefined
+              }
             >
-              {label}
+              <div className="offer-tab-row">
+                <div className="offer-tab-icon" aria-hidden="true">
+                  <img
+                    src={`${import.meta.env.BASE_URL}${offerTabIconFile(slide.id, idx === activeIdx)}`}
+                    alt=""
+                    width={42}
+                    height={42}
+                    style={{ display: "block", objectFit: "contain" }}
+                  />
+                </div>
+                <div className="offer-tab-copy">
+                  <div className="offer-tab-title">{navItems[idx] ?? ""}</div>
+                  <div className="offer-tab-sub">{navSubItems[idx] ?? ""}</div>
+                </div>
+              </div>
             </button>
           ))}
-        </div>
+          </div>
 
-        <div
-          className="offer-carousel"
-          onTouchStart={(e) => { touchStartX.current = e.touches[0]!.clientX; }}
-          onTouchEnd={(e) => {
-            const endX = e.changedTouches[0]!.clientX;
-            const delta = touchStartX.current - endX;
-            if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
-            else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
-          }}
-        >
+          <div
+            className="offer-carousel"
+            onTouchStart={(e) => { touchStartX.current = e.touches[0]!.clientX; }}
+            onTouchEnd={(e) => {
+              const endX = e.changedTouches[0]!.clientX;
+              const delta = touchStartX.current - endX;
+              if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
+              else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
+            }}
+            style={offerMobileReorder ? { order: activeIdx + 2 } : undefined}
+          >
           <div className={`offer-single-card${cardVisible ? " offer-single-card-visible" : ""}`}>
             <div className="offer-premium-card">
               <div className="offer-premium-card-inner">
-                      {/* Minimal ambient lights (gentle, premium, non-distracting) */}
-                <div className="offer-ambient-lights" aria-hidden="true">
-                  <div className="offer-blob offer-blob--a" />
-                  <div className="offer-blob offer-blob--b" />
-                  <div className="offer-blob offer-blob--c" />
-                </div>
-
                 <div className="offer-gallery-grid">
                   <div className="offer-gallery-left">
                     <div className="offer-left-copy">
@@ -527,10 +571,21 @@ export const CoNabizimeSection = (): JSX.Element => {
                           }, 180);
                         }}
                         style={{
-                          fontFamily: "'Space Grotesk', sans-serif",
+                          fontFamily: "'Montserrat', sans-serif",
                           fontWeight: 600,
                           fontSize: "16px",
                           letterSpacing: "0",
+                          transition: "transform 0.25s ease, filter 0.25s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          const b = e.currentTarget as HTMLButtonElement;
+                          b.style.transform = "translateY(-2px)";
+                          b.style.filter = "brightness(1.08)";
+                        }}
+                        onMouseLeave={(e) => {
+                          const b = e.currentTarget as HTMLButtonElement;
+                          b.style.transform = "";
+                          b.style.filter = "";
                         }}
                       >
                         {activeSlide.cta}
@@ -565,7 +620,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                     )}
                   </div>
 
-                  {/* CTA + mobile dot navigation */}
+                  {/* CTA */}
                   <div className="offer-gallery-actions">
                     <button
                       type="button"
@@ -577,67 +632,133 @@ export const CoNabizimeSection = (): JSX.Element => {
                       }}
                       className="offer-cta offer-cta-mobile animate-pulse-glow hero-primary-btn"
                       style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontFamily: "'Montserrat', sans-serif",
                         fontWeight: 600,
                         fontSize: "16px",
                         letterSpacing: "0",
+                        transition: "transform 0.25s ease, filter 0.25s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        const b = e.currentTarget as HTMLButtonElement;
+                        b.style.transform = "translateY(-2px)";
+                        b.style.filter = "brightness(1.08)";
+                      }}
+                      onMouseLeave={(e) => {
+                        const b = e.currentTarget as HTMLButtonElement;
+                        b.style.transform = "";
+                        b.style.filter = "";
                       }}
                     >
                       {activeSlide.cta}
                     </button>
 
-                    <div className="offer-mobile-dots" role="tablist" aria-label={isEn ? "Services picker" : "Výběr služby"}>
-                      {activeSlides.map((s, i) => (
-                        <button
-                          key={s.id}
-                          type="button"
-                          role="tab"
-                          aria-selected={i === activeIdx}
-                          aria-label={isEn ? `Go to card ${i + 1}` : `Přejít na kartu ${i + 1}`}
-                          onClick={() => goTo(i)}
-                          className="offer-dot"
-                          data-active={i === activeIdx ? "true" : undefined}
-                        />
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        </div>
       </div>
 
       <style>{`
-        .offer-tabs{
-          display:flex;
-          justify-content:center;
-          gap:14px;
-          flex-wrap:wrap;
-          margin: 0 auto 10px;
+        .offer-shell{
+          width: 100%;
         }
-        .offer-tab-btn{
-          border:none;
-          border-radius:12px;
-          background: transparent;
-          color: var(--pk-ink-78);
-          padding: 15px 24px;
-          font-family:"Space Grotesk", sans-serif;
-          font-size: 22px;
-          font-weight:600;
-          cursor:pointer;
-          transition: background 200ms ease, color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
-        }
-        .offer-tab-btn:hover{
-          transform: translateY(-1px);
+        .offer-tabs-wrap{
+          display:grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+          padding: 0;
+          border: none;
           background: transparent;
         }
-        .offer-tab-btn-active{
-          background: var(--pk-gradient-cta);
+        @media(max-width:900px){
+          .offer-shell{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .offer-tabs-wrap{
+            display: contents;
+          }
+        }
+        .offer-tab{
+          position: relative;
+          text-align: left;
+          background: var(--pk-page);
+          border: 1px solid var(--pk-slate-border-strong);
+          border-radius: 12px;
+          padding: 18px 12px;
+          cursor: pointer;
+          transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
           color: var(--pk-ink);
-          border-color: transparent;
-          box-shadow: 0 16px 34px var(--pk-accent-16);
         }
+        .offer-tab:hover:not(.is-active){
+          background: var(--pk-slate-tint-04);
+        }
+        .offer-tab.is-active:hover{
+          background: var(--pk-gradient-prototype-card);
+          border-color: rgb(0 229 255 / 0.32);
+        }
+        .offer-tab-row{
+          display:grid;
+          grid-template-columns: 42px minmax(0, 1fr) 42px;
+          align-items:center;
+          gap: 0;
+          width: 100%;
+        }
+        .offer-tab-icon{
+          grid-column: 1;
+          justify-self: start;
+          display:inline-flex;
+          align-items:center;
+          justify-content:flex-start;
+          flex-shrink: 0;
+          margin-top: 0;
+          color: var(--pk-ink-55);
+        }
+        .offer-tab-icon img{
+          width: 42px;
+          height: 42px;
+        }
+        .offer-tab-copy{
+          grid-column: 2;
+          min-width: 0;
+          text-align: center;
+        }
+        .offer-tab-title{
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 20px;
+          line-height: 1.2;
+          color: var(--pk-ink);
+        }
+        .offer-tab-sub{
+          font-family: "Montserrat", sans-serif;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 1.35;
+          margin-top: 5px;
+          color: var(--pk-ink-55);
+        }
+        .offer-tab.is-active{
+          border-color: rgb(0 229 255 / 0.35);
+          background: var(--pk-gradient-prototype-card);
+          box-shadow:
+            0 10px 36px rgb(15 23 42 / 0.22),
+            inset 0 1px 0 rgb(255 255 255 / 0.08);
+        }
+        .offer-tab.is-active .offer-tab-title{
+          color: var(--pk-on-dark-92);
+        }
+        .offer-tab.is-active .offer-tab-sub{
+          color: var(--pk-on-dark-60);
+        }
+        .offer-tab.is-active .offer-tab-icon{
+          color: var(--pk-on-dark-92);
+        }
+
         .offer-carousel{
           width: 100%;
           display:flex;
@@ -654,7 +775,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           transform: translateY(0);
         }
         @media(min-width:901px){
-          .offer-head{ margin-bottom: 41px !important; }
+          .offer-head{ margin-top: 22px !important; margin-bottom: 41px !important; }
           .offer-carousel{ gap: 0 !important; }
         }
         
@@ -671,90 +792,22 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         .offer-premium-card-inner{
-          border-radius: 28px;
+          border-radius: 0;
           background: transparent;
           border: none;
-          padding: 15px 28px;
+          box-shadow: none;
+          padding: 8px 0 0;
           position: relative;
-          overflow: hidden;
-          isolation: isolate;
+          overflow: visible;
           flex: 0 1 auto;
           display: flex;
           flex-direction: column;
           min-height: 0;
         }
 
-        /* Guaranteed dark fade above card background, below content */
-        .offer-premium-card-inner::before{ content: none; }
-
         .offer-premium-card-inner > *{
           position: relative;
-          z-index: 2;
-        }
-
-        .offer-ambient-lights{
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          pointer-events: none;
-          overflow: hidden;
-        }
-
-        .offer-blob{
-          position: absolute;
-          width: clamp(300px, 38vw, 560px);
-          height: clamp(300px, 38vw, 560px);
-          border-radius: 9999px;
-          filter: blur(120px);
-          opacity: 0.12;
-          transform: translate3d(0,0,0);
-          background: radial-gradient(circle at 30% 30%, var(--pk-cyan-194-18) 0%, var(--pk-cyan-194-00) 62%);
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-          will-change: transform;
-        }
-
-        .offer-blob--a{
-          left: -8%;
-          top: 10%;
-          opacity: 0.08;
-          background: radial-gradient(circle at 30% 30%, var(--pk-cyan-194-18) 0%, var(--pk-cyan-194-00) 62%);
-          animation-name: offerBlobMoveA;
-          animation-duration: 34s;
-        }
-
-        .offer-blob--b{
-          left: 36%;
-          top: -18%;
-          opacity: 0.05;
-          background: radial-gradient(circle at 30% 30%, var(--pk-green-glow-16) 0%, var(--pk-green-74-00) 62%);
-          animation-name: offerBlobMoveB;
-          animation-duration: 40s;
-        }
-
-        .offer-blob--c{
-          left: 52%;
-          top: 45%;
-          opacity: 0.06;
-          background: radial-gradient(circle at 30% 30%, var(--pk-sky-56-18) 0%, var(--pk-sky-56-00) 62%);
-          animation-name: offerBlobMoveC;
-          animation-duration: 28s;
-        }
-
-        @keyframes offerBlobMoveA{
-          0%{ transform: translate3d(0px, 0px, 0) scale(1); }
-          50%{ transform: translate3d(18px, -14px, 0) scale(1.02); }
-          100%{ transform: translate3d(0px, 0px, 0) scale(1); }
-        }
-        @keyframes offerBlobMoveB{
-          0%{ transform: translate3d(0px, 0px, 0) scale(1); }
-          50%{ transform: translate3d(-22px, 16px, 0) scale(1.02); }
-          100%{ transform: translate3d(0px, 0px, 0) scale(1); }
-        }
-        @keyframes offerBlobMoveC{
-          0%{ transform: translate3d(0px, 0px, 0) scale(1); }
-          50%{ transform: translate3d(14px, 18px, 0) scale(1.02); }
-          100%{ transform: translate3d(0px, 0px, 0) scale(1); }
+          z-index: 1;
         }
 
         .offer-card-swap{
@@ -773,13 +826,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           min-height: 0;
         }
 
-        /* Mobile-only row: CTA + swipe dots (hidden on desktop) */
-        .offer-gallery-actions{
-          display: none;
-        }
-        .offer-mobile-dots{
-          display: none;
-        }
+        /* Mobile-only row: CTA */
+        .offer-gallery-actions{ display: none; }
 
         .offer-gallery-left{
           flex: 1 1 35%;
@@ -860,7 +908,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         /* kebab-case required — camelCase is ignored in plain <style> (was blocking font-weight) */
         h3.offer-title,
         .offer-title{
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-weight: 700;
           color: var(--pk-ink);
           margin: 0;
@@ -878,21 +926,41 @@ export const CoNabizimeSection = (): JSX.Element => {
           display: inline-block;
         }
 
+        @media(min-width:901px){
+          .offer-title-wrap{
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+          }
+          h3.offer-title.offer-title-large,
+          .offer-title.offer-title-large{
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+            box-sizing: border-box;
+          }
+        }
+
         .offer-title-underline{
           display:none;
         }
 
         .offer-desc{
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-weight: 400;
           font-size: 16px;
           line-height: 1.7;
           color: var(--pk-ink-70);
-          margin: 0 0 18px;
+          margin: 10px 0 18px;
         }
 
         .offer-features-subheading{
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Montserrat', sans-serif;
           font-weight: 600;
           font-size: 15px;
           line-height: 1.45;
@@ -907,7 +975,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
         .offer-bullets li{
           margin: 10px 0;
-          font-family: "Space Grotesk", sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-weight: 500;
           font-size: 13px;
           line-height: 1.45;
@@ -915,12 +983,12 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         .offer-cta{
-          background: var(--pk-gradient-cta);
+          background: var(--pk-gradient-popular);
           color: var(--pk-ink);
           border: none;
           border-radius: 12px;
-          padding: 15px 32px;
-          font-family: "Space Grotesk", sans-serif;
+          padding: 9px 22px;
+          font-family: "Montserrat", sans-serif;
           font-weight: 600;
           font-size: 16px;
           cursor: pointer;
@@ -946,7 +1014,9 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-bullets--checks li{
           position: relative;
           padding-left: 40px;
-          margin: 10px 0;
+          margin: 0;
+          padding-top: 10px;
+          padding-bottom: 10px;
           font-size: 18px;
           line-height: 1.55;
         }
@@ -972,12 +1042,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           border-bottom: 3px solid var(--pk-cool-gray-82);
           transform: rotate(-45deg);
         }
-        .offer-cta{
-          background: var(--pk-gradient-cta) !important;
-          color: var(--pk-ink) !important;
-        }
         .offer-cta-desktop{
-          margin-top: 30px;
+          margin-top: 20px;
           align-self: flex-start;
         }
         .offer-cta-mobile{
@@ -1047,13 +1113,16 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         @media(max-width:900px){
+          .offer-tabs-wrap{
+            grid-template-columns: 1fr;
+          }
           .offer-premium-card{
             flex: 1 1 auto;
             min-height: 0;
             width: 100%;
           }
           .offer-premium-card-inner{
-            padding: 15px;
+            padding: 10px 15px 0;
             flex: 1 1 auto;
             min-height: 0;
           }
@@ -1063,6 +1132,10 @@ export const CoNabizimeSection = (): JSX.Element => {
             flex: 1 1 auto;
             min-height: 0;
           }
+          /* Text → CTA → image */
+          .offer-gallery-left{ order: 1; }
+          .offer-gallery-actions{ order: 2; }
+          .offer-gallery-right{ order: 3; }
           .offer-gallery-actions{
             width: 100%;
             display:flex !important;
@@ -1073,36 +1146,6 @@ export const CoNabizimeSection = (): JSX.Element => {
           }
           .offer-cta-desktop{ display:none !important; }
           .offer-cta-mobile{ display:flex !important; justify-content:center; }
-          .offer-mobile-dots{
-            display:flex;
-            justify-content:center;
-            gap: 8px;
-            margin-top: 0;
-          }
-          .offer-dot{
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            background: var(--pk-slate-border-strong);
-            transition: width 250ms ease, background 250ms ease;
-          }
-          .offer-dot[data-active="true"]{
-            width: 28px;
-            background: var(--pk-accent);
-          }
-          .offer-tabs{
-            gap: 10px;
-            margin-bottom: 20px;
-          }
-          .offer-tab-btn{
-            width: 100%;
-            max-width: 340px;
-            font-size: 13px;
-            padding: 10px 16px;
-          }
           .offer-gallery-left{
             padding: 20px 0 20px;
             text-align: center;
@@ -1162,14 +1205,13 @@ export const CoNabizimeSection = (): JSX.Element => {
             box-sizing: border-box;
             display: flex;
             justify-content: center;
-            padding: 10px 16px !important;
+            padding: 9px 22px !important;
             font-size: 14px !important;
             font-weight: 600;
             margin-top: 30px !important;
             flex-shrink: 0;
           }
           .notebook-screen{ transform: none; }
-          .offer-tabs{ display:none !important; }
         }
 
         @media(min-width:1025px){

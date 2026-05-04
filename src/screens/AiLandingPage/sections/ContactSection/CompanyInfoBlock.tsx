@@ -43,7 +43,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
       <h2
         id="company-info"
         style={{
-          fontFamily: "'Space Grotesk',sans-serif",
+          fontFamily: "'Montserrat',sans-serif",
           fontWeight: 700,
           fontSize: "clamp(22px, 2.5vw, 28px)",
           color: pk.ink,
@@ -91,7 +91,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
               <div style={{ minWidth: 0 }}>
                 <div
                   style={{
-                    fontFamily: "'Space Grotesk',sans-serif",
+                    fontFamily: "'Montserrat',sans-serif",
                     fontSize: "11px",
                     color: pk.ink55,
                     fontWeight: 600,
@@ -103,7 +103,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Space Grotesk',sans-serif",
+                    fontFamily: "'Montserrat',sans-serif",
                     fontSize: "14px",
                     color: pk.ink,
                     lineHeight: 1.45,
