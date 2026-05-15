@@ -13,6 +13,7 @@ import {
 } from "../ContactSection/contactFormConfig";
 import { ContactServiceField } from "../ContactSection/ContactServiceField";
 import { headerPrimaryCtaClassName, headerPrimaryCtaStyle } from "../../../../design/headerCtaStyle";
+import { pushLeadFormSubmitSuccessToDataLayer } from "../../../../utils/gtmDataLayer";
 
 const SUBMIT_LEAD_FN_URL = "https://hmgicymajfjsnwkctvqf.supabase.co/functions/v1/submit-lead";
 
@@ -150,6 +151,10 @@ export const ReadyToDesignSection = (): JSX.Element => {
         body: JSON.stringify(buildLeadPayload(form, isEn)),
       });
       if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+
+      // GTM: fire only after successful HTTP response — not on validation or network/backend errors.
+      pushLeadFormSubmitSuccessToDataLayer();
+
       setForm(leadFormInit);
       setSubmitted(true);
     } catch {
