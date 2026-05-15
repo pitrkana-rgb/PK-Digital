@@ -5,28 +5,35 @@
 
 export const SITE_URL = "https://pk-digital.cz" as const;
 
-/** Bump when `public/og-image.png` changes (cache bust for Facebook, LinkedIn, Discord, Google). */
-export const OG_IMAGE_VERSION = 5;
+/** Square PNGs from `npm run favicons` — Google needs 48×48+; browser tab uses 32×32. */
+export const faviconGoogle48Url = `${SITE_URL}/favicon-google-48.png`;
+export const faviconGoogle96Url = `${SITE_URL}/favicon-google-96.png`;
+export const faviconBrowser32Url = `${SITE_URL}/favicon-browser-32.png`;
 
-const title = "Moderní weby na míru, redesign a AI automatizace | Prototyp do 3 dnů";
-const description =
-  "Tvoříme nové weby, modernizujeme staré a implementujeme AI automatizace. Zdarma návrh do 3 dnů, dodání do 14 dní. Získej funkční web, který přivádí zákazníky.";
+/** Bump when `public/og-image.png` changes (cache bust for Facebook, LinkedIn, Discord, Google). */
+export const OG_IMAGE_VERSION = 6;
+
+export const siteTitle =
+  "Tvorba webových stránek a aplikací na míru, automatizace a AI";
+
+export const siteDescription =
+  "Zajišťujeme kompletní webové služby. Naší prací je tvorba webových stránek a aplikací na míru, včetně automatizace. Získejte prototyp zdarma do 3 dnů.";
 
 const ogImagePath = `/og-image.png?v=${OG_IMAGE_VERSION}`;
 const ogImageAlt =
-  "PK Digital – weby nové generace s AI, ukázka responzivního webu na desktopu a mobilu";
+  "PK Digital – tvorba webových stránek a aplikací na míru, ukázka hero sekce s mockupy";
 
 export const siteMetadata = {
   metadataBase: SITE_URL,
-  title,
-  description,
+  title: siteTitle,
+  description: siteDescription,
   openGraph: {
     type: "website",
     url: `${SITE_URL}/`,
     siteName: "PK Digital",
     locale: "cs_CZ",
-    title,
-    description,
+    title: siteTitle,
+    description: siteDescription,
     images: [
       {
         url: ogImagePath,
@@ -41,8 +48,8 @@ export const siteMetadata = {
     card: "summary_large_image",
     site: "@pkdigital_cz",
     creator: "@pkdigital_cz",
-    title,
-    description,
+    title: siteTitle,
+    description: siteDescription,
     image: ogImagePath,
     imageAlt: ogImageAlt,
   },
@@ -53,3 +60,11 @@ export function absoluteUrl(path: string): string {
 }
 
 export const ogImageAbsoluteUrl = absoluteUrl(ogImagePath);
+
+/** Escape for HTML attribute values. */
+export function escapeHtmlAttr(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;");
+}
