@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
-import heroPcFrameUrl from "../../../../../Images/Hero_PC_frame_V2.png";
+import { HeroCompositeFrame } from "./HeroCompositeFrame";
 import { pk } from "../../../../design/pkLandingColors";
 
 const HERO_TYPING = { typeMs: 1000, holdMs: 2000, deleteMs: 1000, startDelayMs: 1000 } as const;
@@ -12,6 +12,8 @@ const HERO_CTA_PAD_X = Math.round(28 * 0.8);
 const HERO_TYPING_MESSAGES_CS = [
   "KVALITNÍ WEB JE INVESTICE",
   "ZÍSKÁTE PROTOTYP WEBU ZDARMA",
+  "DODÁVÁME RYCHLE A NA MÍRU",
+  "ZVYŠUJEME POČTY ZÁKAZNÍKŮ",
   "PRO KAŽDÝ TYP BUSINESSU",
   "ŽÁDNÉ MĚSÍČNÍ POPLATKY",
   "MOŽNÁ PODPORA 24/7",
@@ -20,6 +22,8 @@ const HERO_TYPING_MESSAGES_CS = [
 const HERO_TYPING_MESSAGES_EN = [
   "A QUALITY WEBSITE IS AN INVESTMENT",
   "GET A FREE WEBSITE PROTOTYPE",
+  "WE DELIVER FAST AND TAILORED",
+  "WE GROW YOUR CUSTOMER BASE",
   "FOR EVERY TYPE OF BUSINESS",
   "NO MONTHLY FEES",
   "SUPPORT AVAILABLE 24/7",
@@ -181,14 +185,14 @@ export const MainHeroSection = (): JSX.Element => {
     headlinePre: "Next‑generation websites with",
     headlineMid: "that",
     headlineAccent: "change the rules and bring customers",
-    subheading: "Websites, e‑shops, and AI‑powered apps designed for growth, performance, and scale. Technology that delivers measurable results and a competitive edge.",
+    subheading: "Websites and AI‑powered apps designed for growth, performance, and scale. Technology that delivers measurable results and a competitive edge.",
     ctaPrimary: "Contact us",
     ctaSecondary: "Our services",
   } : {
     headlinePre: "Weby nové generace s",
     headlineMid: ", které",
     headlineAccent: "mění pravidla hry a přivádějí zákazníky",
-    subheading: "Weby, e-shopy a aplikace s podporou AI navržené pro růst, výkon a škálování. Technologie, které přinášejí měřitelné výsledky a konkurenční výhodu.",
+    subheading: "Weby a aplikace s podporou AI navržené pro růst, výkon a škálování. Technologie, které přinášejí měřitelné výsledky a konkurenční výhodu.",
     ctaPrimary: "Kontaktujte nás",
     ctaSecondary: "Naše služby",
   };
@@ -280,13 +284,7 @@ export const MainHeroSection = (): JSX.Element => {
 
         {/* Mobile-only: show PC frame under subheading */}
         <div className="hero-mobile-frame" aria-hidden="true">
-          <img
-            src={heroPcFrameUrl}
-            alt=""
-            draggable={false}
-            className="hero-mobile-frame-img"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
+          <HeroCompositeFrame imgClassName="hero-mobile-frame-img" />
         </div>
 
         {/* CTAs */}
@@ -295,10 +293,9 @@ export const MainHeroSection = (): JSX.Element => {
           <button
             id="hero-primary-cta"
             type="button"
-            className="animate-pulse-glow hero-primary-btn"
+            className="animate-pulse-glow hero-primary-btn landing-primary-cta"
             onClick={() => navigate("/napiste-nam")}
             style={{
-              background: pk.gradientPopular,
               color: pk.ink,
               border: "none",
               borderRadius: "12px",
@@ -392,17 +389,7 @@ export const MainHeroSection = (): JSX.Element => {
 
           {/* Right media: PC frame (desktop only) */}
           <div className="hero-media" aria-hidden="true">
-            <img
-              src={heroPcFrameUrl}
-              alt=""
-              draggable={false}
-              className="hero-pc-frame"
-              style={{
-                width: "100%",
-                height: "auto",
-                display: "block",
-              }}
-            />
+            <HeroCompositeFrame imgClassName="hero-pc-frame" />
           </div>
         </div>
       </div>
@@ -423,17 +410,7 @@ export const MainHeroSection = (): JSX.Element => {
         }}
       >
         <div className="hero-media-rail-inner">
-          <img
-            src={heroPcFrameUrl}
-            alt=""
-            draggable={false}
-            className="hero-pc-frame"
-            style={{
-              width: "100%",
-              height: "auto",
-              display: "block",
-            }}
-          />
+          <HeroCompositeFrame imgClassName="hero-pc-frame" />
         </div>
       </div>
 
@@ -453,10 +430,6 @@ export const MainHeroSection = (): JSX.Element => {
         @keyframes heroFadeUp {
           from { opacity: 0; transform: translateY(24px); }
           to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes heroMobileFrameIn {
-          from { opacity: 0; transform: translateX(44px); filter: blur(6px); }
-          to { opacity: 1; transform: translateX(0); filter: blur(0); }
         }
         .animate-scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) { .animate-scroll-dot { animation: none; } }
@@ -569,7 +542,9 @@ export const MainHeroSection = (): JSX.Element => {
             position: absolute;
             right: 20px;
             top: 50%;
-            transform: translateY(calc(-50% + 50px));
+            /* Single scale for frame + screen slots. 0.7168 × 1.1 ≈ +10% vs prior desktop size. */
+            transform: translateY(calc(-50% + 50px)) scale(0.78848);
+            transform-origin: right center;
             width: min(56vw, 920px);
             max-width: 920px;
           }
@@ -578,13 +553,12 @@ export const MainHeroSection = (): JSX.Element => {
             height: auto;
             display: block;
           }
-          .hero-pc-frame{
+          /* Whole composite (frame + screen clips) fades in in place — 1s */
+          .hero-media-rail-inner .hero-composite-anim {
             opacity: 0;
-            transform: translateX(60vw) scale(0.896);
-            transform-origin: right center;
-            animation: heroPcArrive 2200ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+            animation: heroCompositeFadeIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             animation-delay: 1000ms;
-            will-change: transform, opacity;
+            will-change: opacity;
           }
           .hero-content-wrap {
             text-align: left;
@@ -618,9 +592,9 @@ export const MainHeroSection = (): JSX.Element => {
             margin-right: 0 !important;
           }
         }
-        @keyframes heroPcArrive{
-          from{ opacity: 0; transform: translateX(60vw) scale(0.896); }
-          to{ opacity: 1; transform: translateX(0) scale(0.896); }
+        @keyframes heroCompositeFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
         /* ── Mobile hero adjustments ────────────── */
         @media (max-width: 768px) {
@@ -640,11 +614,15 @@ export const MainHeroSection = (): JSX.Element => {
             filter: drop-shadow(0 18px 40px var(--pk-slate-tint-16));
           }
           .hero-mobile-frame-img{
+            opacity: 1;
+            transform: none;
+            will-change: auto;
+          }
+          .hero-mobile-frame .hero-composite-anim {
             opacity: 0;
-            transform: translateX(44px);
-            will-change: transform, opacity, filter;
-            animation: heroMobileFrameIn 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+            animation: heroCompositeFadeIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             animation-delay: 1000ms;
+            will-change: opacity;
           }
           .hero-shell {
             padding-left: 16px !important;
@@ -703,6 +681,11 @@ export const MainHeroSection = (): JSX.Element => {
             opacity: 1 !important;
             transform: none !important;
             filter: none !important;
+          }
+          .hero-media-rail-inner .hero-composite-anim,
+          .hero-mobile-frame .hero-composite-anim {
+            animation: none !important;
+            opacity: 1 !important;
           }
         }
       `}</style>

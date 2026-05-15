@@ -503,6 +503,7 @@ export const PriceCalculatorSection = (): JSX.Element => {
               {/* CTA */}
               <button
                 type="button"
+                className="landing-primary-cta animate-pulse-glow"
                 onClick={() => {
                   navigate("/napiste-nam");
                   setTimeout(() => {
@@ -512,9 +513,8 @@ export const PriceCalculatorSection = (): JSX.Element => {
                 style={{
                   width: "100%",
                   padding: "9px 22px",
-                  background: pk.gradientPopular,
                   border: "none",
-                  borderRadius: "14px",
+                  borderRadius: "12px",
                   color: pk.ink,
                   fontFamily: "'Montserrat',sans-serif",
                   fontWeight: 700,

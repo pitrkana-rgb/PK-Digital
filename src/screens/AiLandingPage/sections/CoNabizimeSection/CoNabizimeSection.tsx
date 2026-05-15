@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type TouchEvent } from "react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
 import pcFrameUrl from "../../../../../Images/PC_frame.png";
-import tvorbaWebuUrl from "../../../../../Images/Tvorba webu.png";
+import { HeroCompositeFrame } from "../MainHeroSection/HeroCompositeFrame";
 import aiBotUrl from "../../../../../Images/AI bot.png";
 import modernizaceBeforeUrl from "../../../../../Images/Modernizace/Before.png";
 import modernizaceAfterUrl from "../../../../../Images/Modernizace/After.png";
+import webAppUrl from "../../../../../Images/Web_app.png";
 
 type BeforeAfter = {
   beforeSrc: string;
@@ -23,11 +24,11 @@ const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 /** Inactive: colored icons; active: `*_white.png` (first tab uses `Icon_tvorba_webu_white.png` in /public). */
 const offerTabIconFile = (slideId: string, isActive: boolean) => {
   if (!isActive) {
-    if (slideId === "tvorba-webu") return "Icon_novy_web.png";
+    if (slideId === "tvorba-webu" || slideId === "webove-aplikace") return "Icon_novy_web.png";
     if (slideId === "upgrade-webu") return "Icon_modernizace.png";
     return "Icon_Automatizace.png";
   }
-  if (slideId === "tvorba-webu") return "Icon_tvorba_webu_white.png";
+  if (slideId === "tvorba-webu" || slideId === "webove-aplikace") return "Icon_tvorba_webu_white.png";
   if (slideId === "upgrade-webu") return "Icon_modernizace_white.png";
   return "Icon_Automatizace_white.png";
 };
@@ -274,17 +275,52 @@ const BeforeAfterSlider = ({
   );
 };
 
+type SlideFeature =
+  | string
+  | { bold: string; rest: string }
+  | { before: string; bold: string; after?: string };
+
 type Slide = {
   id: string;
   title: string;
   description: string;
   /** Optional line above the bullet list (e.g. AI card) */
   featuresSubheading?: string;
-  features: string[];
+  features: SlideFeature[];
   cta: string;
   image?: string;
   beforeAfter?: BeforeAfter;
 };
+
+const getFeatureBoldText = (feature: SlideFeature): string => {
+  if (typeof feature === "string") return feature;
+  return feature.bold;
+};
+
+const renderOfferFeature = (feature: SlideFeature, key: string): JSX.Element => (
+  <li key={key}>
+    {typeof feature === "string" ? (
+      feature
+    ) : "rest" in feature ? (
+      <>
+        <strong>{feature.bold}</strong>
+        {feature.rest}
+      </>
+    ) : (
+      <>
+        {feature.before}
+        <strong>{feature.bold}</strong>
+        {feature.after ?? ""}
+      </>
+    )}
+  </li>
+);
+
+const renderOfferFeatureBoldOnly = (feature: SlideFeature, key: string): JSX.Element => (
+  <li key={key}>
+    <strong>{getFeatureBoldText(feature)}</strong>
+  </li>
+);
 
 const slides: Slide[] = [
   {
@@ -293,22 +329,25 @@ const slides: Slide[] = [
     description:
       "Navrhneme a dodáme web do 14 dní — bez složitostí a bez rizika.",
     features: [
-      "Návrh zdarma do 3 dnů",
-      "Design zaměřený na konverze",
-      "Jednoduchá správa bez vývojáře",
+      { bold: "Návrh webu zdarma", rest: " do 3 dnů bez závazků" },
+      { bold: "SEO optimalizace", rest: " pro lepší pozice ve vyhledávání Google" },
+      { bold: "Jednoduchá správa webu", rest: " bez programování a technických znalostí" },
+      { bold: "Responzivní design", rest: " pro mobily, tablety i počítače" },
+      { before: "Web na míru zaměřený na ", bold: "získávání nových zákazníků" },
     ],
     cta: "Nezávazná konzultace",
-    image: tvorbaWebuUrl,
   },
   {
     id: "upgrade-webu",
     title: "Modernizace stránek",
     description:
-      "Kompletní modernizace vašeho stávajícího webu — nový design, vyšší rychlost, lepší konverze.",
+      "Kompletní modernizace vašeho webu — vyšší rychlost a lepší konverze.",
     features: [
-      "Zdarma audit webu",
-      "Identifikace slabých míst",
-      "Rychlejší web s dopadem na SEO",
+      { bold: "Audit webu zdarma", rest: " s návrhem konkrétních vylepšení" },
+      { bold: "Odhalení slabých míst", rest: " snižujících důvěryhodnost a konverze" },
+      { bold: "Modernější design webu", rest: " pro vyšší důvěru zákazníků" },
+      { bold: "Rychlejší načítání webu", rest: " s pozitivním dopadem na SEO" },
+      { bold: "Optimalizace pro mobily", rest: " a lepší uživatelský zážitek" },
     ],
     cta: "Nezávazná konzultace",
     beforeAfter: {
@@ -320,13 +359,29 @@ const slides: Slide[] = [
     },
   },
   {
+    id: "webove-aplikace",
+    title: "Webové aplikace, které usnadní podnikání",
+    description: "Navrhneme a vyvineme moderní webovou aplikaci pro vaše podnikání.",
+    features: [
+      { bold: "Návrh aplikace zdarma", rest: " do 3 dnů bez závazků" },
+      { bold: "Moderní UX design", rest: " pro jednoduché a rychlé používání" },
+      { bold: "Webová aplikace dostupná", rest: " z mobilu, tabletu i počítače" },
+      { bold: "Rychlé a stabilní", rest: " prostředí optimalizované pro výkon" },
+      { bold: "Webová aplikace na", rest: " míru zaměřená na růst firmy" },
+    ],
+    cta: "Nezávazná konzultace",
+    image: webAppUrl,
+  },
+  {
     id: "automatizace-ai",
     title: "Automatizace a AI agenti",
     description: "Získejte více zákazníků a snižte náklady díky chytré automatizaci",
     features: [
-      "Eliminace rutinní práce",
-      "Okamžité zpracování požadavků",
-      "Snížení nákladů až o desítky %",
+      { bold: "Automatizace procesů bez", rest: " rutinní manuální práce" },
+      { bold: "Okamžité zpracování požadavků", rest: " 24 hodin denně bez čekání" },
+      { bold: "Snížení provozních nákladů", rest: " až o desítky procent" },
+      { bold: "Automatické sběry dat", rest: " a propojení firemních systémů" },
+      { bold: "Úspora času zaměstnanců", rest: " díky chytrému workflow systému" },
     ],
     cta: "Nezávazná konzultace",
     image: aiBotUrl,
@@ -340,22 +395,25 @@ const slidesEn: Slide[] = [
     description:
       "We design and deliver your website in 14 days — no complexity and no risk.",
     features: [
-      "Free concept within 3 days",
-      "Conversion-focused design",
-      "Easy management without a developer",
+      { bold: "Free website proposal", rest: " within 3 days, no commitment" },
+      { bold: "SEO optimization", rest: " for better positions in Google search" },
+      { bold: "Easy site management", rest: " without coding or technical skills" },
+      { bold: "Responsive design", rest: " for phones, tablets, and desktops" },
+      { before: "Tailored website focused on ", bold: "winning new customers" },
     ],
     cta: "Free consultation",
-    image: tvorbaWebuUrl,
   },
   {
     id: "upgrade-webu",
     title: "Website Modernization",
     description:
-      "Complete modernization of your existing website - new design, higher speed, and better conversions.",
+      "Complete modernization of your website — higher speed and better conversions.",
     features: [
-      "Free website audit",
-      "Weak-point identification",
-      "Faster website with SEO impact",
+      { bold: "Free website audit", rest: " with specific improvement proposals" },
+      { bold: "Weak spots revealed", rest: " that reduce trust and conversions" },
+      { bold: "A more modern design", rest: " for stronger customer confidence" },
+      { bold: "Faster website loading", rest: " with a positive SEO impact" },
+      { bold: "Optimization for mobile", rest: " and a better user experience" },
     ],
     cta: "Free consultation",
     beforeAfter: {
@@ -367,13 +425,29 @@ const slidesEn: Slide[] = [
     },
   },
   {
+    id: "webove-aplikace",
+    title: "Web applications that simplify your business",
+    description: "We will design and develop a modern web application for your business.",
+    features: [
+      { bold: "Free application design", rest: " within 3 days, no commitment" },
+      { bold: "Modern UX design", rest: " for simple and fast everyday use" },
+      { bold: "Web application available", rest: " on phone, tablet, and desktop" },
+      { bold: "Fast and stable", rest: " environment optimized for performance" },
+      { bold: "Tailored web application", rest: " focused on company growth" },
+    ],
+    cta: "Free consultation",
+    image: webAppUrl,
+  },
+  {
     id: "automatizace-ai",
     title: "Automation and AI Agents",
     description: "Get more customers and reduce costs with smart automation",
     features: [
-      "Eliminate routine work",
-      "Immediate request processing",
-      "Reduce costs by tens of percent",
+      { bold: "Process automation without", rest: " routine manual work" },
+      { bold: "Immediate request processing", rest: " 24 hours a day without waiting" },
+      { bold: "Lower operating costs", rest: " by up to tens of percent" },
+      { bold: "Automatic data collection", rest: " and integration of company systems" },
+      { bold: "Employee time savings", rest: " through a smart workflow system" },
     ],
     cta: "Free consultation",
     image: aiBotUrl,
@@ -392,7 +466,8 @@ export const CoNabizimeSection = (): JSX.Element => {
   const switchTimeoutRef = useRef<number | null>(null);
   const touchStartX = useRef<number>(0);
   const SWIPE_THRESHOLD = 50;
-  const [offerMobileReorder, setOfferMobileReorder] = useState(false);
+  const [isOfferMobile, setIsOfferMobile] = useState(false);
+  const tabTouchStartX = useRef(0);
 
   useEffect(() => {
     return () => {
@@ -402,7 +477,7 @@ export const CoNabizimeSection = (): JSX.Element => {
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 900px)");
-    const sync = () => setOfferMobileReorder(mq.matches);
+    const sync = () => setIsOfferMobile(mq.matches);
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
@@ -420,16 +495,90 @@ export const CoNabizimeSection = (): JSX.Element => {
   };
 
   const navItems = isEn
-    ? ["New website", "Website modernization", "Automation and AI agents"]
-    : ["Tvorba nového webu", "Modernizace stránek", "Automatizace a AI agenti"];
+    ? ["New website", "Website modernization", "Web applications", "Automation and AI agents"]
+    : ["Tvorba nového webu", "Modernizace stránek", "Webové aplikace", "Automatizace a AI agenti"];
 
   const navSubItems = isEn
-    ? ["Custom website, built for growth", "Better UX, speed, and conversions", "Smarter processes, less manual work"]
-    : ["Weby na míru, které přinášejí zákazníky", "Lepší výkon, UX a vyšší konverze", "Chytré procesy, které šetří čas i náklady"];
+    ? [
+      "Custom website, built for growth",
+      "Better UX, speed, and conversions",
+      "Apps tailored to streamline operations",
+      "Smarter processes, less manual work",
+    ]
+    : [
+      "Weby na míru, které přinášejí zákazníky",
+      "Lepší výkon, UX a vyšší konverze",
+      "Aplikace na míru pro efektivnější podnikání",
+      "Chytré procesy, které šetří čas i náklady",
+    ];
 
   useEffect(() => {
     activeIdxRef.current = activeIdx;
   }, [activeIdx]);
+
+  const slideCount = activeSlides.length;
+  const tabSlidePct = slideCount > 0 ? 100 / slideCount : 100;
+
+  const renderOfferTabButton = (slide: Slide, idx: number): JSX.Element => (
+    <button
+      key={slide.id}
+      type="button"
+      role="tab"
+      aria-selected={idx === activeIdx}
+      className={`offer-tab${idx === activeIdx ? " is-active" : ""}`}
+      onClick={() => goTo(idx)}
+    >
+      <div className="offer-tab-row">
+        <div className="offer-tab-icon" aria-hidden="true">
+          <img
+            src={`${import.meta.env.BASE_URL}${offerTabIconFile(slide.id, idx === activeIdx)}`}
+            alt=""
+            width={32}
+            height={32}
+            style={{ display: "block", objectFit: "contain" }}
+          />
+        </div>
+        <div className="offer-tab-copy">
+          <div className="offer-tab-title">{navItems[idx] ?? ""}</div>
+          <div className="offer-tab-sub">{navSubItems[idx] ?? ""}</div>
+        </div>
+      </div>
+    </button>
+  );
+
+  const onTabTouchStart = (e: TouchEvent) => {
+    tabTouchStartX.current = e.touches[0]!.clientX;
+  };
+
+  const onTabTouchEnd = (e: TouchEvent) => {
+    const endX = e.changedTouches[0]!.clientX;
+    const delta = tabTouchStartX.current - endX;
+    if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
+    else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
+  };
+
+  const renderOfferDots = (): JSX.Element => (
+    <div className="offer-tabs-dots" aria-hidden={!isOfferMobile}>
+      {activeSlides.map((_, i) => (
+        <button
+          key={i}
+          type="button"
+          aria-label={isEn ? `Go to service ${i + 1}` : `Přejít na službu ${i + 1}`}
+          onClick={() => goTo(i)}
+          style={{
+            width: i === activeIdx ? "28px" : "8px",
+            height: "8px",
+            borderRadius: "999px",
+            border: "none",
+            cursor: "pointer",
+            background: i === activeIdx ? pk.accent : pk.slateTint16,
+            transition: "width 250ms ease, background 250ms ease",
+            padding: 0,
+          }}
+        />
+      ))}
+    </div>
+  );
 
   return (
     <section
@@ -479,38 +628,38 @@ export const CoNabizimeSection = (): JSX.Element => {
         </div>
 
         <div className="offer-shell">
-          <div className="offer-tabs-wrap" role="tablist" aria-label={isEn ? "Services navigation" : "Navigace služeb"}>
-          {activeSlides.map((slide, idx) => (
-            <button
-              key={slide.id}
-              type="button"
-              role="tab"
-              aria-selected={idx === activeIdx}
-              className={`offer-tab${idx === activeIdx ? " is-active" : ""}`}
-              onClick={() => goTo(idx)}
-              style={
-                offerMobileReorder
-                  ? { order: idx <= activeIdx ? idx + 1 : idx + 2 }
-                  : undefined
-              }
+          <div className="offer-tabs-desktop" role="tablist" aria-label={isEn ? "Services navigation" : "Navigace služeb"}>
+            {activeSlides.map((slide, idx) => renderOfferTabButton(slide, idx))}
+          </div>
+
+          <div className="offer-tabs-mobile">
+            <div
+              className="offer-tabs-mobile-viewport"
+              role="tablist"
+              aria-label={isEn ? "Services navigation" : "Navigace služeb"}
+              onTouchStart={onTabTouchStart}
+              onTouchEnd={onTabTouchEnd}
             >
-              <div className="offer-tab-row">
-                <div className="offer-tab-icon" aria-hidden="true">
-                  <img
-                    src={`${import.meta.env.BASE_URL}${offerTabIconFile(slide.id, idx === activeIdx)}`}
-                    alt=""
-                    width={42}
-                    height={42}
-                    style={{ display: "block", objectFit: "contain" }}
-                  />
-                </div>
-                <div className="offer-tab-copy">
-                  <div className="offer-tab-title">{navItems[idx] ?? ""}</div>
-                  <div className="offer-tab-sub">{navSubItems[idx] ?? ""}</div>
-                </div>
+              <div
+                className="offer-tabs-mobile-track"
+                style={{
+                  display: "flex",
+                  width: `${slideCount * 100}%`,
+                  transform: `translateX(-${activeIdx * tabSlidePct}%)`,
+                  transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                }}
+              >
+                {activeSlides.map((slide, idx) => (
+                  <div
+                    key={slide.id}
+                    className="offer-tabs-mobile-slide"
+                    style={{ flex: `0 0 ${tabSlidePct}%`, padding: "0 6px", boxSizing: "border-box" }}
+                  >
+                    {renderOfferTabButton(slide, idx)}
+                  </div>
+                ))}
               </div>
-            </button>
-          ))}
+            </div>
           </div>
 
           <div
@@ -522,7 +671,6 @@ export const CoNabizimeSection = (): JSX.Element => {
               if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
               else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
             }}
-            style={offerMobileReorder ? { order: activeIdx + 2 } : undefined}
           >
           <div className={`offer-single-card${cardVisible ? " offer-single-card-visible" : ""}`}>
             <div className="offer-premium-card">
@@ -540,6 +688,8 @@ export const CoNabizimeSection = (): JSX.Element => {
                             <span className="offer-title-accent">{isEn ? "Modernization" : "Modernizace"}</span>
                             {isEn ? "" : " stránek"}
                           </h3>
+                        ) : activeSlide.id === "webove-aplikace" ? (
+                          <h3 className="offer-title offer-title-large">{activeSlide.title}</h3>
                         ) : (
                           <h3 className="offer-title offer-title-large">
                             <span className="offer-title-accent">{isEn ? "Automation" : "Automatizace"}</span>
@@ -556,14 +706,16 @@ export const CoNabizimeSection = (): JSX.Element => {
                       ) : null}
 
                       <ul className="offer-bullets offer-bullets--checks">
-                        {activeSlide.features.map((f) => (
-                          <li key={f}>{f}</li>
-                        ))}
+                        {activeSlide.features.map((f, idx) =>
+                          isOfferMobile
+                            ? renderOfferFeatureBoldOnly(f, `${activeSlide.id}-feature-${idx}`)
+                            : renderOfferFeature(f, `${activeSlide.id}-feature-${idx}`),
+                        )}
                       </ul>
 
                       <button
                         type="button"
-                        className="offer-cta offer-cta-desktop animate-pulse-glow hero-primary-btn"
+                        className="offer-cta offer-cta-desktop animate-pulse-glow hero-primary-btn landing-primary-cta"
                         onClick={() => {
                           navigate("/napiste-nam");
                           setTimeout(() => {
@@ -594,7 +746,11 @@ export const CoNabizimeSection = (): JSX.Element => {
                   </div>
 
                   <div className="offer-gallery-right">
-                    {activeSlide.id === "tvorba-webu" || activeSlide.id === "automatizace-ai" ? (
+                    {activeSlide.id === "tvorba-webu" ? (
+                      <div className="offer-hero-frame" aria-hidden="true">
+                        <HeroCompositeFrame animateEntrance={false} />
+                      </div>
+                    ) : activeSlide.id === "webove-aplikace" || activeSlide.id === "automatizace-ai" ? (
                       <div className={`offer-simple-media${activeSlide.id === "automatizace-ai" ? " offer-simple-media--ai-bot" : ""}`}>
                         <img
                           src={activeSlide.image}
@@ -602,7 +758,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                           style={{
                             width: "100%",
                             height: "100%",
-                            objectFit: activeSlide.id === "automatizace-ai" ? "contain" : "cover",
+                            objectFit: "contain",
                             objectPosition: "center",
                             display: "block",
                           }}
@@ -630,7 +786,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                           document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
                         }, 180);
                       }}
-                      className="offer-cta offer-cta-mobile animate-pulse-glow hero-primary-btn"
+                      className="offer-cta offer-cta-mobile animate-pulse-glow hero-primary-btn landing-primary-cta"
                       style={{
                         fontFamily: "'Montserrat', sans-serif",
                         fontWeight: 600,
@@ -651,7 +807,7 @@ export const CoNabizimeSection = (): JSX.Element => {
                     >
                       {activeSlide.cta}
                     </button>
-
+                    {renderOfferDots()}
                   </div>
                 </div>
               </div>
@@ -665,23 +821,30 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-shell{
           width: 100%;
         }
-        .offer-tabs-wrap{
+        .offer-tabs-desktop{
           display:grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 10px;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 8px;
           padding: 0;
           border: none;
           background: transparent;
         }
-        @media(max-width:900px){
-          .offer-shell{
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-          }
-          .offer-tabs-wrap{
-            display: contents;
-          }
+        .offer-tabs-mobile{
+          display: none;
+        }
+        .offer-tabs-dots{
+          display: none;
+          justify-content: center;
+          gap: 8px;
+          margin: 0;
+          padding: 0;
+        }
+        .offer-tabs-mobile-viewport{
+          overflow: hidden;
+          width: 100%;
+        }
+        .offer-tabs-mobile-slide .offer-tab{
+          width: 100%;
         }
         .offer-tab{
           position: relative;
@@ -689,10 +852,11 @@ export const CoNabizimeSection = (): JSX.Element => {
           background: var(--pk-page);
           border: 1px solid var(--pk-slate-border-strong);
           border-radius: 12px;
-          padding: 18px 12px;
+          padding: 12px 8px;
           cursor: pointer;
           transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
           color: var(--pk-ink);
+          min-width: 0;
         }
         .offer-tab:hover:not(.is-active){
           background: var(--pk-slate-tint-04);
@@ -703,9 +867,9 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
         .offer-tab-row{
           display:grid;
-          grid-template-columns: 42px minmax(0, 1fr) 42px;
+          grid-template-columns: 32px minmax(0, 1fr);
           align-items:center;
-          gap: 0;
+          gap: 8px;
           width: 100%;
         }
         .offer-tab-icon{
@@ -719,8 +883,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           color: var(--pk-ink-55);
         }
         .offer-tab-icon img{
-          width: 42px;
-          height: 42px;
+          width: 32px;
+          height: 32px;
         }
         .offer-tab-copy{
           grid-column: 2;
@@ -730,16 +894,16 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-tab-title{
           font-family: "Montserrat", sans-serif;
           font-weight: 800;
-          font-size: 20px;
+          font-size: 15px;
           line-height: 1.2;
           color: var(--pk-ink);
         }
         .offer-tab-sub{
           font-family: "Montserrat", sans-serif;
           font-weight: 500;
-          font-size: 12px;
-          line-height: 1.35;
-          margin-top: 5px;
+          font-size: 11px;
+          line-height: 1.3;
+          margin-top: 4px;
           color: var(--pk-ink-55);
         }
         .offer-tab.is-active{
@@ -820,7 +984,7 @@ export const CoNabizimeSection = (): JSX.Element => {
 
         .offer-gallery-grid{
           display:flex;
-          gap: 28px;
+          gap: 0;
           align-items: center;
           flex: 0 1 auto;
           min-height: 0;
@@ -830,7 +994,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-gallery-actions{ display: none; }
 
         .offer-gallery-left{
-          flex: 1 1 35%;
+          flex: 1 1 43.75%;
           min-width: 0;
           padding: 40px 0;
         }
@@ -850,7 +1014,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             text-align: left;
             align-self: stretch;
             min-height: 0;
-            flex: 1 1 35%;
+            flex: 1 1 43.75%;
             justify-content: flex-start;
           }
           .offer-left-copy{
@@ -872,7 +1036,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         .offer-gallery-right{
-          flex: 1 1 75%;
+          flex: 1 1 56.25%;
           min-width: 0;
           display:flex;
           align-items:center;
@@ -903,6 +1067,11 @@ export const CoNabizimeSection = (): JSX.Element => {
           align-items: center;
           justify-content: center;
           background: transparent;
+        }
+
+        .offer-hero-frame{
+          width: 100%;
+          max-width: 100%;
         }
 
         /* kebab-case required — camelCase is ignored in plain <style> (was blocking font-weight) */
@@ -983,7 +1152,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         .offer-cta{
-          background: var(--pk-gradient-popular);
+          background-color: var(--pk-accent);
           color: var(--pk-ink);
           border: none;
           border-radius: 12px;
@@ -1013,34 +1182,38 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
         .offer-bullets--checks li{
           position: relative;
-          padding-left: 40px;
+          padding-left: 28px;
           margin: 0;
           padding-top: 10px;
           padding-bottom: 10px;
-          font-size: 18px;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 500;
+          font-size: 16px;
           line-height: 1.55;
+          color: var(--pk-ink-82);
+        }
+        .offer-bullets--checks li strong{
+          font-weight: 700;
+          color: var(--pk-ink);
         }
         .offer-bullets--checks li::before{
-          content: "";
+          content: "✓";
           position: absolute;
           left: 0;
-          top: 2px;
-          width: 28px;
-          height: 28px;
-          border-radius: 999px;
-          background: var(--pk-cool-gray-06);
-          box-shadow: 0 0 0 1px var(--pk-cool-gray-22) inset;
+          top: 0.42em;
+          width: auto;
+          height: auto;
+          border-radius: 0;
+          background: none;
+          box-shadow: none;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 1.05em;
+          line-height: 1;
+          color: var(--pk-ink);
         }
         .offer-bullets--checks li::after{
-          content: "";
-          position: absolute;
-          left: 9px;
-          top: 13px;
-          width: 10px;
-          height: 6px;
-          border-left: 3px solid var(--pk-cool-gray-82);
-          border-bottom: 3px solid var(--pk-cool-gray-82);
-          transform: rotate(-45deg);
+          display: none;
         }
         .offer-cta-desktop{
           margin-top: 20px;
@@ -1113,8 +1286,27 @@ export const CoNabizimeSection = (): JSX.Element => {
         }
 
         @media(max-width:900px){
-          .offer-tabs-wrap{
-            grid-template-columns: 1fr;
+          .offer-tabs-desktop{
+            display: none;
+          }
+          .offer-tabs-mobile{
+            display: block;
+            margin-bottom: 0;
+          }
+          .offer-shell{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .offer-carousel{
+            margin-top: 0;
+          }
+          .offer-tabs-dots{
+            display: flex !important;
+            margin-top: 14px;
+          }
+          .offer-title-wrap{
+            display: none !important;
           }
           .offer-premium-card{
             flex: 1 1 auto;
@@ -1122,7 +1314,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             width: 100%;
           }
           .offer-premium-card-inner{
-            padding: 10px 15px 0;
+            padding: 0 15px 0;
             flex: 1 1 auto;
             min-height: 0;
           }
@@ -1132,22 +1324,22 @@ export const CoNabizimeSection = (): JSX.Element => {
             flex: 1 1 auto;
             min-height: 0;
           }
-          /* Text → CTA → image */
+          /* Text → image → CTA */
           .offer-gallery-left{ order: 1; }
-          .offer-gallery-actions{ order: 2; }
-          .offer-gallery-right{ order: 3; }
+          .offer-gallery-right{ order: 2; }
+          .offer-gallery-actions{ order: 3; }
           .offer-gallery-actions{
             width: 100%;
             display:flex !important;
             flex-direction: column;
             align-items: center;
-            gap: 18px;
+            gap: 12px;
             margin-top: 8px;
           }
           .offer-cta-desktop{ display:none !important; }
           .offer-cta-mobile{ display:flex !important; justify-content:center; }
           .offer-gallery-left{
-            padding: 20px 0 20px;
+            padding: 0 0 16px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -1182,20 +1374,32 @@ export const CoNabizimeSection = (): JSX.Element => {
             text-align: center !important;
             margin-bottom: 8px !important;
           }
+          .offer-bullets--checks{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+          }
           .offer-bullets--checks li{
-            font-size: 16px !important; /* 2px bigger than 14px description */
+            display: inline-flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 8px;
+            width: auto;
+            max-width: 100%;
+            font-size: 14px !important;
             line-height: 1.65 !important;
+            padding: 8px 0 !important;
+            padding-left: 0 !important;
+            text-align: center;
           }
           .offer-bullets--checks li::before{
-            top: 2px !important;
-            width: 24px !important;
-            height: 24px !important;
-          }
-          .offer-bullets--checks li::after{
-            left: 8px !important;
-            top: 12px !important;
-            width: 9px !important;
-            height: 5px !important;
+            position: static;
+            top: auto;
+            left: auto;
+            flex-shrink: 0;
+            margin-top: 0.12em;
+            font-size: 1em !important;
           }
           /* Match pricing mobile CTA: full card width, same padding & type size */
           .offer-cta{

@@ -26,6 +26,19 @@
   animation: pulse-glow 2.5s ease-out infinite;
 }
 
+/* Primary CTA: same fill as header “Napište nám” (solid accent + ink text). */
+.landing-primary-cta {
+  background-color: var(--pk-accent) !important;
+  color: var(--pk-ink) !important;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
 /* Nav link underline hover animation */
 .nav-link-underline::after {
   content: '';

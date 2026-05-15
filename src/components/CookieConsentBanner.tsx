@@ -41,19 +41,19 @@ export const CookieConsentBanner = (): JSX.Element | null => {
         right: 0,
         zIndex: 9999,
         padding: "20px 24px",
-        backgroundColor: pk.black98,
-        borderTop: `1px solid ${pk.accent20}`,
+        backgroundColor: pk.page,
+        borderTop: `1px solid ${pk.slateBorderStrong}`,
         display: "flex",
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
         gap: "16px",
-        boxShadow: `0 -4px 24px ${pk.black40}`,
+        boxShadow: `0 -8px 32px ${pk.slateTint12}`,
       }}
     >
-      <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.onDark90, margin: 0, flex: "1 1 280px" }}>
+      <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.ink78, margin: 0, flex: "1 1 280px" }}>
         {isEn ? "This website uses cookies to improve your experience. " : "Tento web používá cookies pro zlepšení vašeho zážitku. "}
-        <Link to="/zasady-ochrany-soukromi" style={{ color: pk.accent, textDecoration: "underline" }}>
+        <Link to="/zasady-ochrany-soukromi" style={{ color: pk.brand4, textDecoration: "underline" }}>
           {isEn ? "Privacy Policy" : "Zásady ochrany soukromí"}
         </Link>
       </p>
@@ -61,11 +61,10 @@ export const CookieConsentBanner = (): JSX.Element | null => {
         <button
           type="button"
           onClick={() => hide("all")}
+          className="landing-primary-cta"
           style={{
             padding: "10px 20px",
-            borderRadius: "10px",
-            background: pk.gradientPopular,
-            color: pk.ink,
+            borderRadius: "12px",
             border: "none",
             fontFamily: "'Montserrat',sans-serif",
             fontWeight: 600,
@@ -81,9 +80,9 @@ export const CookieConsentBanner = (): JSX.Element | null => {
           style={{
             padding: "10px 20px",
             borderRadius: "10px",
-            background: "transparent",
-            color: pk.onDark90,
-            border: `1px solid ${pk.onDarkBorder30}`,
+            background: pk.page,
+            color: pk.ink78,
+            border: `1px solid ${pk.slateBorderStrong}`,
             fontFamily: "'Montserrat',sans-serif",
             fontWeight: 500,
             fontSize: "14px",

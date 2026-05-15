@@ -324,6 +324,8 @@ export const ClientTestimonialsSection = (): JSX.Element => {
         backgroundColor: pk.page,
         padding: "76px 0 100px",
         marginTop: "-50px",
+        position: "relative",
+        zIndex: 3,
         overflow: "visible",
       }}
     >

@@ -1,65 +1,26 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useState, type CSSProperties, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle2, ChevronDown } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
 import arrowSendUrl from "../../../../../Images/arrow_send.png";
+import {
+  buildLeadPayload,
+  getContactServiceOptions,
+  leadFormInit,
+  type LeadFormState,
+} from "../ContactSection/contactFormConfig";
+import { ContactServiceField } from "../ContactSection/ContactServiceField";
+import { headerPrimaryCtaClassName, headerPrimaryCtaStyle } from "../../../../design/headerCtaStyle";
 
-const PROJECT_TYPE_OPTIONS = [
-  "Landing page (pro jeden produkt/službu)",
-  "Firemní web / prezentační stránky",
-  "E-shop (internetový obchod)",
-  "Modernizace / redesign stávajícího webu",
-  "Jiné",
-];
-
-const FEATURES_OPTIONS = [
-  "Chatbot",
-  "Cenový Kalkulátor",
-  "Rezervační systém",
-  "Lead management",
-  "E-shop",
-  "Galerie / Videa",
-  "Kontaktní formuláře",
-  "Napojení na sociální sítě",
-  "Blog / články",
-  "Napojení na analytiku (Google Analytics apod.)",
-];
-
-const DOMAIN_OPTIONS = ["Ano", "Ne"];
 const SUBMIT_LEAD_FN_URL = "https://hmgicymajfjsnwkctvqf.supabase.co/functions/v1/submit-lead";
 
-type FormState = {
-  name: string;
-  company: string;
-  email: string;
-  phone: string;
-  projectType: string;
-  features: string[];
-  hasDomain: string;
-  budget: string;
-  gdprConsent: boolean;
-};
-
-const init: FormState = {
-  name: "",
-  company: "",
-  email: "",
-  phone: "",
-  projectType: "",
-  features: [],
-  hasDomain: "",
-  budget: "",
-  gdprConsent: false,
-};
-
 const DarkFloatingField = ({
-  label, id, type = "text", value, onChange, error, placeholder, isSelect, options,
+  label, id, type = "text", value, onChange, error, placeholder,
 }: {
   label: string; id: string; type?: string; value: string;
   onChange: (v: string) => void; error?: string; placeholder: string;
-  isSelect?: boolean; options?: string[];
 }) => {
   const [focused, setFocused] = useState(false);
   const active = focused || value.length > 0;
@@ -98,127 +59,75 @@ const DarkFloatingField = ({
       }}>
         {label}
       </label>
-
-      {isSelect ? (
-        <div style={{ position: "relative" }}>
-          <select
-            id={id}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            style={{
-              ...sharedStyle,
-              padding: active ? "26px 40px 10px 20px" : "20px 40px 20px 20px",
-              appearance: "none",
-              cursor: "pointer",
-              color: value ? pk.onDark : "transparent",
-            }}
-          >
-            <option value="" disabled hidden></option>
-            {options?.map((opt) => (
-              <option key={opt} value={opt} style={{ background: pk.panelDark, color: pk.onDark }}>
-                {opt}
-              </option>
-            ))}
-          </select>
-          <ChevronDown style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", width: "18px", color: pk.onDark45, pointerEvents: "none" }} />
-        </div>
-      ) : (
-        <input
-          id={id}
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder={focused ? placeholder : ""}
-          style={{
-            ...sharedStyle,
-            padding: active ? "28px 20px 10px" : "20px",
-          }}
-        />
-      )}
+      <input
+        id={id}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        placeholder={focused ? placeholder : ""}
+        style={{
+          ...sharedStyle,
+          padding: active ? "28px 20px 10px" : "20px",
+        }}
+      />
       {error ? <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "12px", color: pk.error300, paddingLeft: "4px", marginTop: "2px" }}>{error}</span> : null}
     </div>
   );
 };
 
+const columnTitleStyle: CSSProperties = {
+  fontFamily: "'Montserrat',sans-serif",
+  fontWeight: 700,
+  fontSize: "18px",
+  lineHeight: 1.3,
+  color: pk.onDark,
+  margin: "0 0 4px",
+};
+
+const fieldGroupLabelStyle: CSSProperties = {
+  fontFamily: "'Montserrat',sans-serif",
+  fontWeight: 500,
+  fontSize: "15px",
+  lineHeight: 1.45,
+  color: pk.onDark78,
+  margin: "0 0 10px",
+};
+
 export const ReadyToDesignSection = (): JSX.Element => {
   const { language } = useLanguage();
   const isEn = language === "en";
-  const PROJECT_OPTIONS = isEn
-    ? [
-      "Landing page (single product/service)",
-      "Company website / presentation pages",
-      "E-commerce store",
-      "Modernization / redesign of existing website",
-      "Other",
-    ]
-    : PROJECT_TYPE_OPTIONS;
-  const FEATURES = isEn
-    ? [
-      "Chatbot",
-      "Price Calculator",
-      "Booking system",
-      "Lead management",
-      "E-commerce",
-      "Gallery / Videos",
-      "Contact forms",
-      "Social media integration",
-      "Blog / articles",
-      "Analytics integration (Google Analytics etc.)",
-    ]
-    : FEATURES_OPTIONS;
-  const DOMAIN = isEn ? ["Yes", "No"] : DOMAIN_OPTIONS;
-  const [form, setForm] = useState<FormState>(init);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const serviceOptions = getContactServiceOptions(isEn);
+  const [form, setForm] = useState<LeadFormState>(leadFormInit);
+  const [errors, setErrors] = useState<Partial<Record<keyof LeadFormState, string>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [featuresOpen, setFeaturesOpen] = useState(false);
-  const featuresDropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const set = (f: keyof FormState) => (v: string | boolean) => {
+  const set = (f: keyof LeadFormState) => (v: string | boolean) => {
     setForm((p) => ({ ...p, [f]: v }));
     if (errors[f]) setErrors((p) => ({ ...p, [f]: undefined }));
     if (submitError) setSubmitError(null);
   };
 
-  const toggleFeature = (feature: string) => {
+  const toggleService = (service: string) => {
     setForm((prev) => ({
       ...prev,
-      features: prev.features.includes(feature)
-        ? prev.features.filter((f) => f !== feature)
-        : [...prev.features, feature],
+      services: prev.services.includes(service)
+        ? prev.services.filter((s) => s !== service)
+        : [...prev.services, service],
     }));
+    if (errors.services) setErrors((p) => ({ ...p, services: undefined }));
     if (submitError) setSubmitError(null);
   };
 
-  useEffect(() => {
-    if (!featuresOpen) return;
-    const onPointerDown = (ev: MouseEvent | TouchEvent) => {
-      const target = ev.target as Node | null;
-      if (!target) return;
-      if (featuresDropdownRef.current?.contains(target)) return;
-      setFeaturesOpen(false);
-    };
-    document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("touchstart", onPointerDown);
-    return () => {
-      document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("touchstart", onPointerDown);
-    };
-  }, [featuresOpen]);
-
   const validate = () => {
-    const e: Partial<Record<keyof FormState, string>> = {};
-    if (!form.name.trim()) e.name = isEn ? "Enter name" : "Zadejte jméno";
-    if (!form.email.trim()) e.email = isEn ? "Enter email" : "Zadejte email";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = isEn ? "Invalid email" : "Neplatný email";
-    if (!form.phone.trim()) e.phone = isEn ? "Enter phone" : "Zadejte telefon";
-    if (!form.projectType) e.projectType = isEn ? "Select project type" : "Vyberte typ projektu";
-    if (!form.hasDomain) e.hasDomain = isEn ? "Select option" : "Vyberte možnost";
+    const e: Partial<Record<keyof LeadFormState, string>> = {};
+    if (!form.name.trim()) e.name = isEn ? "Enter name or company" : "Zadejte jméno nebo název společnosti";
+    if (!form.email.trim()) e.email = isEn ? "Enter email" : "Zadejte e-mail";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = isEn ? "Invalid email" : "Neplatný e-mail";
+    if (form.services.length === 0) e.services = isEn ? "Select at least one service" : "Vyberte alespoň jednu službu";
     if (!form.gdprConsent) e.gdprConsent = isEn ? "Consent is required to submit the form." : "Pro odeslání je nutný souhlas se zpracováním osobních údajů.";
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -229,15 +138,6 @@ export const ReadyToDesignSection = (): JSX.Element => {
     if (!validate()) return;
     setLoading(true);
     setSubmitError(null);
-    const row = {
-      name: form.name.trim(),
-      email: form.email.trim(),
-      phone: form.phone.trim(),
-      company: form.company.trim(),
-      project_type: form.projectType,
-      budget: form.budget.trim(),
-      message: `${isEn ? "Requested features" : "Požadované funkce"}: ${form.features.length ? form.features.join(", ") : isEn ? "None" : "Žádné"}\n${isEn ? "Domain/hosting" : "Doména/hosting"}: ${form.hasDomain}`,
-    };
     try {
       const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
       if (!anonKey) throw new Error("Missing Supabase anon key");
@@ -247,12 +147,11 @@ export const ReadyToDesignSection = (): JSX.Element => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${anonKey}`,
         },
-        body: JSON.stringify(row),
+        body: JSON.stringify(buildLeadPayload(form, isEn)),
       });
       if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
-      setForm(init);
+      setForm(leadFormInit);
       setSubmitted(true);
-      setFeaturesOpen(false);
     } catch {
       setSubmitError(isEn ? "Sending failed. Please try again." : "Odeslání se nepodařilo. Zkuste to prosím znovu.");
     } finally {
@@ -357,156 +256,192 @@ export const ReadyToDesignSection = (): JSX.Element => {
             ) : (
               <form onSubmit={handleSubmit} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
                 <div className="cta-form-grid">
-                  <div className="cta-form-col" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-                    <DarkFloatingField id="cta-name" label={isEn ? "Name (required)" : "Jméno (povinné)"} value={form.name} onChange={set("name") as (v: string) => void} error={errors.name} placeholder={isEn ? "John Smith" : "Jan Novák"} />
-                    <DarkFloatingField id="cta-email" label={isEn ? "Email (required)" : "E-mail (povinné)"} type="email" value={form.email} onChange={set("email") as (v: string) => void} error={errors.email} placeholder={isEn ? "john@company.com" : "jan@firma.cz"} />
-                    <DarkFloatingField id="cta-type" label={isEn ? "Project type (required)" : "Typ projektu (povinné)"} isSelect options={PROJECT_OPTIONS} value={form.projectType} onChange={set("projectType") as (v: string) => void} error={errors.projectType} placeholder="" />
-                    <div ref={featuresDropdownRef} style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                      <button
-                        type="button"
-                        onClick={() => setFeaturesOpen((p) => !p)}
-                        aria-expanded={featuresOpen}
-                        aria-controls="cta-features-listbox"
+                  <div className="cta-form-col contact-form-col--spec">
+                    <h3 style={columnTitleStyle}>
+                      {isEn ? "1. Project specification" : "1. Specifikace projektu"}
+                    </h3>
+                    <ContactServiceField
+                      isEn={isEn}
+                      options={serviceOptions}
+                      selected={form.services}
+                      onToggle={toggleService}
+                      error={errors.services}
+                      inverse
+                    />
+
+                    <div className="contact-details-block">
+                      <label htmlFor="cta-details" style={fieldGroupLabelStyle}>
+                        {isEn ? "Describe your project" : "Popište nám svůj požadavek"}
+                      </label>
+                      <textarea
+                        id="cta-details"
+                        className="contact-details-field"
+                        value={form.projectDetails}
+                        onChange={(e) => set("projectDetails")(e.target.value)}
+                        rows={5}
+                        placeholder={isEn ? "Tell us about your goals, scope, and timeline…" : "Napište nám o cílech, rozsahu a termínu…"}
                         style={{
+                          width: "100%",
+                          resize: "vertical",
                           background: pk.onDark06,
-                          border: `1px solid ${featuresOpen ? pk.accent80 : pk.onDarkBorder12}`,
+                          border: `1px solid ${pk.onDarkBorder12}`,
                           borderRadius: "16px",
-                          minHeight: "58px",
-                          padding: "12px 16px",
+                          padding: "16px 18px",
                           fontFamily: "'Montserrat',sans-serif",
                           fontWeight: 400,
                           fontSize: "16px",
+                          lineHeight: 1.55,
                           color: pk.onDark,
-                          textAlign: "left",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "12px",
-                          cursor: "pointer",
-                          boxShadow: featuresOpen ? `0 0 0 4px ${pk.accent12}` : "none",
-                          transition: "all 250ms ease",
+                          outline: "none",
+                          boxSizing: "border-box",
                           backdropFilter: "blur(10px)",
                         }}
-                      >
-                        <span style={{ color: form.features.length ? pk.onDark : pk.onDark52 }}>
-                          {form.features.length
-                            ? isEn ? `${form.features.length} selected options` : `${form.features.length} vybraných možností`
-                            : isEn ? "Requested features / AI tools" : "Požadované funkce / AI nástroje"}
-                        </span>
-                        <ChevronDown style={{ width: "18px", color: pk.onDark45, transform: featuresOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 200ms ease" }} />
-                      </button>
-                      {featuresOpen ? (
-                        <div
-                          id="cta-features-listbox"
-                          role="listbox"
-                          aria-multiselectable="true"
-                          style={{
-                            background: pk.ctaPanelElevated,
-                            border: `1px solid ${pk.onDarkBorder12}`,
-                            borderRadius: "14px",
-                            padding: "10px",
-                            display: "grid",
-                            gap: "8px",
-                          }}
-                        >
-                          {FEATURES.map((opt) => {
-                            const checked = form.features.includes(opt);
-                            return (
-                              <label key={opt} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "6px 8px", borderRadius: "10px", cursor: "pointer", background: checked ? pk.accent12 : "transparent" }}>
-                                <input type="checkbox" checked={checked} onChange={() => toggleFeature(opt)} style={{ width: "16px", height: "16px", accentColor: pk.accent }} />
-                                <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.onDark }}>{opt}</span>
-                              </label>
-                            );
-                          })}
-                        </div>
-                      ) : null}
+                      />
                     </div>
                   </div>
 
-                  <div className="cta-form-col" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-                    <DarkFloatingField id="cta-company" label={isEn ? "Company" : "Firma"} value={form.company} onChange={set("company") as (v: string) => void} placeholder={isEn ? "Company Ltd." : "Firma s.r.o."} />
-                    <DarkFloatingField id="cta-phone" label={isEn ? "Phone (required)" : "Telefon (povinné)"} type="tel" value={form.phone} onChange={set("phone") as (v: string) => void} error={errors.phone} placeholder="+420 725 703 868" />
-                    <DarkFloatingField id="cta-domain" label={isEn ? "Do you have a domain / hosting? (required)" : "Máte doménu / webhosting? (povinné)"} isSelect options={DOMAIN} value={form.hasDomain} onChange={set("hasDomain") as (v: string) => void} error={errors.hasDomain} placeholder="" />
-                    <DarkFloatingField id="cta-budget" label={isEn ? "Budget" : "Rozpočet"} value={form.budget} onChange={set("budget") as (v: string) => void} placeholder={isEn ? "e.g. 30 000 CZK" : "např. 30 000 Kč"} />
+                  <div className="cta-form-col contact-form-col--contact">
+                    <h3 style={columnTitleStyle}>
+                      {isEn ? "2. Contact details" : "2. Kontaktní údaje"}
+                    </h3>
+                    <DarkFloatingField
+                      id="cta-name"
+                      label={isEn ? "Name / Company name (required)" : "Jméno / Název společnosti (povinné)"}
+                      value={form.name}
+                      onChange={set("name") as (v: string) => void}
+                      error={errors.name}
+                      placeholder={isEn ? "John Smith / Company Ltd." : "Jan Novák / Firma s.r.o."}
+                    />
+                    <DarkFloatingField
+                      id="cta-email"
+                      label={isEn ? "Email (required)" : "E-mail (povinné)"}
+                      type="email"
+                      value={form.email}
+                      onChange={set("email") as (v: string) => void}
+                      error={errors.email}
+                      placeholder={isEn ? "john@company.com" : "jan@firma.cz"}
+                    />
+                    <DarkFloatingField
+                      id="cta-phone"
+                      label={isEn ? "Phone (optional)" : "Telefon (nepovinné)"}
+                      type="tel"
+                      value={form.phone}
+                      onChange={set("phone") as (v: string) => void}
+                      placeholder="+420 725 703 868"
+                    />
+                    <DarkFloatingField
+                      id="cta-address"
+                      label={isEn ? "Address (optional)" : "Adresa (nepovinné)"}
+                      value={form.address}
+                      onChange={set("address") as (v: string) => void}
+                      placeholder={isEn ? "Street, city" : "Ulice, město"}
+                    />
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "4px" }}>
+                      <p style={{ ...fieldGroupLabelStyle, marginBottom: "6px" }}>
+                        {isEn ? "Personal data processing *" : "Zpracování osobních údajů *"}
+                      </p>
+                      <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark78 }}>
+                        <input
+                          type="checkbox"
+                          checked={form.gdprConsent}
+                          onChange={(e) => set("gdprConsent")(e.target.checked)}
+                          style={{ marginTop: "4px", width: "18px", height: "18px", accentColor: pk.accent }}
+                          aria-invalid={!!errors.gdprConsent}
+                        />
+                        <span>
+                          {isEn ? "I agree to the processing of personal data according to the " : "Souhlasím se zpracováním osobních údajů dle "}
+                          <Link to="/zasady-ochrany-soukromi" style={{ color: pk.accent, textDecoration: "underline" }}>
+                            {isEn ? "Privacy Policy" : "Zásad ochrany soukromí"}
+                          </Link>.
+                        </span>
+                      </label>
+                      {errors.gdprConsent ? <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "12px", color: pk.error300, paddingLeft: "30px" }}>{errors.gdprConsent}</span> : null}
+                    </div>
+
+                    {submitError ? (
+                      <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.error300, margin: 0 }} role="alert">
+                        {submitError}
+                      </p>
+                    ) : null}
+
+                    <div className="contact-form-submit-wrap" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        id="contact-form-submit"
+                        className={headerPrimaryCtaClassName}
+                        style={{
+                          ...headerPrimaryCtaStyle,
+                          marginTop: "4px",
+                          cursor: loading ? "wait" : "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "10px",
+                          width: "100%",
+                        }}
+                        onMouseEnter={(e) => {
+                          if (loading) return;
+                          e.currentTarget.style.transform = "translateY(-3px)";
+                          e.currentTarget.style.filter = "brightness(1.1)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = "";
+                          e.currentTarget.style.filter = "";
+                        }}
+                      >
+                        {loading ? (isEn ? "Sending..." : "Odesílám...") : (isEn ? "Start consultation" : "Začít konzultovat")}
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark78 }}>
-                    <input
-                      type="checkbox"
-                      checked={form.gdprConsent}
-                      onChange={(e) => set("gdprConsent")(e.target.checked)}
-                      style={{ marginTop: "4px", width: "18px", height: "18px", accentColor: pk.accent }}
-                      aria-invalid={!!errors.gdprConsent}
-                    />
-                    <span>
-                      {isEn ? "I agree to the processing of personal data according to the " : "Souhlasím se zpracováním osobních údajů dle "}
-                      <Link to="/zasady-ochrany-soukromi" style={{ color: pk.accent, textDecoration: "underline" }}>
-                        {isEn ? "Privacy Policy" : "Zásad ochrany soukromí"}
-                      </Link>.
-                    </span>
-                  </label>
-                  {errors.gdprConsent ? <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "12px", color: pk.error300, paddingLeft: "30px" }}>{errors.gdprConsent}</span> : null}
-                </div>
-
-                {submitError ? (
-                  <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "14px", color: pk.error300, margin: 0 }} role="alert">
-                    {submitError}
-                  </p>
-                ) : null}
-
-                <div className="contact-form-submit-wrap" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    id="contact-form-submit"
-                    className="animate-pulse-glow hero-primary-btn"
-                    style={{
-                      marginTop: "8px",
-                      padding: "9px 22px",
-                      borderRadius: "12px",
-                      background: pk.gradientPopular,
-                      border: "none",
-                      color: pk.ink,
-                      fontFamily: "'Montserrat',sans-serif",
-                      fontWeight: 600,
-                      fontSize: "14px",
-                      cursor: loading ? "wait" : "pointer",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "10px",
-                      transition: "transform 0.25s ease, filter 0.25s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (loading) return;
-                      e.currentTarget.style.transform = "translateY(-3px)";
-                      e.currentTarget.style.filter = "brightness(1.1)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "";
-                      e.currentTarget.style.filter = "";
-                    }}
-                  >
-                    {loading ? (isEn ? "Sending..." : "Odesílám...") : (isEn ? "Start consultation" : "Začít konzultovat")}
-                  </button>
-                </div>
               </form>
             )}
           </div>
         </div>
       </div>
       <style>{`
+        .contact-form-col--spec,
+        .contact-form-col--contact {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
         .cta-form-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 24px;
-          align-items: start;
+          gap: 32px;
+          align-items: stretch;
         }
-        @media(max-width:768px){
+        @media (min-width: 769px) {
+          .contact-form-col--spec {
+            min-height: 100%;
+          }
+          .contact-details-block {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 0;
+          }
+          .contact-details-field {
+            flex: 1 1 auto;
+            min-height: 120px;
+            height: 100%;
+          }
+        }
+        @media (max-width: 768px) {
+          .contact-details-field {
+            min-height: 140px;
+          }
+        }
+        @media (max-width: 768px) {
+          .contact-form-col--spec .contact-details-block { flex: none; }
+          .contact-form-col--spec .contact-details-field { min-height: 120px; height: auto; }
           .cta-form-shell { padding: 28px 18px 26px !important; border-radius: 26px !important; }
-          .cta-form-grid { grid-template-columns: 1fr !important; }
+          .cta-form-grid { grid-template-columns: 1fr !important; gap: 28px; }
           .cta-arrow-img { display: none !important; }
         }
         @media(prefers-reduced-motion:reduce){

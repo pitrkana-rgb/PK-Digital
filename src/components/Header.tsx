@@ -224,7 +224,7 @@ export const Header = () => {
                                 type="button"
                                 onClick={() => navigate("/napiste-nam")}
                                 style={{
-                                    background: pk.gradientPopular,
+                                    backgroundColor: pk.accent,
                                     color: pk.ink,
                                     borderRadius: "12px",
                                     padding: `${HEADER_CTA_PAD_Y}px ${HEADER_CTA_PAD_X}px`,
@@ -398,10 +398,10 @@ export const Header = () => {
                         onClick={() => { navigate("/napiste-nam"); setMenuOpen(false); }}
                         style={{
                             marginTop: "24px",
-                            background: pk.gradientPopular,
+                            backgroundColor: pk.accent,
                             color: pk.ink,
                             border: "none",
-                            borderRadius: "999px",
+                            borderRadius: "12px",
                             padding: `${HEADER_CTA_PAD_Y}px ${HEADER_CTA_PAD_X}px`,
                             fontFamily: "'Montserrat',sans-serif",
                             fontWeight: 600,

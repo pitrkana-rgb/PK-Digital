@@ -92,29 +92,6 @@ const cardsEn: PrototypeCard[] = [
   },
 ];
 
-const CheckChip = () => (
-  <span
-    aria-hidden="true"
-    style={{
-      width: 22,
-      height: 22,
-      borderRadius: 999,
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      background: pk.accent10,
-      boxShadow: `0 0 0 1px ${pk.prototypeRing18} inset`,
-      color: pk.linkSky,
-      flexShrink: 0,
-      marginTop: 1,
-      fontSize: 13,
-      fontWeight: 700,
-    }}
-  >
-    ✓
-  </span>
-);
-
 export const PrototypeShowcaseSection = (): JSX.Element => {
   const { language } = useLanguage();
   const isEn = language === "en";
@@ -233,18 +210,15 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
 
               <h3 className="prototype-title">{card.title}</h3>
 
-              <ul className="prototype-benefits">
+              <ul className="prototype-benefits prototype-benefits--checks">
                 {card.bullets.map((bullet) => (
-                  <li key={bullet}>
-                    <CheckChip />
-                    <span>{bullet}</span>
-                  </li>
+                  <li key={bullet}>{bullet}</li>
                 ))}
               </ul>
 
               <p className="prototype-trust">{card.trust}</p>
 
-              <button type="button" className="prototype-cta" onClick={() => setActivePreview(card)}>
+              <button type="button" className="prototype-cta landing-primary-cta animate-pulse-glow" onClick={() => setActivePreview(card)}>
                 {t.cta}
               </button>
             </article>
@@ -277,16 +251,13 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                     </div>
                     <div className="prototype-category">{card.category}</div>
                     <h3 className="prototype-title">{card.title}</h3>
-                    <ul className="prototype-benefits">
+                    <ul className="prototype-benefits prototype-benefits--checks">
                       {card.bullets.map((bullet) => (
-                        <li key={bullet}>
-                          <CheckChip />
-                          <span>{bullet}</span>
-                        </li>
+                        <li key={bullet}>{bullet}</li>
                       ))}
                     </ul>
                     <p className="prototype-trust">{card.trust}</p>
-                    <button type="button" className="prototype-cta" onClick={() => setActivePreview(card)}>
+                    <button type="button" className="prototype-cta landing-primary-cta animate-pulse-glow" onClick={() => setActivePreview(card)}>
                       {t.cta}
                     </button>
                   </article>
@@ -425,14 +396,32 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           flex-direction:column;
           gap: 12px;
         }
-        .prototype-benefits li{
-          display:flex;
-          align-items:flex-start;
-          gap: 10px;
+        .prototype-benefits--checks{
+          list-style: none;
+          padding-left: 0;
+        }
+        .prototype-benefits--checks li{
+          position: relative;
+          padding-left: 28px;
+          margin: 0;
+          padding-top: 8px;
+          padding-bottom: 8px;
           font-family: "Montserrat", sans-serif;
-          font-size: 15px;
-          line-height: 1.5;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 1.55;
           color: var(--pk-ink-82);
+        }
+        .prototype-benefits--checks li::before{
+          content: "✓";
+          position: absolute;
+          left: 0;
+          top: 0.42em;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 1.05em;
+          line-height: 1;
+          color: var(--pk-ink);
         }
         .prototype-trust{
           margin: 0 0 20px;
@@ -446,10 +435,9 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           border:none;
           border-radius: 12px;
           padding: 9px 22px;
-          background: var(--pk-gradient-popular);
           color: var(--pk-ink);
           font-family: "Montserrat", sans-serif;
-          font-weight: 700;
+          font-weight: 600;
           font-size: 14px;
           cursor:pointer;
           transition: transform 220ms ease, filter 220ms ease;

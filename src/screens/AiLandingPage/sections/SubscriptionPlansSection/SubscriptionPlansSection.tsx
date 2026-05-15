@@ -192,12 +192,11 @@ const PricingCard = ({
       {/* CTA */}
       <button
         type="button"
-        className="pricing-cta animate-pulse-glow hero-primary-btn"
+        className="pricing-cta animate-pulse-glow hero-primary-btn landing-primary-cta"
         onClick={() => navigate("/napiste-nam")}
         style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
           padding: "9px 22px",
-          background: pk.gradientPopular,
           border: "none",
           borderRadius: "12px",
           fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "14px",

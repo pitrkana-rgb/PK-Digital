@@ -94,7 +94,7 @@ export const AiLandingPage = (): JSX.Element => {
             <AiDesignFeaturesSection />
           </section>
 
-          <section data-animate-on-scroll className="section-mb-mobile">
+          <section className="section-mb-mobile">
             <ClientTestimonialsSection />
           </section>
 
