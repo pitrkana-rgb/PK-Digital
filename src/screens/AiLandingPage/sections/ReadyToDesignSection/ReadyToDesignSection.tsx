@@ -152,7 +152,9 @@ export const ReadyToDesignSection = (): JSX.Element => {
       });
       if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
 
-      // GTM: fire only after successful HTTP response — not on validation or network/backend errors.
+      await response.text().catch(() => "");
+
+      // GTM: AFTER ok response + body drained — Custom Event trigger `lead_form_submit` (Preview → Summary → dataLayer pushes).
       pushLeadFormSubmitSuccessToDataLayer();
 
       setForm(leadFormInit);

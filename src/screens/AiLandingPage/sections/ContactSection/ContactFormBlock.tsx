@@ -157,7 +157,10 @@ export const ContactFormBlock = (): JSX.Element => {
         throw new Error(detail || `Request failed with status ${response.status}`);
       }
 
-      // GTM: fire only after successful HTTP response — not on validation or network/backend errors.
+      // Consume success body so the fetch is fully settled before GTM fires (helps async clarity).
+      await response.text().catch(() => "");
+
+      // GTM: AFTER ok response + body drained — Custom Event trigger `lead_form_submit` (Preview → Summary → dataLayer pushes).
       pushLeadFormSubmitSuccessToDataLayer();
 
       setForm(leadFormInit);

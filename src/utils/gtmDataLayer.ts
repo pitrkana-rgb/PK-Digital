@@ -6,15 +6,27 @@ declare global {
 }
 
 /**
- * GTM lead conversion — call only after the backend confirms a successful submit.
+ * Signal a validated lead submission to Google Tag Manager.
  *
- * SPA (React Router): GTM boots once from index.html; `dataLayer` persists across navigations,
- * so each successful form send pushes a discrete event for triggers.
+ * Use only after HTTP success is confirmed (`response.ok`).
+ * Runs in queueMicrotask so the push clears the synchronous React/fetch chain — Tag Assistant
+ * Preview timelines record Custom Events more reliably than synchronous pushes inside `onSubmit`.
  *
- * Does not run on validation errors or failed fetches — callers must invoke only inside success paths.
+ * Mirrors the standard snippet:
+ *   window.dataLayer = window.dataLayer || [];
+ *   window.dataLayer.push({ event: 'lead_form_submit' });
  */
 export function pushLeadFormSubmitSuccessToDataLayer(): void {
   if (typeof window === "undefined") return;
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: "lead_form_submit" });
+
+  const flush = (): void => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "lead_form_submit" });
+  };
+
+  if (typeof queueMicrotask === "function") {
+    queueMicrotask(flush);
+  } else {
+    Promise.resolve().then(flush);
+  }
 }
