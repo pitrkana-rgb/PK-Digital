@@ -325,7 +325,7 @@ const renderOfferFeatureBoldOnly = (feature: SlideFeature, key: string): JSX.Ele
 const slides: Slide[] = [
   {
     id: "tvorba-webu",
-    title: "Web, který přináší zákazníky",
+    title: "Stránky, které přinášejí zákazníky",
     description:
       "Navrhneme a dodáme web do 14 dní — bez složitostí a bez rizika.",
     features: [
@@ -339,7 +339,7 @@ const slides: Slide[] = [
   },
   {
     id: "upgrade-webu",
-    title: "Modernizace stránek",
+    title: "Modernizace webu pro silnější značku",
     description:
       "Kompletní modernizace vašeho webu — vyšší rychlost a lepší konverze.",
     features: [
@@ -360,7 +360,7 @@ const slides: Slide[] = [
   },
   {
     id: "webove-aplikace",
-    title: "Webové aplikace, které usnadní podnikání",
+    title: "Aplikace, které usnadní podnikání",
     description: "Navrhneme a vyvineme moderní webovou aplikaci pro vaše podnikání.",
     features: [
       { bold: "Návrh aplikace zdarma", rest: " do 3 dnů bez závazků" },
@@ -374,7 +374,7 @@ const slides: Slide[] = [
   },
   {
     id: "automatizace-ai",
-    title: "Automatizace a AI agenti",
+    title: "Automatizace, která šetří čas i peníze",
     description: "Získejte více zákazníků a snižte náklady díky chytré automatizaci",
     features: [
       { bold: "Automatizace procesů bez", rest: " rutinní manuální práce" },
@@ -496,7 +496,7 @@ export const CoNabizimeSection = (): JSX.Element => {
 
   const navItems = isEn
     ? ["New website", "Website modernization", "Web applications", "Automation and AI agents"]
-    : ["Tvorba nového webu", "Modernizace stránek", "Webové aplikace", "Automatizace a AI agenti"];
+    : ["Webové stránky na míru", "Modernizace webových stránek", "Webové aplikace", "Automatizace a AI agenti"];
 
   const navSubItems = isEn
     ? [
@@ -582,6 +582,8 @@ export const CoNabizimeSection = (): JSX.Element => {
 
   return (
     <section
+      id="co-nabizime"
+      className="landing-scroll-target"
       style={{
         width: "100%",
         backgroundColor: pk.page,

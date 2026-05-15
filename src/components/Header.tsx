@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../i18n/LanguageContext";
 import companyLogoV4BlackUrl from "../../Images/Company_logo_V4_black.png";
 import { pk } from "../design/pkLandingColors";
+import { scrollToSectionId } from "../utils/scrollToSection";
 
 const HEADER_PHONE_DISPLAY = "+420 725 703 868";
 const HEADER_PHONE_HREF = "tel:+420725703868";
@@ -33,7 +34,7 @@ export const Header = () => {
     const t = language === "en" ? {
         navServices: "Services",
         navReference: "Reference",
-        navFaq: "Common questions",
+        navFaq: "FAQ",
         navContact: "Contact",
         writeUs: "Contact us",
         openMenu: "Open menu",
@@ -57,15 +58,6 @@ export const Header = () => {
         { label: t.navContact, path: "/kontakt" as const },
     ] as const;
 
-    const scrollToSection = (targetId: string) => {
-        const element = document.getElementById(targetId);
-        if (element) {
-            const headerOffset = 80;
-            const top = element.getBoundingClientRect().top + window.scrollY - headerOffset;
-            window.scrollTo({ top, behavior: "smooth" });
-        }
-    };
-
     const handleNavClick = (item: typeof navigationItems[0]) => {
         if (item.path === "/kontakt") {
             if (location.pathname !== "/kontakt") {
@@ -77,11 +69,11 @@ export const Header = () => {
             return;
         }
         if (location.pathname === item.path && item.path === "/" && item.targetId) {
-            scrollToSection(item.targetId);
+            scrollToSectionId(item.targetId);
         } else {
             navigate(item.path);
             if (item.path === "/" && item.targetId) {
-                setTimeout(() => scrollToSection(item.targetId), 120);
+                setTimeout(() => scrollToSectionId(item.targetId), 350);
             }
         }
         setMenuOpen(false);
@@ -91,9 +83,9 @@ export const Header = () => {
         setMenuOpen(false);
         if (location.pathname !== "/") {
             navigate("/");
-            setTimeout(() => scrollToSection("hero"), 120);
+            setTimeout(() => scrollToSectionId("hero"), 350);
         } else {
-            scrollToSection("hero");
+            scrollToSectionId("hero");
         }
     };
 

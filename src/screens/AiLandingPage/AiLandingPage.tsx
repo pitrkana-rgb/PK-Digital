@@ -78,7 +78,7 @@ export const AiLandingPage = (): JSX.Element => {
             <BrandLogosCarouselSection />
           </section>
 
-          <section id="co-nabizime" data-animate-on-scroll className="section-mb-mobile">
+          <section data-animate-on-scroll className="section-mb-mobile">
             <CoNabizimeSection />
           </section>
 
@@ -103,7 +103,7 @@ export const AiLandingPage = (): JSX.Element => {
           <PriceCalculatorSection />
         </section> */}
 
-          <section id="faq" data-animate-on-scroll className="section-mb-mobile">
+          <section data-animate-on-scroll className="section-mb-mobile">
             <FrequentlyAskedQuestionsSection />
           </section>
 

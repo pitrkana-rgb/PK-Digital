@@ -163,7 +163,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
     <section style={{ width: "100%", backgroundColor: pk.page, padding: "80px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
       <SectionDivider />
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
-        <div className="cta-form-wrap" style={{ position: "relative" }}>
+        <div className="cta-form-wrap contact-form-shadow-wrap" style={{ position: "relative" }}>
           <img
             src={arrowSendUrl}
             alt=""
@@ -205,6 +205,19 @@ export const ReadyToDesignSection = (): JSX.Element => {
             />
 
             <div style={{ position: "relative", zIndex: 1, marginBottom: "26px", maxWidth: "760px", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
+              <p
+                style={{
+                  margin: "0 0 10px",
+                  fontFamily: "'Montserrat',sans-serif",
+                  fontWeight: 700,
+                  fontSize: "13px",
+                  lineHeight: 1.4,
+                  letterSpacing: "0.04em",
+                  color: pk.onDark88,
+                }}
+              >
+                {isEn ? "We reply within 24h" : "Odpovídáme do 24h"}
+              </p>
               <h2
                 style={{
                   fontFamily: "'Montserrat',sans-serif",
@@ -215,7 +228,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
                   color: pk.onDark,
                 }}
               >
-                {isEn ? "Let’s start the consultation" : "Začněme konzultovat"}
+                {isEn ? "Non-binding inquiry" : "Nezávazná poptávka"}
               </h2>
               <p
                 style={{
@@ -403,6 +416,13 @@ export const ReadyToDesignSection = (): JSX.Element => {
         </div>
       </div>
       <style>{`
+        .contact-form-shadow-wrap {
+          border-radius: 32px;
+          box-shadow:
+            0 2px 6px rgba(2, 6, 23, 0.05),
+            0 14px 36px rgba(2, 6, 23, 0.09),
+            0 36px 72px rgba(2, 6, 23, 0.12);
+        }
         .contact-form-col--spec,
         .contact-form-col--contact {
           display: flex;

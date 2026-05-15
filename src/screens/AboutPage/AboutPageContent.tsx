@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { pk } from "../../design/pkLandingColors";
+import { headerPrimaryCtaClassName, headerPrimaryCtaStyle } from "../../design/headerCtaStyle";
 import founderV3Url from "../../../Images/Founder_V3.png";
 import founderV2Url from "../../../Images/Founder_V2.png";
 
@@ -174,21 +175,9 @@ export const AboutPageContent = (): JSX.Element => {
                   <button
                     type="button"
                     id="about-consultation-cta"
-                    className="animate-pulse-glow hero-primary-btn"
+                    className={headerPrimaryCtaClassName}
                     onClick={() => navigate("/napiste-nam")}
-                    style={{
-                      background: pk.gradientPopular,
-                      color: "#070B14",
-                      border: "none",
-                      borderRadius: "12px",
-                      padding: "9px 22px",
-                      fontFamily: "'Montserrat',sans-serif",
-                      fontWeight: 600,
-                      fontSize: "14px",
-                      cursor: "pointer",
-                      transition: "transform 0.25s ease, filter 0.25s ease",
-                      whiteSpace: "nowrap",
-                    }}
+                    style={{ ...headerPrimaryCtaStyle, whiteSpace: "nowrap" }}
                     onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.transform = "translateY(-3px)"; b.style.filter = "brightness(1.1)"; }}
                     onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.transform = ""; b.style.filter = ""; }}
                     onMouseDown={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(0.97)"; }}

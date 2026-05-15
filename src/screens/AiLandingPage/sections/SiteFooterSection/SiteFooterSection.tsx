@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import companyLogoV4Url from "../../../../../Images/Company_logo_V4.png";
 import { pk } from "../../../../design/pkLandingColors";
+import { scrollToSectionId } from "../../../../utils/scrollToSection";
 
 export const SiteFooterSection = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export const SiteFooterSection = (): JSX.Element => {
   } : {
     home: "Domů",
     services: "Služby",
-    faq: "FAQ",
+    faq: "Časté dotazy",
     contact: "Kontakt",
     footerDesc: "Navrhujeme moderní weby, automatizujeme procesy a stavíme AI agenty pro váš tým.",
     nav: "Navigace",
@@ -51,13 +52,11 @@ export const SiteFooterSection = (): JSX.Element => {
       return;
     }
     if (location.pathname === link.path && link.path === "/" && link.id) {
-      document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToSectionId(link.id);
     } else {
       navigate(link.path);
       if (link.path === "/" && link.id) {
-        setTimeout(() => {
-          document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
+        setTimeout(() => scrollToSectionId(link.id), 350);
       }
     }
   };

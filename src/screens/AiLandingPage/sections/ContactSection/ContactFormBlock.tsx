@@ -166,9 +166,9 @@ export const ContactFormBlock = (): JSX.Element => {
   };
 
   return (
-    <section id="contact" style={{ width: "100%", padding: "0 0 64px", position: "relative", backgroundColor: pk.page }}>
+    <section id="contact" className="contact-form-page-section" style={{ width: "100%", padding: "0 0 64px", position: "relative", backgroundColor: pk.page }}>
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ marginBottom: "0" }}>
+        <div style={{ marginBottom: "0" }} className="contact-form-shadow-wrap">
           <div
             style={{
               background: pk.hero,
@@ -180,6 +180,62 @@ export const ContactFormBlock = (): JSX.Element => {
             }}
             className="contact-form-card"
           >
+            <div
+              className="contact-form-intro"
+              style={{
+                position: "relative",
+                zIndex: 1,
+                marginBottom: "26px",
+                maxWidth: "760px",
+                marginLeft: "auto",
+                marginRight: "auto",
+                textAlign: "center",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0 0 10px",
+                  fontFamily: "'Montserrat',sans-serif",
+                  fontWeight: 700,
+                  fontSize: "13px",
+                  lineHeight: 1.4,
+                  letterSpacing: "0.04em",
+                  color: pk.onDark88,
+                }}
+              >
+                {isEn ? "We reply within 24h" : "Odpovídáme do 24h"}
+              </p>
+              <h2
+                style={{
+                  fontFamily: "'Montserrat',sans-serif",
+                  fontWeight: 800,
+                  fontSize: "clamp(26px, 3.2vw, 40px)",
+                  lineHeight: 1.12,
+                  margin: 0,
+                  color: pk.onDark,
+                }}
+              >
+                {isEn ? "Non-binding inquiry" : "Nezávazná poptávka"}
+              </h2>
+              <p
+                style={{
+                  margin: "14px 0 0",
+                  maxWidth: "720px",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  fontFamily: "'Montserrat',sans-serif",
+                  fontWeight: 400,
+                  fontSize: "14px",
+                  lineHeight: 1.6,
+                  color: pk.onDark72,
+                }}
+              >
+                {isEn
+                  ? "Fill in the form and we will get back to you with the next steps."
+                  : "Udělejte první krok k novému webu. Zabere to jen 5 minut."}
+              </p>
+            </div>
+
             {submitted ? (
               <div style={{
                 textAlign: "center",
@@ -353,6 +409,13 @@ export const ContactFormBlock = (): JSX.Element => {
       </div>
 
       <style>{`
+        .contact-form-shadow-wrap {
+          border-radius: 28px;
+          box-shadow:
+            0 2px 6px rgba(2, 6, 23, 0.05),
+            0 14px 36px rgba(2, 6, 23, 0.09),
+            0 36px 72px rgba(2, 6, 23, 0.12);
+        }
         .contact-form-col--spec,
         .contact-form-col--contact {
           display: flex;

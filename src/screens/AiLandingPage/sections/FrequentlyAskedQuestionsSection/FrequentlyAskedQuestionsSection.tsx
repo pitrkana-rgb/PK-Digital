@@ -82,7 +82,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" style={{ width: "100%", backgroundColor: pk.page, padding: "76px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
+    <section id="faq" className="landing-scroll-target" style={{ width: "100%", backgroundColor: pk.page, padding: "76px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
       <SectionDivider />
       <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 24px" }}>
 

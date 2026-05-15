@@ -55,10 +55,11 @@ export const CompanyInfoBlock = (): JSX.Element => {
       </h2>
       <div
         style={{
-          background: pk.page,
-          border: `1px solid ${pk.slateTint10}`,
+          background: pk.hero,
+          border: `1px solid ${pk.onDarkBorder12}`,
           borderRadius: "20px",
           padding: "32px 40px",
+          boxShadow: `inset 0 1px 0 ${pk.onDarkBorder08}`,
         }}
       >
         <div
@@ -78,11 +79,12 @@ export const CompanyInfoBlock = (): JSX.Element => {
                   width: "40px",
                   height: "40px",
                   borderRadius: "10px",
-                  background: pk.slateTint06,
+                  background: pk.onDark06,
+                  border: `1px solid ${pk.onDarkBorder12}`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: pk.ink,
+                  color: pk.accent,
                   flexShrink: 0,
                 }}
               >
@@ -93,7 +95,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
                   style={{
                     fontFamily: "'Montserrat',sans-serif",
                     fontSize: "11px",
-                    color: pk.ink55,
+                    color: pk.onDark55,
                     fontWeight: 600,
                     letterSpacing: "0.05em",
                     marginBottom: "4px",
@@ -105,7 +107,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
                   style={{
                     fontFamily: "'Montserrat',sans-serif",
                     fontSize: "14px",
-                    color: pk.ink,
+                    color: pk.onDark,
                     lineHeight: 1.45,
                   }}
                 >

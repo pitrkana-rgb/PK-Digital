@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
 import investicniPoradceImg from "../../../../../Images/Prototypes/investiční poradce.png";
@@ -289,27 +290,29 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         </div>
       </div>
 
-      {activePreview ? (
-        <div className="prototype-modal" role="dialog" aria-modal="true" aria-label={activePreview.category}>
-          <div className="prototype-modal-backdrop" onClick={() => setActivePreview(null)} />
-          <div className="prototype-modal-shell">
-            <div className="prototype-modal-topbar">
-              <div>
-                <div className="prototype-modal-label">{activePreview.category}</div>
-                <h3 className="prototype-modal-title">{activePreview.title}</h3>
-              </div>
-              <button type="button" className="prototype-modal-close" onClick={() => setActivePreview(null)} aria-label={t.closeAria}>
+      {activePreview
+        ? createPortal(
+          <div className="prototype-modal" role="dialog" aria-modal="true" aria-label={activePreview.category}>
+            <div className="prototype-modal-backdrop" onClick={() => setActivePreview(null)} />
+            <div className="prototype-modal-shell">
+              <button
+                type="button"
+                className="prototype-modal-close"
+                onClick={() => setActivePreview(null)}
+                aria-label={t.closeAria}
+              >
                 ×
               </button>
+              <iframe
+                src={activePreview.previewUrl}
+                title={activePreview.category}
+                className="prototype-modal-frame"
+              />
             </div>
-            <iframe
-              src={activePreview.previewUrl}
-              title={activePreview.category}
-              className="prototype-modal-frame"
-            />
-          </div>
-        </div>
-      ) : null}
+          </div>,
+          document.body,
+        )
+        : null}
 
       <style>{`
         @media (min-width: 901px) {
@@ -394,7 +397,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           margin:0 0 16px;
           display:flex;
           flex-direction:column;
-          gap: 12px;
+          gap: 0;
         }
         .prototype-benefits--checks{
           list-style: none;
@@ -404,8 +407,8 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           position: relative;
           padding-left: 28px;
           margin: 0;
-          padding-top: 8px;
-          padding-bottom: 8px;
+          padding-top: 10px;
+          padding-bottom: 10px;
           font-family: "Montserrat", sans-serif;
           font-weight: 500;
           font-size: 16px;
@@ -454,6 +457,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           align-items:center;
           justify-content:center;
           padding: 24px;
+          overflow: auto;
         }
         .prototype-modal-backdrop{
           position:absolute;
@@ -464,7 +468,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         .prototype-modal-shell{
           position:relative;
           z-index:1;
-          width:min(1320px, 100%);
+          width:min(1320px, calc(100% - 48px));
           height:min(84vh, 920px);
           background: var(--pk-page);
           border-radius: 24px;
@@ -473,43 +477,22 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           display:flex;
           flex-direction:column;
         }
-        .prototype-modal-topbar{
-          display:flex;
-          align-items:flex-start;
-          justify-content:space-between;
-          gap:16px;
-          padding: 18px 20px;
-          border-bottom: 1px solid var(--pk-slate-tint-08);
-          background: var(--pk-on-dark-94);
-        }
-        .prototype-modal-label{
-          font-family:"Montserrat", sans-serif;
-          font-size:12px;
-          font-weight:700;
-          letter-spacing:0.05em;
-          text-transform:uppercase;
-          color: var(--pk-ink-55);
-          margin-bottom:6px;
-        }
-        .prototype-modal-title{
-          margin:0;
-          font-family:"Montserrat", sans-serif;
-          font-size:20px;
-          font-weight:700;
-          color: var(--pk-ink);
-          line-height:1.25;
-        }
         .prototype-modal-close{
+          position:absolute;
+          top:14px;
+          right:14px;
+          z-index:2;
           width:40px;
           height:40px;
           border:none;
           border-radius:999px;
-          background: var(--pk-slate-tint-05);
+          background: var(--pk-on-dark-94);
           color: var(--pk-ink);
           font-size:28px;
           line-height:1;
           cursor:pointer;
           flex-shrink:0;
+          box-shadow: 0 8px 24px var(--pk-slate-tint-16);
         }
         .prototype-modal-frame{
           width:100%;
@@ -532,8 +515,6 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           .prototype-title{ font-size: 22px; }
           .prototype-modal{ padding: 12px; }
           .prototype-modal-shell{ height: 88vh; border-radius: 18px; }
-          .prototype-modal-topbar{ padding: 14px 16px; }
-          .prototype-modal-title{ font-size: 17px; }
         }
         @media (prefers-reduced-motion: reduce){
           .prototype-card{ animation: none !important; opacity: 1 !important; }

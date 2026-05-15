@@ -1,7 +1,7 @@
 /** Service labels aligned with Naše služby navigation. */
 export const CONTACT_SERVICE_OPTIONS_CS = [
-  "Tvorba nového webu",
-  "Modernizace stránek",
+  "Webové stránky na míru",
+  "Modernizace webových stránek",
   "Webové aplikace",
   "Automatizace a AI agenti",
 ] as const;

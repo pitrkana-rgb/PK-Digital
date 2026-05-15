@@ -318,7 +318,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
   return (
     <section
       id="reference"
-      className="google-reviews-section"
+      className="google-reviews-section landing-scroll-target"
       style={{
         width: "100%",
         backgroundColor: pk.page,

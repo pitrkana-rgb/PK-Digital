@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { HeroCompositeFrame } from "./HeroCompositeFrame";
 import { pk } from "../../../../design/pkLandingColors";
+import { scrollToSectionId } from "../../../../utils/scrollToSection";
 
 const HERO_TYPING = { typeMs: 1000, holdMs: 2000, deleteMs: 1000, startDelayMs: 1000 } as const;
 /** Align hero primary/secondary CTA height with header CTA. */
@@ -140,13 +141,6 @@ const HeroTypingLine = ({ messages }: { messages: readonly string[] }) => {
   );
 };
 
-const splitTextForReveal = (text: string): [string, string] => {
-  const midpoint = Math.floor(text.length / 2);
-  const splitAt = text.indexOf(" ", midpoint);
-  if (splitAt === -1) return [text, ""];
-  return [text.slice(0, splitAt), text.slice(splitAt + 1)];
-};
-
 /* ── Scroll indicator ─────────────────────────────────────────────── */
 const ScrollIndicator = () => (
   <div
@@ -185,18 +179,19 @@ export const MainHeroSection = (): JSX.Element => {
     headlinePre: "Next‑generation websites with",
     headlineMid: "that",
     headlineAccent: "change the rules and bring customers",
-    subheading: "Websites and AI‑powered apps designed for growth, performance, and scale. Technology that delivers measurable results and a competitive edge.",
+    subheadingLine1: "Websites and AI‑powered apps designed for growth, performance, and scale.",
+    subheadingLine2: "Technology that delivers measurable results and a competitive edge.",
     ctaPrimary: "Contact us",
     ctaSecondary: "Our services",
   } : {
     headlinePre: "Weby nové generace s",
     headlineMid: ", které",
     headlineAccent: "mění pravidla hry a přivádějí zákazníky",
-    subheading: "Weby a aplikace s podporou AI navržené pro růst, výkon a škálování. Technologie, které přinášejí měřitelné výsledky a konkurenční výhodu.",
+    subheadingLine1: "Weby a aplikace s podporou AI navržené pro růst, výkon a škálování.",
+    subheadingLine2: "Technologie, které přinášejí měřitelné výsledky a konkurenční výhodu.",
     ctaPrimary: "Kontaktujte nás",
     ctaSecondary: "Naše služby",
   };
-  const [subheadingLead, subheadingTrail] = splitTextForReveal(t.subheading);
   const typingMessages = language === "en" ? HERO_TYPING_MESSAGES_EN : HERO_TYPING_MESSAGES_CS;
 
   return (
@@ -275,8 +270,8 @@ export const MainHeroSection = (): JSX.Element => {
           maxWidth: "640px",
           margin: "0 0 20px 0",
         }}>
-          <span className="hero-subheading-part hero-subheading-part-left">{subheadingLead}</span>{" "}
-          <span className="hero-subheading-part hero-subheading-part-right">{subheadingTrail}</span>
+          <span className="hero-subheading-part hero-subheading-part-left">{t.subheadingLine1}</span>
+          <span className="hero-subheading-part hero-subheading-part-right">{t.subheadingLine2}</span>
         </p>
         </div>
 
@@ -319,14 +314,7 @@ export const MainHeroSection = (): JSX.Element => {
             id="hero-secondary-cta"
             type="button"
             className="hero-secondary-btn"
-            onClick={() => {
-              const el = document.getElementById("co-nabizime");
-              if (el) {
-                const headerOffset = 80;
-                const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-                window.scrollTo({ top, behavior: "smooth" });
-              }
-            }}
+            onClick={() => scrollToSectionId("co-nabizime")}
             style={{
               background: pk.onDark05,
               color: pk.onDark,
@@ -472,6 +460,9 @@ export const MainHeroSection = (): JSX.Element => {
         .hero-headline-part-right{
           animation: heroRevealRight 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
         }
+        .hero-subheading-part{
+          display: block;
+        }
         .hero-subheading-part-left{
           animation: heroRevealLeft 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
           animation-delay: 1000ms;
@@ -509,6 +500,9 @@ export const MainHeroSection = (): JSX.Element => {
         .hero-media-rail{ display:none; }
         .hero-media-rail-inner{ display:none; }
         @media (min-width: 769px) {
+          .hero-actions-wrap {
+            margin-top: 20px;
+          }
           .hero-content-shift{
             transform: translateY(-20px);
           }
@@ -576,12 +570,8 @@ export const MainHeroSection = (): JSX.Element => {
             box-sizing: border-box;
           }
           .hero-subheading {
-            width: 56% !important;
-            max-width: 56% !important;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            width: 62% !important;
+            max-width: 62% !important;
           }
           .hero-headline {
             margin-left: 0;
