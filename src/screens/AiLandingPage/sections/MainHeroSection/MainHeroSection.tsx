@@ -149,7 +149,7 @@ export const MainHeroSection = (): JSX.Element => {
     subheading:
       "Modern websites and apps built for your business — focused on speed, SEO, and higher conversions.",
     ctaPrimary: "Request a quote",
-    ctaSecondary: "How we work",
+    ctaSecondary: "Our collaboration",
     trustUnderCta: "Reply within 24h and a free consultation",
   } : {
     headlineLine1: "Webové stránky na míru,",
@@ -157,7 +157,7 @@ export const MainHeroSection = (): JSX.Element => {
     subheading:
       "Moderní webové stránky a aplikace na míru se zaměřením na rychlost, SEO a vyšší konverze.",
     ctaPrimary: "Nezávazně poptat",
-    ctaSecondary: "Jak spolupracujeme",
+    ctaSecondary: "Naše spolupráce",
     trustUnderCta: "Odpověď do 24h a konzultace zdarma",
   };
   const typingMessages = language === "en" ? HERO_TYPING_MESSAGES_EN : HERO_TYPING_MESSAGES_CS;
@@ -677,9 +677,19 @@ export const MainHeroSection = (): JSX.Element => {
             white-space: normal !important;
             justify-content: center;
           }
+          .hero-cta-row {
+            flex-wrap: nowrap !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            width: 100%;
+            max-width: 100%;
+          }
           .hero-primary-btn, .hero-secondary-btn {
-            padding: 9px 22px !important;
-            font-size: 14px !important;
+            flex: 0 1 auto;
+            min-width: 0;
+            padding: 9px 14px !important;
+            font-size: 13px !important;
+            white-space: nowrap !important;
           }
         }
         @media (prefers-reduced-motion: reduce) {
