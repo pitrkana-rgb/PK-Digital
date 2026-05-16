@@ -11,19 +11,19 @@ import cenikIcon from "../../../../assets/icons/cenik_icon.png";
 import osobniPristupIcon from "../../../../assets/icons/osobni_pristup_icon.png";
 
 const usPoints = [
-    "Bezplatný prototyp do 3 dnů",
+    "Návrh webu zdarma do 3 dnů",
     "AI nástroje zvyšující konverze",
     "Průměrná doba realizace 14 dní",
-    "Průběžná optimalizace na základě dat",
+    "Web postavený pro Google Ads a SEO",
     "Transparentní ceník bez skrytých poplatků",
     "Osobní přístup a flexibilní komunikace",
 ];
 
 const usPointsEn = [
-    "Free prototype within 3 days",
+    "Free website design within 3 days",
     "AI tools that improve conversions",
     "Average delivery time: 14 days",
-    "Continuous optimization based on data",
+    "Websites built for Google Ads and SEO",
     "Transparent pricing with no hidden fees",
     "Personal approach and flexible communication",
 ];
@@ -71,7 +71,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
             "You get a clear picture of the solution before you invest. We quickly validate direction and design a functional foundation you can build on.",
             "We deploy smart automation that simplifies workflows, saves time and cost, and measurably improves how your business performs.",
             "We ship without unnecessary delays—clear plan, efficient execution, and fast go-live.",
-            "We do not stop at launch. We continuously review data and refine the solution so it keeps delivering better results.",
+            "We structure your site to be discoverable in search and effective for paid campaigns.",
             "You always know what you are paying for—fair, transparent terms with no surprises.",
             "Every project is individual. We respond fast, adapt to your needs, and keep communication clear and effective.",
         ]
@@ -79,7 +79,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
             "Získáte jasnou představu o řešení ještě před investicí. Rychle ověříme směr a navrhneme funkční základ, na kterém můžete stavět.",
             "Nasazujeme chytrou automatizaci, která zjednodušuje procesy, šetří čas i náklady a zároveň prokazatelně zvyšuje výkon vašeho byznysu.",
             "Dodáváme řešení bez zbytečných průtahů. Máme jasný plán, efektivní postup a rychlé uvedení do provozu.",
-            "Nekončíme spuštěním. Neustále vyhodnocujeme data a upravujeme řešení tak, aby dlouhodobě přinášelo lepší výsledky.",
+            "Web připravujeme tak, aby byl dobře dohledatelný ve vyhledávání a fungoval pro placené kampaně.",
             "Přesně víte, za co platíte. Žádná překvapení, jen férové a srozumitelné podmínky.",
             "Každý projekt řešíme individuálně. Reagujeme rychle, přizpůsobujeme se vašim potřebám a držíme komunikaci jasnou a efektivní.",
         ];
@@ -146,8 +146,8 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         margin: "0 auto",
                     }}>
                         {isEn
-                          ? "We build websites fast, use AI effectively, and take responsibility for delivering solutions that actually work."
-                          : "Stavíme weby rychle, využíváme AI a neseme odpovědnost za to, že vaše řešení skutečně funguje."}
+                          ? "We build modern websites and apps that load fast and bring in new customers."
+                          : "Tvoříme weby a aplikace, které vypadají moderně, rychle se načítají a přivádějí nové zákazníky."}
                     </p>
                 </div>
 

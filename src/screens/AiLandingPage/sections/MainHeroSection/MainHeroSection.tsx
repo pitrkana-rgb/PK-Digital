@@ -6,28 +6,27 @@ import { pk } from "../../../../design/pkLandingColors";
 import { scrollToSectionId } from "../../../../utils/scrollToSection";
 
 const HERO_TYPING = { typeMs: 1000, holdMs: 2000, deleteMs: 1000, startDelayMs: 1000 } as const;
+
 /** Align hero primary/secondary CTA height with header CTA. */
 const HERO_CTA_PAD_Y = Math.round(11 * 0.8);
 const HERO_CTA_PAD_X = Math.round(28 * 0.8);
 
 const HERO_TYPING_MESSAGES_CS = [
-  "KVALITNÍ WEB JE INVESTICE",
-  "ZÍSKÁTE PROTOTYP WEBU ZDARMA",
+  "NÁVRH WEBU ZDARMA DO 3 DNŮ",
   "DODÁVÁME RYCHLE A NA MÍRU",
+  "SEO OPTIMALIZACE",
   "ZVYŠUJEME POČTY ZÁKAZNÍKŮ",
   "PRO KAŽDÝ TYP BUSINESSU",
-  "ŽÁDNÉ MĚSÍČNÍ POPLATKY",
-  "MOŽNÁ PODPORA 24/7",
+  "RESPONZIVNÍ DESIGN PRO MOBILY",
 ] as const;
 
 const HERO_TYPING_MESSAGES_EN = [
-  "A QUALITY WEBSITE IS AN INVESTMENT",
-  "GET A FREE WEBSITE PROTOTYPE",
+  "FREE WEBSITE DESIGN IN 3 DAYS",
   "WE DELIVER FAST AND TAILORED",
+  "SEO OPTIMIZATION",
   "WE GROW YOUR CUSTOMER BASE",
   "FOR EVERY TYPE OF BUSINESS",
-  "NO MONTHLY FEES",
-  "SUPPORT AVAILABLE 24/7",
+  "RESPONSIVE DESIGN FOR MOBILES",
 ] as const;
 
 const HeroTypingLine = ({ messages }: { messages: readonly string[] }) => {
@@ -141,56 +140,25 @@ const HeroTypingLine = ({ messages }: { messages: readonly string[] }) => {
   );
 };
 
-/* ── Scroll indicator ─────────────────────────────────────────────── */
-const ScrollIndicator = () => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: "4px",
-      marginTop: "48px",
-    }}
-  >
-    <span
-      style={{
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: "12px",
-        fontWeight: 400,
-        color: pk.ink55,
-        letterSpacing: "0.1em",
-        textTransform: "uppercase" as const,
-      }}
-    >
-      Scroll
-    </span>
-    <div className="animate-bounce" style={{ color: pk.accent }}>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m6 9 6 6 6-6" />
-      </svg>
-    </div>
-  </div>
-);
-
 export const MainHeroSection = (): JSX.Element => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const t = language === "en" ? {
-    headlinePre: "Next‑generation websites with",
-    headlineMid: "that",
-    headlineAccent: "change the rules and bring customers",
-    subheadingLine1: "Websites and AI‑powered apps designed for growth, performance, and scale.",
-    subheadingLine2: "Technology that delivers measurable results and a competitive edge.",
-    ctaPrimary: "Contact us",
-    ctaSecondary: "Our services",
+    headlineLine1: "Tailored websites,",
+    headlineLine2Accent: "that bring you customers",
+    subheading:
+      "Modern websites and apps built for your business — focused on speed, SEO, and higher conversions.",
+    ctaPrimary: "Request a quote",
+    ctaSecondary: "How we work",
+    trustUnderCta: "Reply within 24h and a free consultation",
   } : {
-    headlinePre: "Weby nové generace s",
-    headlineMid: ", které",
-    headlineAccent: "mění pravidla hry a přivádějí zákazníky",
-    subheadingLine1: "Weby a aplikace s podporou AI navržené pro růst, výkon a škálování.",
-    subheadingLine2: "Technologie, které přinášejí měřitelné výsledky a konkurenční výhodu.",
-    ctaPrimary: "Kontaktujte nás",
-    ctaSecondary: "Naše služby",
+    headlineLine1: "Webové stránky na míru,",
+    headlineLine2Accent: "které přivádějí zákazníky",
+    subheading:
+      "Moderní webové stránky a aplikace na míru se zaměřením na rychlost, SEO a vyšší konverze.",
+    ctaPrimary: "Nezávazně poptat",
+    ctaSecondary: "Jak spolupracujeme",
+    trustUnderCta: "Odpověď do 24h a konzultace zdarma",
   };
   const typingMessages = language === "en" ? HERO_TYPING_MESSAGES_EN : HERO_TYPING_MESSAGES_CS;
 
@@ -224,7 +192,7 @@ export const MainHeroSection = (): JSX.Element => {
           <div className="hero-content-shift">
             <div
               className="flex flex-col items-center md:items-start animate-fade-in hero-content-wrap"
-              style={{ width: "100%", maxWidth: "none", padding: 0, marginTop: 0 }}
+              style={{ width: "100%", maxWidth: "none", padding: 0 }}
             >
 
         <div className="hero-heading-block">
@@ -233,31 +201,30 @@ export const MainHeroSection = (): JSX.Element => {
           fontFamily: "'Montserrat', sans-serif",
           fontWeight: 800,
           fontSize: "clamp(13px, 3.6vw, 32px)",
-          lineHeight: 1.05,
+          lineHeight: 1.12,
           color: pk.onDark,
           margin: "0 0 16px 0",
           letterSpacing: "-0.02em",
           maxWidth: "100%",
           width: "100%",
         }}>
-          <span className="hero-headline-part hero-headline-part-left">
-            {t.headlinePre}{" "}
-            <span style={{
+          <span className="hero-headline-line1 hero-headline-part hero-headline-part-left">
+            {t.headlineLine1}
+          </span>
+          <span
+            className="hero-headline-line2 hero-headline-part hero-headline-part-right"
+            style={{
+              display: "block",
+              marginTop: "0.12em",
               background: pk.gradientPopular,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
               filter: pk.heroHeadlineGlow,
-            }}>AI</span>
-            {t.headlineMid ? `${t.headlineMid}` : ""}
-          </span>{" "}
-          <span className="hero-headline-part hero-headline-part-right" style={{
-            background: pk.gradientPopular,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            filter: pk.heroHeadlineGlow,
-          }}>{t.headlineAccent}</span>
+            }}
+          >
+            {t.headlineLine2Accent}
+          </span>
         </h1>
 
         {/* Paragraph */}
@@ -270,8 +237,7 @@ export const MainHeroSection = (): JSX.Element => {
           maxWidth: "640px",
           margin: "0 0 20px 0",
         }}>
-          <span className="hero-subheading-part hero-subheading-part-left">{t.subheadingLine1}</span>
-          <span className="hero-subheading-part hero-subheading-part-right">{t.subheadingLine2}</span>
+          <span className="hero-subheading-part hero-subheading-part-left">{t.subheading}</span>
         </p>
         </div>
 
@@ -314,7 +280,7 @@ export const MainHeroSection = (): JSX.Element => {
             id="hero-secondary-cta"
             type="button"
             className="hero-secondary-btn"
-            onClick={() => scrollToSectionId("co-nabizime")}
+            onClick={() => scrollToSectionId("features")}
             style={{
               background: pk.onDark05,
               color: pk.onDark,
@@ -338,10 +304,27 @@ export const MainHeroSection = (): JSX.Element => {
           </button>
         </div>
 
+        <p
+          className="hero-trust-under-cta"
+          style={{
+            marginTop: "14px",
+            marginBottom: 0,
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 500,
+            fontSize: "clamp(13px, 1.6vw, 15px)",
+            lineHeight: 1.45,
+            color: pk.onDark72,
+            textAlign: "center",
+            maxWidth: "640px",
+          }}
+        >
+          {t.trustUnderCta}
+        </p>
+
         <div
           className="hero-google-overview"
           style={{
-            marginTop: "30px",
+            marginTop: "22px",
             display: "flex",
             alignItems: "center",
             gap: "12px",
@@ -447,6 +430,12 @@ export const MainHeroSection = (): JSX.Element => {
         #hero-primary-cta:focus-visible, #hero-secondary-cta:focus-visible {
           outline: 2px solid var(--pk-accent); outline-offset: 3px;
         }
+        .hero-headline-line1.hero-headline-part {
+          display: block;
+        }
+        .hero-headline-line2.hero-headline-part {
+          display: block !important;
+        }
         .hero-headline-part,
         .hero-subheading-part,
         .hero-actions-wrap{
@@ -465,10 +454,6 @@ export const MainHeroSection = (): JSX.Element => {
         }
         .hero-subheading-part-left{
           animation: heroRevealLeft 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
-          animation-delay: 1000ms;
-        }
-        .hero-subheading-part-right{
-          animation: heroRevealRight 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
           animation-delay: 1000ms;
         }
         .hero-actions-wrap{
@@ -509,8 +494,19 @@ export const MainHeroSection = (): JSX.Element => {
           .hero-heading-block {
             transform: translateY(-30px);
           }
+          .hero-trust-under-cta {
+            text-align: left !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+          }
           .hero-google-overview {
             justify-content: flex-start !important;
+          }
+          .hero-headline {
+            font-size: clamp(16.9px, 4.68vw, 41.6px) !important;
+          }
+          .hero-subheading {
+            font-size: clamp(18.2px, 2.6vw, 22.1px) !important;
           }
           /* Left content aligns with header logo rail */
           .hero-left-rail{
@@ -520,8 +516,12 @@ export const MainHeroSection = (): JSX.Element => {
             /* Keep hero tall enough to match the standard notebook/video visual height */
             min-height: 860px !important;
           }
+          /* padding-top avoids margin-collapse (child margin-top was not visible). */
+          .hero-left-rail > .hero-content-shift {
+            padding-top: 60px !important;
+            box-sizing: border-box;
+          }
           .hero-content-wrap{
-            margin-top: 0 !important;
             max-width: 50%;
           }
           .hero-grid{
@@ -618,6 +618,9 @@ export const MainHeroSection = (): JSX.Element => {
             padding-left: 16px !important;
             padding-right: 16px !important;
           }
+          .hero-left-rail > .hero-content-shift {
+            padding-top: 0 !important;
+          }
           .hero-content-wrap {
             width: 100% !important;
             max-width: 100% !important;
@@ -625,10 +628,17 @@ export const MainHeroSection = (): JSX.Element => {
             margin-top: 20px !important;
           }
           .hero-headline {
-            font-size: 19px !important;
-            line-height: 1.1 !important;
+            font-size: 22.8px !important;
+            line-height: 1.12 !important;
             max-width: 100% !important;
             margin-bottom: 10px !important;
+          }
+          .hero-headline-line1,
+          .hero-headline-line2 {
+            display: block !important;
+          }
+          .hero-headline-line2 {
+            margin-top: 0.1em !important;
           }
           .hero-subheading {
             max-width: 340px !important;
@@ -637,6 +647,13 @@ export const MainHeroSection = (): JSX.Element => {
             margin-left: auto !important;
             margin-right: auto !important;
             margin-bottom: 20px !important;
+          }
+          .hero-trust-under-cta {
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+          .hero-google-overview {
+            justify-content: center !important;
           }
           .hero-typing-inner {
             display: inline-flex;

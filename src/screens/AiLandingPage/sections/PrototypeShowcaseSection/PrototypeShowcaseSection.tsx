@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
+import { scrollToSectionId } from "../../../../utils/scrollToSection";
 import investicniPoradceImg from "../../../../../Images/Prototypes/investiční poradce.png";
 import realitniMaklerImg from "../../../../../Images/Prototypes/realitní makléř.png";
 import fitnessTrenerImg from "../../../../../Images/Prototypes/fitness trenér.png";
@@ -98,16 +99,18 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
   const isEn = language === "en";
   const t = isEn
     ? {
-        heading: "Get a free prototype in 3 days",
+        heading: "Get a free website design in 3 days",
         subheading: "We’ll show you a tailored website concept before you commit. No obligation, no risk.",
-        cta: "View prototype",
+        cta: "Preview prototype",
         closeAria: "Close preview",
+        stickyCta: "I want a similar website",
       }
     : {
-        heading: "Získejte zdarma prototyp do 3 dnů",
+        heading: "Návrh webu zdarma do 3 dnů",
         subheading: "Ukážeme vám konkrétní návrh vašeho webu na míru ještě před spoluprací. Bez závazků, bez rizika.",
-        cta: "Zobraz prototyp",
+        cta: "Prohlédnout prototyp",
         closeAria: "Zavřít náhled",
+        stickyCta: "Chci podobný web",
       };
 
   const activeCards = isEn ? cardsEn : cards;
@@ -303,11 +306,25 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
               >
                 ×
               </button>
-              <iframe
-                src={activePreview.previewUrl}
-                title={activePreview.category}
-                className="prototype-modal-frame"
-              />
+              <div className="prototype-modal-frame-wrap">
+                <iframe
+                  src={activePreview.previewUrl}
+                  title={activePreview.category}
+                  className="prototype-modal-frame"
+                />
+              </div>
+              <div className="prototype-modal-cta-bar">
+                <button
+                  type="button"
+                  className="prototype-modal-cta-btn landing-primary-cta"
+                  onClick={() => {
+                    setActivePreview(null);
+                    window.requestAnimationFrame(() => scrollToSectionId("kontakt"));
+                  }}
+                >
+                  {t.stickyCta}
+                </button>
+              </div>
             </div>
           </div>,
           document.body,
@@ -477,6 +494,37 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           display:flex;
           flex-direction:column;
         }
+        .prototype-modal-frame-wrap{
+          flex: 1 1 auto;
+          min-height: 0;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+        }
+        .prototype-modal-cta-bar{
+          flex-shrink: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 14px 20px 18px;
+          background: linear-gradient(to top, var(--pk-page) 60%, transparent);
+          border-top: 1px solid var(--pk-slate-tint-10);
+          box-shadow: 0 -12px 32px var(--pk-slate-tint-08);
+        }
+        .prototype-modal-cta-btn{
+          border: none;
+          border-radius: 12px;
+          padding: 12px 28px;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 600;
+          font-size: 15px;
+          cursor: pointer;
+          transition: transform 200ms ease, filter 200ms ease;
+        }
+        .prototype-modal-cta-btn:hover{
+          transform: translateY(-2px);
+          filter: brightness(1.05);
+        }
         .prototype-modal-close{
           position:absolute;
           top:14px;
@@ -496,7 +544,8 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         }
         .prototype-modal-frame{
           width:100%;
-          height:100%;
+          flex: 1 1 auto;
+          min-height: 0;
           border:none;
           background: var(--pk-page);
         }
@@ -507,6 +556,12 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           .prototype-mobile-carousel .prototype-card{
             width: min(520px, 100%);
             margin: 0 auto;
+          }
+        }
+        @media (max-width: 1024px){
+          .prototype-card,
+          .prototype-card:hover{
+            box-shadow: none !important;
           }
         }
         @media (max-width: 768px){

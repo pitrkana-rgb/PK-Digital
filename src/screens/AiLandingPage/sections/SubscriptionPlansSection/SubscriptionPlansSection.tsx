@@ -30,7 +30,7 @@ const pricingPlans = [
     cta: "Chci modernizaci",
   },
   {
-    name: "Automatizace a AI agenti",
+    name: "Automatizace procesů",
     description: "Navrhujeme automatizace, které snižují náklady a nahrazují rutinní práci.",
     features: [
       "Mapování procesů a identifikace úspor",
@@ -76,7 +76,7 @@ const pricingPlansEn = [
     cta: "I want modernization",
   },
   {
-    name: "Automation and AI Agents",
+    name: "Process automation",
     description: "We design automations that reduce costs and replace repetitive work.",
     features: [
       "Process mapping and savings identification",

@@ -18,7 +18,7 @@ const steps: StepItem[] = [
   },
   {
     num: "02",
-    title: "Prototyp zdarma",
+    title: "Návrh webu zdarma",
     description:
       "Do 3 dnů získáte ukázku front-end verze webu a cenovou nabídku na míru. Podle prototypu se rozhodnete, zda chcete pokračovat.",
   },
@@ -45,7 +45,7 @@ const stepsEn: StepItem[] = [
   },
   {
     num: "02",
-    title: "Free prototype",
+    title: "Free website design",
     description:
       "Within 3 days you get a front-end prototype and a tailored pricing proposal. Then you decide whether to continue.",
   },
@@ -147,8 +147,8 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
           </h2>
           <p className="how-sub section-sub">
             {isEn
-              ? "From idea to results — fast, clean, and without unnecessary complexity."
-              : "Od nápadu k výsledkům — rychle a bez zbytečné složitosti."}
+              ? "A straightforward path from the first consultation to launching your finished website."
+              : "Jednoduchý proces od první konzultace až po spuštění hotového webu."}
           </p>
         </div>
 

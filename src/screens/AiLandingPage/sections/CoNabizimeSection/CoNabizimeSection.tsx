@@ -327,7 +327,7 @@ const slides: Slide[] = [
     id: "tvorba-webu",
     title: "Stránky, které přinášejí zákazníky",
     description:
-      "Navrhneme a dodáme web do 14 dní — bez složitostí a bez rizika.",
+      "Moderní webové stránky na míru se zaměřením na výkon, SEO a získávání nových zákazníků.",
     features: [
       { bold: "Návrh webu zdarma", rest: " do 3 dnů bez závazků" },
       { bold: "SEO optimalizace", rest: " pro lepší pozice ve vyhledávání Google" },
@@ -393,7 +393,7 @@ const slidesEn: Slide[] = [
     id: "tvorba-webu",
     title: "A website that brings customers",
     description:
-      "We design and deliver your website in 14 days — no complexity and no risk.",
+      "Modern custom websites focused on performance, SEO, and winning new customers.",
     features: [
       { bold: "Free website proposal", rest: " within 3 days, no commitment" },
       { bold: "SEO optimization", rest: " for better positions in Google search" },
@@ -495,21 +495,21 @@ export const CoNabizimeSection = (): JSX.Element => {
   };
 
   const navItems = isEn
-    ? ["New website", "Website modernization", "Web applications", "Automation and AI agents"]
-    : ["Webové stránky na míru", "Modernizace webových stránek", "Webové aplikace", "Automatizace a AI agenti"];
+    ? ["New website", "Website modernization", "Web applications", "Process automation"]
+    : ["Webové stránky na míru", "Modernizace webových stránek", "Webové aplikace", "Automatizace procesů"];
 
   const navSubItems = isEn
     ? [
       "Custom website, built for growth",
       "Better UX, speed, and conversions",
       "Apps tailored to streamline operations",
-      "Smarter processes, less manual work",
+      "Automation that saves time and cost",
     ]
     : [
       "Weby na míru, které přinášejí zákazníky",
       "Lepší výkon, UX a vyšší konverze",
       "Aplikace na míru pro efektivnější podnikání",
-      "Chytré procesy, které šetří čas i náklady",
+      "Automatizace procesů pro úsporu času",
     ];
 
   useEffect(() => {

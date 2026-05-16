@@ -167,7 +167,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
   };
 
   return (
-    <section style={{ width: "100%", backgroundColor: pk.page, padding: "80px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
+    <section id="kontakt" className="landing-scroll-target" style={{ width: "100%", backgroundColor: pk.page, padding: "80px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
       <SectionDivider />
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <div className="cta-form-wrap contact-form-shadow-wrap" style={{ position: "relative" }}>

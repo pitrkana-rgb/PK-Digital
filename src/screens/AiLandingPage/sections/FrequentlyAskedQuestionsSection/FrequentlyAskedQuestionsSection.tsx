@@ -2,78 +2,123 @@ import { useState } from "react";
 import { PlusIcon, MinusIcon } from "lucide-react";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
+import { SectionDivider } from "../../components/SectionDivider";
 
 const faqData = [
   {
     question: "Co budu pro začátek potřebovat?",
-    answer: "Na začátku stačí základní informace o vaší firmě, cíle a hrubá představa o webu. Texty, fotky ani přesný plán mít nemusíte – to vše zvládneme společně. Po nezávazné konzultaci vám sdělím, co bude třeba do dalšího kroku.",
+    answer:
+      "Na začátku stačí základní informace o vašem podnikání, cílech a představě o webu. Nemusíte mít hotové texty ani detailní zadání — celým procesem vás provedeme krok za krokem.",
   },
   {
     question: "Zatím nemám obsah, co s tím?",
-    answer: "Nevadí. Pomůžu vám s přípravou textů, strukturou webu i základním copywritingem. Díky AI nástrojům dokážeme obsah připravit rychle a kvalitně. Fotografie lze vyřešit pořízením vlastních nebo využitím licencovaných stocků.",
+    answer:
+      "To vůbec nevadí. Pomůžeme vám s návrhem struktury webu, doporučením obsahu i směřováním textace tak, aby web působil profesionálně a podporoval získávání poptávek.",
   },
   {
     question: "Můžete navrhnout logo mého webu?",
-    answer: "Základní návrh loga nebo grafické identity do webu zahrnout mohu. Pro komplexní brand manuál spolupracuji s ověřenými grafiky. Vždy záleží na rozsahu projektu – probereme to při konzultaci.",
+    answer:
+      "Ano. Pomůžeme vám vytvořit moderní vizuální identitu včetně loga a základního brandingu, který bude odpovídat stylu vašeho podnikání.",
   },
   {
-    question: "Budu moci své webové stránky snadno upravovat? Nejsem programátor.",
-    answer: "Ano. Weby stavím tak, aby je mohl spravovat kdokoliv bez znalosti programování – texty, obrázky i základní sekce upravíte sami přes přehledné rozhraní. Po předání webu vás vším osobně provedu a ukážu, jak na to.",
+    question: "Budu si moci své webové stránky snadno upravovat? Nejsem programátor.",
+    answer:
+      "Ano. Web připravujeme tak, aby byla běžná správa jednoduchá i bez technických znalostí. Texty, fotografie nebo obsah můžete upravovat sami. Po spuštění vám vše osobně vysvětlíme.",
   },
   {
     question: "Kolik stojí vytvoření webu?",
-    answer: "Tvorba webu na míru začíná od 19\u00a0900 Kč, modernizace stávajícího webu od 14\u00a0900 Kč. Každý projekt je jiný, proto vám po konzultaci připravím přesnou kalkulaci ušitou na míru. Neúčtuji žádné měsíční ani roční paušály.",
+    answer:
+      "Cena webových stránek na míru závisí na rozsahu projektu, funkcích a celkové náročnosti řešení. Menší firemní weby začínají přibližně od nižších desítek tisíc korun, rozsáhlejší webové aplikace naceníme individuálně podle zadání. Součástí je vždy konzultace, návrh řešení a transparentní cenová nabídka bez skrytých poplatků.",
   },
   {
     question: "Co všechno je zahrnuto v ceně?",
-    answer: "V ceně je konzultace, návrh prototypu zdarma, kompletní vývoj webu, mobilní verze, základní SEO optimalizace a osobní předání s ukázkou správy. Dostupné doplňky (AI chatbot, rezervační systém apod.) jsou součástí nabídky při dohodě.",
+    answer:
+      "Součástí projektu bývá návrh designu, vývoj webu, responzivní optimalizace, základní SEO nastavení, kontaktní formuláře, optimalizace rychlosti, napojení analytiky a spuštění webu. Přesný rozsah vždy přizpůsobíme konkrétním potřebám projektu.",
   },
   {
     question: "Je možné platit zálohovou fakturou?",
-    answer: "Ano, standardně probíhá platba ve dvou fázích: záloha před zahájením práce a doplatek po předání hotového webu. Konkrétní podmínky vždy dohodnu individuálně dle projektu.",
+    answer:
+      "Ano. Projekty standardně rozdělujeme do jasných etap s transparentním způsobem fakturace, aby byla spolupráce jednoduchá a přehledná pro obě strany.",
   },
   {
     question: "Potřebuji vlastní doménu a webhosting?",
-    answer: "Pokud doménu ani hosting ještě nemáte, pomohu vám s jejich výběrem a registrací. Pokud je máte, web nasadím na váš stávající hosting nebo doporučím vhodnou alternativu. Vše probereme při konzultaci.",
+    answer:
+      "Pokud ještě nemáte vlastní doménu nebo hosting, pomůžeme vám s výběrem i kompletním nastavením. Web připravíme tak, aby byl rychlý, bezpečný a připravený pro SEO i Google Ads kampaně.",
+  },
+  {
+    question: "Jak dlouho trvá vytvoření webových stránek?",
+    answer:
+      "Většinu webových stránek dokážeme spustit přibližně do 14 dnů od schválení návrhu. Menší projekty mohou být hotové i rychleji, rozsáhlejší webové aplikace individuálně podle náročnosti projektu.",
+  },
+  {
+    question: "Jsou webové stránky připravené pro SEO?",
+    answer:
+      "Ano. Každý web vytváříme s důrazem na technické SEO, rychlost načítání, responzivitu a správnou strukturu obsahu. Web je připravený pro dohledatelnost ve vyhledávání Google i pro reklamní kampaně.",
+  },
+  {
+    question: "Můžete vytvořit web na míru podle konkrétního zadání?",
+    answer:
+      "Ano. Specializujeme se na webové stránky a aplikace na míru podle potřeb konkrétní firmy nebo podnikání. Každý projekt navrhujeme individuálně podle cílů klienta a cílové skupiny.",
   },
 ];
 
 const faqDataEn = [
   {
-    question: "What do I need to start?",
-    answer: "At the beginning, basic information about your company, goals, and a rough website idea is enough. You do not need final texts, photos, or a perfect plan yet - we handle that together.",
+    question: "What do I need to get started?",
+    answer:
+      "To begin, basic information about your business, goals, and vision for the site is enough. You do not need finished copy or a detailed brief — we guide you through every step.",
   },
   {
-    question: "I do not have content yet. What now?",
-    answer: "That is fine. I can help with website structure, content preparation, and basic copywriting. With AI tools, we can produce content quickly and at high quality.",
+    question: "I do not have content yet. What should I do?",
+    answer:
+      "That is fine. We help with site structure, content recommendations, and messaging direction so the site looks professional and supports lead generation.",
   },
   {
     question: "Can you design a logo for my website?",
-    answer: "I can include a basic logo or visual identity proposal for your website. For complete brand manuals, I cooperate with trusted designers.",
+    answer:
+      "Yes. We can help you build a modern visual identity, including a logo and core branding that matches your business style.",
   },
   {
-    question: "Will I be able to edit the website myself?",
-    answer: "Yes. Websites are built so anyone can manage them without coding knowledge - text, images, and core sections can be updated in a clear interface.",
+    question: "Will I be able to edit my website easily? I am not a developer.",
+    answer:
+      "Yes. We build sites so day-to-day management is straightforward without technical skills. You can update text, photos, and content yourself, and we walk you through everything at launch.",
   },
   {
-    question: "How much does website development cost?",
-    answer: "Custom website development starts from CZK 19,900 and modernization from CZK 14,900. Every project is different, so I prepare a custom estimate after consultation.",
+    question: "How much does a website cost?",
+    answer:
+      "Pricing depends on scope, features, and overall complexity. Smaller corporate sites typically start in the lower tens of thousands of CZK; larger web applications are quoted individually. Every project includes consultation, a solution proposal, and a transparent quote with no hidden fees.",
   },
   {
     question: "What is included in the price?",
-    answer: "The price includes consultation, a free prototype proposal, complete development, mobile version, basic SEO optimization, and handover with onboarding.",
+    answer:
+      "Projects usually include design, development, responsive optimization, baseline SEO, contact forms, performance tuning, analytics setup, and go-live. The exact scope is always tailored to your needs.",
   },
   {
-    question: "Can I pay with an advance invoice?",
-    answer: "Yes. Payment is typically in two phases: an advance before work starts and the remaining balance after delivery.",
+    question: "Can I pay with a deposit invoice?",
+    answer:
+      "Yes. We typically split projects into clear milestones with transparent invoicing so collaboration stays simple for both sides.",
   },
   {
     question: "Do I need my own domain and hosting?",
-    answer: "If you do not have a domain or hosting yet, I can help with selection and setup. If you already have them, I deploy on your existing hosting or recommend an alternative.",
+    answer:
+      "If you do not have a domain or hosting yet, we help you choose and set everything up. We prepare the site to be fast, secure, and ready for SEO and Google Ads campaigns.",
+  },
+  {
+    question: "How long does it take to build a website?",
+    answer:
+      "Most websites go live in about 14 days after the design is approved. Smaller projects can be faster; larger web applications depend on complexity.",
+  },
+  {
+    question: "Is the website SEO-ready?",
+    answer:
+      "Yes. Every site is built with technical SEO, fast loading, responsive layout, and sound content structure in mind — ready for Google search visibility and ad campaigns.",
+  },
+  {
+    question: "Can you build a fully custom site from a specific brief?",
+    answer:
+      "Yes. We specialize in bespoke websites and applications for individual businesses. Each project is designed around your goals and target audience.",
   },
 ];
-
-import { SectionDivider } from "../../components/SectionDivider";
 
 export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
   const { language } = useLanguage();
@@ -89,12 +134,12 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
           <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
-            {isEn ? "Frequently Asked Questions" : "Často kladené dotazy"}
+            {isEn ? "Frequently Asked Questions" : "Často vás zajímá"}
           </h2>
           <p className="section-sub" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "18px", color: pk.ink65, margin: "0 auto" }}>
             {isEn
-              ? "Wondering how collaboration works in practice? Here are answers to the questions clients ask most often."
-              : "Zajímá vás, jak spolupráce probíhá v praxi? Připravili jsme odpovědi na otázky, které od klientů dostáváme nejčastěji."}
+              ? "Answers to common questions about custom websites, how we work together, pricing, and ongoing site management."
+              : "Odpovědi na nejčastější otázky ohledně tvorby webových stránek na míru, průběhu spolupráce, ceny i správy webu."}
           </p>
         </div>
 
@@ -153,9 +198,9 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                   role="region"
                   aria-labelledby={`faq-btn-${i}`}
                   style={{
-                    maxHeight: isOpen ? "600px" : "0",
+                    maxHeight: isOpen ? "2400px" : "0",
                     overflow: "hidden",
-                    transition: "max-height 300ms ease",
+                    transition: "max-height 320ms ease",
                   }}
                 >
                   <p style={{

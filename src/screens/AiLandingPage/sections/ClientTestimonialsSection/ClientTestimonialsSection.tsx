@@ -672,10 +672,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             text-align: center !important;
             height: clamp(340px, 56vh, 420px);
             max-height: 420px;
-            /* Premium shadow that won't get clipped with viewport padding */
-            box-shadow:
-              0 18px 40px var(--pk-slate-shadow-14),
-              0 6px 18px var(--pk-slate-tint-10);
+            box-shadow: none !important;
           }
           .gr-carousel-mobile .gr-review-header {
             flex-direction: column !important;
