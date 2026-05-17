@@ -13,11 +13,11 @@ export const SiteFooterSection = (): JSX.Element => {
     home: "Home",
     services: "Services",
     faq: "FAQ",
-    contact: "Contact",
-    footerDesc: "We design modern websites, automate processes, and build AI agents for your team.",
+    contact: "About me",
+    footerDesc: "I design modern websites, automate processes, and build AI agents for your business.",
     nav: "Navigation",
     contactTitle: "Contact",
-    writeUs: "Contact us",
+    writeUs: "Contact me",
     rights: "© 2025 PK-Digital. All rights reserved.",
     privacy: "Privacy Policy",
     terms: "Terms of Use",
@@ -25,11 +25,11 @@ export const SiteFooterSection = (): JSX.Element => {
     home: "Domů",
     services: "Služby",
     faq: "Časté dotazy",
-    contact: "Kontakt",
-    footerDesc: "Navrhujeme moderní weby, automatizujeme procesy a stavíme AI agenty pro váš tým.",
+    contact: "O mě",
+    footerDesc: "Navrhuji moderní weby, automatizuji procesy a stavím AI agenty pro vaše podnikání.",
     nav: "Navigace",
     contactTitle: "Kontakt",
-    writeUs: "Napište nám",
+    writeUs: "Napište mi",
     rights: "© 2025 PK-Digital. Všechna práva vyhrazena.",
     privacy: "Zásady ochrany soukromí",
     terms: "Podmínky užití",
@@ -39,13 +39,13 @@ export const SiteFooterSection = (): JSX.Element => {
     { label: t.home, id: "hero", path: "/" },
     { label: t.services, id: "co-nabizime", path: "/" },
     { label: t.faq, id: "faq", path: "/" },
-    { label: t.contact, id: undefined, path: "/kontakt" },
+    { label: t.contact, id: undefined, path: "/o-me" },
   ] as const;
 
   const handleNavClick = (link: typeof navLinks[0]) => {
-    if (link.path === "/kontakt") {
-      if (location.pathname !== "/kontakt") {
-        navigate("/kontakt");
+    if (link.path === "/o-me") {
+      if (location.pathname !== "/o-me") {
+        navigate("/o-me");
       } else {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }

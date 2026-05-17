@@ -18,9 +18,10 @@ createRoot(document.getElementById("app") as HTMLElement).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AiLandingPage />} />
-          <Route path="/kontakt" element={<ContactPage />} />
+          <Route path="/o-me" element={<ContactPage />} />
+          <Route path="/kontakt" element={<Navigate to="/o-me" replace />} />
           <Route path="/napiste-nam" element={<NapisteNamPage />} />
-          <Route path="/o-nas" element={<Navigate to="/kontakt" replace />} />
+          <Route path="/o-nas" element={<Navigate to="/o-me" replace />} />
           <Route path="/zasady-ochrany-soukromi" element={<PrivacyPolicyPage />} />
           <Route path="/podminky-uziti" element={<TermsPage />} />
           <Route path="*" element={<NotFoundPage />} />

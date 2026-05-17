@@ -100,14 +100,15 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
   const t = isEn
     ? {
         heading: "Get a free website design in 3 days",
-        subheading: "We’ll show you a tailored website concept before you commit. No obligation, no risk.",
+        subheading: "Browse real website prototypes I prepare for clients within 3 days, free of charge, before you commit to working with me.",
         cta: "Preview prototype",
         closeAria: "Close preview",
         stickyCta: "I want a similar website",
       }
     : {
         heading: "Návrh webu zdarma do 3 dnů",
-        subheading: "Ukážeme vám konkrétní návrh vašeho webu na míru ještě před spoluprací. Bez závazků, bez rizika.",
+        subheading:
+          "Prohlídněte si ukázky reálných prototypů webů, které pro klienty připravuji do 3 dnů zdarma ještě před spoluprací",
         cta: "Prohlédnout prototyp",
         closeAria: "Zavřít náhled",
         stickyCta: "Chci podobný web",

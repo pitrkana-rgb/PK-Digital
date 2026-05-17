@@ -41,7 +41,7 @@ const stepsEn: StepItem[] = [
     num: "01",
     title: "Free consultation",
     description:
-      "You fill in a short form and within 24 hours we call to schedule a free consultation and discuss your website goals.",
+      "You fill in a short form and within 24 hours I call to schedule a free consultation and discuss your website goals.",
   },
   {
     num: "02",
@@ -53,13 +53,13 @@ const stepsEn: StepItem[] = [
     num: "03",
     title: "Website development",
     description:
-      "After prototype approval, we build the complete website, typically delivered within 14 days based on project complexity.",
+      "After prototype approval, I build the complete website, typically delivered within 14 days based on project complexity.",
   },
   {
     num: "04",
     title: "Handover and management",
     description:
-      "We personally walk you through the website, show key metrics, and teach you how to edit it easily.",
+      "I personally walk you through the website, show key metrics, and teach you how to edit it easily.",
   },
 ];
 

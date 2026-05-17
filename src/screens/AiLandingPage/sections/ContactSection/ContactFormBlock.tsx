@@ -210,7 +210,7 @@ export const ContactFormBlock = (): JSX.Element => {
                   color: pk.onDark88,
                 }}
               >
-                {isEn ? "We reply within 24h" : "Odpovídáme do 24h"}
+                {isEn ? "I reply within 24h" : "Odpovídám do 24h"}
               </p>
               <h2
                 style={{
@@ -238,7 +238,7 @@ export const ContactFormBlock = (): JSX.Element => {
                 }}
               >
                 {isEn
-                  ? "Fill in the form and we will get back to you with the next steps."
+                  ? "Fill in the form and I will get back to you with the next steps."
                   : "Udělejte první krok k novému webu. Zabere to jen 5 minut."}
               </p>
             </div>
@@ -258,8 +258,8 @@ export const ContactFormBlock = (): JSX.Element => {
                 }}>
                   <CheckCircle2 color={pk.success500} size={40} />
                 </div>
-                <h3 style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "28px", color: pk.ink, marginBottom: "12px" }}>{isEn ? "Thank you for your request." : "Děkujeme za odeslání."}</h3>
-                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.ink62, marginBottom: "32px" }}>{isEn ? "We will get back to you within 24 hours." : "Ozveme se do 24 hodin."}</p>
+                <h3 style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "28px", color: pk.ink, marginBottom: "12px" }}>{isEn ? "Thank you for your request." : "Děkuji za odeslání."}</h3>
+                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.ink62, marginBottom: "32px" }}>{isEn ? "I will get back to you within 24 hours." : "Ozvu se do 24 hodin."}</p>
                 <button type="button" onClick={() => setSubmitted(false)} style={{ background: pk.slateTint04, border: `1px solid ${pk.slateTint12}`, color: pk.ink, padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif" }}>{isEn ? "Send another message" : "Odeslat další zprávu"}</button>
               </div>
             ) : (
@@ -280,7 +280,7 @@ export const ContactFormBlock = (): JSX.Element => {
 
                     <div className="contact-details-block">
                       <label htmlFor="f-details" style={fieldGroupLabelStyle(true)}>
-                        {isEn ? "Describe your project" : "Popište nám svůj požadavek"}
+                        {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
                       </label>
                       <textarea
                         id="f-details"
@@ -288,7 +288,7 @@ export const ContactFormBlock = (): JSX.Element => {
                         value={form.projectDetails}
                         onChange={(e) => set("projectDetails")(e.target.value)}
                         rows={5}
-                        placeholder={isEn ? "Tell us about your goals, scope, and timeline…" : "Napište nám o cílech, rozsahu a termínu…"}
+                        placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
                         style={{
                           width: "100%",
                           resize: "vertical",

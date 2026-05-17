@@ -68,20 +68,20 @@ export const WhyChooseUsSection = (): JSX.Element => {
     const items = isEn ? usPointsEn : usPoints;
     const subtitles = isEn
         ? [
-            "You get a clear picture of the solution before you invest. We quickly validate direction and design a functional foundation you can build on.",
-            "We deploy smart automation that simplifies workflows, saves time and cost, and measurably improves how your business performs.",
-            "We ship without unnecessary delays—clear plan, efficient execution, and fast go-live.",
-            "We structure your site to be discoverable in search and effective for paid campaigns.",
+            "You get a clear picture of the solution before you invest. I quickly validate direction and design a functional foundation you can build on.",
+            "I deploy smart automation that simplifies workflows, saves time and cost, and measurably improves how your business performs.",
+            "I ship without unnecessary delays—clear plan, efficient execution, and fast go-live.",
+            "I structure your site to be discoverable in search and effective for paid campaigns.",
             "You always know what you are paying for—fair, transparent terms with no surprises.",
-            "Every project is individual. We respond fast, adapt to your needs, and keep communication clear and effective.",
+            "Every project is individual. I respond fast, adapt to your needs, and keep communication clear and effective.",
         ]
         : [
-            "Získáte jasnou představu o řešení ještě před investicí. Rychle ověříme směr a navrhneme funkční základ, na kterém můžete stavět.",
-            "Nasazujeme chytrou automatizaci, která zjednodušuje procesy, šetří čas i náklady a zároveň prokazatelně zvyšuje výkon vašeho byznysu.",
-            "Dodáváme řešení bez zbytečných průtahů. Máme jasný plán, efektivní postup a rychlé uvedení do provozu.",
-            "Web připravujeme tak, aby byl dobře dohledatelný ve vyhledávání a fungoval pro placené kampaně.",
+            "Získáte jasnou představu o řešení ještě před investicí. Rychle ověřím směr a navrhnu funkční základ, na kterém můžete stavět.",
+            "Nasazuji chytrou automatizaci, která zjednodušuje procesy, šetří čas i náklady a zároveň prokazatelně zvyšuje výkon vašeho byznysu.",
+            "Dodávám řešení bez zbytečných průtahů. Mám jasný plán, efektivní postup a rychlé uvedení do provozu.",
+            "Web připravuji tak, aby byl dobře dohledatelný ve vyhledávání a fungoval pro placené kampaně.",
             "Přesně víte, za co platíte. Žádná překvapení, jen férové a srozumitelné podmínky.",
-            "Každý projekt řešíme individuálně. Reagujeme rychle, přizpůsobujeme se vašim potřebám a držíme komunikaci jasnou a efektivní.",
+            "Každý projekt řeším individuálně. Reaguji rychle, přizpůsobuji se vašim potřebám a držím komunikaci jasnou a efektivní.",
         ];
 
     useEffect(() => {
@@ -137,7 +137,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         maxWidth: "770px",
                     }}>
                         {isEn ? "Why choose " : "Proč si vybrat "}
-                        <span style={{ color: pk.ink }}>{isEn ? "us" : "právě nás"}</span>
+                        <span style={{ color: pk.ink }}>{isEn ? "me" : "právě mě"}</span>
                     </h2>
                     <p className="section-sub" style={{
                         fontFamily: "'Montserrat', sans-serif",
@@ -146,8 +146,8 @@ export const WhyChooseUsSection = (): JSX.Element => {
                         margin: "0 auto",
                     }}>
                         {isEn
-                          ? "We build modern websites and apps that load fast and bring in new customers."
-                          : "Tvoříme weby a aplikace, které vypadají moderně, rychle se načítají a přivádějí nové zákazníky."}
+                          ? "I build modern websites and apps that load fast and bring in new customers."
+                          : "Tvořím weby a aplikace, které vypadají moderně, rychle se načítají a přivádějí nové zákazníky."}
                     </p>
                 </div>
 

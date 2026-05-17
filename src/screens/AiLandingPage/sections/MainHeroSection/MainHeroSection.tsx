@@ -13,18 +13,18 @@ const HERO_CTA_PAD_X = Math.round(28 * 0.8);
 
 const HERO_TYPING_MESSAGES_CS = [
   "NÁVRH WEBU ZDARMA DO 3 DNŮ",
-  "DODÁVÁME RYCHLE A NA MÍRU",
+  "DODÁVÁM RYCHLE A NA MÍRU",
   "SEO OPTIMALIZACE",
-  "ZVYŠUJEME POČTY ZÁKAZNÍKŮ",
+  "ZVYŠUJI POČTY ZÁKAZNÍKŮ",
   "PRO KAŽDÝ TYP BUSINESSU",
   "RESPONZIVNÍ DESIGN PRO MOBILY",
 ] as const;
 
 const HERO_TYPING_MESSAGES_EN = [
   "FREE WEBSITE DESIGN IN 3 DAYS",
-  "WE DELIVER FAST AND TAILORED",
+  "I DELIVER FAST AND TAILORED",
   "SEO OPTIMIZATION",
-  "WE GROW YOUR CUSTOMER BASE",
+  "I GROW YOUR CUSTOMER BASE",
   "FOR EVERY TYPE OF BUSINESS",
   "RESPONSIVE DESIGN FOR MOBILES",
 ] as const;
@@ -147,9 +147,9 @@ export const MainHeroSection = (): JSX.Element => {
     headlineLine1: "Tailored websites,",
     headlineLine2Accent: "that bring you customers",
     subheading:
-      "Modern websites and apps built for your business — focused on speed, SEO, and higher conversions.",
+      "I build modern websites and apps for your business — focused on speed, SEO, and higher conversions.",
     ctaPrimary: "Request a quote",
-    ctaSecondary: "Our collaboration",
+    ctaSecondary: "Collaboration",
     trustUnderCta: "Reply within 24h and a free consultation",
   } : {
     headlineLine1: "Webové stránky na míru,",
@@ -157,7 +157,7 @@ export const MainHeroSection = (): JSX.Element => {
     subheading:
       "Moderní webové stránky a aplikace na míru se zaměřením na rychlost, SEO a vyšší konverze.",
     ctaPrimary: "Nezávazně poptat",
-    ctaSecondary: "Naše spolupráce",
+    ctaSecondary: "Spolupráce",
     trustUnderCta: "Odpověď do 24h a konzultace zdarma",
   };
   const typingMessages = language === "en" ? HERO_TYPING_MESSAGES_EN : HERO_TYPING_MESSAGES_CS;

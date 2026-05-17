@@ -118,15 +118,15 @@ export const ContactMapFaqBlock = (): JSX.Element => {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <FAQItem
               q={isEn ? "How fast do you reply?" : "Jak rychle odpovídáte?"}
-              a={isEn ? "We guarantee a reply within 24 hours, but usually much sooner - often within a few hours." : "Garantujeme odpověď do 24 hodin, ale většinou se ozýváme mnohem dříve – často už během pár hodin."}
+              a={isEn ? "I guarantee a reply within 24 hours, but usually much sooner - often within a few hours." : "Garantuji odpověď do 24 hodin, ale většinou se ozývám mnohem dříve – často už během pár hodin."}
             />
             <FAQItem
               q={isEn ? "Is the first consultation free?" : "Je první konzultace zdarma?"}
-              a={isEn ? "Yes, the first 15-30 minute consultation is completely free. We discuss your idea and see if we are a good fit." : "Ano, první 15-30minutová konzultace je zcela zdarma. Probereme váš nápad a zjistíme, zda jsme pro sebe vhodní partneři."}
+              a={isEn ? "Yes, the first 15-30 minute consultation is completely free. I discuss your idea with you and see if I am a good fit for your project." : "Ano, první 15–30minutová konzultace je zcela zdarma. Proberu váš nápad a zjistíme, zda vám mohu pomoci."}
             />
             <FAQItem
               q={isEn ? "Can we meet in person?" : "Můžeme se potkat osobně?"}
-              a={isEn ? "Absolutely. We are based in Ivančice near Brno and can meet in our office or travel to you in South Moravia. We also work very effectively online." : "Určitě! Sídlíme v Ivančicích u Brna a rádi vás uvidíme u nás v kanceláři nebo přijedeme za vámi v rámci Jihomoravského kraje. Jinak fungujeme skvěle online."}
+              a={isEn ? "Absolutely. I am based in Ivančice near Brno and can meet at my office or travel to you in South Moravia. I also work very effectively online." : "Určitě! Sídlím v Ivančicích u Brna a rádi vás uvidím v mé kanceláři nebo za vámi přijedu v rámci Jihomoravského kraje. Jinak spolupracuji s klienty skvěle i online."}
             />
           </div>
         </div>

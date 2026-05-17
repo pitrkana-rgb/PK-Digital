@@ -351,25 +351,23 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             maxWidth: "980px",
           }}
         >
-          {language === "en" ? "What do customers say about us?" : "Co o nás říkají zákazníci?"}
+          {language === "en" ? "What do clients say about me?" : "Co o mně říkají klienti?"}
         </h2>
 
         <div className="gr-widget-row">
           {/* Left: Google G + stats — no background, white text */}
           <aside className="gr-left-panel">
             <div className="gr-stats-copy">
-              <div className="gr-google-logo-col" aria-hidden>
-                <GoogleLogoMark className="gr-google-logo-svg" />
-              </div>
               <div className="gr-stats-rating-row" aria-label="Hodnocení 5.0 z 5">
+                <GoogleLogoMark className="gr-google-logo-inline" />
                 <div className="gr-stats-rating-value">5.0</div>
                 <GoogleStars size={26} />
               </div>
               <p className="gr-stats-sub">{language === "en" ? "Based on 3 reviews" : "Na základě 3 hodnocení"}</p>
               <p className="gr-stats-note">
                 {language === "en"
-                  ? "Clients value our professionalism, speed, and results that drive real growth."
-                  : "Naši klienti oceňují profesionalitu, rychlost a výsledky, které přinášejí skutečný růst."}
+                  ? "Clients value my professionalism, speed, and results that drive real growth."
+                  : "Moji klienti oceňují profesionalitu, rychlost a výsledky, které přinášejí skutečný růst."}
               </p>
               <a
                 className="gr-stats-link"
@@ -488,6 +486,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           display: flex;
           flex-direction: column;
           justify-content: center;
+          align-items: center;
           text-align: center;
           gap: 0;
           min-width: 0;
@@ -503,9 +502,16 @@ export const ClientTestimonialsSection = (): JSX.Element => {
         .gr-stats-rating-row{
           display:flex;
           align-items:center;
+          flex-wrap: nowrap;
           gap:10px;
           margin-bottom: 8px;
           justify-content: center;
+        }
+        .gr-google-logo-inline{
+          height: 32px;
+          width: auto;
+          max-height: 32px;
+          flex-shrink: 0;
         }
         .gr-stats-rating-value{
           font-family: Roboto, "Segoe UI", system-ui, sans-serif;
@@ -533,6 +539,23 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           line-height: 1.6;
           margin: 10px 0 0;
           max-width: 36ch;
+        }
+        @media (min-width: 901px) {
+          .gr-stats-note{
+            font-size: 15px;
+            line-height: 1.45;
+            max-width: 100%;
+          }
+          .gr-stats-rating-row{
+            justify-content: flex-start;
+          }
+          .gr-stats-copy{
+            text-align: left;
+            align-items: flex-start;
+          }
+          .gr-left-panel{
+            align-items: flex-start;
+          }
         }
         .gr-stats-link {
           display: inline-block;
@@ -657,9 +680,9 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             text-align: center !important;
             align-items: center !important;
           }
-          .gr-google-logo-col {
-            min-height: 42px !important;
-            margin-bottom: 6px !important;
+          .gr-google-logo-inline {
+            height: 28px !important;
+            max-height: 28px !important;
           }
           .google-reviews-section {
             padding: 56px 0 !important;

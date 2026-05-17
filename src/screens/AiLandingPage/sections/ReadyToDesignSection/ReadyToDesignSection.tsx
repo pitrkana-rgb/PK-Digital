@@ -96,7 +96,12 @@ const fieldGroupLabelStyle: CSSProperties = {
   margin: "0 0 10px",
 };
 
-export const ReadyToDesignSection = (): JSX.Element => {
+type ReadyToDesignSectionProps = {
+  /** Disables negative margins used on the landing page so the footer is not clipped (e.g. /o-me). */
+  avoidFooterOverlap?: boolean;
+};
+
+export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesignSectionProps): JSX.Element => {
   const { language } = useLanguage();
   const isEn = language === "en";
   const serviceOptions = getContactServiceOptions(isEn);
@@ -167,7 +172,17 @@ export const ReadyToDesignSection = (): JSX.Element => {
   };
 
   return (
-    <section id="kontakt" className="landing-scroll-target" style={{ width: "100%", backgroundColor: pk.page, padding: "80px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
+    <section
+      id="kontakt"
+      className="landing-scroll-target"
+      style={{
+        width: "100%",
+        backgroundColor: pk.page,
+        padding: avoidFooterOverlap ? "64px 0 72px" : "80px 0 100px",
+        marginTop: avoidFooterOverlap ? 0 : "-50px",
+        marginBottom: avoidFooterOverlap ? 0 : "-80px",
+      }}
+    >
       <SectionDivider />
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <div className="cta-form-wrap contact-form-shadow-wrap" style={{ position: "relative" }}>
@@ -223,7 +238,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
                   color: pk.onDark88,
                 }}
               >
-                {isEn ? "We reply within 24h" : "Odpovídáme do 24h"}
+                {isEn ? "I reply within 24h" : "Odpovídám do 24h"}
               </p>
               <h2
                 style={{
@@ -260,10 +275,10 @@ export const ReadyToDesignSection = (): JSX.Element => {
                   <CheckCircle2 color={pk.success500} size={40} />
                 </div>
                 <h3 style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "28px", color: pk.onDark, marginBottom: "12px" }}>
-                  {isEn ? "Thank you for your request." : "Děkujeme za odeslání."}
+                  {isEn ? "Thank you for your request." : "Děkuji za odeslání."}
                 </h3>
                 <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.onDark72, marginBottom: "32px" }}>
-                  {isEn ? "We will get back to you within 24 hours." : "Ozveme se do 24 hodin."}
+                  {isEn ? "I will get back to you within 24 hours." : "Ozvu se do 24 hodin."}
                 </p>
                 <button
                   type="button"
@@ -291,7 +306,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
 
                     <div className="contact-details-block">
                       <label htmlFor="cta-details" style={fieldGroupLabelStyle}>
-                        {isEn ? "Describe your project" : "Popište nám svůj požadavek"}
+                        {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
                       </label>
                       <textarea
                         id="cta-details"
@@ -299,7 +314,7 @@ export const ReadyToDesignSection = (): JSX.Element => {
                         value={form.projectDetails}
                         onChange={(e) => set("projectDetails")(e.target.value)}
                         rows={5}
-                        placeholder={isEn ? "Tell us about your goals, scope, and timeline…" : "Napište nám o cílech, rozsahu a termínu…"}
+                        placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
                         style={{
                           width: "100%",
                           resize: "vertical",

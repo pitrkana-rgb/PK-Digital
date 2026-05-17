@@ -35,8 +35,8 @@ export const Header = () => {
         navServices: "Services",
         navReference: "Reference",
         navFaq: "FAQ",
-        navContact: "Contact",
-        writeUs: "Contact us",
+        navContact: "About me",
+        writeUs: "Non-binding inquiry",
         openMenu: "Open menu",
         closeMenu: "Close menu",
         backHomeAria: "PK Digital – back to homepage",
@@ -44,8 +44,8 @@ export const Header = () => {
         navServices: "Služby",
         navReference: "Reference",
         navFaq: "Časté dotazy",
-        navContact: "Kontakt",
-        writeUs: "Napište nám",
+        navContact: "O mě",
+        writeUs: "Nezávazná poptávka",
         openMenu: "Otevřít menu",
         closeMenu: "Zavřít menu",
         backHomeAria: "AI-agency – zpět na začátek",
@@ -55,7 +55,7 @@ export const Header = () => {
         { label: t.navServices, targetId: "co-nabizime" as const, path: "/" as const },
         { label: t.navReference, targetId: "reference" as const, path: "/" as const },
         { label: t.navFaq, targetId: "faq" as const, path: "/" as const },
-        { label: t.navContact, path: "/kontakt" as const },
+        { label: t.navContact, path: "/o-me" as const },
     ] as const;
 
     const handleNavClick = (item: typeof navigationItems[0]) => {
@@ -90,7 +90,7 @@ export const Header = () => {
     };
 
     const navItemIsActive = (item: (typeof navigationItems)[number]) => {
-        if (item.path === "/kontakt") return location.pathname === "/kontakt";
+        if (item.path === "/o-me") return location.pathname === "/o-me";
         return false;
     };
 

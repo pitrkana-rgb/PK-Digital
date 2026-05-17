@@ -241,6 +241,14 @@
 
   /* ─── Gradients (composed only from tokens above) ─── */
   --pk-gradient-brand: linear-gradient(90deg, var(--pk-brand-1) 0%, var(--pk-brand-2) 33%, var(--pk-brand-3) 66%, var(--pk-brand-4) 100%);
+  /* Brand nav / tabs on light sections — darker mix for white text */
+  --pk-gradient-brand-nav-active: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--pk-brand-1) 68%, var(--pk-surface-night-900)) 0%,
+    color-mix(in srgb, var(--pk-brand-2) 70%, var(--pk-surface-night-900)) 38%,
+    color-mix(in srgb, var(--pk-brand-3) 72%, var(--pk-surface-night-800)) 72%,
+    color-mix(in srgb, var(--pk-brand-4) 74%, var(--pk-surface-night-800)) 100%
+  );
   /* Background-aware brand gradients */
   --pk-gradient-on-dark: var(--pk-gradient-popular);
   --pk-gradient-on-light: var(--pk-gradient-brand);

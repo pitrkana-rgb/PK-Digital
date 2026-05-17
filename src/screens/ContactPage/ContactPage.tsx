@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Header } from "../../components/Header";
 import { LandingStylePageRoot } from "../../components/PageBackground";
 import { SiteFooterSection } from "../AiLandingPage/sections/SiteFooterSection/SiteFooterSection";
-import { CompanyInfoBlock } from "../AiLandingPage/sections/ContactSection/CompanyInfoBlock";
+import { AboutMeHeroSection } from "../AboutPage/AboutMeHeroSection";
 import { AboutPageContent } from "../AboutPage/AboutPageContent";
 
 export const ContactPage = (): JSX.Element => {
@@ -20,8 +20,8 @@ export const ContactPage = (): JSX.Element => {
     >
       <Header />
 
-      <div style={{ position: "relative", zIndex: 1, paddingTop: "120px" }}>
-        <CompanyInfoBlock />
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <AboutMeHeroSection />
         <AboutPageContent />
       </div>
 
