@@ -106,10 +106,18 @@ const mainFeaturesEn = [
   },
 ] as const;
 
+const MOBILE_FADE_IN_MAX_WIDTH = 768;
+
 const useFadeIn = (threshold = 0.12) => {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_FADE_IN_MAX_WIDTH}px)`);
+    if (mq.matches) {
+      setVisible(true);
+      return;
+    }
+
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(([e]) => {
@@ -587,9 +595,18 @@ export const AboutWhoSection = (): JSX.Element => {
           }
         }
 
+        @media (max-width: 768px) {
+          .about-builder {
+            padding: 32px 0 64px;
+          }
+          .about-builder-headline {
+            margin-bottom: 32px;
+          }
+        }
+
         @media (max-width: 600px) {
           .about-builder {
-            padding: 40px 0 64px;
+            padding: 28px 0 64px;
           }
           .about-builder-shell {
             padding: 0 20px;

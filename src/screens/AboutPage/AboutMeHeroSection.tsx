@@ -436,9 +436,9 @@ export const AboutMeHeroSection = (): JSX.Element => {
 
         @media (max-width: 768px) {
           .about-hero {
-            min-height: 70svh;
-            min-height: 70dvh;
-            padding: 96px 0 40px;
+            min-height: 58svh;
+            min-height: 58dvh;
+            padding: 96px 0 28px;
             align-items: stretch;
             box-sizing: border-box;
           }
@@ -447,8 +447,8 @@ export const AboutMeHeroSection = (): JSX.Element => {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: calc(70svh - 96px - 40px);
-            min-height: calc(70dvh - 96px - 40px);
+            min-height: calc(58svh - 96px - 28px);
+            min-height: calc(58dvh - 96px - 28px);
             box-sizing: border-box;
           }
           .about-hero-grid {
@@ -486,6 +486,10 @@ export const AboutMeHeroSection = (): JSX.Element => {
             padding-top: 30px;
             text-align: left;
           }
+          .about-hero-title {
+            font-size: clamp(28.8px, 3.78vw, 46.8px);
+            margin-bottom: 16px;
+          }
           .about-hero-title,
           .about-hero-title-line,
           .about-hero-title-accent {
@@ -493,7 +497,7 @@ export const AboutMeHeroSection = (): JSX.Element => {
           }
           .about-hero-bottom {
             margin-top: auto;
-            padding-top: 20px;
+            padding-top: 14px;
             width: 100%;
             position: relative;
             z-index: 2;

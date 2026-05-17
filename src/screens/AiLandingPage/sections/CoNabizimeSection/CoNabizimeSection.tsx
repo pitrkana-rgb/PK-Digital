@@ -1416,7 +1416,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             display: none;
           }
           .offer-head{
-            margin-bottom: 28px !important;
+            margin-bottom: 3px !important;
           }
           .offer-mobile-card-title{
             display: block;
@@ -1426,7 +1426,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             line-height: 1.15;
             letter-spacing: -0.02em;
             color: var(--pk-ink);
-            margin: 22px auto 0;
+            margin: 37px auto 0;
             max-width: 980px;
             text-align: center;
             opacity: 0.35;
