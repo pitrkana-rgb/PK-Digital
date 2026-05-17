@@ -514,7 +514,6 @@ export const CoNabizimeSection = (): JSX.Element => {
   const [mediaMounted, setMediaMounted] = useState(false);
   const [sectionInView, setSectionInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const tabTouchStartX = useRef(0);
 
   const resetOfferReveal = () => {
     setHeaderVisible(false);
@@ -633,9 +632,6 @@ export const CoNabizimeSection = (): JSX.Element => {
     };
   }, [cardVisible, activeIdx, activeSlides, sectionInView]);
 
-  const slideCount = activeSlides.length;
-  const tabSlidePct = slideCount > 0 ? 100 / slideCount : 100;
-
   const renderOfferTabButton = (slide: Slide, idx: number): JSX.Element => {
     const isHighlighted = idx === activeIdx || hoveredTabIdx === idx;
     return (
@@ -667,17 +663,6 @@ export const CoNabizimeSection = (): JSX.Element => {
       </div>
     </button>
     );
-  };
-
-  const onTabTouchStart = (e: TouchEvent) => {
-    tabTouchStartX.current = e.touches[0]!.clientX;
-  };
-
-  const onTabTouchEnd = (e: TouchEvent) => {
-    const endX = e.changedTouches[0]!.clientX;
-    const delta = tabTouchStartX.current - endX;
-    if (delta > SWIPE_THRESHOLD) goTo(activeIdx + 1);
-    else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
   };
 
   const renderOfferDots = (): JSX.Element => (
@@ -751,41 +736,17 @@ export const CoNabizimeSection = (): JSX.Element => {
               ? "I create custom websites and applications, modernize corporate websites, and automate business processes. By combining modern design, SEO, and AI technology, I help companies grow and win more customers."
               : "Tvořím webové stránky a aplikace na míru, modernizuji firemní weby a automatizuji procesy. Díky spojení moderního designu, SEO a AI technologií pomáhám firmám růst a získávat více zákazníků."}
           </p>
+          <h3
+            className={`offer-mobile-card-title${cardVisible ? " is-visible" : ""}`}
+            id="offer-active-service-title"
+          >
+            {activeSlide.title}
+          </h3>
         </div>
 
         <div className="offer-shell">
           <div className="offer-tabs-desktop" role="tablist" aria-label={isEn ? "Services navigation" : "Navigace služeb"}>
             {activeSlides.map((slide, idx) => renderOfferTabButton(slide, idx))}
-          </div>
-
-          <div className="offer-tabs-mobile">
-            <div
-              className="offer-tabs-mobile-viewport"
-              role="tablist"
-              aria-label={isEn ? "Services navigation" : "Navigace služeb"}
-              onTouchStart={onTabTouchStart}
-              onTouchEnd={onTabTouchEnd}
-            >
-              <div
-                className="offer-tabs-mobile-track"
-                style={{
-                  display: "flex",
-                  width: `${slideCount * 100}%`,
-                  transform: `translateX(-${activeIdx * tabSlidePct}%)`,
-                  transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                }}
-              >
-                {activeSlides.map((slide, idx) => (
-                  <div
-                    key={slide.id}
-                    className="offer-tabs-mobile-slide"
-                    style={{ flex: `0 0 ${tabSlidePct}%`, padding: "0 6px", boxSizing: "border-box" }}
-                  >
-                    {renderOfferTabButton(slide, idx)}
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           <div
@@ -954,7 +915,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           border: none;
           background: transparent;
         }
-        .offer-tabs-mobile{
+        .offer-mobile-card-title{
           display: none;
         }
         .offer-tabs-dots{
@@ -963,16 +924,6 @@ export const CoNabizimeSection = (): JSX.Element => {
           gap: 8px;
           margin: 0;
           padding: 0;
-        }
-        .offer-tabs-mobile-viewport{
-          overflow: hidden;
-          width: 90%;
-          max-width: 90%;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .offer-tabs-mobile-slide .offer-tab{
-          width: 100%;
         }
         .offer-tab{
           position: relative;
@@ -1464,14 +1415,30 @@ export const CoNabizimeSection = (): JSX.Element => {
           .offer-tabs-desktop{
             display: none;
           }
-          .offer-tabs-mobile{
+          .offer-head{
+            margin-bottom: 28px !important;
+          }
+          .offer-mobile-card-title{
             display: block;
-            margin-bottom: 0;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--pk-ink);
+            margin: 22px auto 0;
+            max-width: 980px;
+            text-align: center;
+            opacity: 0.35;
+            transition: opacity 180ms ease;
+          }
+          .offer-mobile-card-title.is-visible{
+            opacity: 1;
           }
           .offer-shell{
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 0;
           }
           .offer-carousel{
             margin-top: 0;

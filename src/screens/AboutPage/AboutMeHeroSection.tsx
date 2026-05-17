@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { pk } from "../../design/pkLandingColors";
 import founderV3Url from "../../../Images/Founder_V3.png";
@@ -43,10 +44,30 @@ const perksEn = [
   { Icon: IconSpark, title: "Modern AI workflow", sub: "for better results" },
 ] as const;
 
+const useHeroBackgroundReady = (src: string) => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    const finish = () => setReady(true);
+    img.onload = finish;
+    img.onerror = finish;
+    img.src = src;
+    if (img.complete) finish();
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [src]);
+
+  return ready;
+};
+
 export const AboutMeHeroSection = (): JSX.Element => {
   const { language } = useLanguage();
   const isEn = language === "en";
   const perks = isEn ? perksEn : perksCs;
+  const bgReady = useHeroBackgroundReady(founderV3Url);
 
   const t = isEn
     ? {
@@ -69,12 +90,12 @@ export const AboutMeHeroSection = (): JSX.Element => {
   return (
     <section className="about-hero" aria-labelledby="about-hero-heading">
       <div
-        className="about-hero-bg about-hero-bg-reveal"
+        className={`about-hero-bg${bgReady ? " is-loaded" : ""}`}
         role="img"
         aria-label={t.imgAlt}
         style={{ backgroundImage: `url(${founderV3Url})` }}
       />
-      <div className="about-hero-fade" aria-hidden />
+      <div className={`about-hero-fade${bgReady ? " is-loaded" : ""}`} aria-hidden />
 
       <div className="about-hero-shell">
         <div className="about-hero-grid">
@@ -122,7 +143,19 @@ export const AboutMeHeroSection = (): JSX.Element => {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes aboutHeroBgFade {
+        @keyframes aboutHeroBgReveal {
+          from {
+            opacity: 0;
+            transform: scale(1.035);
+            filter: blur(8px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+          }
+        }
+        @keyframes aboutHeroFadeReveal {
           from { opacity: 0; }
           to { opacity: 1; }
         }
@@ -147,10 +180,13 @@ export const AboutMeHeroSection = (): JSX.Element => {
           background-size: auto 100%;
           background-repeat: no-repeat;
           background-position: right center;
-        }
-        .about-hero-bg-reveal {
           opacity: 0;
-          animation: aboutHeroBgFade 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          transform: scale(1.035);
+          filter: blur(8px);
+          will-change: opacity, transform, filter;
+        }
+        .about-hero-bg.is-loaded {
+          animation: aboutHeroBgReveal 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         .about-hero-fade {
           position: absolute;
@@ -160,6 +196,7 @@ export const AboutMeHeroSection = (): JSX.Element => {
           bottom: 0;
           z-index: 1;
           pointer-events: none;
+          opacity: 0;
           background: linear-gradient(
             to right,
             ${pk.page} 0%,
@@ -170,6 +207,9 @@ export const AboutMeHeroSection = (): JSX.Element => {
             rgb(255 255 255 / 0.28) 80%,
             transparent 94%
           );
+        }
+        .about-hero-fade.is-loaded {
+          animation: aboutHeroFadeReveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
         }
         .about-hero-shell {
           position: relative;
@@ -496,7 +536,8 @@ export const AboutMeHeroSection = (): JSX.Element => {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .about-hero-bg-reveal,
+          .about-hero-bg,
+          .about-hero-fade,
           .about-hero-reveal {
             animation: none !important;
             opacity: 1 !important;
