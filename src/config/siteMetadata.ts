@@ -5,7 +5,8 @@
 
 export const SITE_URL = "https://pk-digital.cz" as const;
 
-/** Square PNGs from `npm run favicons` — Google needs 48×48+; browser tab uses 32×32. */
+/** Master favicon + square PNGs from `npm run favicons` (Google 48×48+, browser tab 32×32). */
+export const faviconUrl = `${SITE_URL}/Favicon.png`;
 export const faviconGoogle48Url = `${SITE_URL}/favicon-google-48.png`;
 export const faviconGoogle96Url = `${SITE_URL}/favicon-google-96.png`;
 export const faviconBrowser32Url = `${SITE_URL}/favicon-browser-32.png`;
