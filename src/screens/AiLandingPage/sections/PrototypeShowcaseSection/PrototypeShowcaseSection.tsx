@@ -284,7 +284,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                   borderRadius: "999px",
                   border: "none",
                   cursor: "pointer",
-                  background: i === mobileIdx ? pk.accent : pk.slateTint16,
+                  background: i === mobileIdx ? pk.ink : pk.slateTint16,
                   transition: "width 250ms ease, background 250ms ease",
                   padding: 0,
                 }}

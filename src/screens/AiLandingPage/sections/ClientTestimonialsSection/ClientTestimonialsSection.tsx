@@ -126,6 +126,8 @@ function GoogleGIcon({ size = 22 }: { size?: number }) {
   );
 }
 
+const MOBILE_STAR_SIZE = 22; /* 18px + 20% */
+
 const cardShell: CSSProperties = {
   boxSizing: "border-box",
   padding: "20px 18px 22px",
@@ -134,6 +136,18 @@ const cardShell: CSSProperties = {
   borderRadius: "12px",
   boxShadow: `0 20px 48px ${pk.slateTint09}`,
 };
+
+function ReviewCardMobileSlide({ r, isEn }: { r: Review; isEn: boolean }) {
+  return (
+    <div className="gr-review-mobile-slide-inner">
+      <div className="gr-review-mobile-top" aria-label={isEn ? "Rating: 5 out of 5" : "Hodnocení: 5 z 5"}>
+        <GoogleStars size={MOBILE_STAR_SIZE} />
+        <span className="gr-review-score">5 / 5</span>
+      </div>
+      <p className="gr-review-body gr-review-body--mobile">{r.text}</p>
+    </div>
+  );
+}
 
 function ReviewCard({ r }: { r: Review }) {
   return (
@@ -224,25 +238,9 @@ function ReviewCard({ r }: { r: Review }) {
   );
 }
 
-const navBtnStyle: CSSProperties = {
-  flexShrink: 0,
-  width: "40px",
-  height: "40px",
-  borderRadius: "50%",
-  border: `1px solid ${pk.slateTint12}`,
-  background: pk.slateTint04,
-  color: pk.ink82,
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  fontSize: "22px",
-  lineHeight: 1,
-  transition: "background 0.2s ease, border-color 0.2s ease",
-};
-
 export const ClientTestimonialsSection = (): JSX.Element => {
   const { language } = useLanguage();
+  const isEn = language === "en";
   const [carouselIndex, setCarouselIndex] = useState(0);
   const n = reviews.length;
   const viewportRef = useRef<HTMLDivElement | null>(null);
@@ -273,27 +271,34 @@ export const ClientTestimonialsSection = (): JSX.Element => {
         })
       : reviews;
 
+  const activeReview = localizedReviews[carouselIndex] ?? localizedReviews[0]!;
+  const [viewportWidthPx, setViewportWidthPx] = useState(0);
+
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      const w = el.clientWidth;
+      if (w > 0) setViewportWidthPx(w);
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
   const goPrev = useCallback(() => {
     setCarouselIndex((i) => (i - 1 + n) % n);
   }, [n]);
 
   const goNext = useCallback(() => {
     setCarouselIndex((i) => (i + 1) % n);
-  }, [n]);
-
-  useEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
-
-    const tick = () => {
-      // Only auto-advance when the mobile carousel is visible.
-      const isMobile = window.matchMedia?.("(max-width: 900px)")?.matches ?? false;
-      if (!isMobile) return;
-      setCarouselIndex((i) => (i + 1) % n);
-    };
-
-    const id = window.setInterval(tick, 3000);
-    return () => window.clearInterval(id);
   }, [n]);
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -339,6 +344,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
         }}
       >
         <h2
+          className="google-reviews-heading"
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontWeight: 700,
@@ -362,10 +368,11 @@ export const ClientTestimonialsSection = (): JSX.Element => {
                 <GoogleLogoMark className="gr-google-logo-inline" />
                 <div className="gr-stats-rating-value">5.0</div>
                 <GoogleStars size={26} />
+                <span className="gr-stats-score">5 / 5</span>
               </div>
-              <p className="gr-stats-sub">{language === "en" ? "Based on 3 reviews" : "Na základě 3 hodnocení"}</p>
+              <p className="gr-stats-sub">{isEn ? "5 Google reviews" : "5 Google recenzí"}</p>
               <p className="gr-stats-note">
-                {language === "en"
+                {isEn
                   ? "Clients value my professionalism, speed, and results that drive real growth."
                   : "Moji klienti oceňují profesionalitu, rychlost a výsledky, které přinášejí skutečný růst."}
               </p>
@@ -388,17 +395,8 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           </div>
 
           {/* Mobile: one row carousel */}
-          <div className="gr-carousel-mobile" aria-label="Recenze — carousel">
-            <div className="gr-carousel-inner">
-              <button
-                type="button"
-                className="gr-carousel-nav gr-carousel-prev"
-                aria-label={language === "en" ? "Previous review" : "Předchozí recenze"}
-                onClick={goPrev}
-                style={navBtnStyle}
-              >
-                ‹
-              </button>
+          <div className="gr-carousel-mobile" aria-label={isEn ? "Reviews carousel" : "Recenze — carousel"}>
+            <article className="gr-mobile-review-unit">
               <div
                 className="gr-carousel-viewport"
                 ref={viewportRef}
@@ -410,40 +408,64 @@ export const ClientTestimonialsSection = (): JSX.Element => {
                 <div
                   className="gr-carousel-track"
                   style={{
-                    transform: `translateX(-${carouselIndex * 100}%)`,
+                    width: viewportWidthPx > 0 ? viewportWidthPx * n : undefined,
+                    transform:
+                      viewportWidthPx > 0
+                        ? `translate3d(-${carouselIndex * viewportWidthPx}px, 0, 0)`
+                        : undefined,
                   }}
                 >
                   {localizedReviews.map((r) => (
-                    <div key={r.id} className="gr-carousel-slide">
-                      <ReviewCard r={r} />
+                    <div
+                      key={r.id}
+                      className="gr-carousel-slide"
+                      style={
+                        viewportWidthPx > 0
+                          ? {
+                              flex: `0 0 ${viewportWidthPx}px`,
+                              width: viewportWidthPx,
+                              minWidth: viewportWidthPx,
+                              maxWidth: viewportWidthPx,
+                            }
+                          : undefined
+                      }
+                    >
+                      <ReviewCardMobileSlide r={r} isEn={isEn} />
                     </div>
                   ))}
                 </div>
               </div>
-              <button
-                type="button"
-                className="gr-carousel-nav gr-carousel-next"
-                aria-label={language === "en" ? "Next review" : "Další recenze"}
-                onClick={goNext}
-                style={navBtnStyle}
-              >
-                ›
-              </button>
-            </div>
-            <div className="gr-carousel-dots" role="tablist" aria-label={language === "en" ? "Review picker" : "Výběr recenze"}>
-              {localizedReviews.map((r, i) => (
-                <button
-                  key={r.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={i === carouselIndex}
-                  aria-label={`Recenze ${i + 1}`}
-                  onClick={() => setCarouselIndex(i)}
-                  className="gr-carousel-dot"
-                  data-active={i === carouselIndex ? "true" : undefined}
-                />
-              ))}
-            </div>
+              <div className="gr-mobile-card-bottom">
+                <footer className="gr-review-mobile-footer">
+                  <span className="gr-review-mobile-author">{activeReview.author}</span>
+                  <time className="gr-review-mobile-date" dateTime={toIsoDate(activeReview.date)}>
+                    {activeReview.date}
+                  </time>
+                </footer>
+                <div className="gr-carousel-dots" role="tablist" aria-label={isEn ? "Review picker" : "Výběr recenze"}>
+                  {localizedReviews.map((r, i) => (
+                    <button
+                      key={r.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={i === carouselIndex}
+                      aria-label={isEn ? `Review ${i + 1}` : `Recenze ${i + 1}`}
+                      onClick={() => setCarouselIndex(i)}
+                      className="gr-carousel-dot"
+                      data-active={i === carouselIndex ? "true" : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            </article>
+            <a
+              className="gr-stats-link gr-stats-link-mobile"
+              href="https://maps.app.goo.gl/HFuawq4yJgxCo54X6"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {isEn ? "View all reviews" : "Zobrazit všechny recenze"}
+            </a>
           </div>
         </div>
       </div>
@@ -520,6 +542,17 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           color: var(--pk-ink);
           line-height: 1;
         }
+        .gr-stats-score {
+          display: none;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 1;
+          color: var(--pk-ink-70);
+        }
+        .gr-stats-link-mobile {
+          display: none;
+        }
         .gr-stats-stars {
           margin-bottom: 0;
         }
@@ -591,39 +624,50 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           min-width: 0;
           width: 100%;
         }
-        .gr-carousel-inner {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 10px;
-          width: 100%;
-        }
         .gr-carousel-viewport {
-          flex: 1 1 0;
-          min-width: 0;
+          width: 100%;
           overflow: hidden;
-          border-radius: 18px;
+          overflow-x: clip;
+          border-radius: 0;
           padding: 0;
           touch-action: pan-y;
+          position: relative;
+          isolation: isolate;
         }
         .gr-carousel-track {
           display: flex;
           flex-direction: row;
+          flex-wrap: nowrap;
           transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
           align-items: stretch;
+          will-change: transform;
         }
         .gr-carousel-slide {
-          flex: 0 0 100%;
-          min-width: 0;
+          flex-shrink: 0;
           box-sizing: border-box;
-          height: 100%;
-          display: flex;
+          overflow: hidden;
         }
         .gr-carousel-dots {
           display: flex;
           justify-content: center;
           gap: 8px;
-          margin-top: 14px;
+          margin-top: 0;
+        }
+        .gr-mobile-review-unit {
+          width: min(520px, 100%);
+          margin: 0 auto;
+          box-sizing: border-box;
+          background: var(--pk-page);
+          border: 1px solid var(--pk-slate-tint-10);
+          border-radius: 12px;
+          box-shadow: 0 20px 48px var(--pk-slate-tint-09);
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        .gr-mobile-card-bottom {
+          flex-shrink: 0;
+          padding: 0 18px 16px;
         }
         .gr-carousel-dot {
           width: 8px;
@@ -633,15 +677,11 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           padding: 0;
           background: var(--pk-slate-tint-16);
           cursor: pointer;
-          transition: width 0.2s ease, background 0.2s ease;
+          transition: width 0.25s ease, background 0.25s ease;
         }
         .gr-carousel-dot[data-active="true"] {
-          width: 22px;
-          background: var(--pk-accent);
-        }
-        .gr-carousel-nav:hover {
-          background: var(--pk-accent-12) !important;
-          border-color: var(--pk-accent-35) !important;
+          width: 28px;
+          background: var(--pk-ink);
         }
         @media (max-width: 1100px) {
           .gr-cards-desktop {
@@ -654,6 +694,9 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           }
         }
         @media (max-width: 900px) {
+          .google-reviews-section .google-reviews-heading {
+            margin-bottom: 20px !important;
+          }
           .gr-cards-desktop {
             display: none !important;
           }
@@ -667,7 +710,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           /* Logo + stats stay side-by-side on mobile */
           .gr-left-panel {
             max-width: none;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             margin-left: auto;
             margin-right: auto;
             flex-direction: column !important;
@@ -680,48 +723,132 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             text-align: center !important;
             align-items: center !important;
           }
+          .gr-stats-rating-row {
+            justify-content: center !important;
+          }
+          .gr-stats-rating-value {
+            display: none !important;
+          }
+          .gr-stats-score {
+            display: inline !important;
+            font-size: 19.2px !important;
+          }
+          .gr-stats-rating-row svg {
+            width: 31px !important;
+            height: 31px !important;
+          }
+          .gr-stats-link {
+            display: none !important;
+          }
+          .gr-stats-link-mobile {
+            display: block !important;
+            margin: 20px auto 0;
+            padding: 0 4px;
+            text-align: center;
+            width: min(520px, 100%);
+            font-family: Roboto, "Segoe UI", system-ui, sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--pk-ink) !important;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            position: relative;
+            z-index: 2;
+            box-sizing: border-box;
+          }
           .gr-google-logo-inline {
-            height: 28px !important;
-            max-height: 28px !important;
+            height: 33.6px !important;
+            max-height: 33.6px !important;
+          }
+          .gr-carousel-mobile {
+            width: 100%;
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
           }
           .google-reviews-section {
             padding: 56px 0 !important;
           }
-          /* Space around each slide without revealing adjacent slides */
-          .gr-carousel-slide{
-            padding: 26px 18px 20px;
+          .gr-stats-note {
+            display: none !important;
           }
-          .gr-carousel-mobile .gr-review-card {
-            text-align: center !important;
-            height: clamp(340px, 56vh, 420px);
-            max-height: 420px;
-            box-shadow: none !important;
-          }
-          .gr-carousel-mobile .gr-review-header {
-            flex-direction: column !important;
-            align-items: center !important;
-            justify-content: center !important;
-          }
-          .gr-carousel-mobile .gr-review-author-row {
-            flex-direction: column !important;
-            align-items: center !important;
-          }
-          .gr-carousel-mobile .gr-review-name-wrap {
-            text-align: center !important;
-          }
-          .gr-carousel-mobile .gr-review-g-icon {
-            margin-top: 4px;
-          }
-          .gr-carousel-mobile .gr-review-stars-row {
-            display: flex !important;
-            justify-content: center !important;
-          }
-          .gr-carousel-mobile .gr-review-body {
-            text-align: center !important;
-            display: -webkit-box;
-            -webkit-line-clamp: 6;
-            -webkit-box-orient: vertical;
+          .gr-carousel-viewport {
+            padding: 20px 0 0;
+            width: 100%;
+            max-width: min(520px, 100%);
+            margin: 0 auto;
             overflow: hidden;
+            overflow-x: clip;
+          }
+          .gr-carousel-slide {
+            box-sizing: border-box;
+            padding: 0;
+            overflow: hidden;
+          }
+          .gr-mobile-review-unit {
+            width: 100%;
+            max-width: min(520px, 100%);
+          }
+          .gr-review-mobile-slide-inner {
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+            padding: 0 18px;
+            box-sizing: border-box;
+            width: 100%;
+            overflow: hidden;
+          }
+          .gr-review-mobile-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 12px;
+          }
+          .gr-review-score {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            line-height: 1;
+            color: var(--pk-ink-70);
+          }
+          .gr-review-body--mobile {
+            flex: 1 1 auto;
+            margin: 0;
+            padding-bottom: 8px;
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+            line-height: 1.65;
+            font-style: italic;
+            color: var(--pk-ink-74);
+            text-align: left;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+          .gr-review-mobile-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 6px 10px;
+            margin: 0 0 10px;
+            padding: 0;
+          }
+          .gr-review-mobile-author {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--pk-ink-92);
+          }
+          .gr-review-mobile-date {
+            font-family: "Montserrat", sans-serif;
+            font-size: 12px;
+            color: var(--pk-ink-50);
+            white-space: nowrap;
+          }
+          .gr-mobile-card-bottom .gr-carousel-dots {
+            margin-top: 0;
+            padding-top: 0;
           }
         }
         @media (prefers-reduced-motion: reduce) {
