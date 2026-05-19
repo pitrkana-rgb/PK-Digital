@@ -3,7 +3,7 @@
  * Source: public/Favicon.png (run after updating the master favicon).
  */
 import sharp from "sharp";
-import { existsSync } from "fs";
+import { copyFileSync, existsSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -14,6 +14,7 @@ const outDir = join(root, "public");
 
 const googleSizes = [48, 96];
 const browserSize = 32;
+const appleTouchSize = 180;
 
 if (!existsSync(src)) {
   console.error("Missing:", src);
@@ -35,3 +36,12 @@ for (const size of googleSizes) {
 const browserOut = join(outDir, `favicon-browser-${browserSize}.png`);
 await resizeSquare(browserSize).png().toFile(browserOut);
 console.log("Wrote:", browserOut);
+
+const appleOut = join(outDir, "apple-touch-icon.png");
+await resizeSquare(appleTouchSize).png().toFile(appleOut);
+console.log("Wrote:", appleOut);
+
+/** Google and browsers often request /favicon.ico — serve square 48×48 PNG at that path. */
+const faviconIco = join(outDir, "favicon.ico");
+copyFileSync(join(outDir, "favicon-google-48.png"), faviconIco);
+console.log("Wrote:", faviconIco);

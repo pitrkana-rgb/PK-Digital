@@ -5,11 +5,12 @@
 
 export const SITE_URL = "https://pk-digital.cz" as const;
 
-/** Master favicon + square PNGs from `npm run favicons` (Google 48×48+, browser tab 32×32). */
-export const faviconUrl = `${SITE_URL}/Favicon.png`;
+/** Square favicons from `npm run favicons` (source: public/Favicon.png). */
+export const faviconIcoUrl = `${SITE_URL}/favicon.ico`;
 export const faviconGoogle48Url = `${SITE_URL}/favicon-google-48.png`;
 export const faviconGoogle96Url = `${SITE_URL}/favicon-google-96.png`;
 export const faviconBrowser32Url = `${SITE_URL}/favicon-browser-32.png`;
+export const appleTouchIconUrl = `${SITE_URL}/apple-touch-icon.png`;
 
 /** Bump when `public/og-image.png` changes (cache bust for Facebook, LinkedIn, Discord, Google). */
 export const OG_IMAGE_VERSION = 6;
