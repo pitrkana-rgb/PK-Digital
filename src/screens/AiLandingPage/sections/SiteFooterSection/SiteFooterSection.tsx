@@ -79,7 +79,7 @@ export const SiteFooterSection = (): JSX.Element => {
                 style={{ height: "72px", width: "auto", display: "block" }}
               />
             </div>
-            <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark55, lineHeight: 1.65, margin: 0 }}>
+            <p style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "14px", color: pk.onDark, lineHeight: 1.65, margin: 0 }}>
               {t.footerDesc}
             </p>
           </div>
@@ -92,9 +92,9 @@ export const SiteFooterSection = (): JSX.Element => {
               <span style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.nav}</span>
               {navLinks.map(link => (
                 <button key={`${link.path}-${link.label}`} type="button" onClick={() => handleNavClick(link)}
-                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark, textAlign: "left", transition: "color 200ms ease" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark60; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
                 >
                   {link.label}
                 </button>
@@ -105,25 +105,25 @@ export const SiteFooterSection = (): JSX.Element => {
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <span style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.08em", color: pk.accent, textTransform: "uppercase" as const, marginBottom: "4px" }}>{t.contactTitle}</span>
               <button type="button" onClick={() => navigate("/napiste-nam")}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", transition: "color 200ms ease" }}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark, textAlign: "left", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark60; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = pk.onDark; }}
               >
                 {t.writeUs}
               </button>
               <a
                 href="tel:+420725703868"
-                style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark60; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
               >
                 +420 725 703 868
               </a>
               <a
                 href="mailto:info@pk-digital.cz"
-                style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark60, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
+                style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "15px", color: pk.onDark, textAlign: "left", textDecoration: "none", transition: "color 200ms ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark60; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = pk.onDark; }}
               >
                 info@pk-digital.cz
               </a>

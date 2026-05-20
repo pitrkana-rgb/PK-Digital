@@ -78,7 +78,7 @@ export const BrandLogosCarouselSection = (): JSX.Element => {
           font-size: clamp(14.4px, 1.38vw, 18px);
           letter-spacing: 0.02em;
           line-height: 1.25;
-          color: var(--pk-ink-82);
+          color: var(--pk-ink);
         }
         .brand-benefit-check{
           display:inline-flex;

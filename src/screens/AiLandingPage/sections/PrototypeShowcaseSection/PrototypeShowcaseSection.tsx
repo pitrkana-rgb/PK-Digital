@@ -8,48 +8,31 @@ import realitniMaklerImg from "../../../../../Images/Prototypes/realitní maklé
 import fitnessTrenerImg from "../../../../../Images/Prototypes/fitness trenér.png";
 
 type PrototypeCard = {
-  category: string;
   title: string;
-  bullets: string[];
-  trust: string;
+  description: string;
   image: string;
   previewUrl: string;
 };
 
 const cards: PrototypeCard[] = [
   {
-    category: "Investiční poradce",
-    title: "Získejte web, který okamžitě budí důvěru a přivádí nové poptávky.",
-    bullets: [
-      "Jasně vysvětlené služby a expertiza",
-      "Formulář pro kvalitní leady",
-      "Silný premium dojem pro bonitní klienty",
-    ],
-    trust: "Připraveno pro jasnou nabídku, reference i konzultační funnel.",
+    title: "Investiční poradce",
+    description:
+      "Web vytvořený pro profesionální prezentaci finančních služeb a budování důvěry. Pomáhá jednoduše vysvětlit nabídku a přivádět nové klienty přes kvalitní poptávky.",
     image: investicniPoradceImg,
     previewUrl: "https://financni-partner-demo.vercel.app/",
   },
   {
-    category: "Realitní makléř",
-    title: "Představte nemovitosti i sebe tak, aby klient chtěl zavolat hned.",
-    bullets: [
-      "Vyšší důvěryhodnost při prvním dojmu",
-      "Lepší prezentace nabídek a lokalit",
-      "Rychlá cesta ke kontaktu a prohlídce",
-    ],
-    trust: "Ideální pro osobní značku, lead capture a lokální viditelnost.",
+    title: "Realitní makléř",
+    description:
+      "Prémiová prezentace pro makléře, kteří chtějí působit moderně a důvěryhodně. Web usnadňuje prezentaci nabídek a podporuje rychlejší kontakt od zájemců.",
     image: realitniMaklerImg,
     previewUrl: "https://domov-snadno.vercel.app/",
   },
   {
-    category: "Fitness trenér",
-    title: "Přeměňte návštěvníky v rezervace tréninku a dlouhodobé klienty.",
-    bullets: [
-      "Silná transformační komunikace",
-      "Prostor pro výsledky klientů a recenze",
-      "Napojení na rezervace nebo poptávku",
-    ],
-    trust: "Navrženo pro osobní značku, balíčky služeb a pravidelné leady.",
+    title: "Fitness trenér",
+    description:
+      "Dynamický web zaměřený na osobní značku trenéra a získávání rezervací. Přehledné sekce, silný vizuál a důraz na výsledky klientů pomáhají zvýšit počet nových zájemců.",
     image: fitnessTrenerImg,
     previewUrl: "https://fitness-trainer-alpha.vercel.app/",
   },
@@ -57,42 +40,63 @@ const cards: PrototypeCard[] = [
 
 const cardsEn: PrototypeCard[] = [
   {
-    category: "Financial advisor",
-    title: "Get a website that builds trust instantly and brings new inquiries.",
-    bullets: [
-      "Services and expertise explained clearly",
-      "A form that attracts high-quality leads",
-      "Strong premium impression for high-value clients",
-    ],
-    trust: "Ready for a clear offer, testimonials, and a consultation funnel.",
+    title: "Financial advisor",
+    description:
+      "A website built for a professional financial services presentation and trust-building. It explains the offer clearly and brings new clients through high-quality inquiries.",
     image: investicniPoradceImg,
     previewUrl: "https://financni-partner-demo.vercel.app/",
   },
   {
-    category: "Real estate agent",
-    title: "Present properties and yourself so clients want to call immediately.",
-    bullets: [
-      "Higher credibility from the first impression",
-      "Better presentation of listings and locations",
-      "Fast path to contact and property viewings",
-    ],
-    trust: "Ideal for personal branding, lead capture, and local visibility.",
+    title: "Real estate agent",
+    description:
+      "A premium presentation for agents who want to look modern and trustworthy. The site showcases listings clearly and encourages faster contact from prospects.",
     image: realitniMaklerImg,
     previewUrl: "https://domov-snadno.vercel.app/",
   },
   {
-    category: "Personal trainer",
-    title: "Turn visitors into training bookings and long-term clients.",
-    bullets: [
-      "Strong transformation-focused messaging",
-      "Space for client results and testimonials",
-      "Integration with booking or inquiries",
-    ],
-    trust: "Designed for personal brand, service packages, and steady lead flow.",
+    title: "Personal trainer",
+    description:
+      "A dynamic website focused on the trainer’s personal brand and booking growth. Strong visuals and clear sections help turn visitors into new inquiries.",
     image: fitnessTrenerImg,
     previewUrl: "https://fitness-trainer-alpha.vercel.app/",
   },
 ];
+
+const PrototypeShowcaseItem = ({
+  card,
+  linkLabel,
+  onPreview,
+}: {
+  card: PrototypeCard;
+  linkLabel: string;
+  onPreview: (card: PrototypeCard) => void;
+}): JSX.Element => {
+  const handleActivate = () => onPreview(card);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleActivate();
+    }
+  };
+
+  return (
+    <article
+      className="prototype-item"
+      role="button"
+      tabIndex={0}
+      onClick={handleActivate}
+      onKeyDown={handleKeyDown}
+      aria-label={`${card.title} – ${linkLabel}`}
+    >
+      <h3 className="prototype-item-title">{card.title}</h3>
+      <div className="prototype-preview">
+        <img src={card.image} alt="" className="prototype-preview-image" aria-hidden="true" />
+      </div>
+      <p className="prototype-item-desc">{card.description}</p>
+      <span className="prototype-item-link">{linkLabel}</span>
+    </article>
+  );
+};
 
 export const PrototypeShowcaseSection = (): JSX.Element => {
   const { language } = useLanguage();
@@ -100,16 +104,17 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
   const t = isEn
     ? {
         heading: "Get a free website design in 3 days",
-        subheading: "Browse real website prototypes I prepare for clients within 3 days, free of charge, before you commit to working with me.",
-        cta: "Preview prototype",
+        subheading:
+          "Browse sample prototypes and get a sense of the quality you'll receive free of charge within 3 days. I'll create your design tailored to your business, and if you're happy with it, I'll turn it into a professional website ready to represent your brand at the highest level.",
+        cta: "View prototype →",
         closeAria: "Close preview",
         stickyCta: "I want a similar website",
       }
     : {
         heading: "Návrh webu zdarma do 3 dnů",
         subheading:
-          "Prohlídněte si ukázky reálných prototypů webů, které pro klienty připravuji do 3 dnů zdarma ještě před spoluprací",
-        cta: "Prohlédnout prototyp",
+          "Prohlédněte si ukázkové prototypy a udělejte si představu o kvalitě zpracování, kterou zdarma získáte do 3 dnů. Váš návrh vytvořím na míru vašemu podnikání a pokud budete spokojeni, proměním jej v profesionální web připravený reprezentovat vaši značku na nejvyšší úrovni.",
+        cta: "Zobrazit prototyp →",
         closeAria: "Zavřít náhled",
         stickyCta: "Chci podobný web",
       };
@@ -120,15 +125,34 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [mobileIdx, setMobileIdx] = useState(0);
   const touchStartX = useRef<number>(0);
+  const suppressCardClickRef = useRef(false);
   const SWIPE_THRESHOLD = 50;
 
   const goTo = (idx: number) => setMobileIdx(Math.max(0, Math.min(activeCards.length - 1, idx)));
-  const onTouchStart = (e: any) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e: any) => {
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    suppressCardClickRef.current = false;
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (Math.abs(e.touches[0].clientX - touchStartX.current) > SWIPE_THRESHOLD) {
+      suppressCardClickRef.current = true;
+    }
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
     const endX = e.changedTouches[0].clientX;
     const delta = touchStartX.current - endX;
-    if (delta > SWIPE_THRESHOLD) goTo(mobileIdx + 1);
-    else if (delta < -SWIPE_THRESHOLD) goTo(mobileIdx - 1);
+    if (Math.abs(delta) > SWIPE_THRESHOLD) {
+      suppressCardClickRef.current = true;
+      if (delta > 0) goTo(mobileIdx + 1);
+      else goTo(mobileIdx - 1);
+    }
+  };
+  const handlePreview = (card: PrototypeCard) => {
+    if (suppressCardClickRef.current) {
+      suppressCardClickRef.current = false;
+      return;
+    }
+    setActivePreview(card);
   };
 
   useEffect(() => {
@@ -187,15 +211,13 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             {t.heading}
           </h2>
           <p
-            className="section-sub"
+            className="section-sub prototype-section-sub"
             style={{
               fontFamily: "'Montserrat', sans-serif",
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: 1.6,
-              color: pk.ink65,
               margin: "0 auto",
-              maxWidth: "860px",
             }}
           >
             {t.subheading}
@@ -204,35 +226,18 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
 
         <div className="prototype-grid prototype-grid-desktop">
           {activeCards.map((card) => (
-            <article key={card.category} className="prototype-card">
-              <div className="prototype-card-top">
-                <div className="prototype-mockup">
-                  <img src={card.image} alt={card.category} className="prototype-mockup-image" />
-                </div>
-              </div>
-
-              <div className="prototype-category">{card.category}</div>
-
-              <h3 className="prototype-title">{card.title}</h3>
-
-              <ul className="prototype-benefits prototype-benefits--checks">
-                {card.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-
-              <p className="prototype-trust">{card.trust}</p>
-
-              <button type="button" className="prototype-cta landing-primary-cta animate-pulse-glow" onClick={() => setActivePreview(card)}>
-                {t.cta}
-              </button>
-            </article>
+            <PrototypeShowcaseItem
+              key={card.previewUrl}
+              card={card}
+              linkLabel={t.cta}
+              onPreview={handlePreview}
+            />
           ))}
         </div>
 
         {/* Mobile carousel (one card) */}
         <div className="prototype-mobile-carousel">
-          <div style={{ overflow: "hidden", width: "100%" }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <div style={{ overflow: "hidden", width: "100%" }} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
             <div
               className="prototype-carousel-track"
               style={{
@@ -244,34 +249,17 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             >
               {activeCards.map((card) => (
                 <div
-                  key={card.category}
+                  key={card.previewUrl}
                   className="prototype-mobile-slide"
                   style={{ flex: `0 0 ${100 / activeCards.length}%`, padding: "0 0 4px", boxSizing: "border-box" }}
                 >
-                  <article className="prototype-card">
-                    <div className="prototype-card-top">
-                      <div className="prototype-mockup">
-                        <img src={card.image} alt={card.category} className="prototype-mockup-image" />
-                      </div>
-                    </div>
-                    <div className="prototype-category">{card.category}</div>
-                    <h3 className="prototype-title">{card.title}</h3>
-                    <ul className="prototype-benefits prototype-benefits--checks">
-                      {card.bullets.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
-                      ))}
-                    </ul>
-                    <p className="prototype-trust">{card.trust}</p>
-                    <button type="button" className="prototype-cta landing-primary-cta animate-pulse-glow" onClick={() => setActivePreview(card)}>
-                      {t.cta}
-                    </button>
-                  </article>
+                  <PrototypeShowcaseItem card={card} linkLabel={t.cta} onPreview={handlePreview} />
                 </div>
               ))}
             </div>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "22px" }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "22px" }}>
             {activeCards.map((_, i) => (
               <button
                 key={i}
@@ -279,8 +267,8 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                 aria-label={isEn ? `Go to card ${i + 1}` : `Přejít na kartu ${i + 1}`}
                 onClick={() => goTo(i)}
                 style={{
-                  width: i === mobileIdx ? "28px" : "8px",
-                  height: "8px",
+                  width: i === mobileIdx ? "36px" : "10px",
+                  height: "10px",
                   borderRadius: "999px",
                   border: "none",
                   cursor: "pointer",
@@ -296,7 +284,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
 
       {activePreview
         ? createPortal(
-          <div className="prototype-modal" role="dialog" aria-modal="true" aria-label={activePreview.category}>
+          <div className="prototype-modal" role="dialog" aria-modal="true" aria-label={activePreview.title}>
             <div className="prototype-modal-backdrop" onClick={() => setActivePreview(null)} />
             <div className="prototype-modal-shell">
               <button
@@ -310,7 +298,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
               <div className="prototype-modal-frame-wrap">
                 <iframe
                   src={activePreview.previewUrl}
-                  title={activePreview.category}
+                  title={activePreview.title}
                   className="prototype-modal-frame"
                 />
               </div>
@@ -337,135 +325,110 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           .prototype-showcase-section {
             padding-top: 30px !important;
           }
+          .prototype-section-sub{
+            max-width: 100%;
+          }
         }
         .prototype-grid{
           display:grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 24px;
+          gap: 32px;
+          align-items: start;
         }
         .prototype-mobile-carousel{ display:none; }
-        .prototype-card{
-          background: var(--pk-page);
-          border: 1px solid var(--pk-slate-600-border-16);
-          border-radius: 28px;
-          box-shadow: 0 20px 48px var(--pk-slate-tint-08);
-          padding: 20px;
+        .prototype-item{
+          background: transparent;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+          padding: 0;
+          margin: 0;
           display:flex;
           flex-direction:column;
-          transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+          gap: 16px;
+          width: 100%;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+          transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
           opacity: ${cardsVisible ? 0 : 1};
-          animation: ${cardsVisible ? "prototypeCardFadeIn 700ms cubic-bezier(0.2,0.8,0.2,1) forwards" : "none"};
+          animation: ${cardsVisible ? "prototypeItemFadeIn 500ms cubic-bezier(0.2,0.8,0.2,1) forwards" : "none"};
         }
-        .prototype-card:nth-child(1){ animation-delay: 0ms; }
-        .prototype-card:nth-child(2){ animation-delay: 1000ms; }
-        .prototype-card:nth-child(3){ animation-delay: 2000ms; }
-        .prototype-card:hover{
+        .prototype-item:hover,
+        .prototype-item:focus-visible{
           transform: translateY(-6px);
-          box-shadow: 0 26px 56px var(--pk-slate-tint-12);
-          border-color: var(--pk-prototype-ring-18);
         }
-        @keyframes prototypeCardFadeIn{
-          from{ opacity: 0; transform: translateY(18px); }
+        .prototype-item:focus-visible{
+          outline: 2px solid var(--pk-accent);
+          outline-offset: 4px;
+        }
+        .prototype-item:nth-child(1){ animation-delay: 0ms; }
+        .prototype-item:nth-child(2){ animation-delay: 500ms; }
+        .prototype-item:nth-child(3){ animation-delay: 1000ms; }
+        @keyframes prototypeItemFadeIn{
+          from{ opacity: 0; transform: translateY(14px); }
           to{ opacity: 1; transform: translateY(0); }
         }
-        .prototype-card-top{
-          margin-bottom: 18px;
-        }
-        .prototype-mockup{
-          border-radius: 22px;
+        .prototype-preview{
+          border-radius: 16px;
           overflow: hidden;
-          background: var(--pk-gradient-prototype-card);
-          min-height: 220px;
-          box-shadow: inset 0 1px 0 var(--pk-on-dark-10);
+          aspect-ratio: 16 / 9;
+          width: 100%;
+          box-shadow:
+            0 4px 6px rgb(2 6 23 / 0.04),
+            0 12px 28px rgb(2 6 23 / 0.08),
+            0 24px 48px rgb(2 6 23 / 0.06);
+          transition:
+            transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .prototype-mockup-image{
+        .prototype-item:hover .prototype-preview,
+        .prototype-item:focus-visible .prototype-preview{
+          transform: scale(1.015);
+          box-shadow:
+            0 8px 16px rgb(2 6 23 / 0.06),
+            0 20px 40px rgb(2 6 23 / 0.12),
+            0 36px 64px rgb(2 6 23 / 0.1);
+        }
+        .prototype-preview-image{
           display:block;
           width:100%;
           height:100%;
-          min-height:220px;
           object-fit:cover;
           object-position: top center;
+          transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .prototype-category{
-          display:inline-flex;
-          align-self:flex-start;
-          margin-bottom: 14px;
-          padding: 7px 12px;
-          border-radius: 999px;
-          background: var(--pk-slate-tint-05);
-          color: var(--pk-ink-72);
-          font-family: "Montserrat", sans-serif;
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
+        .prototype-item:hover .prototype-preview-image,
+        .prototype-item:focus-visible .prototype-preview-image{
+          transform: scale(1.04);
         }
-        .prototype-title{
-          margin: 0 0 16px;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 700;
-          font-size: 24px;
-          line-height: 1.18;
-          letter-spacing: -0.02em;
-          color: var(--pk-ink);
-        }
-        .prototype-benefits{
-          list-style:none;
-          padding:0;
-          margin:0 0 16px;
-          display:flex;
-          flex-direction:column;
-          gap: 0;
-        }
-        .prototype-benefits--checks{
-          list-style: none;
-          padding-left: 0;
-        }
-        .prototype-benefits--checks li{
-          position: relative;
-          padding-left: 28px;
+        .prototype-item-title{
           margin: 0;
-          padding-top: 10px;
-          padding-bottom: 10px;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 500;
-          font-size: 16px;
-          line-height: 1.55;
-          color: var(--pk-ink-82);
-        }
-        .prototype-benefits--checks li::before{
-          content: "✓";
-          position: absolute;
-          left: 0;
-          top: 0.42em;
           font-family: "Montserrat", sans-serif;
           font-weight: 800;
-          font-size: 1.05em;
-          line-height: 1;
+          font-size: 20px;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
           color: var(--pk-ink);
+          text-align: center;
         }
-        .prototype-trust{
-          margin: 0 0 20px;
+        .prototype-item-desc{
+          margin: 0;
           font-family: "Montserrat", sans-serif;
-          font-size: 13px;
-          line-height: 1.55;
-          color: var(--pk-ink-55);
-        }
-        .prototype-cta{
-          margin-top:auto;
-          border:none;
-          border-radius: 12px;
-          padding: 9px 22px;
-          color: var(--pk-ink);
-          font-family: "Montserrat", sans-serif;
-          font-weight: 600;
+          font-weight: 500;
           font-size: 14px;
-          cursor:pointer;
-          transition: transform 220ms ease, filter 220ms ease;
+          line-height: 1.65;
+          color: var(--pk-ink);
+          text-align: center;
         }
-        .prototype-cta:hover{
-          transform: translateY(-2px);
-          filter: brightness(1.06);
+        .prototype-item-link{
+          align-self: center;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 800;
+          font-size: 14px;
+          line-height: 1.65;
+          color: var(--pk-ink);
+          text-decoration: underline;
+          text-underline-offset: 3px;
         }
         .prototype-modal{
           position: fixed;
@@ -554,26 +517,37 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           .prototype-grid-desktop{ display:none !important; }
           .prototype-mobile-carousel{ display:block !important; }
           .prototype-mobile-slide{ padding-top: 6px; }
-          .prototype-mobile-carousel .prototype-card{
+          .prototype-mobile-carousel .prototype-item{
             width: min(520px, 100%);
             margin: 0 auto;
           }
         }
-        @media (max-width: 1024px){
-          .prototype-card,
-          .prototype-card:hover{
-            box-shadow: none !important;
-          }
-        }
         @media (max-width: 768px){
-          .prototype-mockup{ min-height: 190px; }
-          .prototype-mockup-image{ min-height:190px; }
-          .prototype-title{ font-size: 22px; }
+          .prototype-preview{ border-radius: 14px; }
+          .prototype-item{ gap: 14px; }
+          .prototype-item-title{ font-size: 18px; }
           .prototype-modal{ padding: 12px; }
           .prototype-modal-shell{ height: 88vh; border-radius: 18px; }
         }
         @media (prefers-reduced-motion: reduce){
-          .prototype-card{ animation: none !important; opacity: 1 !important; }
+          .prototype-item{ animation: none !important; opacity: 1 !important; }
+          .prototype-item,
+          .prototype-preview,
+          .prototype-preview-image{
+            transition: none !important;
+            transform: none !important;
+          }
+          .prototype-item:hover,
+          .prototype-item:focus-visible{
+            transform: none !important;
+          }
+          .prototype-item:hover .prototype-preview,
+          .prototype-item:focus-visible .prototype-preview{
+            box-shadow:
+              0 4px 6px rgb(2 6 23 / 0.04),
+              0 12px 28px rgb(2 6 23 / 0.08),
+              0 24px 48px rgb(2 6 23 / 0.06);
+          }
         }
       `}</style>
     </section>

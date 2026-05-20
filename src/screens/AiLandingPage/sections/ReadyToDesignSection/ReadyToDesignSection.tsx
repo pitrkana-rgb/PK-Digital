@@ -92,7 +92,7 @@ const fieldGroupLabelStyle: CSSProperties = {
   fontWeight: 500,
   fontSize: "15px",
   lineHeight: 1.45,
-  color: pk.onDark78,
+  color: pk.onDark,
   margin: "0 0 10px",
 };
 
@@ -179,8 +179,8 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
         width: "100%",
         backgroundColor: pk.page,
         padding: avoidFooterOverlap ? "64px 0 72px" : "80px 0 100px",
-        marginTop: avoidFooterOverlap ? 0 : "-50px",
-        marginBottom: avoidFooterOverlap ? 0 : "-80px",
+        marginTop: 0,
+        marginBottom: 0,
       }}
     >
       <SectionDivider />
@@ -235,7 +235,7 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
                   fontSize: "13px",
                   lineHeight: 1.4,
                   letterSpacing: "0.04em",
-                  color: pk.onDark88,
+                  color: pk.onDark,
                 }}
               >
                 {isEn ? "I reply within 24h" : "Odpovídám do 24h"}
@@ -260,7 +260,7 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
                   fontWeight: 400,
                   fontSize: "14px",
                   lineHeight: 1.6,
-                  color: pk.onDark72,
+                  color: pk.onDark,
                 }}
               >
                 {isEn
@@ -277,7 +277,7 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
                 <h3 style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "28px", color: pk.onDark, marginBottom: "12px" }}>
                   {isEn ? "Thank you for your request." : "Děkuji za odeslání."}
                 </h3>
-                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.onDark72, marginBottom: "32px" }}>
+                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.onDark, marginBottom: "32px" }}>
                   {isEn ? "I will get back to you within 24 hours." : "Ozvu se do 24 hodin."}
                 </p>
                 <button
@@ -376,7 +376,7 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
                       <p style={{ ...fieldGroupLabelStyle, marginBottom: "6px" }}>
                         {isEn ? "Personal data processing *" : "Zpracování osobních údajů *"}
                       </p>
-                      <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark78 }}>
+                      <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark }}>
                         <input
                           type="checkbox"
                           checked={form.gdprConsent}

@@ -674,8 +674,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           aria-label={isEn ? `Go to service ${i + 1}` : `Přejít na službu ${i + 1}`}
           onClick={() => goTo(i)}
           style={{
-            width: i === activeIdx ? "28px" : "8px",
-            height: "8px",
+            width: i === activeIdx ? "36px" : "10px",
+            height: "10px",
             borderRadius: "999px",
             border: "none",
             cursor: "pointer",
@@ -727,7 +727,6 @@ export const CoNabizimeSection = (): JSX.Element => {
               fontWeight: 400,
               fontSize: "18px",
               lineHeight: 1.6,
-              color: pk.ink65,
               margin: "0 auto",
               maxWidth: "980px",
             }}
@@ -921,7 +920,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         .offer-tabs-dots{
           display: none;
           justify-content: center;
-          gap: 8px;
+          gap: 10px;
           margin: 0;
           padding: 0;
         }
@@ -1250,7 +1249,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 400;
           font-size: 16px;
           line-height: 1.7;
-          color: var(--pk-ink-70);
+          color: var(--pk-ink);
           margin: 10px 0 18px;
         }
 
@@ -1259,7 +1258,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 600;
           font-size: 15px;
           line-height: 1.45;
-          color: var(--pk-ink-88);
+          color: var(--pk-ink);
           margin: 0 0 10px;
         }
 
@@ -1274,7 +1273,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 500;
           font-size: 13px;
           line-height: 1.45;
-          color: var(--pk-ink-82);
+          color: var(--pk-ink);
         }
 
         .offer-cta{
@@ -1316,7 +1315,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           font-weight: 500;
           font-size: 16px;
           line-height: 1.55;
-          color: var(--pk-ink-82);
+          color: var(--pk-ink);
         }
         .offer-bullets--checks li strong{
           font-weight: 700;

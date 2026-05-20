@@ -5,7 +5,7 @@
 
 export const SITE_URL = "https://pk-digital.cz" as const;
 
-/** Square favicons from `npm run favicons` (source: public/Favicon.png). */
+/** Square favicons from `npm run favicons` (source: public/Company_logo_Icon_V4.png). */
 export const faviconIcoUrl = `${SITE_URL}/favicon.ico`;
 export const faviconGoogle48Url = `${SITE_URL}/favicon-google-48.png`;
 export const faviconGoogle96Url = `${SITE_URL}/favicon-google-96.png`;

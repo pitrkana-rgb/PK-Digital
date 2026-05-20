@@ -233,7 +233,7 @@ export const MainHeroSection = (): JSX.Element => {
           fontWeight: 400,
           fontSize: "clamp(14px, 2.0vw, 17px)",
           lineHeight: 1.65,
-          color: pk.onDark88,
+          color: pk.onDark,
           maxWidth: "640px",
           margin: "0 0 20px 0",
         }}>
@@ -313,7 +313,7 @@ export const MainHeroSection = (): JSX.Element => {
             fontWeight: 500,
             fontSize: "clamp(13px, 1.6vw, 15px)",
             lineHeight: 1.45,
-            color: pk.onDark72,
+            color: pk.onDark,
             textAlign: "center",
             maxWidth: "640px",
           }}
@@ -628,7 +628,7 @@ export const MainHeroSection = (): JSX.Element => {
             margin-top: 20px !important;
           }
           .hero-headline {
-            font-size: 22.8px !important;
+            font-size: min(26.22px, 8.19vw) !important;
             line-height: 1.12 !important;
             max-width: 100% !important;
             margin-bottom: 10px !important;
@@ -636,6 +636,7 @@ export const MainHeroSection = (): JSX.Element => {
           .hero-headline-line1,
           .hero-headline-line2 {
             display: block !important;
+            white-space: nowrap;
           }
           .hero-headline-line2 {
             margin-top: 0.1em !important;

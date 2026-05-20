@@ -86,7 +86,7 @@ const fieldGroupLabelStyle = (inverse: boolean): CSSProperties => ({
   fontWeight: 500,
   fontSize: "15px",
   lineHeight: 1.45,
-  color: inverse ? pk.onDark78 : pk.ink70,
+  color: inverse ? pk.onDark : pk.ink,
   margin: "0 0 10px",
 });
 
@@ -207,7 +207,7 @@ export const ContactFormBlock = (): JSX.Element => {
                   fontSize: "13px",
                   lineHeight: 1.4,
                   letterSpacing: "0.04em",
-                  color: pk.onDark88,
+                  color: pk.onDark,
                 }}
               >
                 {isEn ? "I reply within 24h" : "Odpovídám do 24h"}
@@ -234,7 +234,7 @@ export const ContactFormBlock = (): JSX.Element => {
                   fontWeight: 400,
                   fontSize: "14px",
                   lineHeight: 1.6,
-                  color: pk.onDark72,
+                  color: pk.onDark,
                 }}
               >
                 {isEn
@@ -259,7 +259,7 @@ export const ContactFormBlock = (): JSX.Element => {
                   <CheckCircle2 color={pk.success500} size={40} />
                 </div>
                 <h3 style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "28px", color: pk.ink, marginBottom: "12px" }}>{isEn ? "Thank you for your request." : "Děkuji za odeslání."}</h3>
-                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.ink62, marginBottom: "32px" }}>{isEn ? "I will get back to you within 24 hours." : "Ozvu se do 24 hodin."}</p>
+                <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "17px", color: pk.ink, marginBottom: "32px" }}>{isEn ? "I will get back to you within 24 hours." : "Ozvu se do 24 hodin."}</p>
                 <button type="button" onClick={() => setSubmitted(false)} style={{ background: pk.slateTint04, border: `1px solid ${pk.slateTint12}`, color: pk.ink, padding: "12px 24px", borderRadius: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif" }}>{isEn ? "Send another message" : "Odeslat další zprávu"}</button>
               </div>
             ) : (
@@ -353,7 +353,7 @@ export const ContactFormBlock = (): JSX.Element => {
                       <p style={{ ...fieldGroupLabelStyle(true), marginBottom: "6px" }}>
                         {isEn ? "Personal data processing *" : "Zpracování osobních údajů *"}
                       </p>
-                      <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark78 }}>
+                      <label style={{ display: "flex", alignItems: "flex-start", gap: "12px", cursor: "pointer", fontFamily: "'Montserrat',sans-serif", fontSize: "15px", color: pk.onDark }}>
                         <input
                           type="checkbox"
                           checked={form.gdprConsent}

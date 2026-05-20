@@ -95,7 +95,7 @@ export const CompanyInfoBlock = (): JSX.Element => {
                   style={{
                     fontFamily: "'Montserrat',sans-serif",
                     fontSize: "11px",
-                    color: pk.onDark55,
+                    color: pk.onDark,
                     fontWeight: 600,
                     letterSpacing: "0.05em",
                     marginBottom: "4px",

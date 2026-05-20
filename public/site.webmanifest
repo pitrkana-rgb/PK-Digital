@@ -1,0 +1,27 @@
+{
+  "name": "PK Digital",
+  "short_name": "PK Digital",
+  "icons": [
+    {
+      "src": "/favicon-google-48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-google-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#010204",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

@@ -134,7 +134,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
   }, [items, started, language]);
 
   return (
-  <section ref={sectionRef} id="features" style={{ width: "100%", backgroundColor: pk.hero, padding: "55px 0 95px", marginTop: "-50px", marginBottom: "-50px" }}>
+  <section ref={sectionRef} className="how-works-section" style={{ width: "100%", background: "transparent", padding: "32px 0 48px", position: "relative" }}>
     <SectionDivider />
     <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
 
@@ -143,7 +143,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         <div className="how-left">
           <h2 className="how-title">
             {isEn ? "How the " : "Jak probíhá "}
-            <span style={{ color: pk.onDark }}>{isEn ? "collaboration works" : "spolupráce"}</span>
+            <span style={{ color: pk.ink }}>{isEn ? "collaboration works" : "spolupráce"}</span>
           </h2>
           <p className="how-sub section-sub">
             {isEn
@@ -175,7 +175,9 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
             }
           >
             <div className="how-progress-base" />
-            <div className="how-progress-fill" />
+            <div className="how-progress-fill">
+              <span className="how-progress-glow" aria-hidden="true" />
+            </div>
           </div>
           {items.map((step, idx) => (
             <div
@@ -221,7 +223,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         font-size: clamp(26px, 3.6vw, 42px);
         line-height: 1.08;
         letter-spacing: -0.02em;
-        color: var(--pk-on-dark-92);
+        color: var(--pk-ink);
       }
       .how-sub{
         margin: 0;
@@ -229,7 +231,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         font-weight: 400;
         font-size: 18px;
         line-height: 1.6;
-        color: var(--pk-on-dark-60);
+        color: var(--pk-ink78);
         max-width: 42ch;
       }
 
@@ -249,22 +251,58 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         top: 80px;
         height: 4px;
         z-index: 0;
+        overflow: visible;
       }
       .how-progress-base{
         position:absolute;
         inset:0;
         border-radius: 999px;
-        background: var(--pk-on-dark-border-12);
+        background: var(--pk-slate-tint-12);
+        overflow: hidden;
       }
       .how-progress-fill{
         position:absolute;
         top: 0;
         height: 4px;
         border-radius: 999px;
-        transform-origin: left;
+        transform-origin: left center;
         transform: scaleX(0);
-        inset: 0;
+        left: 0;
+        right: auto;
+        width: 100%;
         background: var(--pk-gradient-popular);
+        overflow: visible;
+      }
+      .how-progress-glow{
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 16px;
+        height: 16px;
+        margin-top: -8px;
+        margin-right: -8px;
+        border-radius: 50%;
+        background: var(--pk-accent);
+        box-shadow:
+          0 0 6px 2px var(--pk-accent-80),
+          0 0 18px 6px var(--pk-accent-40),
+          0 0 32px 10px var(--pk-accent-22);
+        pointer-events: none;
+        opacity: 0;
+      }
+      .how-progress.is-started .how-progress-glow{
+        opacity: 1;
+        animation: howGlowTravelX 4000ms linear forwards;
+      }
+      @keyframes howGlowTravelX{
+        0%, 92%{
+          opacity: 1;
+          transform: scale(1);
+        }
+        100%{
+          opacity: 0;
+          transform: scale(0.55);
+        }
       }
       .how-progress.is-started .how-progress-fill{
         animation: howFill 4000ms linear forwards;
@@ -298,13 +336,14 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         display:flex;
         align-items:center;
         justify-content:center;
-        background: var(--pk-panel-dark);
-        border: 1px solid var(--pk-on-dark-border-16);
+        background: var(--pk-ink);
+        border: 1px solid var(--pk-ink);
+        box-shadow: 0 10px 28px var(--pk-slate-tint-08);
         font-family: "Montserrat", sans-serif;
         font-weight: 800;
         font-size: 18px;
         letter-spacing: 0.08em;
-        color: var(--pk-on-dark-88);
+        color: var(--pk-on-dark);
         position: relative;
         z-index: 2;
       }
@@ -320,7 +359,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         font-weight: 800;
         font-size: 16px;
         line-height: 1.25;
-        color: var(--pk-on-dark-92);
+        color: var(--pk-ink);
         margin: 0;
         max-width: 18ch;
       }
@@ -329,7 +368,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         font-weight: 400;
         font-size: 14px;
         line-height: 1.65;
-        color: var(--pk-on-dark-60);
+        color: var(--pk-ink78);
       }
 
       @media(max-width: 1023px){
@@ -351,6 +390,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
           right: auto;
           width: 4px;
           height: auto;
+          overflow: visible;
         }
         .how-progress-base{
           border-radius: 999px;
@@ -359,10 +399,35 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         .how-progress-fill{
           inset: 0;
           height: auto;
-          width: auto;
+          width: 100%;
+          left: 0;
+          right: 0;
           transform: scaleY(0);
           transform-origin: top center;
           animation: none;
+        }
+        .how-progress-glow{
+          right: auto;
+          left: 50%;
+          top: auto;
+          bottom: 0;
+          margin-top: 0;
+          margin-right: 0;
+          margin-left: -8px;
+          margin-bottom: -8px;
+        }
+        .how-progress.is-started .how-progress-glow{
+          animation: howGlowTravelY 4000ms linear forwards;
+        }
+        @keyframes howGlowTravelY{
+          0%, 92%{
+            opacity: 1;
+            transform: scale(1);
+          }
+          100%{
+            opacity: 0;
+            transform: scale(0.55);
+          }
         }
         .how-progress.is-started .how-progress-fill{
           animation: howFillY 4000ms linear forwards;
@@ -388,6 +453,23 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         }
         .how-step-title{
           max-width: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .how-progress.is-started .how-progress-fill,
+        .how-progress.is-started .how-progress-glow{
+          animation: none !important;
+        }
+        .how-progress.is-started .how-progress-fill{
+          transform: scaleX(1);
+        }
+        .how-progress-glow{
+          opacity: 0 !important;
+        }
+        @media (max-width: 767px) {
+          .how-progress.is-started .how-progress-fill{
+            transform: scaleY(1);
+          }
         }
       }
     `}</style>

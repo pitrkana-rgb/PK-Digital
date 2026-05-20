@@ -46,7 +46,7 @@ export const ContactServiceField = ({
     };
   }, [open]);
 
-  const labelColor = inverse ? pk.onDark78 : pk.ink70;
+  const labelColor = inverse ? pk.onDark : pk.ink;
   const textColor = inverse ? pk.onDark : pk.ink;
   const mutedColor = inverse ? pk.onDark45 : pk.ink45;
   const fieldBg = inverse ? pk.panelDark : pk.slateTint03;
@@ -154,7 +154,7 @@ export const ContactServiceField = ({
           style={{
             width: "18px",
             flexShrink: 0,
-            color: inverse ? pk.onDark55 : pk.ink35,
+            color: inverse ? pk.onDark : pk.ink,
             transform: open ? "rotate(180deg)" : "rotate(0deg)",
             transition: "transform 200ms ease",
           }}

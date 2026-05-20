@@ -12,16 +12,27 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="landing-scroll-target" style={{ width: "100%", backgroundColor: pk.page, padding: "76px 0 100px", marginTop: "-50px", marginBottom: "-80px" }}>
+    <section
+      id="faq"
+      className="landing-scroll-target pk-section-soft-band faq-section"
+      style={{
+        width: "100%",
+        background: pk.gradientSectionSoft,
+        color: pk.ink,
+        padding: "76px 0 100px",
+        marginTop: 0,
+        marginBottom: 0,
+      }}
+    >
       <SectionDivider />
       <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 24px" }}>
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <h2 style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
+          <h2 className="faq-heading" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
             {isEn ? "Frequently Asked Questions" : "Často vás zajímá"}
           </h2>
-          <p className="section-sub" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "18px", color: pk.ink65, margin: "0 auto" }}>
+          <p className="section-sub" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "18px", margin: "0 auto" }}>
             {isEn
               ? "Answers to common questions about custom websites, how I work with clients, pricing, and ongoing site management."
               : "Odpovědi na nejčastější otázky ohledně tvorby webových stránek na míru, průběhu spolupráce, ceny i správy webu."}
@@ -88,9 +99,9 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                     transition: "max-height 320ms ease",
                   }}
                 >
-                  <p style={{
+                  <p className="faq-panel-copy" style={{
                     fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "16px",
-                    lineHeight: 1.7, color: pk.ink68, padding: "0 0 24px 0", margin: 0,
+                    lineHeight: 1.7, color: pk.ink78, padding: "0 0 24px 0", margin: 0,
                   }}>
                     {faq.answer}
                   </p>

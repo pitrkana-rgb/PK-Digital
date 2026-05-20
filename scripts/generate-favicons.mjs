@@ -1,6 +1,7 @@
 /**
  * Square favicons for Google Search (48×48, 96×96) + browser tab (32×32).
- * Source: public/Favicon.png (run after updating the master favicon).
+ * Source: public/Company_logo_Icon_V4.png (PK icon mark). White square background
+ * so the logo is visible in browser tabs and matches Google SERP favicon display.
  */
 import sharp from "sharp";
 import { copyFileSync, existsSync } from "fs";
@@ -9,22 +10,33 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
-const src = join(root, "public", "Favicon.png");
 const outDir = join(root, "public");
 
+const sourceCandidates = [
+  join(root, "public", "Company_logo_Icon_V4.png"),
+  join(root, "Images", "Only_logo_V4_black.png"),
+  join(root, "public", "Favicon.png"),
+];
+
+const src = sourceCandidates.find((p) => existsSync(p));
 const googleSizes = [48, 96];
 const browserSize = 32;
 const appleTouchSize = 180;
 
-if (!existsSync(src)) {
-  console.error("Missing:", src);
+/** White square — visible in browser chrome and Google results. */
+const squareBg = { r: 255, g: 255, b: 255, alpha: 1 };
+
+if (!src) {
+  console.error("No favicon source found. Expected one of:", sourceCandidates);
   process.exit(1);
 }
+
+console.log("Favicon source:", src);
 
 const resizeSquare = (size) =>
   sharp(src).resize(size, size, {
     fit: "contain",
-    background: { r: 255, g: 255, b: 255, alpha: 0 },
+    background: squareBg,
   });
 
 for (const size of googleSizes) {
@@ -41,7 +53,7 @@ const appleOut = join(outDir, "apple-touch-icon.png");
 await resizeSquare(appleTouchSize).png().toFile(appleOut);
 console.log("Wrote:", appleOut);
 
-/** Google and browsers often request /favicon.ico — serve square 48×48 PNG at that path. */
+/** Browsers request /favicon.ico — square 48×48 PNG (Google uses the same asset). */
 const faviconIco = join(outDir, "favicon.ico");
 copyFileSync(join(outDir, "favicon-google-48.png"), faviconIco);
 console.log("Wrote:", faviconIco);

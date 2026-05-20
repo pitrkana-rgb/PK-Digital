@@ -26,7 +26,7 @@ export const AiLandingPage = (): JSX.Element => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-fade-up");
-            entry.target.classList.remove("opacity-0", "translate-y-6");
+            observer.unobserve(entry.target);
           }
         });
       },
@@ -34,7 +34,6 @@ export const AiLandingPage = (): JSX.Element => {
     );
 
     sections.forEach((section) => {
-      section.classList.add("opacity-0", "translate-y-6");
       observer.observe(section);
     });
 
@@ -86,13 +85,23 @@ export const AiLandingPage = (): JSX.Element => {
             <PrototypeShowcaseSection />
           </section>
 
-          <section id="why-us" data-animate-on-scroll className="section-mb-mobile">
-            <WhyChooseUsSection />
-          </section>
-
-          <section id="features" data-animate-on-scroll className="section-mb-mobile">
-            <AiDesignFeaturesSection />
-          </section>
+          <div
+            className="how-unified pk-section-soft-band"
+            style={{
+              width: "100%",
+              background: pk.gradientSectionSoft,
+              color: pk.ink,
+              position: "relative",
+              overflowX: "hidden",
+            }}
+          >
+            <section id="features" className="how-unified__section">
+              <AiDesignFeaturesSection />
+            </section>
+            <section id="why-us" data-animate-on-scroll className="how-unified__section section-mb-mobile">
+              <WhyChooseUsSection />
+            </section>
+          </div>
 
           <section className="section-mb-mobile">
             <ClientTestimonialsSection />
@@ -103,11 +112,11 @@ export const AiLandingPage = (): JSX.Element => {
           <PriceCalculatorSection />
         </section> */}
 
-          <section data-animate-on-scroll className="section-mb-mobile">
+          <section className="section-mb-mobile">
             <FrequentlyAskedQuestionsSection />
           </section>
 
-          <section data-animate-on-scroll className="section-mb-mobile">
+          <section className="section-mb-mobile">
             <ReadyToDesignSection />
           </section>
 
@@ -116,6 +125,47 @@ export const AiLandingPage = (): JSX.Element => {
       </main>
 
       <style>{`
+        /* Subheadings & descriptive copy — clean black on light sections, white on dark */
+        .section-sub {
+          color: var(--pk-ink) !important;
+        }
+        .offer-desc,
+        .offer-bullets li,
+        .offer-bullets--checks li,
+        .offer-features-subheading,
+        .why-trust-sub,
+        .prototype-item-desc,
+        .gr-stats-sub,
+        .gr-stats-note,
+        .gr-review-body {
+          color: var(--pk-ink);
+        }
+        .pk-section-soft-band .section-sub,
+        #features .how-sub.section-sub,
+        #features .how-step-desc {
+          color: var(--pk-ink) !important;
+        }
+        .google-reviews-section--on-hero .gr-stats-sub,
+        .google-reviews-section--on-hero .gr-stats-note,
+        .google-reviews-section--on-hero .google-reviews-heading,
+        .google-reviews-section--on-hero .gr-stats-rating-value,
+        .google-reviews-section--on-hero .gr-stats-score,
+        .google-reviews-section--on-hero .gr-stats-link,
+        .google-reviews-section--on-hero .gr-stats-link-mobile {
+          color: var(--pk-on-dark) !important;
+        }
+        .how-unified__section {
+          margin: 0;
+        }
+        .how-unified__section > section {
+          margin: 0;
+        }
+
+        .hero-subheading,
+        .hero-trust-under-cta {
+          color: var(--pk-on-dark) !important;
+        }
+
         @media(max-width:768px) {
           /* Hero spacing is handled inside MainHeroSection */
           .stats-section { margin-top: 0 !important; }

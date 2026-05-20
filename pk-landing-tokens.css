@@ -275,6 +275,23 @@
     linear-gradient(180deg, var(--pk-void-mid) 0%, var(--pk-void) 100%);
   --pk-gradient-hero-fade: linear-gradient(to bottom, var(--pk-black-00) 55%, var(--pk-black-78) 82%, var(--pk-hero) 100%);
   --pk-gradient-hero-fade-strong: linear-gradient(to bottom, var(--pk-black-00) 0%, var(--pk-hero) 82%);
+  /* Premium inverse bands (legacy dark — kept for optional use) */
+  --pk-section-premium: #1e2430;
+  --pk-gradient-section-premium: linear-gradient(
+    180deg,
+    #262d3a 0%,
+    #222936 28%,
+    var(--pk-section-premium) 52%,
+    var(--pk-hero) 100%
+  );
+  /* Premium soft bands (How it works, FAQ) — light grey, minimal */
+  --pk-section-soft: #f2f4f7;
+  --pk-gradient-section-soft: linear-gradient(
+    180deg,
+    #f8f9fb 0%,
+    var(--pk-section-soft) 45%,
+    #eceef2 100%
+  );
   --pk-gradient-prototype-card: linear-gradient(
     135deg,
     var(--pk-surface-night-950) 0%,

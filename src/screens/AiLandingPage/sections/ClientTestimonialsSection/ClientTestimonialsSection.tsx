@@ -195,7 +195,7 @@ function ReviewCard({ r }: { r: Review }) {
                 fontFamily: "'Montserrat', sans-serif",
                 fontWeight: 700,
                 fontSize: "14px",
-                color: pk.ink92,
+                color: pk.ink,
               }}
             >
               {r.author}
@@ -205,7 +205,7 @@ function ReviewCard({ r }: { r: Review }) {
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontSize: "11px",
-                color: pk.ink50,
+                color: pk.ink,
               }}
             >
               {r.date}
@@ -227,7 +227,7 @@ function ReviewCard({ r }: { r: Review }) {
           fontFamily: "'Montserrat', sans-serif",
           fontSize: "13px",
           lineHeight: 1.6,
-          color: pk.ink74,
+          color: pk.ink,
           margin: 0,
           flex: "1 1 auto",
         }}
@@ -323,15 +323,16 @@ export const ClientTestimonialsSection = (): JSX.Element => {
   return (
     <section
       id="reference"
-      className="google-reviews-section landing-scroll-target"
+      className="google-reviews-section google-reviews-section--on-hero landing-scroll-target"
       style={{
         width: "100%",
-        backgroundColor: pk.page,
+        background: pk.gradientSectionPremium,
+        color: pk.onDark,
         padding: "76px 0 100px",
-        marginTop: "-50px",
+        marginTop: 0,
         position: "relative",
         zIndex: 3,
-        overflow: "visible",
+        overflow: "hidden",
       }}
     >
       <SectionDivider />
@@ -349,7 +350,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             fontFamily: "'Montserrat', sans-serif",
             fontWeight: 700,
             fontSize: "clamp(26px, 3.6vw, 42px)",
-            color: pk.ink,
+            color: pk.onDark,
             margin: "0 auto 40px",
             letterSpacing: "-0.02em",
             lineHeight: 1.1,
@@ -471,6 +472,24 @@ export const ClientTestimonialsSection = (): JSX.Element => {
       </div>
 
       <style>{`
+        .google-reviews-section--on-hero .google-reviews-heading,
+        .google-reviews-section--on-hero .gr-stats-title,
+        .google-reviews-section--on-hero .gr-stats-rating-value,
+        .google-reviews-section--on-hero .gr-stats-score,
+        .google-reviews-section--on-hero .gr-stats-sub,
+        .google-reviews-section--on-hero .gr-stats-note,
+        .google-reviews-section--on-hero .gr-stats-link,
+        .google-reviews-section--on-hero .gr-stats-link:hover,
+        .google-reviews-section--on-hero .gr-stats-link-mobile {
+          color: var(--pk-on-dark);
+        }
+        /* Dots live inside white mobile cards — use dark ink, not on-dark hero text colors */
+        .google-reviews-section--on-hero .gr-mobile-review-unit .gr-carousel-dot {
+          background: var(--pk-slate-tint-16);
+        }
+        .google-reviews-section--on-hero .gr-mobile-review-unit .gr-carousel-dot[data-active="true"] {
+          background: var(--pk-ink);
+        }
         .gr-widget-row {
           display: flex;
           flex-direction: row;
@@ -548,7 +567,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-weight: 700;
           font-size: 16px;
           line-height: 1;
-          color: var(--pk-ink-70);
+          color: var(--pk-ink);
         }
         .gr-stats-link-mobile {
           display: none;
@@ -560,7 +579,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-family: Roboto, "Segoe UI", system-ui, sans-serif;
           font-weight: 400;
           font-size: 14px;
-          color: var(--pk-ink-62);
+          color: var(--pk-ink);
           margin: 0;
           line-height: 1.45;
         }
@@ -568,7 +587,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           font-family: "Montserrat", system-ui, sans-serif;
           font-weight: 500;
           font-size: 20px;
-          color: var(--pk-ink-68);
+          color: var(--pk-ink);
           line-height: 1.6;
           margin: 10px 0 0;
           max-width: 36ch;
@@ -602,8 +621,8 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           transition: color 0.2s ease, opacity 0.2s ease;
         }
         .gr-stats-link:hover {
-          color: var(--pk-ink-78);
-          opacity: 1;
+          color: var(--pk-ink);
+          text-decoration: underline;
         }
         .gr-stats-link:focus-visible {
           outline: 2px solid var(--pk-accent);
@@ -650,8 +669,11 @@ export const ClientTestimonialsSection = (): JSX.Element => {
         .gr-carousel-dots {
           display: flex;
           justify-content: center;
-          gap: 8px;
+          align-items: center;
+          gap: 10px;
           margin-top: 0;
+          min-height: 14px;
+          flex-shrink: 0;
         }
         .gr-mobile-review-unit {
           width: min(520px, 100%);
@@ -670,8 +692,8 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           padding: 0 18px 16px;
         }
         .gr-carousel-dot {
-          width: 8px;
-          height: 8px;
+          width: 10px;
+          height: 10px;
           border-radius: 999px;
           border: none;
           padding: 0;
@@ -680,7 +702,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
           transition: width 0.25s ease, background 0.25s ease;
         }
         .gr-carousel-dot[data-active="true"] {
-          width: 28px;
+          width: 36px;
           background: var(--pk-ink);
         }
         @media (max-width: 1100px) {
@@ -749,7 +771,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             font-family: Roboto, "Segoe UI", system-ui, sans-serif;
             font-size: 13px;
             font-weight: 500;
-            color: var(--pk-ink) !important;
+            color: var(--pk-on-dark) !important;
             text-decoration: underline;
             text-underline-offset: 3px;
             position: relative;
@@ -810,7 +832,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             font-weight: 700;
             font-size: 17px;
             line-height: 1;
-            color: var(--pk-ink-70);
+            color: var(--pk-ink);
           }
           .gr-review-body--mobile {
             flex: 1 1 auto;
@@ -820,7 +842,7 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             font-size: 14px;
             line-height: 1.65;
             font-style: italic;
-            color: var(--pk-ink-74);
+            color: var(--pk-ink);
             text-align: left;
             overflow-wrap: anywhere;
             word-break: break-word;
@@ -838,17 +860,25 @@ export const ClientTestimonialsSection = (): JSX.Element => {
             font-family: "Montserrat", sans-serif;
             font-weight: 700;
             font-size: 14px;
-            color: var(--pk-ink-92);
+            color: var(--pk-ink);
           }
           .gr-review-mobile-date {
             font-family: "Montserrat", sans-serif;
             font-size: 12px;
-            color: var(--pk-ink-50);
+            color: var(--pk-ink);
             white-space: nowrap;
           }
+          .gr-mobile-card-bottom {
+            padding: 0 18px 18px;
+          }
           .gr-mobile-card-bottom .gr-carousel-dots {
-            margin-top: 0;
+            display: flex !important;
+            margin-top: 4px;
             padding-top: 0;
+            visibility: visible;
+          }
+          .gr-mobile-review-unit .gr-carousel-dot {
+            flex-shrink: 0;
           }
         }
         @media (prefers-reduced-motion: reduce) {
