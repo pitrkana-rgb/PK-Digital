@@ -170,7 +170,7 @@ export const AboutWhoSection = (): JSX.Element => {
       aria-labelledby="about-builder-heading"
     >
       <div className="about-builder-shell">
-        <h2 id="about-builder-heading" className="about-builder-headline">
+        <h2 id="about-builder-heading" className="about-builder-headline pk-section-heading">
           {t.headline}
         </h2>
 
@@ -401,12 +401,6 @@ export const AboutWhoSection = (): JSX.Element => {
         }
         .about-builder-headline {
           margin: 0 auto 48px;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 700;
-          font-size: clamp(26px, 3.6vw, 42px);
-          line-height: 1.1;
-          letter-spacing: -0.02em;
-          color: ${pk.ink};
           max-width: 980px;
           text-align: center;
         }

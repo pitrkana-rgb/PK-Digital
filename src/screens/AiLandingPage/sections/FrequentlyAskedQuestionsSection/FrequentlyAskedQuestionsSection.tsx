@@ -29,7 +29,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "64px" }}>
-          <h2 className="faq-heading" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
+          <h2 className="faq-heading pk-section-heading" style={{ margin: "0 auto 20px", maxWidth: "770px" }}>
             {isEn ? "Frequently Asked Questions" : "Často vás zajímá"}
           </h2>
           <p className="section-sub" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "18px", margin: "0 auto" }}>
@@ -116,7 +116,7 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
         .faq-trigger:focus-visible{ outline:2px solid var(--pk-accent); outline-offset:2px; border-radius:4px; }
         @media(max-width:768px){
           .faq-section { padding: 48px 0 60px !important; }
-          .faq-heading { font-size: 22px !important; margin-bottom: 8px !important; }
+          .faq-heading { margin-bottom: 8px !important; }
           .faq-subtitle { font-size: 13px !important; }
           .faq-header { margin-bottom: 32px !important; }
           .faq-trigger { padding: 12px 0 !important; }

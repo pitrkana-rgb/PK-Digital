@@ -707,14 +707,9 @@ export const CoNabizimeSection = (): JSX.Element => {
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <div className="offer-head" style={{ textAlign: "center", marginTop: "12px", marginBottom: "48px" }}>
           <h2
+            className="pk-section-heading"
             style={{
-              fontFamily: "'Montserrat',sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(26px,3.6vw,42px)",
-              lineHeight: 1.1,
-              color: pk.ink,
               margin: "0 auto 20px",
-              letterSpacing: "-0.02em",
               maxWidth: "980px",
             }}
           >

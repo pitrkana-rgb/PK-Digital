@@ -197,14 +197,9 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: "42px" }}>
           <h2
+            className="pk-section-heading"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(26px,3.6vw,42px)",
-              lineHeight: 1.1,
-              color: pk.ink,
               margin: "0 auto 18px",
-              letterSpacing: "-0.02em",
               maxWidth: "860px",
             }}
           >

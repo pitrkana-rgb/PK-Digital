@@ -374,3 +374,25 @@
   --textgrey: rgba(143, 142, 142, 1);
   --theme-colorsprimary: rgba(242, 63, 93, 1);
 }
+
+/* Section H2 — matches Jak probíhá spolupráce */
+.pk-section-heading {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: clamp(26px, 3.6vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--pk-ink);
+}
+
+.pk-section-heading--on-dark {
+  color: var(--pk-on-dark);
+}
+
+@media (max-width: 768px) {
+  .pk-section-heading {
+    font-size: 22px;
+    line-height: 1.08;
+  }
+}

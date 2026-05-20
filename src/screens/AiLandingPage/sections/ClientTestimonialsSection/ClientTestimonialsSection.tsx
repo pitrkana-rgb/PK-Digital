@@ -345,15 +345,9 @@ export const ClientTestimonialsSection = (): JSX.Element => {
         }}
       >
         <h2
-          className="google-reviews-heading"
+          className="google-reviews-heading pk-section-heading pk-section-heading--on-dark"
           style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(26px, 3.6vw, 42px)",
-            color: pk.onDark,
             margin: "0 auto 40px",
-            letterSpacing: "-0.02em",
-            lineHeight: 1.1,
             textAlign: "center",
             maxWidth: "980px",
           }}

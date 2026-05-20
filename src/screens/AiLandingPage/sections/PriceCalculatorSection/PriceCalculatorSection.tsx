@@ -261,13 +261,8 @@ export const PriceCalculatorSection = (): JSX.Element => {
         {/* Section header */}
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
           <h2
+            className="pk-section-heading"
             style={{
-              fontFamily: "'Montserrat',sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(28px,4.5vw,48px)",
-              lineHeight: 1.1,
-              color: pk.ink,
-              letterSpacing: "-0.02em",
               margin: "0 auto 16px",
               maxWidth: "700px",
             }}

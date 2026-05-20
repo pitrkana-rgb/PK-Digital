@@ -42,12 +42,9 @@ export const CompanyInfoBlock = (): JSX.Element => {
     <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
       <h2
         id="company-info"
+        className="pk-section-heading"
         style={{
-          fontFamily: "'Montserrat',sans-serif",
-          fontWeight: 700,
-          fontSize: "clamp(22px, 2.5vw, 28px)",
-          color: pk.ink,
-          marginBottom: "24px",
+          margin: "0 auto 24px",
           textAlign: "center",
         }}
       >

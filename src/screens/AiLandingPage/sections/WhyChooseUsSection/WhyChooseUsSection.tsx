@@ -297,7 +297,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
     >
       <div className="why-inner" style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <header className="why-head">
-          <h2 className="why-heading">
+          <h2 className="why-heading pk-section-heading">
             {isEn ? "Why work with me" : "Proč spolupracovat se mnou"}
           </h2>
         </header>
@@ -400,13 +400,6 @@ export const WhyChooseUsSection = (): JSX.Element => {
         .why-heading {
           margin: 0 auto;
           max-width: 100%;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 800;
-          font-size: clamp(26px, 3.6vw, 42px);
-          line-height: 1.1;
-          letter-spacing: -0.02em;
-          color: var(--pk-ink);
-          text-transform: uppercase;
         }
 
         .why-radial-stage {

@@ -240,16 +240,7 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
               >
                 {isEn ? "I reply within 24h" : "Odpovídám do 24h"}
               </p>
-              <h2
-                style={{
-                  fontFamily: "'Montserrat',sans-serif",
-                  fontWeight: 800,
-                  fontSize: "clamp(26px, 3.2vw, 40px)",
-                  lineHeight: 1.12,
-                  margin: 0,
-                  color: pk.onDark,
-                }}
-              >
+              <h2 className="pk-section-heading pk-section-heading--on-dark" style={{ margin: 0 }}>
                 {isEn ? "Non-binding inquiry" : "Nezávazná poptávka"}
               </h2>
               <p

@@ -244,7 +244,7 @@ export const SubscriptionPlansSection = (): JSX.Element => {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <h2 id="pricing-heading" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.6vw,42px)", color: pk.ink, margin: "0 auto 20px", letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: "770px" }}>
+          <h2 id="pricing-heading" className="pk-section-heading" style={{ margin: "0 auto 20px", maxWidth: "770px" }}>
             {isEn ? "Choose a Service" : "Vyberte službu"}
           </h2>
           <p className="section-sub" style={{ fontFamily: "'Montserrat',sans-serif", fontWeight: 400, fontSize: "18px", color: pk.ink65, margin: "0 auto" }}>

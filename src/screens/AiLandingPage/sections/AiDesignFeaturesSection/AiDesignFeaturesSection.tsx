@@ -141,7 +141,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
       {/* Section header */}
       <div className="how-row">
         <div className="how-left">
-          <h2 className="how-title">
+          <h2 className="how-title pk-section-heading">
             {isEn ? "How the " : "Jak probíhá "}
             <span style={{ color: pk.ink }}>{isEn ? "collaboration works" : "spolupráce"}</span>
           </h2>
@@ -218,12 +218,6 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
       }
       .how-title{
         margin: 0;
-        font-family: "Montserrat", sans-serif;
-        font-weight: 800;
-        font-size: clamp(26px, 3.6vw, 42px);
-        line-height: 1.08;
-        letter-spacing: -0.02em;
-        color: var(--pk-ink);
       }
       .how-sub{
         margin: 0;
