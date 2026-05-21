@@ -1,9 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { HeroCompositeFrame } from "./HeroCompositeFrame";
 import { pk } from "../../../../design/pkLandingColors";
 import { scrollToSectionId } from "../../../../utils/scrollToSection";
+import {
+  hasBeenRevealed,
+  markRevealedById,
+} from "../../../../hooks/useInViewOnce";
+
+const HERO_ENTRANCE_ID = "hero-entrance";
 
 const HERO_TYPING = { typeMs: 1000, holdMs: 2000, deleteMs: 1000, startDelayMs: 1000 } as const;
 
@@ -161,10 +167,43 @@ export const MainHeroSection = (): JSX.Element => {
     trustUnderCta: "Odpověď do 24h a konzultace zdarma",
   };
   const typingMessages = language === "en" ? HERO_TYPING_MESSAGES_EN : HERO_TYPING_MESSAGES_CS;
+  const [entrancePhase, setEntrancePhase] = useState<"" | "play-entrance" | "hero-entrance-done">(
+    () => (hasBeenRevealed(HERO_ENTRANCE_ID) ? "hero-entrance-done" : ""),
+  );
+  useLayoutEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      markRevealedById(HERO_ENTRANCE_ID);
+      setEntrancePhase("hero-entrance-done");
+      return;
+    }
+    if (hasBeenRevealed(HERO_ENTRANCE_ID)) {
+      setEntrancePhase("hero-entrance-done");
+      return;
+    }
+
+    let innerRaf = 0;
+    const outerRaf = requestAnimationFrame(() => {
+      innerRaf = requestAnimationFrame(() => setEntrancePhase("play-entrance"));
+    });
+    return () => {
+      cancelAnimationFrame(outerRaf);
+      if (innerRaf) cancelAnimationFrame(innerRaf);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (entrancePhase !== "play-entrance") return;
+    const timer = window.setTimeout(() => {
+      markRevealedById(HERO_ENTRANCE_ID);
+      setEntrancePhase("hero-entrance-done");
+    }, 3200);
+    return () => window.clearTimeout(timer);
+  }, [entrancePhase]);
 
   return (
     <section
-      className="relative w-full flex items-center justify-center hero-section-mobile"
+      className={`relative w-full flex items-center justify-center hero-section-mobile${entrancePhase ? ` ${entrancePhase}` : ""}`}
       style={{
         minHeight: "max(100vh, 920px)",
         paddingTop: "44px",
@@ -191,7 +230,7 @@ export const MainHeroSection = (): JSX.Element => {
           <div className="hero-left-rail">
           <div className="hero-content-shift">
             <div
-              className="flex flex-col items-center md:items-start animate-fade-in hero-content-wrap"
+              className="flex flex-col items-center md:items-start hero-content-wrap"
               style={{ width: "100%", maxWidth: "none", padding: 0 }}
             >
 
@@ -440,25 +479,53 @@ export const MainHeroSection = (): JSX.Element => {
         .hero-subheading-part,
         .hero-actions-wrap{
           display: inline-block;
-          opacity: 0;
           will-change: transform, opacity, filter;
+          animation-fill-mode: forwards;
         }
-        .hero-headline-part-left{
-          animation: heroRevealLeft 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
-        }
-        .hero-headline-part-right{
-          animation: heroRevealRight 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+        @media (prefers-reduced-motion: no-preference) {
+          .hero-headline-part-left{
+            opacity: 0;
+            transform: translateX(-40px);
+            filter: blur(10px);
+          }
+          .hero-headline-part-right{
+            opacity: 0;
+            transform: translateX(40px);
+            filter: blur(10px);
+          }
+          .hero-subheading-part-left{
+            opacity: 0;
+            transform: translateX(-40px);
+            filter: blur(10px);
+          }
+          .hero-actions-wrap{
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          .hero-section-mobile.hero-entrance-done .hero-headline-part,
+          .hero-section-mobile.hero-entrance-done .hero-subheading-part,
+          .hero-section-mobile.hero-entrance-done .hero-actions-wrap{
+            opacity: 1;
+            transform: none;
+            filter: none;
+          }
+          .hero-section-mobile.play-entrance .hero-headline-part-left{
+            animation: heroRevealLeft 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+          }
+          .hero-section-mobile.play-entrance .hero-headline-part-right{
+            animation: heroRevealRight 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+          }
+          .hero-section-mobile.play-entrance .hero-subheading-part-left{
+            animation: heroRevealLeft 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+            animation-delay: 1000ms;
+          }
+          .hero-section-mobile.play-entrance .hero-actions-wrap{
+            animation: heroFadeUp 700ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+            animation-delay: 2000ms;
+          }
         }
         .hero-subheading-part{
           display: block;
-        }
-        .hero-subheading-part-left{
-          animation: heroRevealLeft 900ms cubic-bezier(0.2,0.8,0.2,1) forwards;
-          animation-delay: 1000ms;
-        }
-        .hero-actions-wrap{
-          animation: heroFadeUp 700ms cubic-bezier(0.2,0.8,0.2,1) forwards;
-          animation-delay: 2000ms;
         }
         .hero-content-wrap {
           text-align: center;
@@ -550,9 +617,16 @@ export const MainHeroSection = (): JSX.Element => {
           /* Whole composite (frame + screen clips) fades in in place — 1s */
           .hero-media-rail-inner .hero-composite-anim {
             opacity: 0;
-            animation: heroCompositeFadeIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            animation-delay: 1000ms;
             will-change: opacity;
+          }
+          .hero-section-mobile.hero-entrance-done .hero-media-rail-inner .hero-composite-anim {
+            opacity: 1;
+          }
+          @media (prefers-reduced-motion: no-preference) {
+            .hero-section-mobile.play-entrance .hero-media-rail-inner .hero-composite-anim {
+              animation: heroCompositeFadeIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+              animation-delay: 1000ms;
+            }
           }
           .hero-content-wrap {
             text-align: left;
@@ -610,9 +684,16 @@ export const MainHeroSection = (): JSX.Element => {
           }
           .hero-mobile-frame .hero-composite-anim {
             opacity: 0;
-            animation: heroCompositeFadeIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            animation-delay: 1000ms;
             will-change: opacity;
+          }
+          .hero-section-mobile.hero-entrance-done .hero-mobile-frame .hero-composite-anim {
+            opacity: 1;
+          }
+          @media (prefers-reduced-motion: no-preference) {
+            .hero-section-mobile.play-entrance .hero-mobile-frame .hero-composite-anim {
+              animation: heroCompositeFadeIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+              animation-delay: 1000ms;
+            }
           }
           .hero-shell {
             padding-left: 16px !important;

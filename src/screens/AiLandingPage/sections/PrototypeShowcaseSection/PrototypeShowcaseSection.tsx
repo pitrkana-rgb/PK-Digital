@@ -1,8 +1,26 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  hasBeenRevealed,
+  markRevealedById,
+  useInViewOnce,
+} from "../../../../hooks/useInViewOnce";
+
+const PROTOTYPE_ENTRANCE_ID = "prototype-showcase-entrance";
+const PROTOTYPE_CARD_STAGGER_MS = 500;
+const PROTOTYPE_ENTRANCE_TOTAL_MS = PROTOTYPE_CARD_STAGGER_MS * 3;
+const PREVIEW_MOBILE_FRAME_WIDTH_PX = 390;
+type PreviewViewport = "desktop" | "mobile";
 import { createPortal } from "react-dom";
+import { Monitor, Smartphone } from "lucide-react";
 import { useLanguage } from "../../../../i18n/LanguageContext";
+import {
+  HEADER_CTA_PAD_Y,
+  headerPrimaryCtaClassName,
+  headerPrimaryCtaStyle,
+} from "../../../../design/headerCtaStyle";
 import { pk } from "../../../../design/pkLandingColors";
 import { scrollToSectionId } from "../../../../utils/scrollToSection";
+import companyLogoV4BlackUrl from "../../../../../Images/Company_logo_V4_black.png";
 import investicniPoradceImg from "../../../../../Images/Prototypes/investiční poradce.png";
 import realitniMaklerImg from "../../../../../Images/Prototypes/realitní makléř.png";
 import fitnessTrenerImg from "../../../../../Images/Prototypes/fitness trenér.png";
@@ -62,7 +80,7 @@ const cardsEn: PrototypeCard[] = [
   },
 ];
 
-const PrototypeShowcaseItem = ({
+const PrototypeShowcaseMobileCard = ({
   card,
   linkLabel,
   onPreview,
@@ -81,7 +99,47 @@ const PrototypeShowcaseItem = ({
 
   return (
     <article
-      className="prototype-item"
+      className="prototype-mobile-card"
+      role="button"
+      tabIndex={0}
+      onClick={handleActivate}
+      onKeyDown={handleKeyDown}
+      aria-label={`${card.title} – ${linkLabel}`}
+    >
+      <div className="prototype-mobile-preview">
+        <img src={card.image} alt="" className="prototype-mobile-preview-image" aria-hidden="true" />
+      </div>
+      <h3 className="prototype-mobile-title">{card.title}</h3>
+      <p className="prototype-mobile-body">
+        {card.description}{" "}
+        <span className="prototype-mobile-link">{linkLabel}</span>
+      </p>
+    </article>
+  );
+};
+
+const PrototypeShowcaseItem = ({
+  card,
+  linkLabel,
+  onPreview,
+  revealed,
+}: {
+  card: PrototypeCard;
+  linkLabel: string;
+  onPreview: (card: PrototypeCard) => void;
+  revealed: boolean;
+}): JSX.Element => {
+  const handleActivate = () => onPreview(card);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleActivate();
+    }
+  };
+
+  return (
+    <article
+      className={`prototype-item${revealed ? " prototype-item--revealed" : ""}`}
       role="button"
       tabIndex={0}
       onClick={handleActivate}
@@ -107,7 +165,10 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         subheading:
           "Browse sample prototypes and get a sense of the quality you'll receive free of charge within 3 days. I'll create your design tailored to your business, and if you're happy with it, I'll turn it into a professional website ready to represent your brand at the highest level.",
         cta: "View prototype →",
-        closeAria: "Close preview",
+        previewBack: "Back to showcase",
+        previewBackShort: "Back",
+        viewportDesktop: "Desktop layout",
+        viewportMobile: "Mobile layout",
         stickyCta: "I want a similar website",
       }
     : {
@@ -115,14 +176,64 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         subheading:
           "Prohlédněte si ukázkové prototypy a udělejte si představu o kvalitě zpracování, kterou zdarma získáte do 3 dnů. Váš návrh vytvořím na míru vašemu podnikání a pokud budete spokojeni, proměním jej v profesionální web připravený reprezentovat vaši značku na nejvyšší úrovni.",
         cta: "Zobrazit prototyp →",
-        closeAria: "Zavřít náhled",
+        previewBack: "Zpět na ukázky",
+        previewBackShort: "Zpět",
+        viewportDesktop: "Rozložení pro počítač",
+        viewportMobile: "Rozložení pro mobil",
         stickyCta: "Chci podobný web",
       };
 
   const activeCards = isEn ? cardsEn : cards;
   const [activePreview, setActivePreview] = useState<PrototypeCard | null>(null);
-  const [cardsVisible, setCardsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const [previewViewport, setPreviewViewport] = useState<PreviewViewport>("desktop");
+  const [sectionRef, cardsVisible] = useInViewOnce({
+    id: "prototype-showcase",
+    threshold: 0.38,
+    rootMargin: "0px 0px -12% 0px",
+  });
+  const entranceDone = hasBeenRevealed(PROTOTYPE_ENTRANCE_ID);
+  const [revealedCount, setRevealedCount] = useState(
+    entranceDone ? activeCards.length : 0,
+  );
+
+  useEffect(() => {
+    if (!cardsVisible) return;
+    if (entranceDone) {
+      setRevealedCount(activeCards.length);
+      return;
+    }
+
+    setRevealedCount(0);
+    let timers: number[] = [];
+    let doneTimer = 0;
+    let cancelled = false;
+
+    const startStagger = () => {
+      if (cancelled) return;
+      timers = activeCards.map((_, index) =>
+        window.setTimeout(
+          () => {
+            if (!cancelled) setRevealedCount(index + 1);
+          },
+          index * PROTOTYPE_CARD_STAGGER_MS,
+        ),
+      );
+      doneTimer = window.setTimeout(() => {
+        if (!cancelled) markRevealedById(PROTOTYPE_ENTRANCE_ID);
+      }, PROTOTYPE_ENTRANCE_TOTAL_MS);
+    };
+
+    const raf = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(startStagger);
+    });
+
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(raf);
+      timers.forEach((id) => window.clearTimeout(id));
+      window.clearTimeout(doneTimer);
+    };
+  }, [cardsVisible, entranceDone, activeCards.length]);
   const [mobileIdx, setMobileIdx] = useState(0);
   const touchStartX = useRef<number>(0);
   const suppressCardClickRef = useRef(false);
@@ -152,13 +263,19 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
       suppressCardClickRef.current = false;
       return;
     }
+    setPreviewViewport("desktop");
     setActivePreview(card);
+  };
+
+  const closePreview = () => {
+    setActivePreview(null);
+    setPreviewViewport("desktop");
   };
 
   useEffect(() => {
     if (!activePreview) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActivePreview(null);
+      if (event.key === "Escape") closePreview();
     };
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
@@ -168,24 +285,9 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
     };
   }, [activePreview]);
 
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setCardsVisible(true);
-        observer.disconnect();
-      },
-      { threshold: 0.18 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [sectionRef]);
-
   return (
     <section
-      ref={(el) => { sectionRef.current = el; }}
+      ref={sectionRef}
       className="prototype-showcase-section"
       style={{
         width: "100%",
@@ -220,57 +322,59 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         </div>
 
         <div className="prototype-grid prototype-grid-desktop">
-          {activeCards.map((card) => (
+          {activeCards.map((card, index) => (
             <PrototypeShowcaseItem
               key={card.previewUrl}
               card={card}
               linkLabel={t.cta}
               onPreview={handlePreview}
+              revealed={entranceDone || revealedCount > index}
             />
           ))}
         </div>
 
         {/* Mobile carousel (one card) */}
         <div className="prototype-mobile-carousel">
-          <div style={{ overflow: "hidden", width: "100%" }} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+          <div
+            className="prototype-mobile-track-wrap"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
             <div
               className="prototype-carousel-track"
               style={{
-                display: "flex",
                 width: `${activeCards.length * 100}%`,
                 transform: `translateX(${-mobileIdx * (100 / activeCards.length)}%)`,
-                transition: "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
               }}
             >
               {activeCards.map((card) => (
                 <div
                   key={card.previewUrl}
                   className="prototype-mobile-slide"
-                  style={{ flex: `0 0 ${100 / activeCards.length}%`, padding: "0 0 4px", boxSizing: "border-box" }}
+                  style={{ flex: `0 0 ${100 / activeCards.length}%` }}
                 >
-                  <PrototypeShowcaseItem card={card} linkLabel={t.cta} onPreview={handlePreview} />
+                  <PrototypeShowcaseMobileCard
+                    card={card}
+                    linkLabel={t.cta}
+                    onPreview={handlePreview}
+                  />
                 </div>
               ))}
             </div>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "22px" }}>
+          <div className="prototype-mobile-dots" role="tablist" aria-label={isEn ? "Prototype slides" : "Prototypy"}>
             {activeCards.map((_, i) => (
               <button
                 key={i}
                 type="button"
+                role="tab"
+                aria-selected={i === mobileIdx}
                 aria-label={isEn ? `Go to card ${i + 1}` : `Přejít na kartu ${i + 1}`}
+                className="prototype-mobile-dot"
+                data-active={i === mobileIdx ? "true" : "false"}
                 onClick={() => goTo(i)}
-                style={{
-                  width: i === mobileIdx ? "36px" : "10px",
-                  height: "10px",
-                  borderRadius: "999px",
-                  border: "none",
-                  cursor: "pointer",
-                  background: i === mobileIdx ? pk.ink : pk.slateTint16,
-                  transition: "width 250ms ease, background 250ms ease",
-                  padding: 0,
-                }}
               />
             ))}
           </div>
@@ -279,35 +383,95 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
 
       {activePreview
         ? createPortal(
-          <div className="prototype-modal" role="dialog" aria-modal="true" aria-label={activePreview.title}>
-            <div className="prototype-modal-backdrop" onClick={() => setActivePreview(null)} />
-            <div className="prototype-modal-shell">
-              <button
-                type="button"
-                className="prototype-modal-close"
-                onClick={() => setActivePreview(null)}
-                aria-label={t.closeAria}
+          <div
+            className="prototype-preview-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-label={activePreview.title}
+          >
+            <header className="prototype-preview-bar">
+              <nav className="prototype-preview-nav" aria-label={isEn ? "Prototype preview" : "Náhled prototypu"}>
+                <div className="prototype-preview-brand">
+                  <button
+                    type="button"
+                    className="prototype-preview-logo-btn"
+                    onClick={closePreview}
+                    aria-label={isEn ? "Close preview" : "Zavřít náhled"}
+                  >
+                    <img
+                      src={companyLogoV4BlackUrl}
+                      alt="PK Digital"
+                      className="prototype-preview-logo"
+                    />
+                  </button>
+                </div>
+
+                <div className="prototype-preview-center">
+                  <p className="prototype-preview-title">{activePreview.title}</p>
+                  <div
+                    className="prototype-preview-viewport"
+                    role="group"
+                    aria-label={isEn ? "Preview device width" : "Šířka náhledu"}
+                  >
+                    <button
+                      type="button"
+                      className="prototype-preview-viewport-btn"
+                      aria-pressed={previewViewport === "desktop"}
+                      aria-label={t.viewportDesktop}
+                      onClick={() => setPreviewViewport("desktop")}
+                    >
+                      <Monitor size={18} strokeWidth={2} aria-hidden />
+                    </button>
+                    <button
+                      type="button"
+                      className="prototype-preview-viewport-btn"
+                      aria-pressed={previewViewport === "mobile"}
+                      aria-label={t.viewportMobile}
+                      onClick={() => setPreviewViewport("mobile")}
+                    >
+                      <Smartphone size={18} strokeWidth={2} aria-hidden />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="prototype-preview-actions">
+                  <button
+                    type="button"
+                    className="prototype-preview-back"
+                    onClick={closePreview}
+                  >
+                    <span className="prototype-preview-back-label prototype-preview-back-label--full">
+                      {t.previewBack}
+                    </span>
+                    <span className="prototype-preview-back-label prototype-preview-back-label--short">
+                      {t.previewBackShort}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`prototype-preview-cta landing-primary-cta ${headerPrimaryCtaClassName}`}
+                    style={headerPrimaryCtaStyle}
+                    onClick={() => {
+                      closePreview();
+                      window.requestAnimationFrame(() => scrollToSectionId("kontakt"));
+                    }}
+                  >
+                    {t.stickyCta}
+                  </button>
+                </div>
+              </nav>
+            </header>
+            <div
+              className={`prototype-preview-scroll${previewViewport === "mobile" ? " prototype-preview-scroll--device-mobile" : ""}`}
+            >
+              <div
+                className={`prototype-preview-stage${previewViewport === "mobile" ? " prototype-preview-stage--device-mobile" : ""}`}
               >
-                ×
-              </button>
-              <div className="prototype-modal-frame-wrap">
                 <iframe
                   src={activePreview.previewUrl}
                   title={activePreview.title}
-                  className="prototype-modal-frame"
+                  className="prototype-preview-frame"
                 />
-              </div>
-              <div className="prototype-modal-cta-bar">
-                <button
-                  type="button"
-                  className="prototype-modal-cta-btn landing-primary-cta"
-                  onClick={() => {
-                    setActivePreview(null);
-                    window.requestAnimationFrame(() => scrollToSectionId("kontakt"));
-                  }}
-                >
-                  {t.stickyCta}
-                </button>
               </div>
             </div>
           </div>,
@@ -345,8 +509,19 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           cursor: pointer;
           -webkit-tap-highlight-color: transparent;
           transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-          opacity: ${cardsVisible ? 0 : 1};
-          animation: ${cardsVisible ? "prototypeItemFadeIn 500ms cubic-bezier(0.2,0.8,0.2,1) forwards" : "none"};
+        }
+        @media (min-width: 901px) {
+          .prototype-grid-desktop .prototype-item{
+            opacity: 0;
+            pointer-events: none;
+            transition:
+              opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+          }
+          .prototype-grid-desktop .prototype-item.prototype-item--revealed{
+            opacity: 1;
+            pointer-events: auto;
+          }
         }
         .prototype-item:hover,
         .prototype-item:focus-visible{
@@ -355,13 +530,6 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         .prototype-item:focus-visible{
           outline: 2px solid var(--pk-accent);
           outline-offset: 4px;
-        }
-        .prototype-item:nth-child(1){ animation-delay: 0ms; }
-        .prototype-item:nth-child(2){ animation-delay: 500ms; }
-        .prototype-item:nth-child(3){ animation-delay: 1000ms; }
-        @keyframes prototypeItemFadeIn{
-          from{ opacity: 0; transform: translateY(14px); }
-          to{ opacity: 1; transform: translateY(0); }
         }
         .prototype-preview{
           border-radius: 16px;
@@ -425,107 +593,346 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           text-decoration: underline;
           text-underline-offset: 3px;
         }
-        .prototype-modal{
+        .prototype-preview-overlay{
           position: fixed;
           inset: 0;
           z-index: 12000;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          padding: 24px;
-          overflow: auto;
-        }
-        .prototype-modal-backdrop{
-          position:absolute;
-          inset:0;
-          background: var(--pk-slate-tint-58);
-          backdrop-filter: blur(8px);
-        }
-        .prototype-modal-shell{
-          position:relative;
-          z-index:1;
-          width:min(1320px, calc(100% - 48px));
-          height:min(84vh, 920px);
-          background: var(--pk-page);
-          border-radius: 24px;
-          overflow:hidden;
-          box-shadow: 0 30px 80px var(--pk-slate-tint-28);
-          display:flex;
-          flex-direction:column;
-        }
-        .prototype-modal-frame-wrap{
-          flex: 1 1 auto;
-          min-height: 0;
-          position: relative;
-          display: flex;
-          flex-direction: column;
-        }
-        .prototype-modal-cta-bar{
-          flex-shrink: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 14px 20px 18px;
-          background: linear-gradient(to top, var(--pk-page) 60%, transparent);
-          border-top: 1px solid var(--pk-slate-tint-10);
-          box-shadow: 0 -12px 32px var(--pk-slate-tint-08);
-        }
-        .prototype-modal-cta-btn{
+          width: 100vw;
+          max-width: 100vw;
+          height: 100vh;
+          height: 100dvh;
+          margin: 0;
+          padding: 0;
           border: none;
+          border-radius: 0;
+          box-shadow: none;
+          background: var(--pk-page);
+          display: grid;
+          grid-template-rows: auto minmax(0, 1fr);
+          overflow: hidden;
+        }
+        .prototype-preview-bar{
+          position: sticky;
+          top: 0;
+          z-index: 3;
+          flex: 0 0 auto;
+          width: 100%;
+          background: var(--pk-page);
+          border-bottom: 1px solid rgb(15 23 42 / 0.05);
+          box-shadow: 0 1px 0 rgb(15 23 42 / 0.05);
+        }
+        .prototype-preview-nav{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px 20px;
+          width: 100%;
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 15px 24px;
+          box-sizing: border-box;
+        }
+        .prototype-preview-brand,
+        .prototype-preview-actions{
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+        }
+        .prototype-preview-logo-btn{
+          display: block;
+          border: none;
+          padding: 0;
+          margin: 0;
+          background: transparent;
+          cursor: pointer;
+          border-radius: 6px;
+        }
+        .prototype-preview-logo-btn:focus-visible{
+          outline: 2px solid var(--pk-accent);
+          outline-offset: 3px;
+        }
+        .prototype-preview-logo{
+          display: block;
+          height: 59.2px;
+          width: auto;
+        }
+        .prototype-preview-center{
+          flex: 1 1 auto;
+          min-width: 0;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          padding: 0 12px;
+        }
+        .prototype-preview-title{
+          margin: 0;
+          max-width: 100%;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: clamp(14px, 1.6vw, 17px);
+          line-height: 1.25;
+          letter-spacing: -0.02em;
+          color: var(--pk-ink);
+          text-align: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .prototype-preview-viewport{
+          display: inline-flex;
+          align-items: center;
+          gap: 2px;
+          padding: 3px;
+          border-radius: 10px;
+          border: 1px solid var(--pk-slate-tint-10);
+          background: var(--pk-slate-tint-08);
+        }
+        .prototype-preview-viewport-btn{
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 38px;
+          height: 34px;
+          border: none;
+          border-radius: 8px;
+          padding: 0;
+          background: transparent;
+          color: var(--pk-ink);
+          cursor: pointer;
+          transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+        }
+        .prototype-preview-viewport-btn:hover{
+          color: var(--pk-brand-4);
+        }
+        .prototype-preview-viewport-btn[aria-pressed="true"]{
+          background: var(--pk-page);
+          color: var(--pk-brand-4);
+          box-shadow: 0 2px 10px rgb(2 6 23 / 0.08);
+        }
+        .prototype-preview-viewport-btn:focus-visible{
+          outline: 2px solid var(--pk-accent);
+          outline-offset: 2px;
+        }
+        .prototype-preview-actions{
+          gap: 10px;
+        }
+        .prototype-preview-back{
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          border: 1px solid var(--pk-slate-tint-10);
           border-radius: 12px;
-          padding: 12px 28px;
+          padding: ${HEADER_CTA_PAD_Y}px 16px;
+          background: var(--pk-page);
+          color: var(--pk-ink);
           font-family: "Montserrat", sans-serif;
           font-weight: 600;
-          font-size: 15px;
+          font-size: 16px;
+          line-height: 1.2;
+          letter-spacing: 0.01em;
           cursor: pointer;
-          transition: transform 200ms ease, filter 200ms ease;
+          white-space: nowrap;
+          transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
         }
-        .prototype-modal-cta-btn:hover{
-          transform: translateY(-2px);
-          filter: brightness(1.05);
+        .prototype-preview-back:hover{
+          border-color: var(--pk-slate-tint-16);
+          transform: translateY(-1px);
         }
-        .prototype-modal-close{
-          position:absolute;
-          top:14px;
-          right:14px;
-          z-index:2;
-          width:40px;
-          height:40px;
-          border:none;
-          border-radius:999px;
-          background: var(--pk-on-dark-94);
-          color: var(--pk-ink);
-          font-size:28px;
-          line-height:1;
-          cursor:pointer;
-          flex-shrink:0;
-          box-shadow: 0 8px 24px var(--pk-slate-tint-16);
+        .prototype-preview-back:focus-visible{
+          outline: 2px solid var(--pk-accent);
+          outline-offset: 2px;
         }
-        .prototype-modal-frame{
-          width:100%;
-          flex: 1 1 auto;
+        .prototype-preview-back-label--short{
+          display: none;
+        }
+        .prototype-preview-scroll{
           min-height: 0;
-          border:none;
+          width: 100%;
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+          background: var(--pk-page);
+        }
+        .prototype-preview-scroll--device-mobile{
+          background: var(--pk-slate-tint-08);
+        }
+        .prototype-preview-stage{
+          width: 100%;
+          min-height: 100%;
+          height: 100%;
+        }
+        .prototype-preview-stage--device-mobile{
+          width: min(${PREVIEW_MOBILE_FRAME_WIDTH_PX}px, 100%);
+          margin: 0 auto;
+          min-height: 100%;
+          background: var(--pk-page);
+          box-shadow:
+            0 0 0 1px var(--pk-slate-tint-10),
+            0 18px 48px rgb(2 6 23 / 0.08);
+        }
+        .prototype-preview-frame{
+          display: block;
+          width: 100%;
+          height: 100%;
+          min-height: 100%;
+          border: none;
+          margin: 0;
+          padding: 0;
           background: var(--pk-page);
         }
         @media (max-width: 1024px){
           .prototype-grid-desktop{ display:none !important; }
-          .prototype-mobile-carousel{ display:block !important; }
-          .prototype-mobile-slide{ padding-top: 6px; }
-          .prototype-mobile-carousel .prototype-item{
+          .prototype-mobile-carousel{
+            display:block !important;
             width: min(520px, 100%);
             margin: 0 auto;
+          }
+          .prototype-mobile-track-wrap{
+            overflow: hidden;
+            width: 100%;
+          }
+          .prototype-carousel-track{
+            display: flex;
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          }
+          .prototype-mobile-slide{
+            box-sizing: border-box;
+            padding: 0;
+          }
+          .prototype-mobile-card{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: 0;
+            padding: 12px;
+            box-sizing: border-box;
+            background: var(--pk-page);
+            border: 1px solid var(--pk-slate-tint-10);
+            border-radius: 12px;
+            box-shadow: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            text-align: left;
+          }
+          .prototype-mobile-card:focus-visible{
+            outline: 2px solid var(--pk-accent);
+            outline-offset: 3px;
+          }
+          .prototype-mobile-preview{
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            margin: 0 0 12px;
+            box-shadow: none;
+          }
+          .prototype-mobile-preview-image{
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+          }
+          .prototype-mobile-title{
+            margin: 0 0 8px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 800;
+            font-size: 17px;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            color: var(--pk-ink);
+          }
+          .prototype-mobile-body{
+            margin: 0;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--pk-ink);
+          }
+          .prototype-mobile-link{
+            font-weight: 800;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            white-space: nowrap;
+          }
+          .prototype-mobile-dots{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 0;
+          }
+          .prototype-mobile-dot{
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            background: var(--pk-slate-tint-16);
+            transition: width 250ms ease, background 250ms ease;
+          }
+          .prototype-mobile-dot[data-active="true"]{
+            width: 36px;
+            background: var(--pk-ink);
           }
         }
         @media (max-width: 768px){
           .prototype-preview{ border-radius: 14px; }
           .prototype-item{ gap: 14px; }
           .prototype-item-title{ font-size: 18px; }
-          .prototype-modal{ padding: 12px; }
-          .prototype-modal-shell{ height: 88vh; border-radius: 18px; }
+          .prototype-mobile-card{ padding: 11px; }
+          .prototype-mobile-title{ font-size: 16px; }
+          .prototype-mobile-body{ font-size: 13px; line-height: 1.5; }
+          .prototype-preview-logo{
+            height: 59.2px;
+          }
+          .prototype-preview-nav{
+            padding: 15px 24px;
+            gap: 12px;
+          }
+          .prototype-preview-center{
+            display: none;
+          }
+          .prototype-preview-viewport{
+            display: none !important;
+          }
+          .prototype-preview-actions{
+            margin-left: auto;
+            flex-shrink: 0;
+            justify-content: flex-end;
+            gap: 8px;
+          }
+          .prototype-preview-back-label--full{
+            display: none;
+          }
+          .prototype-preview-back-label--short{
+            display: inline;
+          }
+          .prototype-preview-back{
+            font-size: 14px;
+            padding: ${HEADER_CTA_PAD_Y}px 12px;
+          }
+          .prototype-preview-cta{
+            flex-shrink: 0;
+            font-size: 14px !important;
+            padding: ${HEADER_CTA_PAD_Y}px 16px !important;
+          }
+        }
+        @media (min-width: 768px){
+          .prototype-preview-logo{
+            height: 66px;
+          }
         }
         @media (prefers-reduced-motion: reduce){
-          .prototype-item{ animation: none !important; opacity: 1 !important; }
+          .prototype-grid-desktop .prototype-item{
+            opacity: 1 !important;
+            pointer-events: auto !important;
+          }
           .prototype-item,
           .prototype-preview,
           .prototype-preview-image{

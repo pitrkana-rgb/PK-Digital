@@ -1,4 +1,13 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  hasBeenRevealed,
+  markRevealedById,
+  useInViewOnce,
+} from "../../../../hooks/useInViewOnce";
+
+const WHY_ENTRANCE_ID = "why-us-entrance";
+const HUB_FADE_MS = 720;
+type DesktopPhase = "idle" | "hub" | "sequence" | "done";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
 
@@ -107,10 +116,18 @@ const benefitsEn: Benefit[] = [
   },
 ];
 
-/** Clockwise reveal: top-left → top-right → middle-left → middle-right → bottom-left → bottom-right */
+/** Desktop reveal: top-left → top-right → middle-left → middle-right → bottom-left → bottom-right */
 const ANIM_SEQUENCE = [0, 3, 1, 4, 2, 5] as const;
-const ORBIT_MS = 750;
-const STEP_MS = 520;
+const ORBIT_MS = 500;
+const STEP_MS = 500;
+const WHY_MOBILE_CARD_STAGGER_MS = 500;
+type AnimPhase = "dot" | "line" | "icon" | "text";
+const PHASE_OFFSET_MS: Record<AnimPhase, number> = {
+  dot: 0,
+  line: 55,
+  icon: 210,
+  text: 330,
+};
 /** Orbit radius in SVG viewBox units (10% smaller than previous r=296) */
 const ORBIT_R = 266;
 const ORBIT_VIEWBOX = 520;
@@ -128,10 +145,13 @@ type ConnectorLine = {
   iconY: number;
 };
 
-const animDelay = (index: number, offset: 0 | 1 | 2): number => {
+const animDelay = (index: number, phase: AnimPhase): number => {
   const slot = ANIM_SEQUENCE.indexOf(index as (typeof ANIM_SEQUENCE)[number]);
-  return ORBIT_MS + slot * STEP_MS + offset;
+  if (slot < 0) return ORBIT_MS;
+  return ORBIT_MS + slot * STEP_MS + PHASE_OFFSET_MS[phase];
 };
+
+const DESKTOP_ENTRANCE_MS = ORBIT_MS + ANIM_SEQUENCE.length * STEP_MS + 200;
 
 const BenefitIcon = ({ src }: { src: string }) => (
   <img src={src} alt="" aria-hidden="true" className="why-benefit-icon-img" />
@@ -157,9 +177,10 @@ const BenefitNode = ({
       className={`why-benefit ${sideClass}${midClass}${visibleClass}`}
       style={
         {
-          "--why-icon-delay": `${animDelay(index, 1)}ms`,
-          "--why-text-delay": `${animDelay(index, 2)}ms`,
-          "--why-line-delay": `${animDelay(index, 0)}ms`,
+          "--why-dot-delay": `${animDelay(index, "dot")}ms`,
+          "--why-line-delay": `${animDelay(index, "line")}ms`,
+          "--why-icon-delay": `${animDelay(index, "icon")}ms`,
+          "--why-text-delay": `${animDelay(index, "text")}ms`,
         } as React.CSSProperties
       }
     >
@@ -185,7 +206,7 @@ const BenefitCardMobile = ({
 }) => (
   <article
     className={`why-benefit-card${visible ? " is-visible" : ""}`}
-    style={{ animationDelay: `${ORBIT_MS + index * 140}ms` }}
+    style={{ animationDelay: `${index * WHY_MOBILE_CARD_STAGGER_MS}ms` }}
   >
     <div className="why-benefit-icon-disc why-benefit-icon-disc--mobile">
       <BenefitIcon src={benefit.icon} />
@@ -198,11 +219,23 @@ const BenefitCardMobile = ({
 );
 
 export const WhyChooseUsSection = (): JSX.Element => {
-  const ref = useRef<HTMLElement | null>(null);
+  const [sectionRef, sectionVisible] = useInViewOnce({
+    id: "why-us",
+    threshold: 0.32,
+    rootMargin: "0px 0px -8% 0px",
+  });
+  const [hubRef, hubVisible] = useInViewOnce({
+    id: "why-us-hub",
+    threshold: 0.55,
+    rootMargin: "0px 0px -4% 0px",
+  });
+  const [desktopPhase, setDesktopPhase] = useState<DesktopPhase>(() =>
+    hasBeenRevealed(WHY_ENTRANCE_ID) ? "done" : "idle",
+  );
   const stageRef = useRef<HTMLDivElement | null>(null);
-  const hubRef = useRef<HTMLDivElement | null>(null);
+  const promoImgRef = useRef<HTMLImageElement | null>(null);
+  const hubSequenceStartedRef = useRef(false);
   const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [visible, setVisible] = useState(false);
   const [connectors, setConnectors] = useState<ConnectorLine[]>([]);
   const { language } = useLanguage();
   const isEn = language === "en";
@@ -251,22 +284,6 @@ export const WhyChooseUsSection = (): JSX.Element => {
     setConnectors(next);
   }, [benefits]);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.12 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   useLayoutEffect(() => {
     updateConnectors();
     const stage = stageRef.current;
@@ -280,12 +297,63 @@ export const WhyChooseUsSection = (): JSX.Element => {
       ro.disconnect();
       window.removeEventListener("resize", updateConnectors);
     };
-  }, [updateConnectors, visible, language]);
+  }, [updateConnectors, sectionVisible, language, desktopPhase]);
+
+  useEffect(() => {
+    if (!hubVisible || desktopPhase !== "idle") return;
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 900px)").matches) {
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDesktopPhase("done");
+      markRevealedById(WHY_ENTRANCE_ID);
+      return;
+    }
+
+    setDesktopPhase("hub");
+  }, [hubVisible, desktopPhase]);
+
+  useEffect(() => {
+    if (desktopPhase !== "hub") return;
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 900px)").matches) {
+      return;
+    }
+
+    hubSequenceStartedRef.current = false;
+    let doneTimer = 0;
+    let fallbackTimer = 0;
+
+    const startBenefitSequence = () => {
+      if (hubSequenceStartedRef.current) return;
+      hubSequenceStartedRef.current = true;
+      setDesktopPhase("sequence");
+      doneTimer = window.setTimeout(() => {
+        setDesktopPhase("done");
+        markRevealedById(WHY_ENTRANCE_ID);
+      }, DESKTOP_ENTRANCE_MS);
+    };
+
+    const onHubFadeEnd = (event: AnimationEvent) => {
+      if (event.animationName !== "whyHubFadeIn") return;
+      window.clearTimeout(fallbackTimer);
+      startBenefitSequence();
+    };
+
+    const img = promoImgRef.current;
+    img?.addEventListener("animationend", onHubFadeEnd);
+    fallbackTimer = window.setTimeout(startBenefitSequence, HUB_FADE_MS);
+
+    return () => {
+      window.clearTimeout(fallbackTimer);
+      window.clearTimeout(doneTimer);
+      img?.removeEventListener("animationend", onHubFadeEnd);
+    };
+  }, [desktopPhase]);
 
   return (
     <section
-      ref={ref}
-      className="why-choose-section pk-section-soft-band"
+      ref={sectionRef}
+      className={`why-choose-section pk-section-soft-band${sectionVisible ? " has-revealed" : ""}${desktopPhase === "hub" ? " why-phase-hub" : ""}${desktopPhase === "sequence" ? " play-entrance why-phase-sequence" : ""}${desktopPhase === "done" ? " why-phase-done" : ""}`}
       style={{
         width: "100%",
         background: "transparent",
@@ -305,7 +373,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
         {/* Desktop radial layout */}
         <div
           ref={stageRef}
-          className={`why-radial-stage${visible ? " is-visible" : ""}`}
+          className={`why-radial-stage${sectionVisible ? " is-visible" : ""}`}
           aria-label={isEn ? "Reasons" : "Důvody"}
         >
           {/* Connectors: above orbit, below PC image (z-index 3) */}
@@ -320,7 +388,12 @@ export const WhyChooseUsSection = (): JSX.Element => {
               <g
                 key={c.index}
                 className={`why-connector-g why-connector-g--${c.index}`}
-                style={{ "--why-line-delay": `${animDelay(c.index, 0)}ms` } as React.CSSProperties}
+                style={
+                  {
+                    "--why-dot-delay": `${animDelay(c.index, "dot")}ms`,
+                    "--why-line-delay": `${animDelay(c.index, "line")}ms`,
+                  } as React.CSSProperties
+                }
               >
                 <line
                   className="why-connector-line"
@@ -342,14 +415,14 @@ export const WhyChooseUsSection = (): JSX.Element => {
                   key={b.title}
                   benefit={b}
                   index={index}
-                  visible={visible}
+                  visible={sectionVisible}
                   iconRef={setIconRef(index)}
                 />
               );
             })}
           </div>
 
-          <div ref={hubRef} className="why-orbit-layer" aria-hidden="true">
+          <div className="why-orbit-layer" aria-hidden="true">
             <div className="why-orbit-wrap">
               <svg className="why-orbit-svg" viewBox={`0 0 ${ORBIT_VIEWBOX} ${ORBIT_VIEWBOX}`} aria-hidden="true">
                 <circle className="why-orbit-circle" cx="260" cy="260" r={ORBIT_R} />
@@ -359,8 +432,8 @@ export const WhyChooseUsSection = (): JSX.Element => {
             </div>
           </div>
 
-          <div className="why-radial-hub" aria-hidden="true">
-            <img src={pcPromoImg} alt="" className="why-promo-img" />
+          <div ref={hubRef} className="why-radial-hub" aria-hidden="true">
+            <img ref={promoImgRef} src={pcPromoImg} alt="" className="why-promo-img" />
           </div>
 
           <div className="why-radial-col why-radial-col--right">
@@ -371,7 +444,7 @@ export const WhyChooseUsSection = (): JSX.Element => {
                   key={b.title}
                   benefit={b}
                   index={index}
-                  visible={visible}
+                  visible={sectionVisible}
                   iconRef={setIconRef(index)}
                 />
               );
@@ -380,13 +453,13 @@ export const WhyChooseUsSection = (): JSX.Element => {
         </div>
 
         {/* Mobile vertical layout */}
-        <div className={`why-mobile${visible ? " is-visible" : ""}`}>
+        <div className={`why-mobile${sectionVisible ? " is-visible" : ""}`}>
           <div className="why-mobile-promo-wrap">
             <img src={pcPromoImg} alt="" className="why-promo-img why-promo-img--mobile" />
           </div>
           <div className="why-mobile-list">
             {benefits.map((b, i) => (
-              <BenefitCardMobile key={b.title} benefit={b} index={i} visible={visible} />
+              <BenefitCardMobile key={b.title} benefit={b} index={i} visible={sectionVisible} />
             ))}
           </div>
         </div>
@@ -427,24 +500,17 @@ export const WhyChooseUsSection = (): JSX.Element => {
           stroke-dasharray: 400;
           stroke-dashoffset: 400;
         }
-        .why-radial-stage.is-visible .why-connector-line {
-          animation: whyConnectorLine 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: var(--why-line-delay, 0ms);
-        }
-        @keyframes whyConnectorLine {
-          to { stroke-dashoffset: 0; }
-        }
         .why-connector-dot {
           fill: url(#why-dot-gradient);
           opacity: 0;
           transform-origin: center;
         }
-        .why-radial-stage.is-visible .why-connector-dot {
-          animation: whyConnectorDot 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: var(--why-line-delay, 0ms);
+        @keyframes whyConnectorLine {
+          to { stroke-dashoffset: 0; }
         }
         @keyframes whyConnectorDot {
-          to { opacity: 1; }
+          from { opacity: 0; transform: scale(0.4); }
+          to { opacity: 1; transform: scale(1); }
         }
         .why-mobile {
           display: none;
@@ -512,9 +578,6 @@ export const WhyChooseUsSection = (): JSX.Element => {
           stroke-dashoffset: ${ORBIT_CIRCUMFERENCE};
           transform-origin: center;
         }
-        .why-radial-stage.is-visible .why-orbit-circle {
-          animation: whyOrbitDraw 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
         @keyframes whyOrbitDraw {
           to { stroke-dashoffset: 0; }
         }
@@ -538,9 +601,6 @@ export const WhyChooseUsSection = (): JSX.Element => {
           bottom: 22%;
           background: rgb(0 229 255 / 0.18);
         }
-        .why-radial-stage.is-visible .why-orbit-glow {
-          opacity: 1;
-        }
         .why-promo-img {
           position: relative;
           z-index: 10;
@@ -549,14 +609,151 @@ export const WhyChooseUsSection = (): JSX.Element => {
           object-fit: contain;
           display: block;
           filter: drop-shadow(0 28px 48px rgb(2 6 23 / 0.14));
-          opacity: 0;
-          transform: scale(0.96);
-        }
-        .why-radial-stage.is-visible .why-promo-img {
-          animation: whyPromoIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
         }
         @keyframes whyPromoIn {
-          to { opacity: 1; transform: scale(1); }
+          to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+        @keyframes whyHubFadeIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.94) translateY(14px);
+            filter: blur(10px);
+          }
+          55% {
+            filter: blur(3px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+          }
+        }
+
+        /* Desktop: keep radial stage hidden until hub → sequence → done */
+        @media (min-width: 901px) {
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-promo-img,
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-benefit-copy,
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-benefit-icon-disc,
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-connector-dot,
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-orbit-glow {
+            opacity: 0 !important;
+          }
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-connector-line {
+            stroke-dashoffset: 400 !important;
+          }
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-orbit-circle {
+            stroke-dashoffset: ${ORBIT_CIRCUMFERENCE} !important;
+          }
+          .why-choose-section:not(.why-phase-hub):not(.play-entrance):not(.why-phase-done) .why-radial-stage .why-benefit--mid.why-benefit--right .why-benefit-icon-disc {
+            transform: translateX(${MIDDLE_ICON_ORBIT_OFFSET_PX}px) scale(0.82) !important;
+          }
+        }
+
+        /* Desktop-only scroll entrance (once per page load) */
+        @media (min-width: 901px) {
+          .why-choose-section.why-phase-done .why-orbit-circle {
+            stroke-dashoffset: 0;
+          }
+          .why-choose-section.why-phase-done .why-connector-line {
+            stroke-dashoffset: 0;
+          }
+          .why-choose-section.why-phase-done .why-connector-dot {
+            opacity: 1;
+            transform: scale(1);
+          }
+          .why-choose-section.why-phase-done .why-benefit-icon-disc {
+            opacity: 1;
+            transform: scale(1);
+          }
+          .why-choose-section.why-phase-done .why-benefit--mid.why-benefit--right .why-benefit-icon-disc {
+            transform: translateX(${MIDDLE_ICON_ORBIT_OFFSET_PX}px) scale(1);
+          }
+          .why-choose-section.why-phase-done .why-benefit-copy {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .why-choose-section.why-phase-done .why-orbit-glow {
+            opacity: 1;
+          }
+          .why-choose-section.why-phase-done .why-promo-img {
+            opacity: 1;
+            transform: none;
+            filter: none;
+          }
+          .why-choose-section.why-phase-hub .why-promo-img {
+            opacity: 0;
+            transform: scale(0.94) translateY(14px);
+            filter: blur(10px);
+          }
+          .why-choose-section.why-phase-hub .why-orbit-circle {
+            stroke-dashoffset: ${ORBIT_CIRCUMFERENCE};
+          }
+          .why-choose-section.why-phase-hub .why-connector-line {
+            stroke-dashoffset: 400;
+          }
+          .why-choose-section.why-phase-hub .why-connector-dot {
+            opacity: 0;
+          }
+          .why-choose-section.why-phase-hub .why-benefit-icon-disc {
+            opacity: 0;
+            transform: scale(0.82);
+          }
+          .why-choose-section.why-phase-hub .why-benefit--mid.why-benefit--right .why-benefit-icon-disc {
+            transform: translateX(${MIDDLE_ICON_ORBIT_OFFSET_PX}px) scale(0.82);
+          }
+          .why-choose-section.why-phase-hub .why-benefit-copy {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          .why-choose-section.why-phase-hub .why-orbit-glow {
+            opacity: 0;
+          }
+        }
+        @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+          .why-choose-section.why-phase-hub .why-promo-img {
+            animation: whyHubFadeIn ${HUB_FADE_MS}ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          }
+          .why-choose-section.play-entrance .why-orbit-circle {
+            animation: whyOrbitDraw 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          }
+          .why-choose-section.play-entrance .why-promo-img {
+            opacity: 1;
+            transform: none;
+            filter: none;
+          }
+          .why-choose-section.play-entrance .why-orbit-glow {
+            opacity: 1;
+            transition-delay: 0.35s;
+          }
+          .why-choose-section.play-entrance .why-connector-dot {
+            animation: whyConnectorDot 0.12s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: var(--why-dot-delay, 0ms);
+          }
+          .why-choose-section.play-entrance .why-connector-line {
+            animation: whyConnectorLine 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: var(--why-line-delay, 0ms);
+          }
+          .why-choose-section.play-entrance .why-benefit-icon-disc {
+            opacity: 0;
+            transform: scale(0.82);
+            animation: whyIconIn 0.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: var(--why-icon-delay, 0ms);
+          }
+          .why-choose-section.play-entrance .why-benefit--mid.why-benefit--right .why-benefit-icon-disc {
+            transform: translateX(${MIDDLE_ICON_ORBIT_OFFSET_PX}px) scale(0.82);
+            animation: whyIconInMidRight 0.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: var(--why-icon-delay, 0ms);
+          }
+          .why-choose-section.play-entrance .why-benefit--mid.why-benefit--left .why-benefit-icon-disc {
+            animation: whyIconIn 0.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: var(--why-icon-delay, 0ms);
+          }
+          .why-choose-section.play-entrance .why-benefit-copy {
+            opacity: 0;
+            transform: translateY(8px);
+            animation: whyTextIn 0.17s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: var(--why-text-delay, 0ms);
+          }
         }
 
         .why-benefit {
@@ -580,8 +777,6 @@ export const WhyChooseUsSection = (): JSX.Element => {
           flex: 1 1 auto;
           min-width: 0;
           max-width: min(100%, 380px);
-          opacity: 0;
-          transform: translateY(8px);
         }
         .why-benefit--left .why-benefit-copy {
           padding-right: clamp(6px, 0.85vw, 10px);
@@ -596,10 +791,6 @@ export const WhyChooseUsSection = (): JSX.Element => {
         }
         .why-benefit--right {
           gap: clamp(6px, 0.75vw, 10px);
-        }
-        .why-benefit.is-visible .why-benefit-copy {
-          animation: whyTextIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: var(--why-text-delay);
         }
         @keyframes whyTextIn {
           to { opacity: 1; transform: translateY(0); }
@@ -651,16 +842,8 @@ export const WhyChooseUsSection = (): JSX.Element => {
         .why-benefit--mid.why-benefit--right .why-benefit-icon-disc {
           transform: translateX(${MIDDLE_ICON_ORBIT_OFFSET_PX}px) scale(0.82);
         }
-        .why-benefit--mid.why-benefit--right.is-visible .why-benefit-icon-disc {
-          animation: whyIconInMidRight 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: var(--why-icon-delay);
-        }
         @keyframes whyIconInMidRight {
           to { opacity: 1; transform: translateX(${MIDDLE_ICON_ORBIT_OFFSET_PX}px) scale(1); }
-        }
-        .why-benefit--mid.why-benefit--left.is-visible .why-benefit-icon-disc {
-          animation: whyIconIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: var(--why-icon-delay);
         }
 
         .why-benefit-icon-disc {
@@ -678,12 +861,6 @@ export const WhyChooseUsSection = (): JSX.Element => {
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          opacity: 0;
-          transform: scale(0.82);
-        }
-        .why-benefit.is-visible .why-benefit-icon-disc {
-          animation: whyIconIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: var(--why-icon-delay);
         }
         @keyframes whyIconIn {
           to { opacity: 1; transform: scale(1); }
@@ -734,10 +911,12 @@ export const WhyChooseUsSection = (): JSX.Element => {
           .why-promo-img--mobile {
             width: min(320px, 100%);
             opacity: 0;
-            transform: translateY(12px);
+            transform: scale(0.98);
           }
-          .why-mobile.is-visible .why-promo-img--mobile {
-            animation: whyPromoIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+          @media (prefers-reduced-motion: no-preference) {
+            .why-mobile.is-visible .why-promo-img--mobile {
+              animation: whyPromoIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+            }
           }
           .why-mobile-list {
             display: flex;
@@ -758,8 +937,8 @@ export const WhyChooseUsSection = (): JSX.Element => {
             opacity: 0;
             transform: translateY(14px);
           }
-          .why-benefit-card.is-visible {
-            animation: whyCardIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          .why-mobile.is-visible .why-benefit-card {
+            animation: whyCardIn ${WHY_MOBILE_CARD_STAGGER_MS}ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
           }
           @keyframes whyCardIn {
             to { opacity: 1; transform: translateY(0); }

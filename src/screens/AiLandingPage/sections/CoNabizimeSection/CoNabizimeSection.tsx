@@ -1,4 +1,12 @@
 import { useEffect, useRef, useState, type TouchEvent } from "react";
+import {
+  hasBeenRevealed,
+  markRevealedById,
+  useInViewOnce,
+} from "../../../../hooks/useInViewOnce";
+
+const OFFER_CONTENT_REVEAL_ID = "co-nabizime-offer";
+const BEFORE_AFTER_INTRO_ID = "co-nabizime-before-after-intro";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../../i18n/LanguageContext";
@@ -54,7 +62,6 @@ const BeforeAfterSlider = ({
   const [pos, setPos] = useState(55);
   const [dragging, setDragging] = useState(false);
   const [introRunning, setIntroRunning] = useState(false);
-  const introPlayedRef = useRef(false);
 
   const transitionStyle =
     dragging || !introRunning
@@ -62,11 +69,11 @@ const BeforeAfterSlider = ({
       : "clip-path 0.65s cubic-bezier(0.4, 0, 0.2, 1), left 0.65s cubic-bezier(0.4, 0, 0.2, 1)";
 
   useEffect(() => {
-    if (!introDemo || introPlayedRef.current) return;
+    if (!introDemo || hasBeenRevealed(BEFORE_AFTER_INTRO_ID)) return;
     const el = ref.current;
     if (!el) return;
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      introPlayedRef.current = true;
+      markRevealedById(BEFORE_AFTER_INTRO_ID);
       return;
     }
 
@@ -75,7 +82,7 @@ const BeforeAfterSlider = ({
       const center = 55;
       const right = 78;
       const left = 28;
-      introPlayedRef.current = true;
+      markRevealedById(BEFORE_AFTER_INTRO_ID);
       setIntroRunning(true);
       await sleep(450);
       if (cancelled) return;
@@ -366,13 +373,13 @@ const slides: Slide[] = [
     id: "tvorba-webu",
     title: "Webové stránky na míru",
     description:
-      "Moderní webové stránky na míru se zaměřením na výkon, SEO a získávání nových zákazníků.",
+      "Moderní webové stránky na míru pro podnikatele i firmy",
     features: [
-      { bold: "Návrh webu zdarma do 3 dnů", rest: "" },
-      { bold: "SEO optimalizace pro Google", rest: "" },
-      { bold: "Jednoduchá správa webu", rest: "" },
-      { bold: "Responzivní design pro všechny zařízení", rest: "" },
-      { bold: "Web zaměřený na vyšší konverze", rest: "" },
+      { before: "", bold: "Návrh webu zdarma", after: " do 3 dnů bez závazků" },
+      { before: "", bold: "SEO optimalizace", after: " pro lepší pozice ve vyhledávání Google" },
+      { before: "", bold: "Jednoduchá správa webu", after: " bez programování a technických znalostí" },
+      { before: "", bold: "Responzivní design", after: " pro mobily, tablety i počítače" },
+      { before: "Web na míru zaměřený na ", bold: "získávání nových zákazníků", after: "" },
     ],
     cta: "Nezávazná konzultace",
   },
@@ -382,11 +389,11 @@ const slides: Slide[] = [
     description:
       "Kompletní modernizace vašeho webu — vyšší rychlost a lepší konverze.",
     features: [
-      { bold: "Audit webu zdarma a návrh řešení", rest: "" },
-      { bold: "Odhalení slabých míst snižující konverze", rest: "" },
-      { bold: "Modernější design webu pro vyšší důvěru", rest: "" },
-      { bold: "Rychlejší načítání webu pro lepší SEO", rest: "" },
-      { bold: "Optimalizace pro všechny zařízení", rest: "" },
+      { before: "", bold: "Audit webu zdarma", after: " s návrhem konkrétních vylepšení" },
+      { before: "", bold: "Odhalení slabých míst", after: " snižujících důvěryhodnost a konverze" },
+      { before: "", bold: "Modernější design webu", after: " pro vyšší důvěru zákazníků" },
+      { before: "", bold: "Rychlejší načítání webu", after: " s pozitivním dopadem na SEO" },
+      { before: "", bold: "Optimalizace pro mobily", after: " a lepší uživatelský zážitek" },
     ],
     cta: "Nezávazná konzultace",
     beforeAfter: {
@@ -402,11 +409,11 @@ const slides: Slide[] = [
     title: "Webové aplikace na míru",
     description: "Navrhnu a vyvinu moderní webovou aplikaci pro vaše podnikání.",
     features: [
-      { bold: "Návrh aplikace zdarma do 3 dnů", rest: "" },
-      { bold: "Moderní a jednoduchý UX design", rest: "" },
-      { bold: "Aplikace dostupná ze všech zařízení", rest: "" },
-      { bold: "Prostředí optimalizované pro výkon", rest: "" },
-      { bold: "Aplikace na míru zaměřená na růst firmy", rest: "" },
+      { before: "", bold: "Návrh aplikace zdarma", after: " do 3 dnů bez závazků" },
+      { before: "", bold: "Moderní UX design", after: " pro jednoduché a rychlé používání" },
+      { before: "Webová aplikace ", bold: "dostupná z mobilu, tabletu i počítače", after: "" },
+      { before: "", bold: "Rychlé a stabilní prostředí", after: " optimalizované pro výkon" },
+      { before: "Webová aplikace na míru ", bold: "zaměřená na růst firmy", after: "" },
     ],
     cta: "Nezávazná konzultace",
     image: webAppUrl,
@@ -416,11 +423,11 @@ const slides: Slide[] = [
     title: "Automatizace procesů a AI agenti",
     description: "Získejte více zákazníků a snižte náklady díky chytré automatizaci",
     features: [
-      { bold: "Automatizace rutinní manuální práce", rest: "" },
-      { bold: "Okamžité zpracování požadavků 24 hodin", rest: "" },
-      { bold: "Snížení provozních nákladů", rest: "" },
-      { bold: "Automatické sběry dat", rest: "" },
-      { bold: "Úspora času zaměstnanců", rest: "" },
+      { before: "", bold: "Automatizace procesů", after: " bez rutinní manuální práce" },
+      { before: "", bold: "Okamžité zpracování požadavků", after: " 24 hodin denně bez čekání" },
+      { before: "", bold: "Snížení provozních nákladů", after: " až o desítky procent" },
+      { before: "", bold: "Automatické sběry dat", after: " a propojení firemních systémů" },
+      { before: "", bold: "Úspora času zaměstnanců", after: " díky chytrému workflow systému" },
     ],
     cta: "Nezávazná konzultace",
     image: aiBotUrl,
@@ -432,7 +439,7 @@ const slidesEn: Slide[] = [
     id: "tvorba-webu",
     title: "Custom websites",
     description:
-      "Modern custom websites focused on performance, SEO, and winning new customers.",
+      "Modern custom websites for entrepreneurs and businesses",
     features: [
       { bold: "Free website design within 3 days", rest: "" },
       { bold: "SEO optimization for Google", rest: "" },
@@ -505,15 +512,27 @@ export const CoNabizimeSection = (): JSX.Element => {
   const switchTimeoutRef = useRef<number | null>(null);
   const touchStartX = useRef<number>(0);
   const SWIPE_THRESHOLD = 50;
-  const [isOfferMobile, setIsOfferMobile] = useState(false);
+  const [isOfferMobile, setIsOfferMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 900px)").matches,
+  );
   const [hoveredTabIdx, setHoveredTabIdx] = useState<number | null>(null);
   const [headerVisible, setHeaderVisible] = useState(false);
   const [visibleBulletCount, setVisibleBulletCount] = useState(0);
   const [ctaVisible, setCtaVisible] = useState(false);
   const [imageVisible, setImageVisible] = useState(false);
   const [mediaMounted, setMediaMounted] = useState(false);
-  const [sectionInView, setSectionInView] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const [sectionRef, sectionInView] = useInViewOnce({
+    id: "co-nabizime",
+    threshold: isOfferMobile ? 0.35 : 0.12,
+    rootMargin: isOfferMobile ? "0px 0px -12% 0px" : "0px",
+  });
+  const [mediaRef, mediaInView] = useInViewOnce({
+    id: "co-nabizime-media",
+    threshold: 0.98,
+    rootMargin: "0px 0px -3% 0px",
+  });
+  const offerRevealReady = isOfferMobile ? sectionInView : mediaInView;
+  const offerRevealStartedRef = useRef(false);
 
   const resetOfferReveal = () => {
     setHeaderVisible(false);
@@ -523,7 +542,8 @@ export const CoNabizimeSection = (): JSX.Element => {
     setMediaMounted(false);
   };
 
-  const revealItemClass = (visible: boolean) => `offer-reveal-item${visible ? " is-in" : ""}`;
+  const revealItemClass = (visible: boolean) =>
+    `offer-reveal-item${visible ? " is-in" : ""}`;
 
   useEffect(() => {
     return () => {
@@ -560,22 +580,6 @@ export const CoNabizimeSection = (): JSX.Element => {
   }, [activeIdx]);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
-          setSectionInView(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: [0, 0.12, 0.2], rootMargin: "0px 0px -32px 0px" },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
     let cancelled = false;
 
     if (!cardVisible) {
@@ -583,7 +587,20 @@ export const CoNabizimeSection = (): JSX.Element => {
       return;
     }
 
-    if (!sectionInView) {
+    if (!offerRevealReady) {
+      return;
+    }
+
+    const isTabChange = offerRevealStartedRef.current;
+    offerRevealStartedRef.current = true;
+
+    if (!isTabChange && hasBeenRevealed(OFFER_CONTENT_REVEAL_ID)) {
+      const slide = activeSlides[activeIdx];
+      setHeaderVisible(true);
+      setVisibleBulletCount(slide?.features.length ?? 0);
+      setCtaVisible(true);
+      setMediaMounted(true);
+      setImageVisible(true);
       return;
     }
 
@@ -603,6 +620,7 @@ export const CoNabizimeSection = (): JSX.Element => {
         setCtaVisible(true);
         setMediaMounted(true);
         setImageVisible(true);
+        markRevealedById(OFFER_CONTENT_REVEAL_ID);
         return;
       }
 
@@ -612,8 +630,6 @@ export const CoNabizimeSection = (): JSX.Element => {
       });
 
       setHeaderVisible(true);
-      await sleep(260);
-      if (cancelled) return;
 
       for (let i = 0; i < slide.features.length; i++) {
         setVisibleBulletCount(i + 1);
@@ -624,13 +640,14 @@ export const CoNabizimeSection = (): JSX.Element => {
       await sleep(90);
       if (cancelled) return;
       setCtaVisible(true);
+      markRevealedById(OFFER_CONTENT_REVEAL_ID);
     };
 
     void runReveal();
     return () => {
       cancelled = true;
     };
-  }, [cardVisible, activeIdx, activeSlides, sectionInView]);
+  }, [cardVisible, activeIdx, activeSlides, offerRevealReady, isOfferMobile]);
 
   const renderOfferTabButton = (slide: Slide, idx: number): JSX.Element => {
     const isHighlighted = idx === activeIdx || hoveredTabIdx === idx;
@@ -731,7 +748,7 @@ export const CoNabizimeSection = (): JSX.Element => {
               : "Tvořím webové stránky a aplikace na míru, modernizuji firemní weby a automatizuji procesy. Díky spojení moderního designu, SEO a AI technologií pomáhám firmám růst a získávat více zákazníků."}
           </p>
           <h3
-            className={`offer-mobile-card-title${cardVisible ? " is-visible" : ""}`}
+            className={`offer-mobile-card-title pk-section-heading${cardVisible ? " is-visible" : ""}`}
             id="offer-active-service-title"
           >
             {activeSlide.title}
@@ -753,7 +770,7 @@ export const CoNabizimeSection = (): JSX.Element => {
               else if (delta < -SWIPE_THRESHOLD) goTo(activeIdx - 1);
             }}
           >
-          <div className={`offer-single-card${cardVisible && sectionInView ? " offer-single-card-visible" : ""}`}>
+          <div className={`offer-single-card${cardVisible && offerRevealReady ? " offer-single-card-visible" : ""}`}>
             <div className="offer-premium-card">
               <div className="offer-premium-card-inner">
                 <div className="offer-gallery-grid">
@@ -815,9 +832,12 @@ export const CoNabizimeSection = (): JSX.Element => {
                     </div>
                   </div>
 
-                  <div className="offer-gallery-right">
+                  <div ref={mediaRef} className="offer-gallery-right">
                     {mediaMounted ? (
-                    <div className={`offer-gallery-media-shell${imageVisible ? " is-in" : ""}`}>
+                    <div
+                      key={activeSlide.id}
+                      className={`offer-gallery-media-shell${imageVisible ? " is-in" : ""}`}
+                    >
                     {activeSlide.id === "tvorba-webu" ? (
                       <div className="offer-hero-frame" aria-hidden="true">
                         <HeroCompositeFrame animateEntrance={false} />
@@ -1024,11 +1044,6 @@ export const CoNabizimeSection = (): JSX.Element => {
           gap: 0;
         }
         .offer-single-card{
-          opacity: 0;
-          transform: translateY(10px);
-          transition: opacity 180ms ease, transform 180ms ease;
-        }
-        .offer-single-card-visible{
           opacity: 1;
           transform: translateY(0);
         }
@@ -1142,11 +1157,28 @@ export const CoNabizimeSection = (): JSX.Element => {
           width: 100%;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 1s ease;
+          transform: scale(0.985) translateY(10px);
+          filter: blur(6px);
+          will-change: opacity, transform, filter;
         }
         .offer-gallery-media-shell.is-in{
-          opacity: 1;
           visibility: visible;
+          animation: offerMediaReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes offerMediaReveal{
+          0%{
+            opacity: 0;
+            transform: scale(0.985) translateY(10px);
+            filter: blur(6px);
+          }
+          55%{
+            filter: blur(2px);
+          }
+          100%{
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+          }
         }
         .offer-gallery-media-placeholder{
           width: 100%;
@@ -1198,10 +1230,10 @@ export const CoNabizimeSection = (): JSX.Element => {
         h3.offer-title,
         .offer-title{
           font-family: "Montserrat", sans-serif;
-          font-weight: 700;
+          font-weight: 600;
           color: var(--pk-ink);
           margin: 0;
-          letter-spacing: -0.02em;
+          letter-spacing: 0.01em;
           line-height: 1.15;
         }
 
@@ -1232,6 +1264,8 @@ export const CoNabizimeSection = (): JSX.Element => {
             overflow: hidden;
             text-overflow: clip;
             box-sizing: border-box;
+            font-weight: 800 !important;
+            letter-spacing: -0.02em;
           }
         }
 
@@ -1412,14 +1446,9 @@ export const CoNabizimeSection = (): JSX.Element => {
           .offer-head{
             margin-bottom: 3px !important;
           }
-          .offer-mobile-card-title{
+          .offer-mobile-card-title.pk-section-heading{
             display: block;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            color: var(--pk-ink);
+            font-size: calc(22px * 0.8);
             margin: 37px auto 0;
             max-width: 980px;
             text-align: center;
@@ -1497,8 +1526,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             text-align: center;
             width: 100%;
           }
-          /* Keep mobile titles readable, not bigger than section heading */
-          .offer-title-large{ font-size: 24px !important; }
+          .offer-title-large{ font-size: calc(22px * 0.8) !important; }
           .offer-title:not(.offer-title-large){ font-size: clamp(22px, 6vw, 30px) !important; }
           .offer-desc{
             font-size: 14px !important;
@@ -1568,6 +1596,8 @@ export const CoNabizimeSection = (): JSX.Element => {
           .offer-gallery-media-shell{
             opacity: 1 !important;
             transform: none !important;
+            filter: none !important;
+            animation: none !important;
             transition: none !important;
           }
         }

@@ -1,4 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEntranceOnce, useInViewOnce } from "../../../../hooks/useInViewOnce";
+
+const FEATURES_ENTRANCE_ID = "features-entrance";
 import { SectionDivider } from "../../components/SectionDivider";
 import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
@@ -68,33 +71,32 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
   const isEn = language === "en";
   const items = isEn ? stepsEn : steps;
 
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isHowMobile, setIsHowMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setIsHowMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const [sectionRef, started] = useInViewOnce({
+    id: "features",
+    threshold: isHowMobile ? 0.3 : 0.12,
+    rootMargin: isHowMobile ? "0px" : "-50px 0px 0px 0px",
+  });
+  const HOW_LINE_MS = 3000;
+  const HOW_STEP_STAGGER_MS = HOW_LINE_MS / items.length;
+  const playEntrance = useEntranceOnce(started, FEATURES_ENTRANCE_ID, HOW_LINE_MS + 400);
   const howStepsRef = useRef<HTMLDivElement | null>(null);
-  const [started, setStarted] = useState(false);
   const [mobileRail, setMobileRail] = useState<{
     left: number;
     top: number;
     height: number;
   } | null>(null);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setStarted(true);
-        obs.disconnect();
-      },
-      {
-        threshold: 0.12,
-        // Require a bit more scroll before starting animations
-        rootMargin: "-50px 0px 0px 0px",
-      },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
 
   useLayoutEffect(() => {
     const wrap = howStepsRef.current;
@@ -134,7 +136,11 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
   }, [items, started, language]);
 
   return (
-  <section ref={sectionRef} className="how-works-section" style={{ width: "100%", background: "transparent", padding: "32px 0 48px", position: "relative" }}>
+  <section
+    ref={sectionRef}
+    className={`how-works-section${started ? " is-started" : ""}${playEntrance ? " play-entrance" : ""}`}
+    style={{ width: "100%", background: "transparent", padding: "32px 0 48px", position: "relative" }}
+  >
     <SectionDivider />
     <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
 
@@ -159,7 +165,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
           aria-label={isEn ? "Steps" : "Kroky"}
         >
           <div
-            className={`how-progress${started ? " is-started" : ""}`}
+            className="how-progress"
             aria-hidden="true"
             style={
               mobileRail
@@ -183,7 +189,7 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
             <div
               key={step.num}
               className={`how-step${started ? " is-started" : ""}`}
-              style={{ transitionDelay: `${idx * 1000}ms` }}
+              style={{ transitionDelay: `${idx * HOW_STEP_STAGGER_MS}ms` }}
               role="listitem"
             >
               <div className="how-step-top">
@@ -284,9 +290,12 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         pointer-events: none;
         opacity: 0;
       }
-      .how-progress.is-started .how-progress-glow{
+      .how-works-section.is-started:not(.play-entrance) .how-progress-fill{
+        transform: scaleX(1);
+      }
+      .how-works-section.play-entrance.is-started .how-progress-glow{
         opacity: 1;
-        animation: howGlowTravelX 4000ms linear forwards;
+        animation: howGlowTravelX 3000ms linear forwards;
       }
       @keyframes howGlowTravelX{
         0%, 92%{
@@ -298,8 +307,8 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
           transform: scale(0.55);
         }
       }
-      .how-progress.is-started .how-progress-fill{
-        animation: howFill 4000ms linear forwards;
+      .how-works-section.play-entrance.is-started .how-progress-fill{
+        animation: howFill 3000ms linear forwards;
       }
       @keyframes howFill{
         from{ transform: scaleX(0); }
@@ -312,7 +321,11 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         position: relative;
         z-index: 1;
       }
-      .how-step.is-started{
+      .how-works-section.is-started:not(.play-entrance) .how-step.is-started{
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .how-works-section.play-entrance.is-started .how-step.is-started{
         opacity: 1;
         transform: translateY(0);
       }
@@ -410,8 +423,11 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
           margin-left: -8px;
           margin-bottom: -8px;
         }
-        .how-progress.is-started .how-progress-glow{
-          animation: howGlowTravelY 4000ms linear forwards;
+        .how-works-section.is-started:not(.play-entrance) .how-progress-fill{
+          transform: scaleY(1);
+        }
+        .how-works-section.play-entrance.is-started .how-progress-glow{
+          animation: howGlowTravelY 3000ms linear forwards;
         }
         @keyframes howGlowTravelY{
           0%, 92%{
@@ -423,8 +439,8 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
             transform: scale(0.55);
           }
         }
-        .how-progress.is-started .how-progress-fill{
-          animation: howFillY 4000ms linear forwards;
+        .how-works-section.play-entrance.is-started .how-progress-fill{
+          animation: howFillY 3000ms linear forwards;
         }
         @keyframes howFillY{
           from{ transform: scaleY(0); }
@@ -450,18 +466,23 @@ export const AiDesignFeaturesSection = (): JSX.Element => {
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        .how-progress.is-started .how-progress-fill,
-        .how-progress.is-started .how-progress-glow{
+        .how-works-section.is-started .how-progress-fill,
+        .how-works-section.is-started .how-progress-glow{
           animation: none !important;
         }
-        .how-progress.is-started .how-progress-fill{
+        .how-works-section.is-started .how-progress-fill{
           transform: scaleX(1);
         }
         .how-progress-glow{
           opacity: 0 !important;
         }
+        .how-works-section.is-started .how-step.is-started{
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
         @media (max-width: 767px) {
-          .how-progress.is-started .how-progress-fill{
+          .how-works-section.is-started .how-progress-fill{
             transform: scaleY(1);
           }
         }

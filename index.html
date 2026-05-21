@@ -25,8 +25,8 @@
   <meta name="language" content="cs" />
   <meta name="revisit-after" content="7 days" />
   <!-- Brand surface (matches landing background); browser UI / PWA tint -->
-  <meta name="theme-color" content="#010204" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="color-scheme" content="light" />
 
   <!-- ═══════════════════════════════════════════════════════════
          VIEWPORT & COMPATIBILITY
@@ -159,12 +159,17 @@
   <link rel="manifest" href="/site.webmanifest" />
 
   <!-- ═══════════════════════════════════════════════════════════
+         CRITICAL FIRST PAINT (before JS — prevents FOUC / hidden hero text)
+  ════════════════════════════════════════════════════════════════ -->
+  <link href="pk-critical.css" rel="stylesheet" />
+
+  <!-- ═══════════════════════════════════════════════════════════
          PERFORMANCE: PRECONNECT & FONTS
   ════════════════════════════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=optional"
     rel="stylesheet"
   />
   <link href="pk-landing-tokens.css" rel="stylesheet" />

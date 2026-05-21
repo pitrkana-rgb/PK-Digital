@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { AiDesignFeaturesSection } from "./sections/AiDesignFeaturesSection/AiDesignFeaturesSection";
 import { FrequentlyAskedQuestionsSection } from "./sections/FrequentlyAskedQuestionsSection";
 import { MainHeroSection } from "./sections/MainHeroSection";
@@ -16,32 +15,6 @@ import { HeroBackgroundVideo } from "../../components/HeroBackgroundVideo";
 import { pk } from "../../design/pkLandingColors";
 
 export const AiLandingPage = (): JSX.Element => {
-  useEffect(() => {
-    const sections = document.querySelectorAll<HTMLElement>(
-      "[data-animate-on-scroll]",
-    );
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-up");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 },
-    );
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   return (
     <div
       className="relative w-full min-h-screen overflow-x-hidden"
@@ -77,11 +50,11 @@ export const AiLandingPage = (): JSX.Element => {
             <BrandLogosCarouselSection />
           </section>
 
-          <section data-animate-on-scroll className="section-mb-mobile">
+          <section className="section-mb-mobile">
             <CoNabizimeSection />
           </section>
 
-          <section data-animate-on-scroll className="section-mb-mobile">
+          <section className="section-mb-mobile">
             <PrototypeShowcaseSection />
           </section>
 
@@ -98,7 +71,7 @@ export const AiLandingPage = (): JSX.Element => {
             <section id="features" className="how-unified__section">
               <AiDesignFeaturesSection />
             </section>
-            <section id="why-us" data-animate-on-scroll className="how-unified__section section-mb-mobile">
+            <section id="why-us" className="how-unified__section section-mb-mobile">
               <WhyChooseUsSection />
             </section>
           </div>

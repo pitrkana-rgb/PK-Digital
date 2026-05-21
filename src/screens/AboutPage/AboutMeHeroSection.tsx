@@ -180,13 +180,7 @@ export const AboutMeHeroSection = (): JSX.Element => {
           background-size: auto 100%;
           background-repeat: no-repeat;
           background-position: right center;
-          opacity: 0;
-          transform: scale(1.035);
-          filter: blur(8px);
           will-change: opacity, transform, filter;
-        }
-        .about-hero-bg.is-loaded {
-          animation: aboutHeroBgReveal 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         .about-hero-fade {
           position: absolute;
@@ -196,7 +190,6 @@ export const AboutMeHeroSection = (): JSX.Element => {
           bottom: 0;
           z-index: 1;
           pointer-events: none;
-          opacity: 0;
           background: linear-gradient(
             to right,
             ${pk.page} 0%,
@@ -207,9 +200,6 @@ export const AboutMeHeroSection = (): JSX.Element => {
             rgb(255 255 255 / 0.28) 80%,
             transparent 94%
           );
-        }
-        .about-hero-fade.is-loaded {
-          animation: aboutHeroFadeReveal 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
         }
         .about-hero-shell {
           position: relative;
@@ -229,17 +219,41 @@ export const AboutMeHeroSection = (): JSX.Element => {
           max-width: min(680px, 52vw);
         }
         .about-hero-reveal {
-          opacity: 0;
           will-change: transform, opacity, filter;
+          animation-fill-mode: both;
         }
-        .about-hero-reveal-left {
-          animation: aboutHeroRevealLeft 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-        .about-hero-reveal-right {
-          animation: aboutHeroRevealRight 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-        .about-hero-reveal-up {
-          animation: aboutHeroRevealUp 750ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        @media (prefers-reduced-motion: no-preference) {
+          .about-hero-bg {
+            opacity: 0;
+            transform: scale(1.035);
+            filter: blur(8px);
+          }
+          .about-hero-bg.is-loaded {
+            animation: aboutHeroBgReveal 1100ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          }
+          .about-hero-fade {
+            opacity: 0;
+          }
+          .about-hero-fade.is-loaded {
+            animation: aboutHeroFadeReveal 900ms cubic-bezier(0.2, 0.8, 0.2, 1) 180ms forwards;
+          }
+          .about-hero-reveal-left {
+            opacity: 0;
+            transform: translateX(-32px);
+            filter: blur(8px);
+            animation: aboutHeroRevealLeft 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          }
+          .about-hero-reveal-right {
+            opacity: 0;
+            transform: translateX(32px);
+            filter: blur(8px);
+            animation: aboutHeroRevealRight 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          }
+          .about-hero-reveal-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: aboutHeroRevealUp 750ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          }
         }
         .about-hero-delay-1 { animation-delay: 200ms; }
         .about-hero-delay-2 { animation-delay: 450ms; }

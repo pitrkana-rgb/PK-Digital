@@ -1,0 +1,89 @@
+/**
+ * First-paint stability — loaded before app CSS/JS.
+ * Hero blocks start in pre-animation state (no visible-then-animate flash).
+ */
+html {
+  background-color: #ffffff;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background-color: #ffffff;
+  color: #070b14;
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* Scroll-reveal wrapper: never hide before/after hydration */
+[data-animate-on-scroll],
+.animate-fade-up {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Hero: match animation "from" state until React applies play-entrance */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-headline-part-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    filter: blur(10px);
+  }
+  .hero-headline-part-right {
+    opacity: 0;
+    transform: translateX(40px);
+    filter: blur(10px);
+  }
+  .hero-subheading-part-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    filter: blur(10px);
+  }
+  .hero-actions-wrap {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .hero-composite-anim {
+    opacity: 0;
+  }
+
+  /* About page hero — pre-animation state (no flash before CSS-in-JS) */
+  .about-hero-bg {
+    opacity: 0;
+    transform: scale(1.035);
+    filter: blur(8px);
+  }
+  .about-hero-fade {
+    opacity: 0;
+  }
+  .about-hero-reveal-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    filter: blur(8px);
+  }
+  .about-hero-reveal-right {
+    opacity: 0;
+    transform: translateX(32px);
+    filter: blur(8px);
+  }
+  .about-hero-reveal-up {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

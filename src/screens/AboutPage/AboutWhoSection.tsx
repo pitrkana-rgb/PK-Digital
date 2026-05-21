@@ -263,13 +263,8 @@ export const AboutWhoSection = (): JSX.Element => {
         .about-builder {
           padding: 56px 0 88px;
           background: ${pk.page};
-          opacity: 0;
-          transform: translateY(28px);
-          transition: opacity 0.75s ease, transform 0.75s ease;
-        }
-        .about-builder.is-visible {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
         .about-builder-shell {
           max-width: ${PAGE_SHELL_MAX};
