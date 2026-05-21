@@ -54,7 +54,7 @@ export const AiLandingPage = (): JSX.Element => {
             <CoNabizimeSection />
           </section>
 
-          <section className="section-mb-mobile">
+          <section className="section-mb-mobile prototype-section-wrap">
             <PrototypeShowcaseSection />
           </section>
 
@@ -137,6 +137,12 @@ export const AiLandingPage = (): JSX.Element => {
         .hero-subheading,
         .hero-trust-under-cta {
           color: var(--pk-on-dark) !important;
+        }
+
+        @media (max-width: 1024px) {
+          .prototype-section-wrap {
+            overflow: visible;
+          }
         }
 
         @media(max-width:768px) {

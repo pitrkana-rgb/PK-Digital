@@ -12,6 +12,7 @@ import {
 import { ContactServiceField } from "./ContactServiceField";
 import { headerPrimaryCtaClassName, headerPrimaryCtaStyle } from "../../../../design/headerCtaStyle";
 import { pushLeadFormSubmitSuccessToDataLayer } from "../../../../utils/gtmDataLayer";
+import { contactFormLayoutStyles } from "./contactFormLayoutStyles";
 
 const SUBMIT_LEAD_FN_URL = "https://hmgicymajfjsnwkctvqf.supabase.co/functions/v1/submit-lead";
 
@@ -34,8 +35,8 @@ const FloatingField = ({
   const textColor = inverse ? pk.onDark : pk.ink;
 
   return (
-    <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "4px" }}>
-      <label htmlFor={id} style={{
+    <div className={`contact-floating-field${active ? " is-label-active" : ""}`} style={{ position: "relative", display: "flex", flexDirection: "column", gap: "4px" }}>
+      <label htmlFor={id} className="contact-floating-label" style={{
         position: "absolute", left: "16px",
         top: active ? "8px" : "50%",
         transform: active ? "translateY(0) scale(0.85)" : "translateY(-50%)",
@@ -51,6 +52,7 @@ const FloatingField = ({
       <input
         id={id}
         type={type}
+        className="contact-floating-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
@@ -256,10 +258,14 @@ export const ContactFormBlock = (): JSX.Element => {
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
                 <div className="contact-form-grid">
-                  <div className="contact-form-col contact-form-col--spec">
-                    <h3 style={columnTitleStyle(true)}>
-                      {isEn ? "1. Project specification" : "1. Specifikace projektu"}
-                    </h3>
+                  <h3 className="contact-form-section-title contact-form-section-title--spec" style={columnTitleStyle(true)}>
+                    {isEn ? "1. Project specification" : "1. Specifikace projektu"}
+                  </h3>
+                  <h3 className="contact-form-section-title contact-form-section-title--contact" style={columnTitleStyle(true)}>
+                    {isEn ? "2. Contact details" : "2. Kontaktní údaje"}
+                  </h3>
+
+                  <div className="contact-form-area--services">
                     <ContactServiceField
                       isEn={isEn}
                       options={serviceOptions}
@@ -268,41 +274,9 @@ export const ContactFormBlock = (): JSX.Element => {
                       error={errors.services}
                       inverse
                     />
-
-                    <div className="contact-details-block">
-                      <label htmlFor="f-details" style={fieldGroupLabelStyle(true)}>
-                        {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
-                      </label>
-                      <textarea
-                        id="f-details"
-                        className="contact-details-field"
-                        value={form.projectDetails}
-                        onChange={(e) => set("projectDetails")(e.target.value)}
-                        rows={5}
-                        placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
-                        style={{
-                          width: "100%",
-                          resize: "vertical",
-                          background: pk.panelDark,
-                          border: `1px solid ${pk.onDarkBorder12}`,
-                          borderRadius: "16px",
-                          padding: "16px 18px",
-                          fontFamily: "'Montserrat',sans-serif",
-                          fontWeight: 400,
-                          fontSize: "16px",
-                          lineHeight: 1.55,
-                          color: pk.onDark,
-                          outline: "none",
-                          boxSizing: "border-box",
-                        }}
-                      />
-                    </div>
                   </div>
 
-                  <div className="contact-form-col contact-form-col--contact">
-                    <h3 style={columnTitleStyle(true)}>
-                      {isEn ? "2. Contact details" : "2. Kontaktní údaje"}
-                    </h3>
+                  <div className="contact-form-area--fields">
                     <FloatingField
                       inverse
                       id="f-name"
@@ -339,7 +313,38 @@ export const ContactFormBlock = (): JSX.Element => {
                       onChange={set("address") as (v: string) => void}
                       placeholder={isEn ? "Street, city" : "Ulice, město"}
                     />
+                  </div>
 
+                  <div className="contact-form-area--details contact-details-block">
+                    <label htmlFor="f-details" style={fieldGroupLabelStyle(true)}>
+                      {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
+                    </label>
+                    <textarea
+                      id="f-details"
+                      className="contact-details-field"
+                      value={form.projectDetails}
+                      onChange={(e) => set("projectDetails")(e.target.value)}
+                      rows={5}
+                      placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
+                      style={{
+                        width: "100%",
+                        resize: "vertical",
+                        background: pk.panelDark,
+                        border: `1px solid ${pk.onDarkBorder12}`,
+                        borderRadius: "16px",
+                        padding: "16px 18px",
+                        fontFamily: "'Montserrat',sans-serif",
+                        fontWeight: 400,
+                        fontSize: "16px",
+                        lineHeight: 1.55,
+                        color: pk.onDark,
+                        outline: "none",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  </div>
+
+                  <div className="contact-form-area--footer">
                     <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "4px" }}>
                       <p style={{ ...fieldGroupLabelStyle(true), marginBottom: "6px" }}>
                         {isEn ? "Personal data processing *" : "Zpracování osobních údajů *"}
@@ -414,53 +419,9 @@ export const ContactFormBlock = (): JSX.Element => {
             0 14px 36px rgba(2, 6, 23, 0.09),
             0 36px 72px rgba(2, 6, 23, 0.12);
         }
-        .contact-form-col--spec,
-        .contact-form-col--contact {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-        .contact-form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 32px;
-          align-items: stretch;
-        }
-        @media (min-width: 769px) {
-          .contact-form-col--spec {
-            min-height: 100%;
-          }
-          .contact-details-block {
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-height: 0;
-          }
-          .contact-details-field {
-            flex: 1 1 auto;
-            min-height: 120px;
-            height: 100%;
-          }
-        }
+        ${contactFormLayoutStyles}
         @media (max-width: 768px) {
-          .contact-details-field {
-            min-height: 140px;
-          }
-          .contact-form-grid {
-            grid-template-columns: 1fr !important;
-            gap: 28px;
-          }
-          .contact-form-col:first-child { order: 1; }
-          .contact-form-col:last-child  { order: 2; }
           .contact-form-card { padding: 28px 16px !important; }
-          .contact-form-col--spec .contact-details-block {
-            flex: none;
-          }
-          .contact-form-col--spec .contact-details-field {
-            min-height: 120px;
-            height: auto;
-          }
           .contact-form-submit-wrap {
             justify-content: center !important;
           }

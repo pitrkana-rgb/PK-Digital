@@ -14,6 +14,7 @@ import {
 import { ContactServiceField } from "../ContactSection/ContactServiceField";
 import { headerPrimaryCtaClassName, headerPrimaryCtaStyle } from "../../../../design/headerCtaStyle";
 import { pushLeadFormSubmitSuccessToDataLayer } from "../../../../utils/gtmDataLayer";
+import { contactFormLayoutStyles } from "../ContactSection/contactFormLayoutStyles";
 
 const SUBMIT_LEAD_FN_URL = "https://hmgicymajfjsnwkctvqf.supabase.co/functions/v1/submit-lead";
 
@@ -43,8 +44,8 @@ const DarkFloatingField = ({
   };
 
   return (
-    <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "4px" }}>
-      <label htmlFor={id} style={{
+    <div className={`contact-floating-field${active ? " is-label-active" : ""}`} style={{ position: "relative", display: "flex", flexDirection: "column", gap: "4px" }}>
+      <label htmlFor={id} className="contact-floating-label" style={{
         position: "absolute",
         left: "16px",
         top: active ? "8px" : "50%",
@@ -63,6 +64,7 @@ const DarkFloatingField = ({
       <input
         id={id}
         type={type}
+        className="contact-floating-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
@@ -281,11 +283,15 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
-                <div className="cta-form-grid">
-                  <div className="cta-form-col contact-form-col--spec">
-                    <h3 style={columnTitleStyle}>
-                      {isEn ? "1. Project specification" : "1. Specifikace projektu"}
-                    </h3>
+                <div className="contact-form-grid cta-form-grid">
+                  <h3 className="contact-form-section-title contact-form-section-title--spec" style={columnTitleStyle}>
+                    {isEn ? "1. Project specification" : "1. Specifikace projektu"}
+                  </h3>
+                  <h3 className="contact-form-section-title contact-form-section-title--contact" style={columnTitleStyle}>
+                    {isEn ? "2. Contact details" : "2. Kontaktní údaje"}
+                  </h3>
+
+                  <div className="contact-form-area--services">
                     <ContactServiceField
                       isEn={isEn}
                       options={serviceOptions}
@@ -294,42 +300,9 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
                       error={errors.services}
                       inverse
                     />
-
-                    <div className="contact-details-block">
-                      <label htmlFor="cta-details" style={fieldGroupLabelStyle}>
-                        {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
-                      </label>
-                      <textarea
-                        id="cta-details"
-                        className="contact-details-field"
-                        value={form.projectDetails}
-                        onChange={(e) => set("projectDetails")(e.target.value)}
-                        rows={5}
-                        placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
-                        style={{
-                          width: "100%",
-                          resize: "vertical",
-                          background: pk.onDark06,
-                          border: `1px solid ${pk.onDarkBorder12}`,
-                          borderRadius: "16px",
-                          padding: "16px 18px",
-                          fontFamily: "'Montserrat',sans-serif",
-                          fontWeight: 400,
-                          fontSize: "16px",
-                          lineHeight: 1.55,
-                          color: pk.onDark,
-                          outline: "none",
-                          boxSizing: "border-box",
-                          backdropFilter: "blur(10px)",
-                        }}
-                      />
-                    </div>
                   </div>
 
-                  <div className="cta-form-col contact-form-col--contact">
-                    <h3 style={columnTitleStyle}>
-                      {isEn ? "2. Contact details" : "2. Kontaktní údaje"}
-                    </h3>
+                  <div className="contact-form-area--fields">
                     <DarkFloatingField
                       id="cta-name"
                       label={isEn ? "Name / Company name (required)" : "Jméno / Název společnosti (povinné)"}
@@ -362,7 +335,39 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
                       onChange={set("address") as (v: string) => void}
                       placeholder={isEn ? "Street, city" : "Ulice, město"}
                     />
+                  </div>
 
+                  <div className="contact-form-area--details contact-details-block">
+                    <label htmlFor="cta-details" style={fieldGroupLabelStyle}>
+                      {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
+                    </label>
+                    <textarea
+                      id="cta-details"
+                      className="contact-details-field"
+                      value={form.projectDetails}
+                      onChange={(e) => set("projectDetails")(e.target.value)}
+                      rows={5}
+                      placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
+                      style={{
+                        width: "100%",
+                        resize: "vertical",
+                        background: pk.onDark06,
+                        border: `1px solid ${pk.onDarkBorder12}`,
+                        borderRadius: "16px",
+                        padding: "16px 18px",
+                        fontFamily: "'Montserrat',sans-serif",
+                        fontWeight: 400,
+                        fontSize: "16px",
+                        lineHeight: 1.55,
+                        color: pk.onDark,
+                        outline: "none",
+                        boxSizing: "border-box",
+                        backdropFilter: "blur(10px)",
+                      }}
+                    />
+                  </div>
+
+                  <div className="contact-form-area--footer">
                     <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "4px" }}>
                       <p style={{ ...fieldGroupLabelStyle, marginBottom: "6px" }}>
                         {isEn ? "Personal data processing *" : "Zpracování osobních údajů *"}
@@ -436,45 +441,9 @@ export const ReadyToDesignSection = ({ avoidFooterOverlap = false }: ReadyToDesi
             0 14px 36px rgba(2, 6, 23, 0.09),
             0 36px 72px rgba(2, 6, 23, 0.12);
         }
-        .contact-form-col--spec,
-        .contact-form-col--contact {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-        .cta-form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 32px;
-          align-items: stretch;
-        }
-        @media (min-width: 769px) {
-          .contact-form-col--spec {
-            min-height: 100%;
-          }
-          .contact-details-block {
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-height: 0;
-          }
-          .contact-details-field {
-            flex: 1 1 auto;
-            min-height: 120px;
-            height: 100%;
-          }
-        }
+        ${contactFormLayoutStyles}
         @media (max-width: 768px) {
-          .contact-details-field {
-            min-height: 140px;
-          }
-        }
-        @media (max-width: 768px) {
-          .contact-form-col--spec .contact-details-block { flex: none; }
-          .contact-form-col--spec .contact-details-field { min-height: 120px; height: auto; }
           .cta-form-shell { padding: 28px 18px 26px !important; border-radius: 26px !important; }
-          .cta-form-grid { grid-template-columns: 1fr !important; gap: 28px; }
           .cta-arrow-img { display: none !important; }
         }
         @media(prefers-reduced-motion:reduce){

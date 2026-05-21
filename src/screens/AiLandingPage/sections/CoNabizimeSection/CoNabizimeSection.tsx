@@ -1448,7 +1448,7 @@ export const CoNabizimeSection = (): JSX.Element => {
           }
           .offer-mobile-card-title.pk-section-heading{
             display: block;
-            font-size: calc(22px * 0.8);
+            font-size: calc(22px * 0.8 * 1.1);
             margin: 37px auto 0;
             max-width: 980px;
             text-align: center;
@@ -1553,7 +1553,7 @@ export const CoNabizimeSection = (): JSX.Element => {
             max-width: 100%;
             font-size: 14px !important;
             line-height: 1.65 !important;
-            padding: 8px 0 !important;
+            padding: 4px 0 !important;
             padding-left: 0 !important;
             text-align: center;
           }

@@ -7,7 +7,8 @@ import {
 
 const PROTOTYPE_ENTRANCE_ID = "prototype-showcase-entrance";
 const PROTOTYPE_CARD_STAGGER_MS = 500;
-const PROTOTYPE_ENTRANCE_TOTAL_MS = PROTOTYPE_CARD_STAGGER_MS * 3;
+const prototypeEntranceTotalMs = (cardCount: number) =>
+  PROTOTYPE_CARD_STAGGER_MS * Math.max(0, cardCount - 1);
 const PREVIEW_MOBILE_FRAME_WIDTH_PX = 390;
 type PreviewViewport = "desktop" | "mobile";
 import { createPortal } from "react-dom";
@@ -24,6 +25,9 @@ import companyLogoV4BlackUrl from "../../../../../Images/Company_logo_V4_black.p
 import investicniPoradceImg from "../../../../../Images/Prototypes/investiční poradce.png";
 import realitniMaklerImg from "../../../../../Images/Prototypes/realitní makléř.png";
 import fitnessTrenerImg from "../../../../../Images/Prototypes/fitness trenér.png";
+import profithermImg from "../../../../../Images/Project_images/Profitherm-desktop.png";
+import dentistImg from "../../../../../Images/Project_images/Dentist-desktop.png";
+import barberImg from "../../../../../Images/Project_images/Barber-desktop.png";
 
 type PrototypeCard = {
   title: string;
@@ -54,6 +58,27 @@ const cards: PrototypeCard[] = [
     image: fitnessTrenerImg,
     previewUrl: "https://fitness-trainer-alpha.vercel.app/",
   },
+  {
+    title: "Rekonstrukce",
+    description:
+      "Web zaměřený na dotační programy a rekonstrukce domů na klíč. Jasně vysvětluje služby, buduje důvěru a pomáhá přivádět kvalitní poptávky od majitelů nemovitostí.",
+    image: profithermImg,
+    previewUrl: "https://profithermsolution.cz/",
+  },
+  {
+    title: "Zubní ordinace",
+    description:
+      "Profesionální prezentace pro zubaře a dentální hygienisty. Přehledné služby, moderní vizuál a snadný kontakt pomáhají pacientům rychle objednat termín a posílit důvěru v ordinaci.",
+    image: dentistImg,
+    previewUrl: "https://dentio.vercel.app/",
+  },
+  {
+    title: "Barbershop",
+    description:
+      "Stylový web pro pánský barbershop s důrazem na atmosféru a řemeslo. Prezentuje služby, ceník a rezervace tak, aby zákazníci snadno našli termín a vraceli se pravidelně.",
+    image: barberImg,
+    previewUrl: "https://black-beard-chi.vercel.app/",
+  },
 ];
 
 const cardsEn: PrototypeCard[] = [
@@ -78,15 +103,34 @@ const cardsEn: PrototypeCard[] = [
     image: fitnessTrenerImg,
     previewUrl: "https://fitness-trainer-alpha.vercel.app/",
   },
+  {
+    title: "Home renovation",
+    description:
+      "A website focused on grant programs and turnkey home renovations. It explains services clearly, builds trust, and brings quality inquiries from property owners.",
+    image: profithermImg,
+    previewUrl: "https://profithermsolution.cz/",
+  },
+  {
+    title: "Dental practice",
+    description:
+      "A professional presentation for dentists and dental hygienists. Clear services, a modern look, and easy contact help patients book faster and trust the practice.",
+    image: dentistImg,
+    previewUrl: "https://dentio.vercel.app/",
+  },
+  {
+    title: "Barbershop",
+    description:
+      "A stylish website for a men’s barbershop with a focus on atmosphere and craft. It showcases services, pricing, and booking so clients find a slot and keep coming back.",
+    image: barberImg,
+    previewUrl: "https://black-beard-chi.vercel.app/",
+  },
 ];
 
 const PrototypeShowcaseMobileCard = ({
   card,
-  linkLabel,
   onPreview,
 }: {
   card: PrototypeCard;
-  linkLabel: string;
   onPreview: (card: PrototypeCard) => void;
 }): JSX.Element => {
   const handleActivate = () => onPreview(card);
@@ -104,28 +148,23 @@ const PrototypeShowcaseMobileCard = ({
       tabIndex={0}
       onClick={handleActivate}
       onKeyDown={handleKeyDown}
-      aria-label={`${card.title} – ${linkLabel}`}
+      aria-label={card.title}
     >
       <div className="prototype-mobile-preview">
         <img src={card.image} alt="" className="prototype-mobile-preview-image" aria-hidden="true" />
       </div>
       <h3 className="prototype-mobile-title">{card.title}</h3>
-      <p className="prototype-mobile-body">
-        {card.description}{" "}
-        <span className="prototype-mobile-link">{linkLabel}</span>
-      </p>
+      <p className="prototype-mobile-body">{card.description}</p>
     </article>
   );
 };
 
 const PrototypeShowcaseItem = ({
   card,
-  linkLabel,
   onPreview,
   revealed,
 }: {
   card: PrototypeCard;
-  linkLabel: string;
   onPreview: (card: PrototypeCard) => void;
   revealed: boolean;
 }): JSX.Element => {
@@ -144,14 +183,13 @@ const PrototypeShowcaseItem = ({
       tabIndex={0}
       onClick={handleActivate}
       onKeyDown={handleKeyDown}
-      aria-label={`${card.title} – ${linkLabel}`}
+      aria-label={card.title}
     >
       <h3 className="prototype-item-title">{card.title}</h3>
       <div className="prototype-preview">
         <img src={card.image} alt="" className="prototype-preview-image" aria-hidden="true" />
       </div>
       <p className="prototype-item-desc">{card.description}</p>
-      <span className="prototype-item-link">{linkLabel}</span>
     </article>
   );
 };
@@ -164,7 +202,6 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         heading: "Get a free website design in 3 days",
         subheading:
           "Browse sample prototypes and get a sense of the quality you'll receive free of charge within 3 days. I'll create your design tailored to your business, and if you're happy with it, I'll turn it into a professional website ready to represent your brand at the highest level.",
-        cta: "View prototype →",
         previewBack: "Back to showcase",
         previewBackShort: "Back",
         viewportDesktop: "Desktop layout",
@@ -175,7 +212,6 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         heading: "Návrh webu zdarma do 3 dnů",
         subheading:
           "Prohlédněte si ukázkové prototypy a udělejte si představu o kvalitě zpracování, kterou zdarma získáte do 3 dnů. Váš návrh vytvořím na míru vašemu podnikání a pokud budete spokojeni, proměním jej v profesionální web připravený reprezentovat vaši značku na nejvyšší úrovni.",
-        cta: "Zobrazit prototyp →",
         previewBack: "Zpět na ukázky",
         previewBackShort: "Zpět",
         viewportDesktop: "Rozložení pro počítač",
@@ -220,7 +256,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
       );
       doneTimer = window.setTimeout(() => {
         if (!cancelled) markRevealedById(PROTOTYPE_ENTRANCE_ID);
-      }, PROTOTYPE_ENTRANCE_TOTAL_MS);
+      }, prototypeEntranceTotalMs(activeCards.length));
     };
 
     const raf = window.requestAnimationFrame(() => {
@@ -296,7 +332,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         marginTop: "-30px",
       }}
     >
-      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
+      <div className="prototype-showcase-inner" style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: "42px" }}>
           <h2
             className="pk-section-heading"
@@ -326,7 +362,6 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             <PrototypeShowcaseItem
               key={card.previewUrl}
               card={card}
-              linkLabel={t.cta}
               onPreview={handlePreview}
               revealed={entranceDone || revealedCount > index}
             />
@@ -335,6 +370,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
 
         {/* Mobile carousel (one card) */}
         <div className="prototype-mobile-carousel">
+          <div className="prototype-mobile-carousel-shadow-room">
           <div
             className="prototype-mobile-track-wrap"
             onTouchStart={onTouchStart}
@@ -356,12 +392,12 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                 >
                   <PrototypeShowcaseMobileCard
                     card={card}
-                    linkLabel={t.cta}
                     onPreview={handlePreview}
                   />
                 </div>
               ))}
             </div>
+          </div>
           </div>
 
           <div className="prototype-mobile-dots" role="tablist" aria-label={isEn ? "Prototype slides" : "Prototypy"}>
@@ -583,16 +619,6 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           color: var(--pk-ink);
           text-align: center;
         }
-        .prototype-item-link{
-          align-self: center;
-          font-family: "Montserrat", sans-serif;
-          font-weight: 800;
-          font-size: 14px;
-          line-height: 1.65;
-          color: var(--pk-ink);
-          text-decoration: underline;
-          text-underline-offset: 3px;
-        }
         .prototype-preview-overlay{
           position: fixed;
           inset: 0;
@@ -783,35 +809,54 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           background: var(--pk-page);
         }
         @media (max-width: 1024px){
+          .prototype-showcase-section{
+            overflow: visible;
+          }
+          .prototype-showcase-inner{
+            overflow: visible;
+          }
           .prototype-grid-desktop{ display:none !important; }
           .prototype-mobile-carousel{
             display:block !important;
-            width: min(520px, 100%);
+            width: 100%;
+            max-width: min(520px, 100%);
             margin: 0 auto;
+            padding: 0;
+            overflow: visible;
+          }
+          .prototype-mobile-carousel-shadow-room{
+            width: 100%;
+            overflow: hidden;
           }
           .prototype-mobile-track-wrap{
             overflow: hidden;
             width: 100%;
+            padding: 16px 0 20px;
+            box-sizing: border-box;
           }
           .prototype-carousel-track{
             display: flex;
+            align-items: stretch;
             transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           }
           .prototype-mobile-slide{
             box-sizing: border-box;
-            padding: 0;
+            min-width: 0;
+            padding: 0 14px;
           }
           .prototype-mobile-card{
             display: flex;
             flex-direction: column;
             width: 100%;
             margin: 0;
-            padding: 12px;
+            padding: 14px;
             box-sizing: border-box;
             background: var(--pk-page);
-            border: 1px solid var(--pk-slate-tint-10);
-            border-radius: 12px;
-            box-shadow: none;
+            border: 1px solid rgb(15 23 42 / 0.07);
+            border-radius: 16px;
+            box-shadow:
+              0 1px 2px rgb(15 23 42 / 0.05),
+              0 4px 12px rgb(15 23 42 / 0.07);
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
             text-align: left;
@@ -826,7 +871,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             overflow: hidden;
             aspect-ratio: 16 / 9;
             margin: 0 0 12px;
-            box-shadow: none;
+            box-shadow: inset 0 0 0 1px rgb(15 23 42 / 0.04);
           }
           .prototype-mobile-preview-image{
             display: block;
@@ -852,19 +897,13 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             line-height: 1.55;
             color: var(--pk-ink);
           }
-          .prototype-mobile-link{
-            font-weight: 800;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            white-space: nowrap;
-          }
           .prototype-mobile-dots{
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
-            margin-top: 20px;
-            padding: 0;
+            margin-top: 12px;
+            padding: 0 8px;
           }
           .prototype-mobile-dot{
             width: 10px;
@@ -885,15 +924,24 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           .prototype-preview{ border-radius: 14px; }
           .prototype-item{ gap: 14px; }
           .prototype-item-title{ font-size: 18px; }
-          .prototype-mobile-card{ padding: 11px; }
+          .prototype-mobile-card{
+            padding: 12px;
+            border-radius: 14px;
+          }
+          .prototype-showcase-inner{
+            padding-left: 18px;
+            padding-right: 18px;
+          }
+          .prototype-mobile-track-wrap{
+            padding: 14px 0 18px;
+          }
+          .prototype-mobile-slide{
+            padding: 0 12px;
+          }
           .prototype-mobile-title{ font-size: 16px; }
           .prototype-mobile-body{ font-size: 13px; line-height: 1.5; }
-          .prototype-preview-logo{
-            height: 59.2px;
-          }
-          .prototype-preview-nav{
-            padding: 15px 24px;
-            gap: 12px;
+          .prototype-preview-brand{
+            display: none !important;
           }
           .prototype-preview-center{
             display: none;
@@ -901,11 +949,18 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           .prototype-preview-viewport{
             display: none !important;
           }
+          .prototype-preview-nav{
+            padding: 15px 20px;
+            gap: 10px;
+            justify-content: space-between;
+          }
           .prototype-preview-actions{
-            margin-left: auto;
-            flex-shrink: 0;
-            justify-content: flex-end;
-            gap: 8px;
+            flex: 1 1 auto;
+            min-width: 0;
+            width: 100%;
+            margin-left: 0;
+            justify-content: space-between;
+            gap: 10px;
           }
           .prototype-preview-back-label--full{
             display: none;
@@ -914,13 +969,17 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             display: inline;
           }
           .prototype-preview-back{
+            flex-shrink: 0;
             font-size: 14px;
-            padding: ${HEADER_CTA_PAD_Y}px 12px;
+            padding: ${HEADER_CTA_PAD_Y}px 14px;
           }
           .prototype-preview-cta{
             flex-shrink: 0;
-            font-size: 14px !important;
-            padding: ${HEADER_CTA_PAD_Y}px 16px !important;
+            margin-left: 0;
+            max-width: none;
+            font-size: 13px !important;
+            padding: ${HEADER_CTA_PAD_Y}px 14px !important;
+            white-space: nowrap;
           }
         }
         @media (min-width: 768px){

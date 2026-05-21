@@ -126,6 +126,7 @@ export const ContactServiceField = ({
       </p>
       <button
         type="button"
+        className="contact-service-trigger"
         onClick={() => setOpen((p) => !p)}
         aria-expanded={open}
         aria-haspopup="listbox"
