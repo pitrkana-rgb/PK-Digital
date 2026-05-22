@@ -1,5 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
+import { ResponsiveWebpImage } from "../../../../components/ResponsiveWebpImage";
 import heroFrameV3Url from "../../../../../Images/Hero_PC_frame_V3.png";
+import {
+  HERO_DESKTOP_INTRINSIC,
+  HERO_DESKTOP_SIZES,
+  HERO_DESKTOP_WIDTHS,
+  HERO_MOBILE_INTRINSIC,
+  HERO_MOBILE_SIZES,
+  HERO_MOBILE_WIDTHS,
+  HERO_PROJECT_IDS,
+  heroDesktopBasePath,
+  heroMobileBasePath,
+} from "./heroPreviewAssets";
 
 /** Natural pixel size of Hero_PC_frame_V3.png */
 const FRAME_NATURAL = { w: 1536, h: 1024 } as const;
@@ -14,100 +26,65 @@ const MOBILE_SCREEN = { x: 1180, y: 268, w: 327, h: 750, borderRadiusPx: 36 } as
 const pctX = (n: number): string => `${(n / FRAME_NATURAL.w) * 100}%`;
 const pctY = (n: number): string => `${(n / FRAME_NATURAL.h) * 100}%`;
 
-type ProjectPair = {
-  id: string;
-  desktop: string;
-  mobile: string;
-};
-
-function loadAllProjectPairs(): ProjectPair[] {
-  const desktopGlob = import.meta.glob<{ default: string }>(
-    "../../../../../Images/Project_images/*-desktop.png",
-    { eager: true },
-  );
-  const mobileGlob = import.meta.glob<{ default: string }>(
-    "../../../../../Images/Project_images/*-mobil.png",
-    { eager: true },
-  );
-
-  const mobileByBase = new Map<string, string>();
-  for (const [path, mod] of Object.entries(mobileGlob)) {
-    const m = path.match(/([^/]+)-mobil\.png$/i);
-    if (m?.[1]) mobileByBase.set(m[1].toLowerCase(), mod.default);
-  }
-
-  const pairs: ProjectPair[] = [];
-  for (const [path, mod] of Object.entries(desktopGlob)) {
-    const m = path.match(/([^/]+)-desktop\.png$/i);
-    if (!m?.[1]) continue;
-    const base = m[1];
-    pairs.push({
-      id: base.toLowerCase(),
-      desktop: mod.default,
-      mobile: mobileByBase.get(base.toLowerCase()) ?? mod.default,
-    });
-  }
-
-  const order = ["profitherm", "finance", "reality", "fitness"];
-  return pairs.sort((a, b) => {
-    const ai = order.indexOf(a.id);
-    const bi = order.indexOf(b.id);
-    if (ai === -1 && bi === -1) return a.id.localeCompare(b.id, "cs");
-    if (ai === -1) return 1;
-    if (bi === -1) return -1;
-    return ai - bi;
-  });
-}
-
-const heroProjectPairs = loadAllProjectPairs();
-
-const shotLayerStyle = {
-  position: "absolute" as const,
+const shotLayerStyle: CSSProperties = {
+  position: "absolute",
   left: 0,
   top: 0,
   width: "100%",
   height: "100%",
-  objectFit: "cover" as const,
-  objectPosition: "center center" as const,
-  display: "block" as const,
-  maxWidth: "none" as const,
-  pointerEvents: "none" as const,
+  maxWidth: "none",
+  pointerEvents: "none",
   transition: `opacity ${FADE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-  willChange: "opacity" as const,
+  willChange: "opacity",
+  transform: "translateZ(0)",
+  backfaceVisibility: "hidden",
+  imageRendering: "auto",
 };
 
 type HeroScreenCarouselProps = {
-  shots: string[];
+  projectIds: readonly string[];
+  variant: "desktop" | "mobile";
   activeIdx: number;
   className?: string;
-  /** Phone cutouts need contain so side bezels in mockups stay visible (cover crops horizontally). */
   objectFit?: "cover" | "contain";
 };
 
 /** Crossfades screenshots inside one frame cutout (index controlled by parent for sync). */
 const HeroScreenCarousel = ({
-  shots,
+  projectIds,
+  variant,
   activeIdx,
   className,
   objectFit = "cover",
 }: HeroScreenCarouselProps): JSX.Element | null => {
-  if (shots.length === 0) return null;
+  if (projectIds.length === 0) return null;
+
+  const isDesktop = variant === "desktop";
+  const basePathFn = isDesktop ? heroDesktopBasePath : heroMobileBasePath;
+  const widths = isDesktop ? HERO_DESKTOP_WIDTHS : HERO_MOBILE_WIDTHS;
+  const sizes = isDesktop ? HERO_DESKTOP_SIZES : HERO_MOBILE_SIZES;
+  const intrinsic = isDesktop ? HERO_DESKTOP_INTRINSIC : HERO_MOBILE_INTRINSIC;
 
   return (
     <>
-      {shots.map((src, i) => (
-        <img
-          key={src}
-          src={src}
-          alt=""
-          draggable={false}
+      {projectIds.map((projectId, i) => (
+        <ResponsiveWebpImage
+          key={projectId}
+          basePath={basePathFn(projectId)}
+          widths={widths}
+          sizes={sizes}
+          width={intrinsic.width}
+          height={intrinsic.height}
           className={className}
           style={{
             ...shotLayerStyle,
             objectFit,
+            objectPosition: isDesktop ? "top center" : "center center",
             opacity: i === activeIdx ? 1 : 0,
             zIndex: i === activeIdx ? 2 : 1,
           }}
+          loading={i === 0 ? "eager" : "lazy"}
+          fetchPriority={i === activeIdx && i === 0 ? "high" : "auto"}
         />
       ))}
     </>
@@ -127,9 +104,7 @@ export const HeroCompositeFrame = ({
   animateEntrance = true,
 }: HeroCompositeFrameProps): JSX.Element => {
   const [activeIdx, setActiveIdx] = useState(0);
-  const desktopShots = useMemo(() => heroProjectPairs.map((p) => p.desktop), []);
-  const mobileShots = useMemo(() => heroProjectPairs.map((p) => p.mobile), []);
-  const count = heroProjectPairs.length;
+  const count = HERO_PROJECT_IDS.length;
 
   useEffect(() => {
     if (count <= 1) return;
@@ -152,6 +127,8 @@ export const HeroCompositeFrame = ({
     overflow: "hidden" as const,
     borderRadius: 0,
     zIndex: 0,
+    isolation: "isolate" as const,
+    background: "rgb(15 23 42 / 0.06)",
   };
 
   const mobileCornerPct = `${(MOBILE_SCREEN.borderRadiusPx / MOBILE_SCREEN.w) * 100}%`;
@@ -165,9 +142,10 @@ export const HeroCompositeFrame = ({
     overflow: "hidden" as const,
     borderRadius: mobileCornerPct,
     zIndex: 0,
+    isolation: "isolate" as const,
+    background: "rgb(15 23 42 / 0.06)",
   };
 
-  const hasShots = count > 0;
   const safeIdx = count > 0 ? activeIdx % count : 0;
 
   return (
@@ -180,26 +158,31 @@ export const HeroCompositeFrame = ({
         aspectRatio: `${FRAME_NATURAL.w} / ${FRAME_NATURAL.h}`,
       }}
     >
-      {hasShots ? (
-        <>
-          <div aria-hidden="true" className="hero-slot-desktop hero-slot" style={desktopSlot}>
-            <HeroScreenCarousel shots={desktopShots} activeIdx={safeIdx} className="hero-project-shot" />
-          </div>
-          <div aria-hidden="true" className="hero-slot-mobile hero-slot" style={mobileSlot}>
-            <HeroScreenCarousel
-              shots={mobileShots}
-              activeIdx={safeIdx}
-              className="hero-project-shot hero-project-shot--phone"
-              objectFit="contain"
-            />
-          </div>
-        </>
-      ) : null}
+      <div aria-hidden="true" className="hero-slot-desktop hero-slot" style={desktopSlot}>
+        <HeroScreenCarousel
+          projectIds={HERO_PROJECT_IDS}
+          variant="desktop"
+          activeIdx={safeIdx}
+          className="hero-project-shot"
+        />
+      </div>
+      <div aria-hidden="true" className="hero-slot-mobile hero-slot" style={mobileSlot}>
+        <HeroScreenCarousel
+          projectIds={HERO_PROJECT_IDS}
+          variant="mobile"
+          activeIdx={safeIdx}
+          className="hero-project-shot hero-project-shot--phone"
+          objectFit="contain"
+        />
+      </div>
       <img
         src={heroFrameV3Url}
         alt=""
         draggable={false}
         className={imgClassName}
+        width={FRAME_NATURAL.w}
+        height={FRAME_NATURAL.h}
+        decoding="async"
         style={{
           width: "100%",
           height: "auto",
@@ -215,16 +198,6 @@ export const HeroCompositeFrame = ({
         .hero-project-shot {
           -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
-          filter: contrast(1.05) saturate(1.07);
-        }
-        .hero-project-shot--phone {
-          object-fit: contain;
-          object-position: center center;
-        }
-        @supports (image-rendering: high-quality) {
-          .hero-project-shot {
-            image-rendering: high-quality;
-          }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero-project-shot {

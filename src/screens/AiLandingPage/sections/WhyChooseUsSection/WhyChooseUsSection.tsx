@@ -28,7 +28,7 @@ type Benefit = {
 
 const benefitsCs: Benefit[] = [
   {
-    title: "Web zdarma do 3 dnů",
+    title: "Návrh webu zdarma do 3 dnů",
     description:
       "Nezávazně připravím první návrh vašeho webu, abyste ještě před investicí viděli styl, směr i potenciál celého řešení.",
     icon: prototypIcon,
@@ -42,7 +42,7 @@ const benefitsCs: Benefit[] = [
     side: "left",
   },
   {
-    title: "Hotový web už za 14 dnů",
+    title: "Profesionální web už za 14 dnů",
     description:
       "Díky efektivnímu workflow a moderním technologiím dodávám kvalitní weby výrazně rychleji než běžné agentury.",
     icon: dobaRealizaceIcon,
@@ -87,7 +87,7 @@ const benefitsEn: Benefit[] = [
     side: "left",
   },
   {
-    title: "Live website in 14 days",
+    title: "Professional website in 14 days",
     description:
       "Thanks to an efficient workflow and modern technology, I deliver quality websites much faster than typical agencies.",
     icon: dobaRealizaceIcon,

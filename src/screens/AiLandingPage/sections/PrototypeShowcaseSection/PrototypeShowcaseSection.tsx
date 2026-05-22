@@ -6,7 +6,7 @@ import {
 } from "../../../../hooks/useInViewOnce";
 
 const PROTOTYPE_ENTRANCE_ID = "prototype-showcase-entrance";
-const PROTOTYPE_CARD_STAGGER_MS = 500;
+const PROTOTYPE_CARD_STAGGER_MS = 250;
 const prototypeEntranceTotalMs = (cardCount: number) =>
   PROTOTYPE_CARD_STAGGER_MS * Math.max(0, cardCount - 1);
 const PREVIEW_MOBILE_FRAME_WIDTH_PX = 390;
@@ -22,116 +22,126 @@ import {
 import { pk } from "../../../../design/pkLandingColors";
 import { scrollToSectionId } from "../../../../utils/scrollToSection";
 import companyLogoV4BlackUrl from "../../../../../Images/Company_logo_V4_black.png";
-import investicniPoradceImg from "../../../../../Images/Prototypes/investiční poradce.png";
-import realitniMaklerImg from "../../../../../Images/Prototypes/realitní makléř.png";
-import fitnessTrenerImg from "../../../../../Images/Prototypes/fitness trenér.png";
-import profithermImg from "../../../../../Images/Project_images/Profitherm-desktop.png";
-import dentistImg from "../../../../../Images/Project_images/Dentist-desktop.png";
-import barberImg from "../../../../../Images/Project_images/Barber-desktop.png";
+import { PrototypePreviewImage } from "./PrototypePreviewImage";
 
 type PrototypeCard = {
   title: string;
+  badge: string;
   description: string;
-  image: string;
+  imageId: string;
   previewUrl: string;
 };
 
 const cards: PrototypeCard[] = [
   {
-    title: "Investiční poradce",
-    description:
-      "Web vytvořený pro profesionální prezentaci finančních služeb a budování důvěry. Pomáhá jednoduše vysvětlit nabídku a přivádět nové klienty přes kvalitní poptávky.",
-    image: investicniPoradceImg,
-    previewUrl: "https://financni-partner-demo.vercel.app/",
-  },
-  {
-    title: "Realitní makléř",
-    description:
-      "Prémiová prezentace pro makléře, kteří chtějí působit moderně a důvěryhodně. Web usnadňuje prezentaci nabídek a podporuje rychlejší kontakt od zájemců.",
-    image: realitniMaklerImg,
-    previewUrl: "https://domov-snadno.vercel.app/",
-  },
-  {
-    title: "Fitness trenér",
-    description:
-      "Dynamický web zaměřený na osobní značku trenéra a získávání rezervací. Přehledné sekce, silný vizuál a důraz na výsledky klientů pomáhají zvýšit počet nových zájemců.",
-    image: fitnessTrenerImg,
-    previewUrl: "https://fitness-trainer-alpha.vercel.app/",
-  },
-  {
-    title: "Rekonstrukce",
+    title: "Profitherm Solution",
+    badge: "Rekonstrukce",
     description:
       "Web zaměřený na dotační programy a rekonstrukce domů na klíč. Jasně vysvětluje služby, buduje důvěru a pomáhá přivádět kvalitní poptávky od majitelů nemovitostí.",
-    image: profithermImg,
+    imageId: "profitherm",
     previewUrl: "https://profithermsolution.cz/",
   },
   {
-    title: "Zubní ordinace",
+    title: "Black Beard",
+    badge: "Barbershop",
+    description:
+      "Stylový web pro pánský barbershop s důrazem na atmosféru a řemeslo. Prezentuje služby, ceník a rezervace tak, aby zákazníci snadno našli termín a vraceli se pravidelně.",
+    imageId: "black-beard",
+    previewUrl: "https://black-beard-chi.vercel.app/",
+  },
+  {
+    title: "Dentio",
+    badge: "Zubní ordinace",
     description:
       "Profesionální prezentace pro zubaře a dentální hygienisty. Přehledné služby, moderní vizuál a snadný kontakt pomáhají pacientům rychle objednat termín a posílit důvěru v ordinaci.",
-    image: dentistImg,
+    imageId: "dentio",
     previewUrl: "https://dentio.vercel.app/",
   },
   {
-    title: "Barbershop",
+    title: "Jan Novák",
+    badge: "Fitness",
     description:
-      "Stylový web pro pánský barbershop s důrazem na atmosféru a řemeslo. Prezentuje služby, ceník a rezervace tak, aby zákazníci snadno našli termín a vraceli se pravidelně.",
-    image: barberImg,
-    previewUrl: "https://black-beard-chi.vercel.app/",
+      "Dynamický web zaměřený na osobní značku trenéra a získávání rezervací. Přehledné sekce, silný vizuál a důraz na výsledky klientů pomáhají zvýšit počet nových zájemců.",
+    imageId: "jan-novak",
+    previewUrl: "https://fitness-trainer-alpha.vercel.app/",
+  },
+  {
+    title: "Váš finanční partner",
+    badge: "Finance",
+    description:
+      "Web vytvořený pro profesionální prezentaci finančních služeb a budování důvěry. Pomáhá jednoduše vysvětlit nabídku a přivádět nové klienty přes kvalitní poptávky.",
+    imageId: "vas-financni-partner",
+    previewUrl: "https://financni-partner-demo.vercel.app/",
+  },
+  {
+    title: "Osobní makléř",
+    badge: "Reality",
+    description:
+      "Prémiová prezentace pro makléře, kteří chtějí působit moderně a důvěryhodně. Web usnadňuje prezentaci nabídek a podporuje rychlejší kontakt od zájemců.",
+    imageId: "osobni-makler",
+    previewUrl: "https://domov-snadno.vercel.app/",
   },
 ];
 
 const cardsEn: PrototypeCard[] = [
   {
-    title: "Financial advisor",
-    description:
-      "A website built for a professional financial services presentation and trust-building. It explains the offer clearly and brings new clients through high-quality inquiries.",
-    image: investicniPoradceImg,
-    previewUrl: "https://financni-partner-demo.vercel.app/",
-  },
-  {
-    title: "Real estate agent",
-    description:
-      "A premium presentation for agents who want to look modern and trustworthy. The site showcases listings clearly and encourages faster contact from prospects.",
-    image: realitniMaklerImg,
-    previewUrl: "https://domov-snadno.vercel.app/",
-  },
-  {
-    title: "Personal trainer",
-    description:
-      "A dynamic website focused on the trainer’s personal brand and booking growth. Strong visuals and clear sections help turn visitors into new inquiries.",
-    image: fitnessTrenerImg,
-    previewUrl: "https://fitness-trainer-alpha.vercel.app/",
-  },
-  {
-    title: "Home renovation",
+    title: "Profitherm Solution",
+    badge: "Renovation",
     description:
       "A website focused on grant programs and turnkey home renovations. It explains services clearly, builds trust, and brings quality inquiries from property owners.",
-    image: profithermImg,
+    imageId: "profitherm",
     previewUrl: "https://profithermsolution.cz/",
   },
   {
-    title: "Dental practice",
+    title: "Black Beard",
+    badge: "Barbershop",
+    description:
+      "A stylish website for a men’s barbershop with a focus on atmosphere and craft. It showcases services, pricing, and booking so clients find a slot and keep coming back.",
+    imageId: "black-beard",
+    previewUrl: "https://black-beard-chi.vercel.app/",
+  },
+  {
+    title: "Dentio",
+    badge: "Dental",
     description:
       "A professional presentation for dentists and dental hygienists. Clear services, a modern look, and easy contact help patients book faster and trust the practice.",
-    image: dentistImg,
+    imageId: "dentio",
     previewUrl: "https://dentio.vercel.app/",
   },
   {
-    title: "Barbershop",
+    title: "Jan Novák",
+    badge: "Fitness",
     description:
-      "A stylish website for a men’s barbershop with a focus on atmosphere and craft. It showcases services, pricing, and booking so clients find a slot and keep coming back.",
-    image: barberImg,
-    previewUrl: "https://black-beard-chi.vercel.app/",
+      "A dynamic website focused on the trainer’s personal brand and booking growth. Strong visuals and clear sections help turn visitors into new inquiries.",
+    imageId: "jan-novak",
+    previewUrl: "https://fitness-trainer-alpha.vercel.app/",
+  },
+  {
+    title: "Your financial partner",
+    badge: "Finance",
+    description:
+      "A website built for a professional financial services presentation and trust-building. It explains the offer clearly and brings new clients through high-quality inquiries.",
+    imageId: "vas-financni-partner",
+    previewUrl: "https://financni-partner-demo.vercel.app/",
+  },
+  {
+    title: "Personal broker",
+    badge: "Real estate",
+    description:
+      "A premium presentation for agents who want to look modern and trustworthy. The site showcases listings clearly and encourages faster contact from prospects.",
+    imageId: "osobni-makler",
+    previewUrl: "https://domov-snadno.vercel.app/",
   },
 ];
 
 const PrototypeShowcaseMobileCard = ({
   card,
   onPreview,
+  priority = false,
 }: {
   card: PrototypeCard;
   onPreview: (card: PrototypeCard) => void;
+  priority?: boolean;
 }): JSX.Element => {
   const handleActivate = () => onPreview(card);
   const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -151,9 +161,17 @@ const PrototypeShowcaseMobileCard = ({
       aria-label={card.title}
     >
       <div className="prototype-mobile-preview">
-        <img src={card.image} alt="" className="prototype-mobile-preview-image" aria-hidden="true" />
+        <PrototypePreviewImage
+          imageId={card.imageId}
+          className="prototype-mobile-preview-image"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+        />
       </div>
-      <h3 className="prototype-mobile-title">{card.title}</h3>
+      <div className="prototype-mobile-heading">
+        <h3 className="prototype-mobile-title">{card.title}</h3>
+        <span className="prototype-item-badge">{card.badge}</span>
+      </div>
       <p className="prototype-mobile-body">{card.description}</p>
     </article>
   );
@@ -163,10 +181,12 @@ const PrototypeShowcaseItem = ({
   card,
   onPreview,
   revealed,
+  priority = false,
 }: {
   card: PrototypeCard;
   onPreview: (card: PrototypeCard) => void;
   revealed: boolean;
+  priority?: boolean;
 }): JSX.Element => {
   const handleActivate = () => onPreview(card);
   const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -185,9 +205,17 @@ const PrototypeShowcaseItem = ({
       onKeyDown={handleKeyDown}
       aria-label={card.title}
     >
-      <h3 className="prototype-item-title">{card.title}</h3>
       <div className="prototype-preview">
-        <img src={card.image} alt="" className="prototype-preview-image" aria-hidden="true" />
+        <PrototypePreviewImage
+          imageId={card.imageId}
+          className="prototype-preview-image"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+        />
+      </div>
+      <div className="prototype-item-heading">
+        <h3 className="prototype-item-title">{card.title}</h3>
+        <span className="prototype-item-badge">{card.badge}</span>
       </div>
       <p className="prototype-item-desc">{card.description}</p>
     </article>
@@ -364,6 +392,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
               card={card}
               onPreview={handlePreview}
               revealed={entranceDone || revealedCount > index}
+              priority={index < 3}
             />
           ))}
         </div>
@@ -384,7 +413,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                 transform: `translateX(${-mobileIdx * (100 / activeCards.length)}%)`,
               }}
             >
-              {activeCards.map((card) => (
+              {activeCards.map((card, index) => (
                 <div
                   key={card.previewUrl}
                   className="prototype-mobile-slide"
@@ -393,6 +422,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                   <PrototypeShowcaseMobileCard
                     card={card}
                     onPreview={handlePreview}
+                    priority={index === mobileIdx}
                   />
                 </div>
               ))}
@@ -549,56 +579,78 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         @media (min-width: 901px) {
           .prototype-grid-desktop .prototype-item{
             opacity: 0;
+            transform: translate3d(0, 16px, 0);
             pointer-events: none;
+            will-change: opacity, transform;
             transition:
-              opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+              opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
           }
           .prototype-grid-desktop .prototype-item.prototype-item--revealed{
             opacity: 1;
+            transform: translate3d(0, 0, 0);
             pointer-events: auto;
           }
+          .prototype-grid-desktop .prototype-item.prototype-item--revealed:hover,
+          .prototype-grid-desktop .prototype-item.prototype-item--revealed:focus-visible{
+            transform: translate3d(0, -6px, 0);
+          }
         }
-        .prototype-item:hover,
-        .prototype-item:focus-visible{
-          transform: translateY(-6px);
+        @media (max-width: 900px) {
+          .prototype-item:hover,
+          .prototype-item:focus-visible{
+            transform: translateY(-6px);
+          }
         }
         .prototype-item:focus-visible{
           outline: 2px solid var(--pk-accent);
           outline-offset: 4px;
         }
         .prototype-preview{
+          position: relative;
+          isolation: isolate;
           border-radius: 16px;
           overflow: hidden;
           aspect-ratio: 16 / 9;
           width: 100%;
+          max-height: none;
+          background: rgb(15 23 42 / 0.04);
           box-shadow:
+            0 1px 0 rgb(255 255 255 / 0.65) inset,
             0 4px 6px rgb(2 6 23 / 0.04),
-            0 12px 28px rgb(2 6 23 / 0.08),
-            0 24px 48px rgb(2 6 23 / 0.06);
+            0 12px 28px rgb(2 6 23 / 0.08);
           transition:
-            transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-            box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+          transform: translateZ(0);
+          backface-visibility: hidden;
         }
         .prototype-item:hover .prototype-preview,
         .prototype-item:focus-visible .prototype-preview{
-          transform: scale(1.015);
+          transform: translateZ(0) scale(1.012);
           box-shadow:
+            0 1px 0 rgb(255 255 255 / 0.7) inset,
             0 8px 16px rgb(2 6 23 / 0.06),
-            0 20px 40px rgb(2 6 23 / 0.12),
-            0 36px 64px rgb(2 6 23 / 0.1);
+            0 20px 40px rgb(2 6 23 / 0.1);
         }
         .prototype-preview-image{
-          display:block;
-          width:100%;
-          height:100%;
-          object-fit:cover;
+          display: block;
+          width: 100%;
+          height: 100%;
+          max-width: none;
+          object-fit: cover;
           object-position: top center;
-          transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+          image-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          transform: translateZ(0);
+          backface-visibility: hidden;
         }
-        .prototype-item:hover .prototype-preview-image,
-        .prototype-item:focus-visible .prototype-preview-image{
-          transform: scale(1.04);
+        .prototype-item-heading{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          width: 100%;
         }
         .prototype-item-title{
           margin: 0;
@@ -608,7 +660,26 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           line-height: 1.2;
           letter-spacing: -0.02em;
           color: var(--pk-ink);
-          text-align: center;
+          text-align: left;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+        .prototype-item-badge{
+          flex: 0 0 auto;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 6px 12px;
+          border-radius: 999px;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 1;
+          letter-spacing: 0.02em;
+          color: var(--pk-ink);
+          background: var(--pk-slate-tint-06);
+          border: 1px solid var(--pk-slate-tint-16);
+          white-space: nowrap;
         }
         .prototype-item-desc{
           margin: 0;
@@ -617,7 +688,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
           font-size: 14px;
           line-height: 1.65;
           color: var(--pk-ink);
-          text-align: center;
+          text-align: left;
         }
         .prototype-preview-overlay{
           position: fixed;
@@ -866,28 +937,47 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             outline-offset: 3px;
           }
           .prototype-mobile-preview{
+            position: relative;
+            isolation: isolate;
             width: 100%;
             border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16 / 9;
             margin: 0 0 12px;
-            box-shadow: inset 0 0 0 1px rgb(15 23 42 / 0.04);
+            background: rgb(15 23 42 / 0.04);
+            box-shadow:
+              0 1px 0 rgb(255 255 255 / 0.6) inset,
+              inset 0 0 0 1px rgb(15 23 42 / 0.05);
           }
           .prototype-mobile-preview-image{
             display: block;
             width: 100%;
             height: 100%;
+            max-width: none;
             object-fit: cover;
             object-position: top center;
+            image-rendering: auto;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+          }
+          .prototype-mobile-heading{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 0 0 8px;
           }
           .prototype-mobile-title{
-            margin: 0 0 8px;
+            margin: 0;
             font-family: "Montserrat", sans-serif;
             font-weight: 800;
             font-size: 17px;
             line-height: 1.25;
             letter-spacing: -0.02em;
             color: var(--pk-ink);
+            flex: 1 1 auto;
+            min-width: 0;
+            text-align: left;
           }
           .prototype-mobile-body{
             margin: 0;
@@ -993,9 +1083,11 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             pointer-events: auto !important;
           }
           .prototype-item,
-          .prototype-preview,
-          .prototype-preview-image{
+          .prototype-preview{
             transition: none !important;
+            transform: none !important;
+          }
+          .prototype-preview-image{
             transform: none !important;
           }
           .prototype-item:hover,

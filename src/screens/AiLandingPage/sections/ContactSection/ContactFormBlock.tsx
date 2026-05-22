@@ -265,17 +265,49 @@ export const ContactFormBlock = (): JSX.Element => {
                     {isEn ? "2. Contact details" : "2. Kontaktní údaje"}
                   </h3>
 
-                  <div className="contact-form-area--services">
-                    <ContactServiceField
-                      isEn={isEn}
-                      options={serviceOptions}
-                      selected={form.services}
-                      onToggle={toggleService}
-                      error={errors.services}
-                      inverse
-                    />
+                  <div className="contact-form-area--left">
+                    <div className="contact-form-area--services">
+                      <ContactServiceField
+                        isEn={isEn}
+                        options={serviceOptions}
+                        selected={form.services}
+                        onToggle={toggleService}
+                        error={errors.services}
+                        inverse
+                      />
+                    </div>
+
+                    <div className="contact-form-area--details contact-details-block">
+                      <label htmlFor="f-details" style={fieldGroupLabelStyle(true)}>
+                        {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
+                      </label>
+                      <textarea
+                        id="f-details"
+                        className="contact-details-field"
+                        value={form.projectDetails}
+                        onChange={(e) => set("projectDetails")(e.target.value)}
+                        rows={5}
+                        placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
+                        style={{
+                          width: "100%",
+                          resize: "vertical",
+                          background: pk.panelDark,
+                          border: `1px solid ${pk.onDarkBorder12}`,
+                          borderRadius: "16px",
+                          padding: "16px 18px",
+                          fontFamily: "'Montserrat',sans-serif",
+                          fontWeight: 400,
+                          fontSize: "16px",
+                          lineHeight: 1.55,
+                          color: pk.onDark,
+                          outline: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                    </div>
                   </div>
 
+                  <div className="contact-form-area--right">
                   <div className="contact-form-area--fields">
                     <FloatingField
                       inverse
@@ -312,35 +344,6 @@ export const ContactFormBlock = (): JSX.Element => {
                       value={form.address}
                       onChange={set("address") as (v: string) => void}
                       placeholder={isEn ? "Street, city" : "Ulice, město"}
-                    />
-                  </div>
-
-                  <div className="contact-form-area--details contact-details-block">
-                    <label htmlFor="f-details" style={fieldGroupLabelStyle(true)}>
-                      {isEn ? "Describe your project" : "Popište mi svůj požadavek"}
-                    </label>
-                    <textarea
-                      id="f-details"
-                      className="contact-details-field"
-                      value={form.projectDetails}
-                      onChange={(e) => set("projectDetails")(e.target.value)}
-                      rows={5}
-                      placeholder={isEn ? "Tell me about your goals, scope, and timeline…" : "Napište mi o cílech, rozsahu a termínu…"}
-                      style={{
-                        width: "100%",
-                        resize: "vertical",
-                        background: pk.panelDark,
-                        border: `1px solid ${pk.onDarkBorder12}`,
-                        borderRadius: "16px",
-                        padding: "16px 18px",
-                        fontFamily: "'Montserrat',sans-serif",
-                        fontWeight: 400,
-                        fontSize: "16px",
-                        lineHeight: 1.55,
-                        color: pk.onDark,
-                        outline: "none",
-                        boxSizing: "border-box",
-                      }}
                     />
                   </div>
 
@@ -403,6 +406,7 @@ export const ContactFormBlock = (): JSX.Element => {
                         {loading ? (isEn ? "Sending..." : "Odesílám...") : <><Send size={20} /> {isEn ? "Send request" : "Odeslat poptávku"}</>}
                       </button>
                     </div>
+                  </div>
                   </div>
                 </div>
               </form>

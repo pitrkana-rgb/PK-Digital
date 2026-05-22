@@ -16,7 +16,7 @@
 | JSON-LD | `index.html` | `Organization` + `LocalBusiness`, `WebSite`; `logo` / `image` reference `og-image.png` |
 | Theme color | `index.html` | `#FF5A1F` — brand UI uses cyan (`#00E5FF`); decide one primary for browser chrome / PWA |
 | Source image | `Images/metadata.png` | Copied to **`public/og-image.png`** (keep in sync when updating art) |
-| Favicon | `index.html` | `/Company_logo_Icon_V2.png` |
+| Favicon | `index.html`, `public/site.webmanifest` | `/Favicon.png` |
 
 **Status (implemented):** Run **`npm run og-image`** after changing **`Images/metadata.png`**. That script resizes to **1200×630** with **`fit: cover`** and **`position: northwest`** (top-left anchor) so X/Facebook/WhatsApp previews favor the **logo, headline, and left CTA** instead of a centered crop. Bump **`?v=`** on `og-image.png` in `index.html` when you ship a new PNG.
 
