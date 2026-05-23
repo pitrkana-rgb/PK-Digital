@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties, memo } from "react";
 import { ResponsiveWebpImage } from "../../../../components/ResponsiveWebpImage";
 import heroFrameV3Url from "../../../../../Images/Hero_PC_frame_V3.png";
 import {
@@ -98,11 +98,11 @@ type HeroCompositeFrameProps = {
   animateEntrance?: boolean;
 };
 
-export const HeroCompositeFrame = ({
+export const HeroCompositeFrame = memo(function HeroCompositeFrame({
   imgClassName,
   wrapperClassName,
   animateEntrance = true,
-}: HeroCompositeFrameProps): JSX.Element => {
+}: HeroCompositeFrameProps) {
   const [activeIdx, setActiveIdx] = useState(0);
   const count = HERO_PROJECT_IDS.length;
 
@@ -207,4 +207,4 @@ export const HeroCompositeFrame = ({
       `}</style>
     </div>
   );
-};
+});

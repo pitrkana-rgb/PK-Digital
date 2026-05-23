@@ -10,7 +10,8 @@
     "og-image": "node scripts/generate-og-image.mjs",
     "prototype-previews": "node scripts/generate-prototype-previews.mjs",
     "hero-previews": "node scripts/generate-hero-previews.mjs",
-    "previews": "npm run prototype-previews && npm run hero-previews"
+    "offer-previews": "node scripts/generate-offer-previews.mjs",
+    "previews": "npm run prototype-previews && npm run hero-previews && npm run offer-previews"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",

@@ -22,6 +22,7 @@ import {
 import { pk } from "../../../../design/pkLandingColors";
 import { scrollToSectionId } from "../../../../utils/scrollToSection";
 import companyLogoV4BlackUrl from "../../../../../Images/Company_logo_V4_black.png";
+import { MobilePreviewClickHint } from "../../../../components/MobilePreviewClickHint";
 import { PrototypePreviewImage } from "./PrototypePreviewImage";
 
 type PrototypeCard = {
@@ -137,10 +138,12 @@ const cardsEn: PrototypeCard[] = [
 const PrototypeShowcaseMobileCard = ({
   card,
   onPreview,
+  previewHintLabel,
   priority = false,
 }: {
   card: PrototypeCard;
   onPreview: (card: PrototypeCard) => void;
+  previewHintLabel: string;
   priority?: boolean;
 }): JSX.Element => {
   const handleActivate = () => onPreview(card);
@@ -167,6 +170,7 @@ const PrototypeShowcaseMobileCard = ({
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
         />
+        <MobilePreviewClickHint label={previewHintLabel} />
       </div>
       <div className="prototype-mobile-heading">
         <h3 className="prototype-mobile-title">{card.title}</h3>
@@ -234,6 +238,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         previewBackShort: "Back",
         viewportDesktop: "Desktop layout",
         viewportMobile: "Mobile layout",
+        previewHint: "Tap for preview",
         stickyCta: "I want a similar website",
       }
     : {
@@ -244,6 +249,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
         previewBackShort: "Zpět",
         viewportDesktop: "Rozložení pro počítač",
         viewportMobile: "Rozložení pro mobil",
+        previewHint: "Klikněte pro náhled",
         stickyCta: "Chci podobný web",
       };
 
@@ -422,6 +428,7 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
                   <PrototypeShowcaseMobileCard
                     card={card}
                     onPreview={handlePreview}
+                    previewHintLabel={t.previewHint}
                     priority={index === mobileIdx}
                   />
                 </div>
@@ -959,6 +966,56 @@ export const PrototypeShowcaseSection = (): JSX.Element => {
             image-rendering: auto;
             transform: translateZ(0);
             backface-visibility: hidden;
+          }
+          .pk-mobile-preview-click-hint{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: absolute;
+            right: 11px;
+            bottom: 11px;
+            z-index: 2;
+            max-width: calc(100% - 22px);
+            padding: 8px 12px 8px 10px;
+            border-radius: 11px;
+            background: rgb(0 0 0 / 0.34);
+            color: #fff;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+            font-size: 12.65px;
+            line-height: 1.2;
+            letter-spacing: 0.01em;
+            pointer-events: none;
+            user-select: none;
+            text-shadow:
+              0 1px 3px rgb(0 0 0 / 0.55),
+              0 0 14px rgb(0 0 0 / 0.4);
+            filter: drop-shadow(0 2px 10px rgb(0 0 0 / 0.3));
+            animation: pkMobilePreviewHintPulse 3.2s ease-in-out infinite;
+          }
+          .pk-mobile-preview-click-hint__icon{
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+          }
+          .pk-mobile-preview-click-hint__label{
+            white-space: nowrap;
+          }
+          @keyframes pkMobilePreviewHintPulse{
+            0%, 100%{
+              opacity: 0.78;
+              transform: scale(0.98);
+            }
+            50%{
+              opacity: 1;
+              transform: scale(1.03);
+            }
+          }
+          @media (prefers-reduced-motion: reduce){
+            .pk-mobile-preview-click-hint{
+              animation: none;
+              opacity: 0.9;
+            }
           }
           .prototype-mobile-heading{
             display: flex;

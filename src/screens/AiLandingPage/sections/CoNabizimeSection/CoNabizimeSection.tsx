@@ -13,31 +13,9 @@ import { useLanguage } from "../../../../i18n/LanguageContext";
 import { pk } from "../../../../design/pkLandingColors";
 import pcFrameUrl from "../../../../../Images/PC_frame.png";
 import { HeroCompositeFrame } from "../MainHeroSection/HeroCompositeFrame";
-import aiBotUrl from "../../../../../Images/AI bot.png";
-import modernizaceBeforeUrl from "../../../../../Images/Modernizace/Before.png";
-import modernizaceAfterUrl from "../../../../../Images/Modernizace/After.png";
-import webAppUrl from "../../../../../Images/Web_app.png";
-import heroFrameV3Url from "../../../../../Images/Hero_PC_frame_V3.png";
-
-type BeforeAfter = {
-  beforeSrc: string;
-  afterSrc: string;
-  beforeLabel: string;
-  afterLabel: string;
-  /** One-time demo: on first viewport entry, nudge slider right → left → center */
-  introDemo?: boolean;
-};
-
-const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
-
-const preloadImage = (src: string): Promise<void> =>
-  new Promise((resolve) => {
-    const img = new Image();
-    const done = () => resolve();
-    img.onload = done;
-    img.onerror = done;
-    img.src = src;
-  });
+import { OfferResponsiveAsset } from "./OfferResponsiveAsset";
+import { preloadOfferSlideMedia } from "./offerMediaPreload";
+import type { BeforeAfterConfig, Slide, SlideFeature } from "./offerSlideTypes";
 
 /** Inactive: colored icons; active: `*_white.png` (first tab uses `Icon_tvorba_webu_white.png` in /public). */
 const offerTabIconFile = (slideId: string, isActive: boolean) => {
@@ -51,13 +29,20 @@ const offerTabIconFile = (slideId: string, isActive: boolean) => {
   return "Icon_Automatizace_white.png";
 };
 
+const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+type BeforeAfterSliderProps = BeforeAfterConfig & {
+  isMobile: boolean;
+};
+
 const BeforeAfterSlider = ({
-  beforeSrc,
-  afterSrc,
-  beforeLabel,
-  afterLabel,
+  beforeAssetId,
+  afterAssetId,
+  beforeLabel: _beforeLabel,
+  afterLabel: _afterLabel,
   introDemo = false,
-}: BeforeAfter): JSX.Element => {
+  isMobile,
+}: BeforeAfterSliderProps): JSX.Element => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [pos, setPos] = useState(55);
   const [dragging, setDragging] = useState(false);
@@ -166,11 +151,11 @@ const BeforeAfterSlider = ({
       onPointerUp={() => setDragging(false)}
       onPointerCancel={() => setDragging(false)}
     >
-      <img
-        src={beforeSrc}
-        alt={beforeLabel}
-        draggable={false}
-        onDragStart={(e) => e.preventDefault()}
+      <OfferResponsiveAsset
+        assetId={beforeAssetId}
+        isMobile={isMobile}
+        loading="eager"
+        fetchPriority="high"
         style={{
           width: "100%",
           height: "100%",
@@ -197,11 +182,10 @@ const BeforeAfterSlider = ({
           transition: transitionStyle,
         }}
       >
-        <img
-          src={afterSrc}
-          alt={afterLabel}
-          draggable={false}
-          onDragStart={(e) => e.preventDefault()}
+        <OfferResponsiveAsset
+          assetId={afterAssetId}
+          isMobile={isMobile}
+          loading="eager"
           style={{
             width: "100%",
             height: "100%",
@@ -292,52 +276,6 @@ const BeforeAfterSlider = ({
   );
 };
 
-type SlideFeature =
-  | string
-  | { bold: string; rest: string }
-  | { before: string; bold: string; after?: string };
-
-type Slide = {
-  id: string;
-  title: string;
-  description: string;
-  /** Optional line above the bullet list (e.g. AI card) */
-  featuresSubheading?: string;
-  features: SlideFeature[];
-  cta: string;
-  image?: string;
-  beforeAfter?: BeforeAfter;
-};
-
-const preloadOfferSlideMedia = async (slide: Slide): Promise<void> => {
-  if (slide.id === "tvorba-webu") {
-    const desktopGlob = import.meta.glob<{ default: string }>(
-      "../../../../../Images/Project_images/*-desktop.png",
-      { eager: true },
-    );
-    const mobileGlob = import.meta.glob<{ default: string }>(
-      "../../../../../Images/Project_images/*-mobil.png",
-      { eager: true },
-    );
-    const urls = new Set<string>([heroFrameV3Url]);
-    Object.values(desktopGlob).forEach((m) => urls.add(m.default));
-    Object.values(mobileGlob).forEach((m) => urls.add(m.default));
-    await Promise.all([...urls].map(preloadImage));
-    return;
-  }
-  if (slide.beforeAfter) {
-    await Promise.all([
-      preloadImage(pcFrameUrl),
-      preloadImage(slide.beforeAfter.beforeSrc),
-      preloadImage(slide.beforeAfter.afterSrc),
-    ]);
-    return;
-  }
-  if (slide.image) {
-    await preloadImage(slide.image);
-  }
-};
-
 const getFeatureBoldText = (feature: SlideFeature): string => {
   if (typeof feature === "string") return feature;
   return feature.bold;
@@ -397,8 +335,8 @@ const slides: Slide[] = [
     ],
     cta: "Nezávazná konzultace",
     beforeAfter: {
-      beforeSrc: modernizaceBeforeUrl,
-      afterSrc: modernizaceAfterUrl,
+      beforeAssetId: "modernizace-before",
+      afterAssetId: "modernizace-after",
       beforeLabel: "Před",
       afterLabel: "Po",
       introDemo: true,
@@ -416,7 +354,7 @@ const slides: Slide[] = [
       { before: "Webová aplikace na míru ", bold: "zaměřená na růst firmy", after: "" },
     ],
     cta: "Nezávazná konzultace",
-    image: webAppUrl,
+    imageAssetId: "web-app",
   },
   {
     id: "automatizace-ai",
@@ -430,7 +368,7 @@ const slides: Slide[] = [
       { before: "", bold: "Úspora času zaměstnanců", after: " díky chytrému workflow systému" },
     ],
     cta: "Nezávazná konzultace",
-    image: aiBotUrl,
+    imageAssetId: "ai-bot",
   },
 ];
 
@@ -463,8 +401,8 @@ const slidesEn: Slide[] = [
     ],
     cta: "Free consultation",
     beforeAfter: {
-      beforeSrc: modernizaceBeforeUrl,
-      afterSrc: modernizaceAfterUrl,
+      beforeAssetId: "modernizace-before",
+      afterAssetId: "modernizace-after",
       beforeLabel: "Before",
       afterLabel: "After",
       introDemo: true,
@@ -482,7 +420,7 @@ const slidesEn: Slide[] = [
       { bold: "Tailored application focused on company growth", rest: "" },
     ],
     cta: "Free consultation",
-    image: webAppUrl,
+    imageAssetId: "web-app",
   },
   {
     id: "automatizace-ai",
@@ -496,7 +434,7 @@ const slidesEn: Slide[] = [
       { bold: "Employee time savings", rest: "" },
     ],
     cta: "Free consultation",
-    image: aiBotUrl,
+    imageAssetId: "ai-bot",
   },
 ];
 
@@ -610,7 +548,7 @@ export const CoNabizimeSection = (): JSX.Element => {
       const slide = activeSlides[activeIdx];
       if (!slide) return;
 
-      await preloadOfferSlideMedia(slide);
+      await preloadOfferSlideMedia(slide, isOfferMobile);
       if (cancelled) return;
 
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -671,6 +609,8 @@ export const CoNabizimeSection = (): JSX.Element => {
             alt=""
             width={38}
             height={34}
+            loading={idx === activeIdx ? "eager" : "lazy"}
+            decoding="async"
             style={{ display: "block", objectFit: "contain" }}
           />
         </div>
@@ -842,11 +782,13 @@ export const CoNabizimeSection = (): JSX.Element => {
                       <div className="offer-hero-frame" aria-hidden="true">
                         <HeroCompositeFrame animateEntrance={false} />
                       </div>
-                    ) : activeSlide.id === "webove-aplikace" || activeSlide.id === "automatizace-ai" ? (
+                    ) : activeSlide.imageAssetId ? (
                       <div className={`offer-simple-media${activeSlide.id === "automatizace-ai" ? " offer-simple-media--ai-bot" : ""}`}>
-                        <img
-                          src={activeSlide.image}
-                          alt={activeSlide.title}
+                        <OfferResponsiveAsset
+                          assetId={activeSlide.imageAssetId}
+                          isMobile={isOfferMobile}
+                          loading="eager"
+                          fetchPriority={activeSlide.id === activeSlides[0]?.id ? "high" : "auto"}
                           style={{
                             width: "100%",
                             height: "100%",
@@ -859,9 +801,20 @@ export const CoNabizimeSection = (): JSX.Element => {
                     ) : (
                       <div className="notebook">
                         <div className="notebook-screen">
-                          <img className="notebook-frame-img" src={pcFrameUrl} alt="" aria-hidden="true" />
+                          <img
+                            className="notebook-frame-img"
+                            src={pcFrameUrl}
+                            alt=""
+                            aria-hidden="true"
+                            width={1536}
+                            height={1024}
+                            decoding="async"
+                            loading="lazy"
+                          />
                           <div className="notebook-screen-inner" aria-hidden="true">
-                            {activeSlide.beforeAfter ? <BeforeAfterSlider {...activeSlide.beforeAfter} /> : null}
+                            {activeSlide.beforeAfter ? (
+                              <BeforeAfterSlider {...activeSlide.beforeAfter} isMobile={isOfferMobile} />
+                            ) : null}
                           </div>
                         </div>
                       </div>
@@ -1221,6 +1174,14 @@ export const CoNabizimeSection = (): JSX.Element => {
           background: transparent;
         }
 
+        .offer-simple-media picture,
+        .offer-simple-media img,
+        .notebook-screen-inner picture,
+        .notebook-screen-inner img{
+          image-rendering: auto;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+        }
         .offer-hero-frame{
           width: 100%;
           max-width: 100%;
