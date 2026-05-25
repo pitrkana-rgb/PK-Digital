@@ -5,6 +5,16 @@ export const faqData = [
       "Na začátku stačí základní informace o vašem podnikání, cílech a představě o webu. Nemusíte mít hotové texty ani detailní zadání — celým procesem vás provedu krok za krokem.",
   },
   {
+    question: "Kolik stojí vytvoření webu?",
+    answer:
+      "Cena webových stránek na míru závisí na rozsahu projektu, funkcích a celkové náročnosti řešení. Menší firemní weby začínají přibližně od nižších desítek tisíc korun, rozsáhlejší webové aplikace nacením individuálně podle zadání. Součástí je vždy konzultace, návrh řešení a transparentní cenová nabídka bez skrytých poplatků.",
+  },
+  {
+    question: "Co všechno je zahrnuto v ceně?",
+    answer:
+      "Součástí projektu bývá návrh designu, vývoj webu, responzivní optimalizace, základní SEO nastavení, kontaktní formuláře, optimalizace rychlosti, napojení analytiky a spuštění webu. Přesný rozsah vždy přizpůsobím konkrétním potřebám projektu.",
+  },
+  {
     question: "Zatím nemám obsah, co s tím?",
     answer:
       "To vůbec nevadí. Pomohu vám s návrhem struktury webu, doporučením obsahu i směřováním textace tak, aby web působil profesionálně a podporoval získávání poptávek.",
@@ -15,19 +25,9 @@ export const faqData = [
       "Ano. Pomohu vám vytvořit moderní vizuální identitu včetně loga a základního brandingu, který bude odpovídat stylu vašeho podnikání.",
   },
   {
-    question: "Budu si moci své webové stránky snadno upravovat? Nejsem programátor.",
+    question: "Budu si moci web snadno upravovat?",
     answer:
       "Ano. Web připravuji tak, aby byla běžná správa jednoduchá i bez technických znalostí. Texty, fotografie nebo obsah můžete upravovat sami. Po spuštění vám vše osobně vysvětlím.",
-  },
-  {
-    question: "Kolik stojí vytvoření webu?",
-    answer:
-      "Cena webových stránek na míru závisí na rozsahu projektu, funkcích a celkové náročnosti řešení. Menší firemní weby začínají přibližně od nižších desítek tisíc korun, rozsáhlejší webové aplikace nacením individuálně podle zadání. Součástí je vždy konzultace, návrh řešení a transparentní cenová nabídka bez skrytých poplatků.",
-  },
-  {
-    question: "Co všechno je zahrnuto v ceně?",
-    answer:
-      "Součástí projektu bývá návrh designu, vývoj webu, responzivní optimalizace, základní SEO nastavení, kontaktní formuláře, optimalizace rychlosti, napojení analytiky a spuštění webu. Přesný rozsah vždy přizpůsobím konkrétním potřebám projektu.",
   },
   {
     question: "Je možné platit zálohovou fakturou?",
@@ -49,11 +49,6 @@ export const faqData = [
     answer:
       "Ano. Každý web vytvářím s důrazem na technické SEO, rychlost načítání, responzivitu a správnou strukturu obsahu. Web je připravený pro dohledatelnost ve vyhledávání Google i pro reklamní kampaně.",
   },
-  {
-    question: "Můžete vytvořit web na míru podle konkrétního zadání?",
-    answer:
-      "Ano. Specializuji se na webové stránky a aplikace na míru podle potřeb konkrétní firmy nebo podnikání. Každý projekt navrhuji individuálně podle cílů klienta a cílové skupiny.",
-  },
 ] as const;
 
 export const faqDataEn = [
@@ -61,6 +56,16 @@ export const faqDataEn = [
     question: "What do I need to get started?",
     answer:
       "To begin, basic information about your business, goals, and vision for the site is enough. You do not need finished copy or a detailed brief — I guide you through every step.",
+  },
+  {
+    question: "How much does a website cost?",
+    answer:
+      "Pricing depends on scope, features, and overall complexity. Smaller corporate sites typically start in the lower tens of thousands of CZK; larger web applications are quoted individually. Every project includes consultation, a solution proposal, and a transparent quote with no hidden fees.",
+  },
+  {
+    question: "What is included in the price?",
+    answer:
+      "Projects usually include design, development, responsive optimization, baseline SEO, contact forms, performance tuning, analytics setup, and go-live. The exact scope is always tailored to your needs.",
   },
   {
     question: "I do not have content yet. What should I do?",
@@ -73,19 +78,9 @@ export const faqDataEn = [
       "Yes. I can help you build a modern visual identity, including a logo and core branding that matches your business style.",
   },
   {
-    question: "Will I be able to edit my website easily? I am not a developer.",
+    question: "Will I be able to edit my website easily?",
     answer:
       "Yes. I build sites so day-to-day management is straightforward without technical skills. You can update text, photos, and content yourself, and I walk you through everything at launch.",
-  },
-  {
-    question: "How much does a website cost?",
-    answer:
-      "Pricing depends on scope, features, and overall complexity. Smaller corporate sites typically start in the lower tens of thousands of CZK; larger web applications are quoted individually. Every project includes consultation, a solution proposal, and a transparent quote with no hidden fees.",
-  },
-  {
-    question: "What is included in the price?",
-    answer:
-      "Projects usually include design, development, responsive optimization, baseline SEO, contact forms, performance tuning, analytics setup, and go-live. The exact scope is always tailored to your needs.",
   },
   {
     question: "Can I pay with a deposit invoice?",
@@ -106,10 +101,5 @@ export const faqDataEn = [
     question: "Is the website SEO-ready?",
     answer:
       "Yes. Every site is built with technical SEO, fast loading, responsive layout, and sound content structure in mind — ready for Google search visibility and ad campaigns.",
-  },
-  {
-    question: "Can you build a fully custom site from a specific brief?",
-    answer:
-      "Yes. I specialize in bespoke websites and applications for individual businesses. Each project is designed around your goals and target audience.",
   },
 ] as const;
