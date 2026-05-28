@@ -5,8 +5,8 @@
 
 export const SITE_URL = "https://pk-digital.cz" as const;
 
-/** Canonical favicon (public/Favicon.png) — SERP, browser tab, PWA. */
-export const faviconUrl = `${SITE_URL}/Favicon.png`;
+/** Canonical favicon (public/favicon-v2.png) — SERP, browser tab, PWA. */
+export const faviconUrl = `${SITE_URL}/favicon-v2.png`;
 
 /** Bump when `public/og-image.png` changes (cache bust for Facebook, LinkedIn, Discord, Google). */
 export const OG_IMAGE_VERSION = 6;
